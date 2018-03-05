@@ -12,5 +12,5 @@
  * @remark 定义版本号
  */
 defined('IN_IA') or exit('Access Denied');
-defined('FM_VERSION') or define('FM_VERSION','3.20180228');
+defined('FM_VERSION') or define('FM_VERSION','3.20180305000');
 ?>
