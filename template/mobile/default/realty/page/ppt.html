@@ -1,0 +1,78 @@
+<div id="ppt" class="container-fluid" style="position: relative;">
+	<div class="row-fluid">
+		<div class="span12" >
+			<div class="carousel slide" id="carousel-container" >
+				<ol class="carousel-indicators" style="">
+					{php $slideNum = 0;}
+					{loop $advs $row}
+					<li data-slide-to="{$slideNum}" {if $slideNum == '0'} class="active"{/if} data-target="#carousel-container">
+					</li>
+					{php $slideNum++;}
+					{/loop}
+				</ol>
+
+				<div class="carousel-inner" style="">
+					{php $i = 0;}
+					{loop $advs $row}
+					<div class="item {if $i == 0} active {/if}"  style="">
+						<div  style="text-align: center;">
+							<a href="{$row['link']}">
+								<img alt="" src="{$row['thumb']}" title="{$row['advname']}" style="width:100%;vertical-align:middle;"/>
+							</a>
+						</div>
+						<div class="carousel-caption hidden">
+							<h4>
+
+							</h4>
+							<p>
+								{$row['advname']}
+							</p>
+						</div>
+					</div>
+					{php $i++;}
+					{/loop}
+				</div>
+			</div>
+			<a data-slide="prev" href="#carousel-container" class="left carousel-control">‹</a>
+			<a data-slide="next" href="#carousel-container" class="right carousel-control">›</a>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="themes/hiluker/resource/js/hammer.min.js"></script>
+<!--Hammer,触摸事件识别 -->
+<script>
+	$('#carousel-container').carousel();
+	var mc = new Hammer($('#carousel-container').get(0));
+	mc.on("panleft", function(ev) {
+		$('#carousel-container').carousel('next');
+	});
+	mc.on("panright", function(ev) {
+		$('#carousel-container').carousel('prev');
+	});
+
+	// 先要对监听的DOM进行一些初始化
+var hammer = new Hammer($("#carousel-container").get(0));
+
+// 然后加入相应的回调函数即可
+hammer.ondragstart = function(ev) {
+
+};  // 开始拖动
+hammer.ondrag = function(ev) { }; // 拖动中
+hammer.ondragend = function(ev) { }; // 拖动结束
+hammer.onswipe = function(ev) { }; // 滑动
+
+hammer.on("tap", function(ev) {
+
+}); // 单击
+hammer.on('doubletap', function(ev) {
+
+}); //双击
+hammer.onhold = function(ev) { }; // 长按
+
+hammer.ontransformstart = function(ev) { }; // 双指收张开始
+hammer.ontransform = function(ev) { }; // 双指收张中
+hammer.ontransformend = function(ev) { }; // 双指收张结束
+
+hammer.onrelease = function(ev) { }; // 手指离开屏幕
+</script>

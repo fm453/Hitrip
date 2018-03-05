@@ -1,0 +1,57 @@
+		<div class="mui-content">
+			<ul class="mui-table-view mui-grid-view mui-grid-9" style="background-color:#f7f7f7;margin-top:0;">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4"><a  href="{php echo fm_murl('search','goods','index',array('isrecommand'=>1))}">
+		                    <span class="mui-icon mui-icon-extra mui-icon-extra-like" style="padding-right: 0;margin-left: 0;">
+		                    <span class="mui-badge">{$alltotal['goods']['rec']}</span>
+		                    </span>
+		                    <div class="mui-media-body">推荐</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4"><a href="{php echo fm_murl('search','goods','index',array('isnew'=>1))}">
+		                    <span class="mui-icon mui-icon-extra mui-icon-extra-new" style="padding-right: 0;margin-left: 0;">
+		                    <span class="mui-badge">{$alltotal['goods']['new']}</span>
+		                    </span>
+		                    <div class="mui-media-body">新品</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4"><a href="{php echo fm_murl('search','goods','index',array('ishot'=>1))}">
+		                    <span class="mui-icon mui-icon-extra mui-icon-extra-rank" style="padding-right: 0;margin-left: 0;">
+		                    <span class="mui-badge">{$alltotal['goods']['hot']}</span>
+		                    </span>
+		                    <div class="mui-media-body">热门</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4"><a href="{php echo fm_murl('search','goods','index',array('istime'=>1))}">
+		                    <span class="mui-icon mui-icon-extra mui-icon-extra-outline" style="padding-right: 0;margin-left: 0;">
+		                    <span class="mui-badge">{$alltotal['goods']['time']}</span>
+		                    </span>
+		                    <div class="mui-media-body">限时</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4"><a href="{php echo fm_murl('search','goods','index',array('keyword'=>'礼包'))}">
+		                    <span class="mui-icon mui-icon-extra mui-icon-extra-gift" style="padding-right: 0;margin-left: 0;">
+		                    <span class="mui-badge">{$alltotal['goods']['gift']}</span>
+		                    </span>
+		                    <div class="mui-media-body">礼包</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4"><a href="{php echo fm_murl('search','goods','index',array('keyword'=>'专享'))}">
+		                    <span class="mui-icon mui-icon-extra mui-icon-extra-prech" style="padding-right: 0;margin-left: 0;">
+		                    <span class="mui-badge">{$alltotal['goods']['only']}</span>
+		                    </span>
+		                    <div class="mui-media-body">专享</div></a></li>
+		           <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4"><a href="{php echo fm_murl('search','goods','index',array('keyword'=>'特卖'))}">
+		                    <span class="mui-icon mui-icon-extra mui-icon-extra-lamp" style="padding-right: 0;margin-left: 0;">
+		                    <span class="mui-badge">{$alltotal['goods']['temai']}</span>
+		                    </span>
+		                    <div class="mui-media-body">特卖</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4"><a href="tel:{$settings['brands']['phone']}">
+		                    <span class="mui-icon mui-icon-extra mui-icon-extra-custom" style="padding-right: 0;margin-left: 0;">
+		                    <span class="mui-badge" style="background:#f0ad4e;">{$alltotal['goods']['kefu']}</span>
+		                    </span>
+		                    <div class="mui-media-body">客服</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4"><a href="#" id="topartner">
+		                    <span class="mui-icon mui-icon-location" style="padding-right: 0;margin-left: 0;"></span>
+		                    <div class="mui-media-body">合作商家</div></a></li>
+		        </ul>
+		</div>
+<script type="text/javascript" >
+	var topartner = document.getElementById("topartner");
+		topartner.addEventListener('tap', function() {
+				mui.alert('该功能暂未开放,谢谢您的关注！', '商城提示', function() {
+					var newhtml = '<span class="mui-icon mui-icon-location" style="padding-right: 0;margin-left: 0;"><span class="mui-badge"  style="background:#f0ad4e;">Off</span></span><div class="mui-media-body">合作商家</div>';
+					topartner.innerHTML = newhtml;
+				});
+				return false;
+			});
+</script>

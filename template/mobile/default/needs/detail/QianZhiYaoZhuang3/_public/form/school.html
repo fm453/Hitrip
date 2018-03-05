@@ -1,0 +1,26 @@
+	<div class="mui-input-row">
+		<label>所在中学：</label>
+		<input id='school' type="text" name="school" class="mui-hidden" value="{$needs_data['school']}" />
+		<input id='schoolPicker' type="text" name="schoolPicker" class="mui-input-clear" placeholder="{if $needs_data['school']}{$needs_data['school']}{else}点击选择行业{/if}" value="{$needs['school'][$needs_data['school']]}" />
+	</div>
+	<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var id="school";
+					var idPicker = new $.PopPicker();
+					var pickData = {php echo $needs_school};
+					idPicker.setData(pickData);
+					var showPickerButton = doc.getElementById(id+'Picker');
+					var pickResult = doc.getElementById('Result_'+id);
+					showPickerButton.addEventListener('tap', function(event) {
+						idPicker.show(function(items) {
+							showPickerButton.value = JSON.stringify(items[0].text);
+							document.getElementById(id).setAttribute('value',items[0].value);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+	</script>

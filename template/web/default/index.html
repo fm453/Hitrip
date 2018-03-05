@@ -1,0 +1,29 @@
+{template $fm453style.'common/_header'}
+<div class="main">
+		<div class="panel panel-info">
+			<div class="panel-heading" style="text-align:center;">
+				{$shopname}{$routes[$do]['title']}
+			</div>
+			<div class="panel-body">
+				{loop $all_ac $a_c}
+				<a class="btn btn-default {if $a_c==$ac} disabled {/if}"  href="{php echo fm_wurl($do,$a_c,'',array())}"><i class="{$routes[$do]['ac'][$a_c]['icon']}"></i> {$routes[$do]['ac'][$a_c]['title']}</a>
+				{/loop}
+			</div>
+			<div class="panel-body">
+
+			</div>
+		</div>
+</div>
+<div class="main">
+	<div class="panel panel-warning">
+			<div class="panel-heading" style="text-align:center;">
+				{$shopname}后台功能入口集合
+			</div>
+			<div class="panel-body">
+			{loop $routes_do $d_o}
+				<a class="btn {if $d_o==$do} btn-info {else} btn-default {/if}" href="{php echo fm_wurl($d_o,'','',array())}" target="_parent" style="margin-bottom:10px;"><i class="{$routes[$d_o]['icon']}"></i> {$routes[$d_o]['title']}</a>
+			{/loop}
+			</div>
+		</div>
+</div>
+{template $fm453style.'common/_footer'}

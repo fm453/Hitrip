@@ -1,0 +1,62 @@
+<div class="panel panel-default">
+			<div class="panel-heading">
+			<a data-toggle="collapse" data-parent="#accordion"
+          href="#data-logs">
+          日志处理(<span style="color:red;">加载：fm_load()->model('logs');</span>)<span class="pull-right">（点击展示）</span>
+        </a>
+			</div>
+</div>
+<div class="container-fluid panel-collapse collapse" id="data-logs">
+	<div class="row-fluid">
+		<div class="span12">
+			<ol>
+				<li>
+					<ul>
+						<li>保存日志入库
+						<code>fmMod_log_query_uid
+						</code>
+						</li>
+						<li>参数
+						<code>$mid，分享者的会员id
+						</code>
+						<pre>fmMod_log_query_uid
+						</pre>
+						</li>
+						<li>结果值
+						<code>无
+						</code>
+						</li>
+					</ul>
+				</li>
+
+<p></p>
+				<li>
+					<ul>
+						<li>获取后台当前用户指定范围的操作日志
+						<code>fmMod_log_query_uid($platid,$do,$tablename,$sn,$first,$getnum,$addons);
+						</code>
+						</li>
+						<li>参数
+						<code>$platid</code>平台id,数据类型：int，默认为0（目前统一为0）,可为空<br>
+						<code>$do</code>后台的操作类型，数据类型：str或array()，如save,update,delete，可为空<br>
+						<code>$tablename</code>所操作的数据表，数据类型：str或array()，表名可通过相关数据表处理函数获得<br>
+						<code>$sn</code>所操作的具体某条数据，数据类型：int或array()，对应数据表中的id或sn,可为空。前提是$tablename为有效的单一表名。<br>
+						<code>$first</code>结果数据的起始位置，数据类型：int，可为空<br>
+						<code>$getnum</code>结果数据的总条数，数据类型：int，可为空<br>
+						<code>$addons</code>附加参数，数据类型：array()，可为空。完整示例：<br>
+$addons=array();
+$addons['tabletype']='system';//所操作的数据类型，传入该参数时，$tablename\$sn均失效
+$addons['time']=array('start'=>time()-3600*24*30,'end'=>time());//start表示记录生成时间晚于该时间，end表示记录生成时间早于该时间
+						</li>
+						<li>结果值,数组
+						<code>$return['result']、$return['msg']、$return['data']
+						</code>
+						</li>
+					</ul>
+				</li>
+
+
+			</ol>
+		</div>
+	</div>
+</div>

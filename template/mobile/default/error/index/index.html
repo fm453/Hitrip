@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>{$pagename}</title>
+	<meta name="format-detection" content="telephone=no, address=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+	<meta name="apple-touch-fullscreen" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<link rel="shortcut icon" href="../attachment/images/global/wechat.jpg" />
+
+	<script type="text/javascript" src="../app/resource/js/lib/jquery-1.11.1.min.js?v=20160906"></script>
+	<script type="text/javascript" src="../app/resource/js/lib/mui.min.js?v=20160906"></script>
+
+
+	<link href="../app/resource/css/common.min.css?v=20160906" rel="stylesheet">
+</head>
+<body>
+<div class="container container-fill">
+	<div class="mui-content fadeInUpBig animated mui-backdrop" style="background-color: rgb(239, 239, 244); bottom: 20px;">
+		<div class="mui-content-padded">
+			<div class="mui-message">
+				<div class="mui-message-icon"><span class="mui-msg-error"></span></div>
+				<p class="mui-desc">
+				<a id='js_tip'class="mui-btn mui-btn-default mui-btn-block mui-btn-outlined">{$msg['title']}</a>
+					{$msg['body']}
+				</p>
+				<div class="mui-button-area">
+					<a  href="{$backurl}" class="mui-action-back mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">返回上一页</a>
+					<a href="{php echo fm_murl('index','index','index',array())}" class="mui-btn mui-btn-primary mui-btn-block">首页</a>
+					<a  href="#modal-feedback" class="mui-btn mui-btn-danger mui-btn-block">反馈给管理员</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 模态框 -->
+{template $appstyle.'error/index/index/feedback'}
+<script type="text/javascript">
+mui.init();
+</script>
+</body>
+</html>

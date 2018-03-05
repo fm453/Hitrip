@@ -1,0 +1,7 @@
+/*加载过于消耗资源，暂停使用*/
+@font-face {
+    font-family: Microsoft YaHei ;
+    font-weight: normal;
+    font-style: normal;
+    src:  url('../font/msyh.ttf') format('truetype'); /* iOS 4.1- *//* Safari, Android, iOS */
+}

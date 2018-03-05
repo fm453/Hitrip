@@ -1,0 +1,23 @@
+	{if $list}
+	<div class="mui-content" id="search-list-table">
+	<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">
+		为您找到:共<span style="color:#ff0000"><b>{$total}</b></span>个
+
+	{$footbar_pagename} 搜索结果
+	</h5>
+	<div class="mui-card" style="background-color: transparent;">
+		<ul class="mui-table-view mui-grid-view" style="background-color: transparent;">
+			{loop $members $uid $row}
+			{template $appstyle.$do.'/'.$ac.'/_public/member/item_rec'}
+			{/loop}
+		</ul>
+	</div>
+	</div>
+	{else}
+	<div class="mui-content"  style="background:#efeff4 url({$fm453resource}images/default/background-logo.png)  no-repeat fixed center center;">
+	<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">
+		没有找到相关的内容，建议您换个搜索条件再试试
+	</h5>
+
+	</div>
+	{/if}

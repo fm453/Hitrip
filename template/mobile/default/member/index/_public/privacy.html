@@ -1,0 +1,31 @@
+<div id="privacy" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>设置
+				</button>
+				<h1 class="mui-center mui-title">隐私</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+
+						<ul class="mui-table-view">
+							<li class="mui-table-view-divider">通讯录</li>
+							<li class="mui-table-view-cell">
+								<span>对同一省份的人开放</span>
+								<div class="mui-switch mui-switch-mini {if $mine_settings['onoffs']['openContactToProvince']==1} mui-active {/if}" data-setfor="onoffs"  data-setkey="openContactToProvince">
+									<div class="mui-switch-handle"></div>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<span>可通过手机号搜索到我</span>
+								<div class="mui-switch mui-switch-mini {if $mine_settings['onoffs']['searchByPhone']==1} mui-active {/if}" data-setfor="onoffs" data-setkey="searchByPhone">
+									<div class="mui-switch-handle"></div>
+								</div>
+							</li>
+						</ul>
+
+					</div>
+				</div>
+			</div>
+		</div>

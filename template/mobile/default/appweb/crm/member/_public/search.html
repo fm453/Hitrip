@@ -1,0 +1,215 @@
+<style>
+	.sort li{
+
+	}
+	.sort .mui-table-view.mui-grid-view .mui-table-view-cell{
+		margin-right:0;
+		padding: 10px 0 0 0px;
+	}
+	.sort span .mui-icon{
+		 color:#ddd;
+		 text-align: center;
+	}
+	.sort span .mui-media-body{
+		 margin-left:0px;
+	}
+	.sort .sel {
+		width: 30px;
+		height: 30px;
+		display: inline-block;
+		text-align: center;
+		border: 1px solid #ddd;
+		border-radius: 15px;
+		font-size: 28px;
+	}
+	.sort .active>span{
+		background-color:#0095f6;
+		color:#fff;
+	}
+	.category-keyword .mui-btn {
+		padding:1px;
+	}
+	.goodstpl .mui-table-view.mui-grid-view .mui-table-view-cell{
+		margin-right:0;
+		padding: 10px 0 0 0px;
+	}
+	.goodstpl .active{
+		border:1px  #0095f6 dotted;
+		box-shadow: 2px 2px 2px 2px #0095f6;
+	}
+	.goodstpl .sel {
+		width: 50px;
+		height: 50px;
+		display: inline-block;
+		text-align: center;
+		border-radius: 10px;
+		font-size: 14px;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+	}
+</style>
+<div class="mui-content" style="margin-top: 0;margin-bottom: 0;">
+	<form action="{php echo fm_murl($do,$ac,'load',array())}" method="post" class="mui-input-group" id="form1" enctype="multipart/form-data" onsubmit='return formcheck()'  style="padding-bottom: 5px;">
+		{if $_GPC['isnew']==1}<input type="hidden" name="isnew" value="1" />{/if}
+		{if $_GPC['ishot']==1}<input type="hidden" name="ishot" value="1" />{/if}
+		{if $_GPC['isdiscount']==1}<input type="hidden" name="isdiscount" value="1" />{/if}
+		{if $_GPC['istime']==1}<input type="hidden" name="istime" value="1" />{/if}
+		<input type="hidden" name="sort" value="{$sort}" />
+		<input type="hidden" name="bytime" value="{$hasorderbytime}" />
+		<input type="hidden" name="bysales" value="{$hasorderbysales}" />
+		<input type="hidden" name="byrenqi" value="{$hasorderbyrenqi}" />
+		<input type="hidden" name="byprice" value="{$hasorderbyprice}" />
+		<input type="hidden" name="fromplats" value="{$_GPC['fromplats']}" />
+		<input type="hidden" name="a_tpl" value="{$a_tpl}" />
+		<input type="hidden" name="token" value="{$_W['token']}" />
+
+		<!--关键词-->
+		<div class="" style="margin-top:3px;">
+			<div class="mui-input-row" style="height:34px;">
+				<input id="search" type="search" name="keyword" class="mui-input mui-input-clear" value="{$_GPC['keyword']}" placeholder="请输入关键字搜索">
+			</div>
+		</div>
+
+		<!--排序筛选-->
+		<div class="sort" style="display: none;">
+				<ul class="mui-table-view mui-grid-view mui-grid-6" style="text-align: center;padding:0 0 10px 0;">
+		<li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2" style="">
+			<span orderby="time" showorder="{$sortb0}" class="{$allissort[0]}" >
+				{if $sortb0=='desc'}
+				<span class="sel mui-icon mui-icon-arrowthindown" style="" id="click-time">
+				</span>
+				{else}
+				<span class="sel mui-icon mui-icon-arrowthinup" style="" id="click-time">
+				</span>
+				{/if}
+			<div class="mui-media-body">新会员</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2">
+			<span orderby="sales" showorder="{$sortb1}"  class="{$allissort[1]}" >
+				{if $sortb1=='desc'}
+				<span class="sel mui-icon mui-icon-arrowthindown" style="" id="click-sales">
+				</span>
+				{else}
+				<span class="sel mui-icon mui-icon-arrowthinup" style="" id="click-sales">
+				</span>
+				{/if}
+				<div class="mui-media-body">阅读量</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2">
+			<span orderby="renqi" showorder="{$sortb2}"  class="{$allissort[2]}">
+				{if $sortb2=='desc'}
+				<span class="sel mui-icon mui-icon-arrowthindown" style=""  id="click-renqi">
+				</span>
+				{else}
+				<span class="sel mui-icon mui-icon-arrowthinup" style=""  id="click-renqi">
+				</span>
+				{/if}
+				<div class="mui-media-body">人气</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2">
+			<span  keywords="rand" {if $keywords} class="active" {/if} >
+				<span class="sel mui-icon mui-icon-flag" {if $keywords} style="color:red;" {/if} id="click-keyword">
+				</span>
+				<div class="mui-media-body">热搜</div>
+			</span>
+		</li>
+				</ul>
+		</div>
+	<button type="submit" class="hidden" style="display: none;"></button>
+	</form>
+</div>
+
+<script language='javascript'>
+	var now_goodstpl = "{$a_tpl}";
+	//监听文章模型选择
+	mui('.goodstpl').on( 'tap' , 'li' , function(){
+		var goodstpl_clicked=this.getAttribute("data-goodstpl");
+		$('.goodstpl,li').removeClass("active");
+		this.classList.toggle('active');
+		document.getElementsByName("goodstpl")[0].value = goodstpl_clicked;
+		formcheck();
+	});
+
+	//监听排序设置
+	mui('.sort').on( 'tap' , 'span' , function(){
+		var orderby = this.getAttribute("orderby");
+		var showorder = this.getAttribute("showorder");
+		var fromplats = this.getAttribute("fromplats");
+		var randkeywords = this.getAttribute("keywords");
+		if (orderby || fromplats) {
+			ChangeShoworder(this);
+		}else {
+			if (randkeywords=='rand') {
+				getRandKeywords();
+			}
+		}
+	});
+
+	var sortarray={'time':0,'sales':0,'renqi':0,'price':0};
+	var orderarray={'desc':'asc','asc':'desc'};
+	function ChangeShoworder(obj) {
+		var orderby = obj.getAttribute("orderby");
+		var showorder = obj.getAttribute("showorder");
+		var fromplats = obj.getAttribute("fromplats");
+		var randkeywords = obj.getAttribute("keywords");
+		if (orderby) {
+			sortarray[orderby]++;
+			var k = sortarray[orderby];
+			if (k>2) {
+				document.getElementsByName("by"+orderby)[0].value='false';
+				sortarray[orderby]=0;
+				obj.classList.toggle('active');
+			}else {
+				document.getElementsByName("by"+orderby)[0].value='true';
+				if (k==1) {
+					obj.classList.toggle('active');
+				}
+				var sortspan = $("#click-"+orderby);
+				if (showorder=='desc') {
+					obj.setAttribute("showorder",orderarray[showorder]);
+				 	sortspan.addClass('mui-icon-arrowthinup').removeClass('mui-icon-arrowthindown').removeClass('mui-icon-pulldown');
+				}else {
+					obj.setAttribute("showorder",orderarray[showorder]);
+				 	sortspan.removeClass('mui-icon-arrowthinup').addClass('mui-icon-pulldown');
+				}
+				document.getElementById(orderby).value=orderarray[showorder];
+			}
+		}
+		if (fromplats) {
+			var new_plat = (fromplats=='all') ? "{$_W['uniacid']}" : 'all';
+			var plattitle = {"all":"全网","{$_W['uniacid']}":"本店"}
+			document.getElementsByName('fromplats')[0].value=new_plat;
+			obj.setAttribute("fromplats",new_plat);
+			obj.classList.toggle('active');
+			$("#click-plat").next().html(plattitle[new_plat]);
+			$('#showstatus').html(fromplats);
+		}
+		formcheck();
+	}
+
+	function getRandKeywords() {
+		var url = "{php echo fm_murl('ajax','index','randkeyword',array())}";
+		var data = {
+			'type' : "article"
+		};
+		mui.getJSON(url,data,
+			function(res){
+				$('#search').val(res);//替换内容
+				//document.getElementById('search').value= res;//替换内容
+				formcheck();
+			}
+		);
+	}
+
+	function formcheck() {
+		var form = document.getElementById('form1');
+		form.keyword.focus();
+		form.submit();//直接利用表单自身进行提交（不通过AJAX方式进行动态查询，不建议）
+		return false;
+	}
+</script>

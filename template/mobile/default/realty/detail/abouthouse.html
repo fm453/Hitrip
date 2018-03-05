@@ -1,0 +1,104 @@
+<div class="jumbotron" >
+        <h1>
+           {$HouseData['params']['price']['lowest']}<span class="rt-unit">元/平</span>起
+        </h1>
+    <div id="abouthouse-high-hidden">
+         <h3>
+            {$HouseData['title']}
+        </h3>
+        <p>
+        		{if $HouseData['params']['open']==1}
+            <label class="label label-warning">在售</label>
+            {/if}
+            {if $HouseData['params']['open']==0}
+            <label class="label label-info">待开盘</label>
+            {/if}
+        </p>
+        <hr class="hr-line">
+        <p>
+        	<span class="rt-label">物业类型</span> : <span class="rt-val">{$HouseData['params']['property']['type']}</span></span>
+        </p>
+        <p>
+        	<span class="rt-label">物业公司</span> : <span class="rt-val">{$HouseData['params']['property']['mangerName']}</span></span>
+        </p>
+        <p>
+            <span class="rt-label">开发商</span> : <span class="rt-val">{$HouseData['params']['developer']['name']}</span></span>
+        </p>
+        <p>
+            <span class="rt-label">装修状况</span> : <span class="rt-val">{$zhuangxiuTypes[$HouseData['params']['zhuangxiu']['type']]}</span></span>
+        </p>
+        <p>
+        	<span class="rt-label">项目地址</span> : <span class="rt-val">{$HouseData['params']['address']}</span>
+        </p>
+        <p>
+        	<span class="rt-label">最新开盘</span> : <span class="rt-val">{php echo date('Y年m月d日',$HouseData['params']['opendate'])}</span>
+        </p>
+        <p>
+        	<span class="rt-label">交房时间</span> : <span class="rt-val">{php echo date('Y年m月d日',$HouseData['params']['jiaofangdate'])}</span>
+        </p>
+        <hr class="hr-line">
+
+         <p>
+            <button class="btn btn-info col-lg-12 tel">
+                <i class="fa fa-phone-square"></i> &nbsp;&nbsp;联系电话:{$settings['brands']['phone']}
+            </button>
+        </p>
+    </div>
+        <form action="{php echo fm_murl('form','feedback','',array());}" method="post" class="form-horizontal" role="form" id="baoming-form" onsubmit="return formcheck('baoming-form');return false;" data-noajax = '0' style="background-color: #eee;padding-top:5px;padding-bottom: 15px;">
+            <input type="hidden" name="ajax" value="1" />
+            <input type="hidden" name="s_sn" value="{$s_sn}" />
+            <input type="hidden" name="f_sn" value="{$f_sn}" />
+            <input type="hidden" name="about" value="realty" />
+            <input type="hidden" name="house" value="{$HouseData['params']['title']}" />
+            <input type="hidden" name="token" value="{$_W['token']}" />
+            
+            <h4 class="form-title" style="color:#49afcd;text-align: left;padding-left: 10px;"><i class="fa fa-edit"></i>    报名参加购房团购</h4>
+            <p></p>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label class="control-label">姓名：</label>
+                <div class="">
+                    <input class="form-control" type="text" id="" name="data[name]" placeholder="怎么称呼您？" value="{$user['name']}" />
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:10px;">
+                <label class="control-label">性别：</label>
+                <div class="radio-inline">
+                    <label class='radio-inline'>
+                        <input type='radio' name='data[gender]' value='1' {if $user['gender'] == 1 || !isset($user['gender'])} checked {/if} /> 先生
+                        <input type='radio' name='data[gender]' value='0' {if isset($user['gender']) && $user['gender'] == 0} checked {/if} /> 女士
+                    </label>
+                    <label class='radio-inline'>
+                        
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:10px;">
+                <label class="control-label">手机：</label>
+                <div class="">
+                    <input class="form-control" type="text" id="" name="data[phone]" placeholder="请填写手机号以便联系您" value="{$user['phone']}" onblur="formcheck('baoming-form');" />
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:10px;">
+                <label class="control-label">备注：</label>
+                <div class="">
+                    <textarea class="form-control" type="text" id="" name="data[remark]" placeholder="如果您有什么需要我们提前为准备的，或者其他明确需求的，可以留言给我们" /></textarea>
+                </div>
+            </div>
+ 
+            <button class="btn btn-success col-lg-12 baoming-form" type="submit">
+                参加团购，立享优惠
+            </button>
+        </form>
+        <p>
+            <hr class="hr-line">
+        </p>
+        
+        <div class="btn-group" role="group" aria-label="右侧挂件按钮组">
+        		<a class="btn btn-info gotop gotop-down" href="#footerbar" > 去底端<i class="fa fa-arrow-down"></i></a>
+        		<a class="btn btn-info  gotop gotop-up" href="#" id="btt">去顶端 <i class="fa fa-arrow-up"></i></a>
+        	</div>
+        <br>
+</div>

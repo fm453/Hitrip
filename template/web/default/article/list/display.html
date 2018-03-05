@@ -1,0 +1,82 @@
+<div class="main">
+	<div style="text-align: center;">
+		{$pager}
+	</div>
+	<div class="panel panel-info fm453_newmouse">
+	<div class="panel-heading"></div>
+	<div class="panel-body table-responsive">
+		<form action="" method="post" onsubmit="return formcheck(this)">
+			<div class="row">
+			{loop $list $item}
+				<div class="col-sm-4 col-md-3">
+					<div class="thumbnail" style="background:url({$item['thumb']});background-repeat: no-repeat;background-size:contain;">
+						<div style="height: 300px;"></div>
+						<div class="caption" contenteditable="false" style="background-color:rgba(0,0,0,.8);color:#fff;">
+							<h3 style="margin-top:3px;margin-bottom:3px;height: 25px;line-height:25px;overflow: hidden;white-space: nowrap;text-overflow:ellipsis;">
+								{$item['title']}
+							</h3>
+							<p style="height:15px;">
+							{$item['plataccount']['name']}({$item['uniacid']})
+							 <i class="fa fa-eye"></i>&nbsp;{$item['viewcount']}  /   <i class="fa fa-gift"></i>&nbsp; {$item['sales']}  /   <i class="fa fa-thumbs-up"></i>&nbsp; {$item['dianzan']} &nbsp;&nbsp; 
+							</p>
+							<p style="font-style: italic;margin-top:3px;margin-bottom:3px;height: 40px;line-height:20px;overflow: hidden;text-overflow:ellipsis;">
+							{$item['description']}
+							</p>
+							<p>排序(填写数字，按回车键保存)：
+							<input type="text" class="btn btn-default btn-md" name="displayorder[{$item['id']}]" value="{$item['displayorder']}" >
+							</p>
+							<p>
+								<label data='{$item['isnew']}' class='label {if $item['isnew']==1}label-info{else}label-default{/if}' onclick="setProperty(this,{$item['id']},'label-info','label-default','isnew')">新品</label>
+								<label data='{$item['ishot']}' class='label {if $item['ishot']==1}label-info{else}label-default{/if}' onclick="setProperty(this,{$item['id']},'label-info','label-default','ishot')">热卖</label>
+								<label data='{$item['isrecommand']}' class='label {if $item['isrecommand']==1}label-info{else}label-default{/if}' onclick="setProperty(this,{$item['id']},'label-info','label-default','isrecommand')">推荐</label>
+								<label data='{$item['isdiscount']}' class='label {if $item['isdiscount']==1}label-info{else}label-default{/if}' onclick="setProperty(this,{$item['id']},'label-info','label-default','isdiscount')">折扣</label>
+								<label data='{$item['status']}' class='label {if $item['status']==1}label-success{else}label-warning{/if}' onclick="setProperty(this,{$item['id']},'label-success','label-warning','status')">{if $item['status']==1}上架{else}下架{/if}</label>
+							</p>
+							<p>
+								<a href="{php echo fm_murl('article','detail', 'index',array('id' => $item['id']))}" class="btn btn-default btn-sm jsclip" target="_blank" data-toggle="tooltip" data-placement="top" title="打开前台页面预览"><i class="fa fa-link"></i></a>&nbsp;&nbsp;
+								<a href="{php echo fm_wurl('order','bygoods','display', array('aid' => $item['id']))}" class="btn btn-default btn-sm hidden" data-toggle="tooltip" data-placement="top" title="支付记录"><i class="fa fa-cny"></i></a>&nbsp;&nbsp;
+								<a href="{php echo fm_wurl($do,'copy','display', array('id' => $item['id'], 'pindex' => $pindex))}" class="btn btn-default btn-sm  hidden" data-toggle="tooltip" data-placement="top" title="复制文章信息后再编辑保存为新内容"><i class="fa fa-copy"></i></a>&nbsp;&nbsp;
+								<a href="{php echo fm_wurl($do,'ajax','delete', array('id' => $item['id'],'from_ac'=>$ac,'from_op'=>$operation,'delete'=>'article','sn' => $item['sn']))}" onclick="return confirm('再确认一下，要删除此文章吗？此操作不可恢复！');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times" style="color:red;"></i></a>
+							</p>
+							<p>
+								<a href="./index.php?c=site&a=article&do=post&id={$item['sn']}"class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" target="_blank" title="系统微站功能-文章管理"><i class="fa fa-pencil"></i> 微站文章</a>&nbsp;&nbsp;
+								<a href="{php echo fm_wurl($do,'detail','display', array('id' => $item['id'],'pindex' => $pindex))}"class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" target="_blank" title="新建文章或营销规则相关设置"><i class="fa fa-gears"></i> 编辑管理</a>&nbsp;&nbsp;
+							</p>
+						</div>
+					</div>
+				</div>
+				{/loop}
+			</div>
+			<input name="submit" type="submit" class="btn btn-primary" value="提交">
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</form>
+	</div>
+	<div style="text-align: center;">
+		{$pager}
+	</div>
+	<div class="panel-heading"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	var category = {php echo json_encode($children)};
+	function setProperty(obj,id,label1,label2,type){
+		$(obj).html($(obj).html() + "...");
+		$.post("{php echo fm_wurl($do,'ajax','update',array('from_ac'=>$ac,'from_op'=>$operation))}"
+			,{id:id,type:type, data: obj.getAttribute("data")}
+			,function(d){
+				$(obj).html($(obj).html().replace("...",""));
+				if(type=='status'){
+				 $(obj).html( d.data=='1'?'上架':'下架');
+				}
+				$(obj).attr("data",d.data);
+				if(d.result==1){
+					$(obj).toggleClass(label1);
+					$(obj).toggleClass(label2);
+				}
+			}
+			,"json"
+		);
+	}
+
+</script>
+    

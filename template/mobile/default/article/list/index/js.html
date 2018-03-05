@@ -1,0 +1,54 @@
+<script>
+	mui.init({
+		swipeBack: true //启用右滑关闭功能
+	});
+
+	var controls = document.getElementById("segmentedControls");
+	var contents = document.getElementById("segmentedControlContents");
+	var html = [];
+	var i = 1,
+		j = 1,
+		m = "{php echo count($allcategory['parent'])}"; //左侧选项卡数量+1	一级分类数量+1
+	var pcate_idx=[];
+
+	var allPcates = {php echo json_encode($allcategory['parent']);};
+	var allCcates = {php echo json_encode($allcategory['child']);};
+	for(var pcate in allPcates){
+		html.push('<a class="mui-control-item" href="#content' + pcate + '">'+ allPcates[pcate]['name'] + '</a>');
+	}
+	controls.innerHTML += html.join('');
+
+	html = [];
+	for(var pcate in allPcates)
+	{
+		html.push('<div id="content' + pcate + '" class="mui-control-content"><ul class="mui-table-view">');
+		html.push('<li class="mui-table-view-cell" data-href="'+ "{php echo fm_murl('article','list','subcate',array())}" +'&pcate=' + pcate + '">全部'+ allPcates[pcate]['name'] +'内容</li>');
+		var ccates = allCcates[pcate];
+		if (ccates !='' || ccates !='undefined'  ) {
+			for(var ccate in ccates)
+			{
+				html.push('<li class="mui-table-view-cell" data-href="'+  "{php echo fm_murl('article','list','subcate',array())}" +'&pcate=' + pcate +'&ccate=' + ccate  +'">' + ccates[ccate]['name'] + '</li>');
+			}
+		}
+
+		html.push('</ul></div>');
+	}
+	contents.innerHTML += html.join('');
+
+	 //默认选中第一个
+	controls.querySelector('.mui-control-item').classList.add('mui-active');
+	contents.querySelector('.mui-control-content').classList.add('mui-active');
+
+	//添加事件监听
+	//链接打开；
+	$('.mui-control-content').on('tap', 'li', function(e) {
+		var href = this.getAttribute('data-href');
+		if (href) {
+			if (window.plus) {
+				plus.runtime.openURL(href);
+			} else {
+				location.href = href;
+			}
+		}
+	});
+</script>

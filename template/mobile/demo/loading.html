@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>{$shopname}演示</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="{$appsrc}/css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="{$appsrc}/css/app.css" />
+		<style>
+			h5 {
+				margin-bottom: 10px;
+				text-align: left;
+			}
+
+			.mui-demo-container{
+				background-color: #fff;
+				padding: 10px 15px;
+			}
+
+			.mui-btn-block{
+				padding: 5px 0;
+			}
+
+			#demo5 .mui-progressbar{
+				margin: 15px 10px;
+			}
+
+			.mui-progressbar-success span {
+				background-color: #4cd964;
+			}
+			.mui-progressbar-warning span {
+				background-color: #f0ad4e;
+			}
+			.mui-progressbar-danger span {
+				background-color: #dd524d;
+			}
+			.mui-progressbar-royal span {
+				background-color: #8a6de9;
+			}
+
+			/*Android平台使用父子webview，因此需要修改顶部进度条的显示位置*/
+			.mui-plus.mui-android>.mui-progressbar{
+				top:0
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content"  style="padding-top:50%;padding-bottom:50%;">
+
+			<div class="mui-demo-container" style="background-color: rgba(255, 255, 255, 0);">
+				<div>
+					<h5 style="text-align: center; ">页面加载中……</h5>
+					<p class="mui-progressbar mui-progressbar-infinite" style="height:3px;" id="progressbar"></p>
+				</div>
+			</div>
+
+		</div>
+		<script src="{$appsrc}/js/mui.min.js"></script>
+		<script>
+			//无限进度条
+				//一般使用时，mui(container).progress()构造方法中不传入参数，就表示无限循环；
+
+				//3秒后自动消失，实际可根据实际情况决定关闭进度条的时机；
+				setTimeout(function() {
+					mui('body').progressbar().hide();
+					top.location.href = "index/453.html";
+					//location.href = "list.html";
+				}, 1500);
+		</script>
+	</body>
+
+</html>

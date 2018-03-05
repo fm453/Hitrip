@@ -1,0 +1,42 @@
+{if $do=='goods' && $ac=='query'}
+{php $ishidden='hidden'}
+{/if}
+
+<ul class="nav nav-tabs {$ishidden}">
+{loop $all_ac $ac_key $a_c}
+{php if($a_c=='ajax' || $a_c=='index' || $a_c=='addon' ) unset($all_ac[$ac_key]);}
+{php if($a_c=='ajax' || $a_c=='index' || $a_c=='addon') unset($routes[$do]['ac'][$a_c])}
+	{loop $all_op $op_key $o_p}
+	{php if($o_p=='delete') unset($all_op[$op_key])}
+		{if $a_c==$ac}
+			{if $o_p == $operation}
+			<li class="active">
+				<a href="{php echo fm_wurl($do, $a_c, $o_p, array('sn'=>$sn,'s_sn'=>$s_sn,'f_sn'=>$f_sn,'o_sn'=>$o_sn))}">
+					{$routes[$do]['ac'][$a_c]['title']} -
+					{$routes[$do]['ac'][$a_c]['op'][$o_p]['title']}
+				</a>
+			</li>
+			{else}
+			<li {if $o_p=='modify' || $o_p=='copy' || $o_p=='export' || $routes[$do]['ac'][$a_c]['op'][$o_p]['hidden']==1} class="hidden" {/if} >
+				<a href="{php echo fm_wurl($do, $a_c, $o_p, array('sn'=>$sn,'s_sn'=>$s_sn,'f_sn'=>$f_sn,'o_sn'=>$o_sn))}">
+				{$routes[$do]['ac'][$a_c]['op'][$o_p]['title']}
+				</a>
+			</li>
+			{/if}
+		{/if}
+	{/loop}
+	{if !empty($routes[$do]['ac'][$a_c]['title']) && $a_c !=$ac}
+		<li class=''>
+			<a href="{php echo fm_wurl($do,$a_c,'',array('sn'=>$sn,'s_sn'=>$s_sn,'f_sn'=>$f_sn,'o_sn'=>$o_sn))}" style="background-color:rgba(124,124,124,0.3);color:#fff;" title="{$routes[$do]['title']}的相关功能">
+			{$routes[$do]['ac'][$a_c]['title']}
+			</a>
+		</li>
+	{/if}
+{/loop}
+
+		<li >
+			<a href="{php echo fm_wurl($do, 'index', '', '')}" style="background-color:rgba(124,124,124,0.3);color:#fff;" title="{$routes[$do]['title']}的相关功能">
+			{$routes[$do]['title']}
+			</a>
+		</li>
+</ul>

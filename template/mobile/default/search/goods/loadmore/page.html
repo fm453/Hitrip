@@ -1,0 +1,17 @@
+{if $refreshOrder}
+<div class="mui-content">
+    <div class="mui-row">
+		{loop $list $goodsid $goods}
+		{template $appstyle.$do.'/'.$ac.'/_public/goods/item_rec'}
+	{/loop}
+    </div>
+</div>
+{else}
+<div class="mui-content">
+    <div class="mui-row">
+	{loop $list $goodsid $goods}
+		{template $appstyle.$do.'/'.$ac.'/_public/goods/item_rec'}
+	{/loop}
+    </div>
+</div>
+{/if}

@@ -1,0 +1,415 @@
+
+{if $operation == 'post'}
+
+<div class="main">
+
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+        <input type="hidden" name="psn" value="{$parent['id']}" />
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+
+                编辑餐厅
+
+            </div>
+
+            <div class="panel-body">
+
+                {if !empty($psn)}
+
+                <div class="form-group">
+
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">所属餐厅</label>
+
+                    <div class="col-sm-9">{$parent['title']}</div>
+
+                </div>
+
+                {/if}
+
+                <div class="form-group">
+
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+
+                    <div class="col-sm-9">
+
+                        <input type="text" name="displayorder" class="form-control" value="{$category['displayorder']}" />
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>名称</label>
+
+                    <div class="col-sm-9">
+
+                        <input type="text" name="catename" class="form-control" value="{$category['title']}" />
+
+                    </div>
+
+                </div>
+
+                {if $category['psn']==0 && empty($psn) }
+                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">餐厅分类</label>
+
+                                    <div class="col-sm-9">
+                <select name="typeid" class='form-control'>
+                <option value=""></option>
+                {loop $shoptype $row}
+				<option value="{$row['id']}" {if $row['id'] == $category['typeid']}selected="selected"{/if}>{$row['title']}</option>
+                {/loop}
+
+					</select>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">缩略图</label>
+
+                    <div class="col-sm-9">
+
+                        {php echo tpl_form_field_image('thumb', $category['thumb']);}
+
+                    </div>
+
+                </div>
+				<div class="form-group">
+
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">设置餐厅状态</label>
+
+                    <div class="col-sm-9">
+                        <select name="enabled" class='form-control'>
+
+							<option value="1" {if $category['enabled'] == 1 || !$category['enabled']}selected="selected"{/if}>营业中</option>
+                            <option value="0" {if $category['enabled'] == 0 && $category['name']}selected="selected"{/if}>休息中</option>
+
+					</select>
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否支持外卖</label>
+
+                    <div class="col-sm-9">
+                        <select name="iswaimai" class='form-control'>
+
+							<option value="1" {if $category['iswaimai'] == 1}selected="selected"{/if}>支持</option>
+                            <option value="0" {if $category['iswaimai'] == 0 || !$category['iswaimai']}selected="selected"{/if}>不支持</option>
+
+    					</select>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否支持堂食</label>
+                    <div class="col-sm-9">
+                        <select name="istangshi" class='form-control'>
+							<option value="1" {if $category['istangshi'] == 1}selected="selected"{/if}>支持</option>
+                            <option value="0" {if $category['istangshi'] == 0 || !$category['istangshi']}selected="selected"{/if}>不支持</option>
+    					</select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否支持自取外带</label>
+                    <div class="col-sm-9">
+                        <select name="isziqu" class='form-control'>
+							<option value="1" {if $category['isziqu'] == 1}selected="selected"{/if}>支持</option>
+                            <option value="0" {if $category['isziqu'] == 0 || !$category['isziqu']}selected="selected"{/if}>不支持</option>
+    					</select>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否默认餐厅</label>
+                    <div class="col-sm-9">
+                        <select name="isdefault" class='form-control'>
+							<option value="1" {if $category['isdefault'] == 1}selected="selected"{/if}>是（不进入对应分类列表页）</option>
+                            <option value="0" {if $category['isdefault'] == 0 || !$category['isdefault']}selected="selected"{/if}>否（将列出对应分类的全部餐厅）</option>
+    					</select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否忽略详情页</label>
+                    <div class="col-sm-9">
+                        <select name="isnodetail" class='form-control'>
+							<option value="1" {if $category['isnodetail'] == 1}selected="selected"{/if}>是（不进入对应餐厅的详情页）</option>
+                            <option value="0" {if $category['isnodetail'] == 0 || !$category['isnodetail']}selected="selected"{/if}>否（从餐厅列表页点击时先进入餐厅简介页面）</option>
+    					</select>
+                    </div>
+
+                </div>
+
+                 <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">热度</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="total" value="{$category['total']}" />
+                    </div>
+                </div>
+
+                 <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">起送价</label>
+                    <div class="col-sm-9">
+                       <input type="text" class="form-control" name="sendprice" value="{$category['sendprice']}" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">手机号码</label>
+                    <div class="col-sm-9">
+                       <input type="text" class="form-control shouji" name="shouji" value="{$category['shouji']}" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">餐厅邮箱</label>
+                    <div class="col-sm-9">
+                       <input type="text" class="form-control" name="email" value="{$category['email']}" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">上午营业时间</label>
+                    <div class="col-sm-3">
+                       <input type="text" class="form-control" data-field="time" name="time1" value="{$ptime1}" />
+                    </div>
+                    <div class="col-sm-1">
+                       至
+                    </div>
+                    <div class="col-sm-3">
+					<input type="text" class="form-control" data-field="time" name="time2" value="{$ptime2}" />
+                    </div>
+                </div>
+
+                 <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">下午营业时间</label>
+                    <div class="col-sm-3">
+                       <input type="text" class="form-control" data-field="time" name="time3" value="{$ptime3}" />
+                    </div>
+                     <div class="col-sm-1">
+                       至
+                    </div>
+                    <div class="col-sm-3">
+					<input type="text" class="form-control" data-field="time" name="time4" value="{$ptime4}" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">餐厅介绍</label>
+                    <div class="col-sm-9">
+                        <textarea name="description" class="form-control" cols="70">{$category['description']}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">餐厅地址</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="address" value="{$category['address']}" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">可控制的会员分组</label>
+                    <div class="col-sm-9">
+                        <select name="mbgroup" class='form-control'>
+                        <option value=""></option>
+                        {loop $groups $row}
+                        <option value="{$row['groupid']}" {if $row['groupid'] == $category['mbgroup']}selected="selected"{/if}>{$row['title']}</option>
+                        {/loop}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">订单核销员</label>
+                <div class="col-sm-9">
+                    <textarea type="text" name="managers" class="form-control" />{$category['managers']}</textarea>
+                    <span class="help-block">说明：可对关联餐厅的订单进行核销;这里填写核销员的微信openid，可填写多个；多个openid之间，用英文半角逗号“,”分隔开;管理员同时拥有核销权限；  <a href="{php echo fm_wurl('crm','member','',array());}" class="btn btn-default" target="_blank">  -->>查找会员OPENID  </a></span>
+                </div>
+    				</div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">坐标：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="loc_x" id="loc_x" value="{$category['loc_x']}" />
+                    </div>
+                    <div class="col-sm-1">——</div>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="loc_y" id="loc_y" value="{$category['loc_y']}" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9">
+                        <span class="help-block"><a class="btn btn-default" href="http://lbs.qq.com/tool/getpoint/index.html" target="_blank">去搜索位置坐标以便提取</a></span>
+                        <div style="width:700px;height:400px" id="map-container"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+{/if}
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+
+    </form>
+</div>
+<div id="dtBox"></div>
+<script type="text/javascript" src="../web/resource/components/colorpicker/spectrum.js"></script>
+<link type="text/css" rel="stylesheet" href="../web/resource/components/colorpicker/spectrum.css" />
+<link rel="stylesheet" type="text/css" href="../addons/{FM_NAME}/resource/vfoods/DateTimePicker.css" />
+<script type="text/javascript" src="../addons/{FM_NAME}/resource/vfoods/DateTimePicker.js"></script>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="../addons/{FM_NAME}/resource/vfoods/DateTimePicker-ltie92.css" />
+<script type="text/javascript" src="../addons/{FM_NAME}/resource/vfoods/DateTimePicker-ltie92.js"></script>
+<![endif]-->
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp&key={$map_api_qq}"></script>
+<script type="text/javascript">
+    $("#dtBox").DateTimePicker(
+		{
+    		dateFormat: "yyyy-MM-dd"
+		});
+
+    var map,marker,center = null;
+    center = new qq.maps.LatLng({$loc_x}, {$loc_y});
+    map = new qq.maps.Map(
+        document.getElementById("map-container"),
+        {
+            center: center,
+            zoom: 13
+        }
+    );
+    var scaleControl = new qq.maps.ScaleControl({
+        align: qq.maps.ALIGN.BOTTOM_LEFT,
+        margin: qq.maps.Size(85, 15),
+        map: map
+    });
+
+    var anchor = new qq.maps.Point(10, 30);
+    var size = new qq.maps.Size(52, 30);
+    var origin = new qq.maps.Point(0, 0);
+    var icon = new qq.maps.MarkerImage('../addons/{FM_NAME}/resource/vfoods/locate.png', size, origin, anchor);
+        size = new qq.maps.Size(52, 30);
+    var originShadow = new qq.maps.Point(32, 0);
+    var shadow =new qq.maps.MarkerImage(
+            '../addons/{FM_NAME}/resource/vfoods/locate.png',
+            size,
+            originShadow,
+            anchor
+        );
+    var marker = new qq.maps.Marker({
+        icon: icon,
+        shadow: shadow,
+        map: map,
+        position:center,
+    });
+
+    var jump = function(event) {
+        marker.setPosition(event.latLng);
+        $("#loc_x").val(event.latLng.getLat());
+        $("#loc_y").val(event.latLng.getLng());
+    };
+
+    qq.maps.event.addListener(map, 'click', jump);
+</script>
+
+
+{elseif $operation == 'display'}
+
+<div class="main">
+    <div class="category">
+        <form action="" method="post">
+			<div class="panel panel-default">
+				<div class="panel-body table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th style="width:10px;"></th>
+								<th style="width:80px;">排列顺序</th>
+								<th style="width:150px;">名称</th>
+                                <th style="width:80px;">起送价</th>
+								<th style="width:150px;">状态</th>
+                                <th style="width:80px;">操作</th>
+							</tr>
+						</thead>
+
+						<tbody>
+            			{loop $category $row}
+            				<tr>
+            					<td>{if count($children[$row['id']]) > 0}<a href="javascript:;"><i class="icon-chevron-down"></i></a>{/if}</td>
+            					<td><span class="label label-warning">{$row['displayorder']}</span></td>
+            					<td><div class="type-parent">{$row['title']}&nbsp;&nbsp;&nbsp;&nbsp;{if empty($row['psn'])}<a class="btn btn-warning" href="{php echo fm_wurl('vfoods','category', 'post',array('psn' => $row['id']));}"><i class="fa fa-plus-circle"></i> 添加菜系</a>{/if}</div></td>
+                                <td><span>{$row['sendprice']}元</span></td>
+                                <td>
+                               {if $row['enabled'] == 1}
+                               <span class="label label-info">营业中</span>
+                               {else}
+                               <span class="label label-default">休息中</span>
+                               {/if}
+                               {if $row['iswaimai'] == 1}
+                               <span class="label label-info">可外卖</span>
+                               {/if}
+                               {if $row['isziqu'] == 1}
+                               <span class="label label-info">可自取</span>
+                               {/if}
+                               {if $row['istangshi'] == 1}
+                               <span class="label label-info">可堂食</span>
+                               {/if}
+                               </td>
+            					<td>
+                                    {if !$row['isnodetail']}
+                                    <a class="btn btn-default" href="{php echo fm_murl('vfoods','shop', 'index',array('id' => $row['id'],'pcate' => $row['id']));}" title="前台链接(订餐)" target="_blank"><i class="fa fa-link"></i></a>&nbsp;&nbsp;
+                                    {else}
+                                    <a class="btn btn-default" href="{php echo fm_murl('vfoods','list', 'index',array('id' => $row['id'],'pcate' => $row['id']));}" title="前台链接（详情）" target="_blank"><i class="fa fa-link"></i></a>&nbsp;&nbsp;
+                                    {/if}
+
+                                    <a class="btn btn-default" href="{php echo fm_wurl('vfoods','category', 'post',array('id' => $row['id']));}" title="编辑"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+
+                                    <a class="btn btn-danger" href="{php echo fm_wurl('vfoods','category', 'delete',array('id' => $row['id']));}" onclick="return confirm('确认删除此餐厅吗？');return false;" title="删除"><i class="fa fa-times"></i></a>
+                                </td>
+            				</tr>
+            				{loop $children[$row['id']] $row}
+            				<tr>
+            					<td></td>
+            					<td>&nbsp;&nbsp;&nbsp;&nbsp;{$row['displayorder']}</td>
+            					<td><div class="type-child">————{$row['title']}&nbsp;&nbsp;</div></td>
+                                <td></td>
+                                  <td></td>
+            					<td>
+                                    <a class="btn btn-default" href="{php echo fm_wurl('vfoods','category', 'post',array('id' => $row['id']));}">编辑</a>&nbsp;&nbsp;
+                                    <a class="btn btn-danger" href="{php echo fm_wurl('vfoods','category', 'delete',array('id' => $row['id']));}" onclick="return confirm('确认删除此菜系吗？');return false;">删除</a>
+                                </td>
+            				</tr>
+            				{/loop}
+            			{/loop}
+            				<tr>
+            					<td></td>
+            					<td colspan="4">
+            						<a class="btn btn-warning" href="{php echo fm_wurl('vfoods','category', 'post',array());}"><i class="fa fa-plus-circle"></i> 添加新餐厅</a>
+            					</td>
+            				</tr>
+            			</tbody>
+
+					</table>
+				</div>
+           </div>
+        </form>
+    </div>
+</div>
+{/if}

@@ -1,0 +1,319 @@
+<style type="text/css">
+body{
+	background-color: rgba(255,255,255,1);
+}
+.mui-content {
+	background-color: rgba(255,255,255,.1);
+}
+/*————————popover弹出菜单—————————————*/
+.mui-popover {
+	height: 300px;
+}
+
+/*————————通讯录样式——————————————————*/
+			 .oa-contact-cell.mui-table .mui-table-cell {
+				padding: 11px 0;
+				vertical-align: middle;
+			}
+
+			.oa-contact-cell {
+				position: relative;
+				margin: -11px 0;
+			}
+
+			.oa-contact-avatar {
+				width: 75px;
+			}
+			.oa-contact-avatar img {
+				border-radius: 50%;
+			}
+			.oa-contact-content {
+				width: 100%;
+			}
+			.oa-contact-name {
+				margin-right: 20px;
+			}
+			.oa-contact-name, oa-contact-position {
+				float: left;
+			}
+			.oa-contact-email {
+				padding: 0 15px ;
+			}
+</style>
+<style>
+/**________动态圆形图中心扩散效果________**/
+/**
+	 body{ background:#ef4040}
+    img{display: block;}
+**/
+    .cssBox {width: 300px;height: 300px;margin: 20px auto;background-color: #ef4040;position: relative;}
+    .cssBox .borderRadius {width: 276px;height: 276px;
+        position: absolute;left: 50%;top: 50%;margin: -138px 0 0 -138px;
+        -webkit-animation: rotating 2s ease 0s infinite;
+                animation: rotating 2s ease 0s infinite;
+    }
+    @-webkit-keyframes rotating {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+            opacity: 1;
+        }
+        65% {
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+            opacity: 1;
+        }
+        100% {
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+            opacity: 0;
+        }
+    }
+    .cssBox .borderRadius .lfRaidus {width: 276px;height: 138px;border-radius: 138px 138px 0 0;position: relative;
+        -webkit-animation: lfRaidus 2s ease 0s infinite;
+                animation: lfRaidus 2s ease 0s infinite;
+    }
+    @-webkit-keyframes lfRaidus {
+        0% {
+            background: -moz-linear-gradient(right,red,black);background: -webkit-linear-gradient(right,#e06e18,#ef4040);background: -o-linear-gradient(right,red,black);
+        }
+        65% {
+            background: -moz-linear-gradient(right,red,black);background: -webkit-linear-gradient(right,#e06e18,#ef4040);background: -o-linear-gradient(right,red,black);
+        }
+        100% {
+            background: -moz-linear-gradient(right,red,black);background: -webkit-linear-gradient(right,#e06e18,#ef4040);background: -o-linear-gradient(right,red,black);
+        }
+    }
+    .cssBox .borderRadius .lfRaidus .ctRaidus {width: 262px;height: 131px;background-color: #ef4040;border-radius: 131px 131px 0 0;
+        position: absolute;left: 50%;bottom: 0;-webkit-transform: translate(-50%, 0);transform: translate(-50%, 0);
+    }
+    .cssBox .borderRadius .rtRaidus {width: 276px;height: 138px;border-radius: 0 0 138px 138px;position: relative;
+        -webkit-animation: rtRaidus 2s ease 0s infinite;
+                animation: rtRaidus 2s ease 0s infinite;
+    }
+    @-webkit-keyframes rtRaidus {
+        0% {
+            background: -moz-linear-gradient(right,red,black);background: -webkit-linear-gradient(right,#e06e18,#f79704);background: -o-linear-gradient(right,red,black);
+        }
+        65% {
+            background: -moz-linear-gradient(right,red,black);background: -webkit-linear-gradient(right,#e06e18,#f79704);background: -o-linear-gradient(right,red,black);
+        }
+        100% {
+            background: -moz-linear-gradient(right,red,black);background: -webkit-linear-gradient(right,#e06e18,#f79704);background: -o-linear-gradient(right,red,black);
+        }
+    }
+    .cssBox .borderRadius .rtRaidus .ctRaidus {width: 262px;height: 131px;background-color: #ef4040;border-radius: 0 0 131px 131px;
+        position: absolute;left: 50%;top: 0;-webkit-transform: translate(-50%, 0);transform: translate(-50%, 0);
+    }
+    .cssBox .borderRadius .rtRaidus .hfPoint {width: 7px;height: 5px;position: absolute;left: 0px;top: -5px;border-radius: 5px 5px 0 0;background-color: #ff9900;}
+    .cssBox .borderRadius .rtRaidus .rtPoint {width: 5px;height: 5px;position: absolute;left: 10px;top: -5px;border-radius: 5px;background-color: #ff9900;}
+    .cssBox .imageRadius {margin-top: 4px;opacity: 0;width: 100%;height: 100%;
+        position: absolute;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);
+        -webkit-animation: imageRadius 2s ease 0s infinite;
+                animation: imageRadius 2s ease 0s infinite;
+    }
+    @-webkit-keyframes imageRadius {
+        0% {
+            opacity: 0;
+        }
+        65% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    .cssBox .waveRaidus {margin-top: 4px;opacity: 0;
+        position: absolute;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);
+        -webkit-animation: waveRaidus 2s ease-out 0s infinite;
+                animation: waveRaidus 2s ease-out 0s infinite;
+    }
+    @-webkit-keyframes waveRaidus {
+        0% {
+            width: 100%;height: 100%;
+            opacity: 0;
+        }
+        65% {
+            width: 100%;height: 100%;
+            opacity: 0;
+        }
+        66% {
+            width: 100%;height: 100%;
+            opacity: 0.8;
+        }
+        100% {
+            width: 130%;height: 130%;
+            opacity: 0;
+        }
+    }
+    .cssBox .pointRadius {width: 10px;height: 10px;border-radius: 360px;background-color: #FFF;border: 1px solid transparent;
+        position: absolute;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);
+        -webkit-animation: pointRadius 2s ease 0s infinite;
+                animation: pointRadius 2s ease 0s infinite;
+    }
+    @-webkit-keyframes pointRadius {
+        0% {width: 10px;height: 10px;border: 0;box-shadow: 0 0 0px 3px rgba(255,255,255,0.3), 0 0 0px 6px rgba(255,255,255,0.2), 0 0 0px 9px rgba(255,255,255,0.1);}
+        5% {width: 10px;height: 10px;border: 0;box-shadow: 0 0 0px 3px rgba(255,255,255,0.3), 0 0 0px 6px rgba(255,255,255,0.2), 0 0 0px 9px rgba(255,255,255,0.1);}
+        10% {width: 12px;height: 12px;border: 0;box-shadow: 0 0 0px 2px rgba(255,255,255,0.3), 0 0 0px 4px rgba(255,255,255,0.2), 0 0 0px 6px rgba(255,255,255,0.1);}
+        15% {width: 16px;height: 16px;border: 0;box-shadow: 0 0 0px 1px rgba(255,255,255,0.3), 0 0 0px 2px rgba(255,255,255,0.2), 0 0 0px 3px rgba(255,255,255,0.1);}
+        20% {width: 26px;height: 26px;border: 0;box-shadow: none;}
+        65% {width: 205px;height: 205px;border: 2px solid #CCC;}
+        100% {width: 205px;height: 205px;border: 2px solid #CCC;}
+    }
+</style>
+
+<style type="text/css">
+/**________图片点击预览插件样式________**/
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+				text-align: center;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				/** display: block;**/
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>

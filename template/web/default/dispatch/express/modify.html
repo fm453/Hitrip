@@ -1,0 +1,80 @@
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit='return formcheck()'>
+		<input type="hidden" name="id" value="{$id}" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				快递详细设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="displayorder" class="form-control" value="{$express['displayorder']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">快递品牌</label>
+					<div class="col-sm-9 col-xs-12">
+					<input type="text" name="brand" id="express_brand" class="hidden" value="{$express['brand']}" /> 
+					<select id="common_corp" class="form-control input-medium">
+						{loop $expresses $key $v}
+							<option value="{$key}" data-name="{$v}" {if $express['brand']==$key} selected="selected" {/if}>{$v}</option>
+						{/loop}
+					</select>
+					<span class="help-block">如果您选择了常用快递，则客户可以订单中查询快递信息，如果缺少您想要的快递，您可以联系我们! </span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>快递公司</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id='express_name' name="express_name" class="form-control" value="{$express['express_name']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">公司网站</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="express_url" class="form-control" value="{$express['express_url']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">配送区域</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="express_area" class="form-control" value="{$express['express_area']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否删除</label>
+					<div class="col-sm-9 col-xs-12">
+						<label class='radio-inline'>
+						 	<input type='radio' name='deleted' value='1' {if $express['deleted']==1} checked="checked" {/if} /> 是
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='deleted' value='0' {if $express['deleted']==0} checked="checked" {/if} /> 否
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+<div class="form-group col-sm-12">
+	<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" onclick='return formcheck()' />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+	</div>
+	</form>
+</div>
+<script language='javascript'>
+	function formcheck(){
+		if($("#express_name").isEmpty()){
+			Tip.focus("express_name","请填写快递公司名称!");
+			return false;
+		}
+		return true;
+	}
+	
+	$(function(){
+		$("#common_corp").change(function(){
+			var obj = $(this);
+			var sel =obj.find("option:selected");
+			$("#express_brand").val(sel.val());
+		});
+	})
+	</script>

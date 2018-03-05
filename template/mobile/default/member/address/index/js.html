@@ -1,0 +1,177 @@
+<script type="text/javascript" charset="utf-8">
+	mui.init(
+		{
+			swipeBack: false, //启用右滑关闭功能
+			gestureConfig: {
+				tap: true, //默认为true,单击屏幕
+				doubletap: true, //默认为false，双击屏幕
+				longtap: false, //默认为false，长按屏幕
+				hold:false,//默认为false，按住屏幕
+				release:false,//默认为false，离开屏幕
+				swipe: true, //默认为true，滑动（swipeleft  , swiperight,   swipeup,   swipedown )
+				drag: true, //默认为true，拖动  ( dragstart,  drag,   dragend )
+			},
+		}
+	);
+	//定义支持区域滚动的层类
+	mui('.mui-scroll-wrapper').scroll();
+
+	//实现ios平台原生侧滑关闭页面；
+	if(mui.os.plus && mui.os.ios) {
+		mui.plusReady(function() { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故直接屏蔽popGesture功能
+			plus.webview.currentWebview().setStyle({
+				'popGesture': 'none'
+			});
+		});
+	}
+</script>
+
+<!-- 模态框 modal -->
+
+<!-- 监听标题-->
+<script type="text/javascript" >
+//监听header的双击事件
+	document.querySelector('header').addEventListener('doubletap', function() {
+		$('#pagename').html('正在刷新…');
+		refreshLoad("pullrefresh-table");
+	});
+
+</script>
+<!-- 上拉下拉事件 -->
+<script type="text/javascript" >
+	mui.init({
+		pullRefresh: {
+			container: '#pullrefresh',
+			down: {
+				auto: false, //自动下拉刷新一次
+				contentover : "{$shopname}提示：立即释放 刷新一下",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+				contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+				contentrefresh : "{$shopname}正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+				callback: pulldownRefresh
+			},
+			up: {
+				contentrefresh: '{$shopname}正在加载...',
+				callback: pullupRefresh
+			}
+		}
+	});
+
+	/**
+	 * 下拉刷新具体业务实现
+	 */
+	function pulldownRefresh() {
+		setTimeout(function() {
+			 //refreshLoad("pullrefresh-table");
+			//mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+		}, 1500);
+	}
+	//页面刷新加载处理
+	function refreshLoad(container) {
+		$('#pagename').html('正在更新');
+		var url = "{$_W['siteurl']}";
+		var data = {};
+		if (container=='') {
+			container = 'pullrefresh';
+		}
+		$.get(url,data,function(res){
+			if (res) {
+				$('#'.container).html(res);//替换内容
+				setTimeout(function(){
+					$('#pagename').html('内容更新完毕');
+					setTimeout(function(){
+						$('#pagename').html('{$pagename}');
+				},500);
+				},1500);
+			}
+		});
+	}
+
+	var count = 0;	//起始计数
+	var maxpages = "{$maxpages}";	//当前情况下的最大页数
+	/**
+	 * 上拉加载具体业务实现
+	 */
+	function pullupRefresh() {
+		setTimeout(function() {
+			count ++;	//累计一次上拉次数
+			mui('#pullrefresh').pullRefresh().endPullupToRefresh((true)); //参数为true(累计刷新页数达到最大分页数)代表没有更多数据了
+		}, 1500);
+	}
+</script>
+
+<!-- 初始化日期时间组件 -->
+<script>
+	(function($) {
+		$.init();
+		var btns = $('.choosedate');
+		btns.each(function(i, btn) {
+			btn.addEventListener('tap', function() {
+				var optionsJson = this.getAttribute('data-options') || '{}';
+				var options = JSON.parse(optionsJson);//字符串转数组
+				var id = this.getAttribute('id');
+				var result = $('#result_'+id)[0];
+				var picker = new $.DtPicker(options);
+				var chosendate = '';
+				var vailabletime = Date.parse(new Date())-3600;
+				picker.show(function(rs) {
+							/*
+		* rs.value 拼合后的 value
+		* rs.text 拼合后的 text
+		* rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+		* rs.m 月，用法同年
+		* rs.d 日，用法同年
+		* rs.h 时，用法同年
+		* rs.i 分（minutes 的第二个字母），用法同年
+		*/
+					result.innerText = rs.text;
+					chosendate = Date.parse(new Date(rs.y.value+'-'+rs.m.value+'-'+rs.d.value+' '+rs.h.value+':'+rs.i.value));
+					if (vailabletime>chosendate) {
+						chosendate = new $.DtPicker(options);
+						$('#'+id)[0].value = '日期已过，请重新选择';
+					}else {
+						$('#'+id)[0].value = '您预计于'+rs.text+'入住';
+					}
+					$('#'+id+'2')[0].value =chosendate;
+
+					picker.dispose();
+				});
+			}, false);
+		});
+	})(mui);
+</script>
+<!-- 初始化下拉选择组件 -->
+<script>
+			(function($) {
+				$.init();
+				var btns1l = $('.choose1l');
+		btns1l.each(function(i, btn) {
+			btn.addEventListener('tap', function() {
+				var thisname = this.getAttribute('name');
+				var options= defaultGtplParams(thisname);
+				var id = this.getAttribute('id');
+				var result = $('#result_'+id)[0];
+				var thistext = this.getAttribute('value');
+				var Picker = new $.PopPicker();
+				Picker.setData(options);
+				Picker.show(function(items) {
+					result.innerText = JSON.stringify(items[0].value);
+					$('#'+id+'2')[0].value = JSON.stringify(items[0].value) ;
+					$('#'+id)[0].value = thistext + JSON.stringify(items[0].text);
+				}, false);
+			});
+		});
+		var cityPicker3 = new $.PopPicker({
+						layer: 3
+					});
+					cityPicker3.setData(cityData3);
+					var showCityPickerButton = doc.getElementById('showCityPicker3');
+					var cityResult3 = doc.getElementById('cityResult3');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							cityResult3.innerText = "你选择的城市是:" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+		})(mui);
+</script>

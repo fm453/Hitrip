@@ -1,0 +1,17 @@
+<div class="mui-content">
+	<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">
+	栏目分类
+	</h5>
+	{loop $rec_category $category}
+	<a href="#">
+		<div class="mui-card" style="margin-bottom: 5px;">
+			<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url({$category['thumb']});"></div>
+			<div class="mui-card-content">
+				<div class="mui-card-content-inner">
+					<p style="color: #333;">{$category['description']}</p>
+				</div>
+			</div>
+		</div>
+	</a>
+	{/loop}
+</div>

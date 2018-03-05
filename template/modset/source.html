@@ -1,0 +1,119 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+<div class="main">
+	<form action="{php echo $this->createWebUrl('modset')}" method="post" class="form-horizontal form" id="setting-form">
+	<input type="hidden" name="ac" value="source" />
+	<input type="hidden" name="op" value="modify" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				内容源编码设置-<span style="color: red;font-weight: bolder;">本设置项只有管理员及站长可见</span>
+			</div>
+			<div class="panel-body">
+				{if $_FM['isSuper'] || $_W['isfounder'] }
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">页面内容模型编码</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="data[PageModel]" class="form-control" value="{$settings['source']['PageModel']}" />
+						<span class="help-block">说明：该模型决定页面数据关联，一旦设置后请勿轻易变动，否则无法正常调用相关内容</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页内容编码</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="data[IndexContent]" class="form-control" value="{$settings['source']['IndexContent']}" />
+						<span class="help-block">说明：该实例决定首页数据关联，一旦设置后请勿轻易变动，否则无法正常调用相关内容</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">新闻栏目实例编码</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="data[NewsInstance]" class="form-control" value="{$settings['source']['NewsInstance']}" />
+						<span class="help-block">说明：该实例决定新闻栏目数据关联，一旦设置后请勿轻易变动，否则无法正常调用相关内容</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">业务栏目实例编码</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="data[ProductInstance]" class="form-control" value="{$settings['source']['ProductInstance']}" />
+						<span class="help-block">说明：该实例决定产品/服务栏目数据关联，一旦设置后请勿轻易变动，否则无法正常调用相关内容</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">案例栏目实例编码</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="data[CaseInstance]" class="form-control" value="{$settings['source']['CaseInstance']}" />
+						<span class="help-block">说明：该实例决定案例/客户展示栏目数据关联，一旦设置后请勿轻易变动，否则无法正常调用相关内容</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">招聘栏目实例编码</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="data[JobInstance]" class="form-control" value="{$settings['source']['JobInstance']}" />
+						<span class="help-block">说明：该实例决定招聘展示栏目数据关联，一旦设置后请勿轻易变动，否则无法正常调用相关内容</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">单页面实例编码</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="data[SpageInstance]" class="form-control" value="{$settings['source']['SpageInstance']}" />
+						<span class="help-block">说明：该实例决定案例/客户展示栏目数据关联，一旦设置后请勿轻易变动，否则无法正常调用相关内容</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">"关于我们"内容页</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="data[AboutUsContent]" class="form-control" value="{$settings['source']['AboutUsContent']}" />
+						<span class="help-block">说明：该内容页展示“关于我们”的页面内容</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">"联系我们"内容页</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="data[ContactUsContent]" class="form-control" value="{$settings['source']['ContactUsContent']}" />
+						<span class="help-block">说明：该内容页展示“联系我们”的页面内容</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">"企业荣誉"内容页</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="data[HonorContent]" class="form-control" value="{$settings['source']['HonorContent']}" />
+						<span class="help-block">说明：该内容页展示“企业荣誉”的页面内容</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">"企业资质"内容页</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="data[CredentialsContent]" class="form-control" value="{$settings['source']['CredentialsContent']}" />
+						<span class="help-block">说明：该内容页展示“企业资质”的页面内容</span>
+					</div>
+				</div>
+				{/if}
+
+			</div>
+		</div>
+
+		<div class="panel-body">
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+			<div class="col-sm-10 col-xs-10" >
+				<input type="submit" name="save" value="保存" class="btn btn-primary" />
+			</div>
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

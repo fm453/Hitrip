@@ -1,0 +1,43 @@
+<div class="row-fluid">
+	<div class="">
+    <div class="s-l-lt">
+    	<a class="" href="{php echo fm_murl('realty','detail','index',array('sn'=>$item['sn'],'s_sn'=>$item['s_sn']))}" target="_blank">
+        <div class="thumbnail" style="background-image: url({$item['params']['rec_thumb']});">
+        </div>
+        </a>
+    </div>
+    <div class="s-l-rt">
+
+    	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-9" style="">
+        <div class="thumbnail" style="">
+            <div class="caption" contenteditable="false">
+                <h3 style="">
+                    <span class="title">{$item['title']}</span>
+                </h3>
+                <p style="">
+                		<a href="http://api.map.baidu.com/geocoder?location={$item['params']['location']['lat']},{$item['params']['location']['lng']}&coord_type=gcj02&output=html&src={$item['title']}" target="_blank">
+                    <span class="address"><i class="fa fa-map-marker"></i>&nbsp; 地址：{$item['params']['address']}</span>
+                    </a>
+                </p>
+                 <p style="">
+                 	{loop $item['params']['searching']['roomtypes'] $col $rt}
+                 		{$rt}居
+                 	{/loop}
+                    <span class="area">建筑面积约 {$item['params']['coverage']['start']}~{$item['params']['coverage']['end']} m<sup>2</sup></span>
+                </p>
+                <p style="">
+                    <label class="label label-info">在售</label>
+                    <label class="label label-warning">住宅</label>
+                </p>
+            </div>
+        </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2" style="">
+        <h4>
+                	<span class="price">{$item['params']['prices']['start']}</span><span class="unit">元/m<sup>2</sup><em><small>起</small></em></span>
+                </h4>
+        </div>
+    </div>
+    </div>
+</div>
+<hr>

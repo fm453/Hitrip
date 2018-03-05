@@ -1,0 +1,35 @@
+<script type="text/javascript">
+//检测一个函数是否存在，如果存在，则执行
+function CheckFunction(funcName) {
+    try {
+        if (typeof(eval(funcName)) == "function") {
+           return funcName();
+        }
+    } catch(e) {}
+    return false;
+}
+
+var elems = document.querySelectorAll('[data-function]');
+for( var i = 0 , j = elems.length ; i < j ; i++ ){
+    var elem = elems[i];
+    var funcName = elem.getAttribute("data-function");
+    console.log(funcName.substring(0,7));
+    elem.addEventListener('tap',
+    function() {
+        if (funcName.substring(0,7) == '#modal-') {
+            //alert(funcName);
+            //如果是模态框链接，则打开链接(不刷新页面),使用系统原生方法
+           //window.open(funcName,'top');
+           window.location.href = funcName;
+           //使用MUI方法打开页面
+			mui.openWindow({
+				id : funcName,
+				url : funcName
+			});
+        }else{
+            CheckFunction(funcName);
+        }
+    });
+}
+
+</script>

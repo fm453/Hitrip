@@ -1,0 +1,56 @@
+<div class="main">
+	<div class="panel panel-default ">
+		<div class="panel-heading">
+			名单(总数：<span style="color:red;">{$total}</span>)
+			<a href="" class="pull-right" style="color:red;"><i class="fa fa-spinner"></i>刷新</a>
+		</div>
+		<div class="panel-body table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th style="float: left;">操作</th>
+						<th>商户名称</th>
+						<th>联系电话</th>
+						<th>联系手机</th>
+						<th>状态</th>
+						<th>地址</th>
+					</tr>
+				</thead>
+				<tbody>
+					{loop $list $item}
+					<tr>
+						<td>
+							<a href="{php echo  fm_wurl($do,$ac,'modify', array('id' => $item['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="编辑商户资料"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+							<a href="{php echo fm_wurl($do,'ajax','delete', array('id' => $item['id'],'from_ac'=>$ac,'from_op'=>$operation,'delete'=>'partner'))}" onclick="return confirm('再确认一下，要删除此商户吗？');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times" style="color:red;"></i></a>
+						</td>
+						<td>
+							<img src="{php echo tomedia($item['logo'])}" alt="" width="30px" height="30px">
+							<span style="">{$item['name']}</span>
+						</td>
+						<td>
+							{$item['tel1']} <br> {$item['tel2']}
+						</td>
+						<td>
+							{$item['mobile1']} <br> {$item['mobile2']}
+						</td>
+						<td>
+							{if $item['status']==0}
+								<span class="label label-default">禁用</span>
+							{else}
+								<span class="label label-success">正常</span>
+							{/if}
+							{if $item['deleted']==1}
+								<span class="label label-danger">已删除</span>
+							{/if}
+						</td>
+						<td>
+							{$item['address']}
+						</td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+			{$pager}
+		</div>
+	</div>
+</div>

@@ -1,0 +1,27 @@
+{template $appstyle.'error/index/css'}
+{template $appstyle.'error/index/titlebar'}
+
+<div class="mui-content mui-scroll-wrapper">
+
+	<div class="mui-card">
+		<div class="mui-card-header">{$msg['title']}</div>
+		<div class="mui-card-content">
+			<div class="mui-card-content-inner" style="padding:1px;">
+				{template $appstyle.'error/index/index/message'}
+			</div>
+		</div>
+
+			<div class="mui-card-footer">
+				<a class="btn btn-sm btn-default btn-goback"  href="{$backurl}"><i class="fa fa-reply"></i>  返回上一页</a>
+				<a class="btn btn-sm btn-default"  href="{php echo fm_murl('index','index','index',array())}"><i class="fa fa-home"></i>  首页</a>
+				<a class="btn btn-sm btn-default mui-pull-right" href="#modal-feedback">反馈给管理员</a>
+			</div>
+
+	</div>
+
+</div>
+
+<!-- 模态框 -->
+{template $appstyle.'error/index/index/feedback'}
+
+{template $appstyle.'error/index/index/js'}

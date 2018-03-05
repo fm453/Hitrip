@@ -1,0 +1,117 @@
+<div class="main">
+	<div class="panel panel-info">
+	<div class="panel-heading"></div>
+	<div class="panel-body table-responsive">
+	<form action="" method="post" onsubmit="return formcheck(this)">
+		<table class="table table-hover " style="white-space: normal;overflow: visible;text-overflow: ellipsis;">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:10%;">ID(SN)/排序</th>
+					<th style="width:25%;">商品标题</th>
+					<th style="width:20%;">属性及状态(点击可修改)</th>
+					<th style="width:25%;">库存状态</th>
+					<th style="text-align:right; width:20%;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>
+					{$item['id']}<br>({$item['sn']})<br>
+					<input type="text" class="form-control" name="displayorder[{$item['id']}]" value="{$item['displayorder']}" >
+					</td>
+					<td>
+					<p>
+						<img src="{php echo tomedia($item['thumb']);}" alt="" width="30" height="" onerror="$(this).remove()">
+						{if !empty($category[$item['pcate']])}
+						<span class="text-danger">[{$category[$item['pcate']]['name']}]</span>
+						{/if}
+						{if !empty($category[$item['ccate']])}
+						<span class="text-info">[{$category[$item['ccate']]['name']}]</span>
+						{/if}
+					</p>
+					<p>
+						{$item['title']}
+					</p>
+					</td>
+					<td>
+					<p>
+						<label data='{$item['isnew']}' class='label {if $item['isnew']==1}label-info{else}label-default{/if}' onclick="setProperty(this,{$item['id']},'label-info','label-default','isnew')">新品</label>
+						<label data='{$item['ishot']}' class='label {if $item['ishot']==1}label-info{else}label-default{/if}' onclick="setProperty(this,{$item['id']},'label-info','label-default','ishot')">热卖</label>
+						<label data='{$item['isrecommand']}' class='label {if $item['isrecommand']==1}label-info{else}label-default{/if}' onclick="setProperty(this,{$item['id']},'label-info','label-default','isrecommand')">推荐</label>
+						<label data='{$item['isdiscount']}' class='label {if $item['isdiscount']==1}label-info{else}label-default{/if}' onclick="setProperty(this,{$item['id']},'label-info','label-default','isdiscount')">折扣</label>
+						<label data='{$item['status']}' class='label {if $item['status']==1}label-success{else}label-warning{/if}' onclick="setProperty(this,{$item['id']},'label-success','label-warning','status')">{if $item['status']==1}上架{else}下架{/if}</label>
+						</p>
+						<p>
+						<label data='{$item['isagent']}' class='label {if $item['isagent']==1}label-info{else}label-default{/if}' onclick="setProperty(this,{$item['id']},'label-info','label-default','isagent')">允许代理</label>
+						<label data='{$item['hasoption']}' class='label {if $item['hasoption']==1}label-info{else}label-default{/if}' onclick="setProperty(this,{$item['id']},'label-info','label-default','hasoption')">启用多规格</label>
+						<label data='{$item['type']}' class='label  {if $item['type']==1}label-info{else}label-default{/if}' onclick="setProperty(this,{$item['id']},'label-info','label-default','type')">{if $item['type']==1}实体物品{else}虚拟物品{/if}</label>
+						</p>
+						<p>
+						平台：{$item['plataccount']['name']}({$item['uniacid']})
+						</p>
+						
+					</td>
+					<td>
+						<p>产品编号：{if $item['goodssn']}{$item['goodssn']}{else}未填写{/if}
+&nbsp;|&nbsp;
+产品条码：{if $item['productsn']}{$item['productsn']}{else}未填写{/if}
+</p>
+						<p>库存(真实/对外)：{$item['stock']} / {$item['total']} ({$item['unit']}) &nbsp;&nbsp; 余存：{php echo $item['leftnum'];}</p>
+<p>
+销量(真实/虚拟)：{$item['realsales']} /  {$item['sales']} &nbsp;&nbsp; 
+<a href="{php echo fm_wurl($do,'detail','stock', array('id' => $item['id'],'pindex' => $pindex))}"class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="仅修改商品库存"><i class="fa fa-database"></i> 改库存</a>&nbsp;&nbsp;
+</p>
+					</td>
+					<td style="text-align:right;">
+					<p>
+<a href="{$_W['siteroot']}app/{php echo str_replace('./','',$this->createMobileUrl('detail', array('id' => $item['id'])))}" class="btn btn-default btn-sm jsclip" target="_blank" data-toggle="tooltip" data-placement="top" title="打开前台页面预览"><i class="fa fa-link"></i></a>&nbsp;&nbsp;
+						<a href="{php echo fm_wurl($do,'detail','display', array('id' => $item['id'],'pindex' => $pindex))}"class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="编辑该商品"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
+<a href="{php echo fm_wurl($do,'copy','display', array('id' => $item['id'], 'pindex' => $pindex))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="复制商品信息后再编辑保存为新商品"><i class="fa fa-copy"></i></a>&nbsp;&nbsp;
+								<a href="{php echo fm_wurl($do,'ajax','update', array('id' => $item['id'],'from_ac'=>$ac,'from_op'=>$operation,'update'=>'goods','sn' => $item['sn']))}" onclick="return confirm('再确认一下，要恢复此商品吗？');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="恢复后产品将对前台开放，并修改为下架状态"><i class="fa fa-reply" style="color:green;"></i></a>
+						</p>
+						
+						<a href="{php echo $this->createWebUrl('orderbygoods', array('gid' => $item['id'], 'op' => 'fromgoods'))}"class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" target="_blank" title="查看该商品的所有关联订单"><i class="fa fa-shopping-cart"></i>关联订单</a>&nbsp;&nbsp;
+						</p>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+			<tfoot>
+			</tfoot>
+		</table>
+		<input name="submit" type="submit" class="btn btn-primary" value="提交">
+		<input type="hidden" name="token" value="{$_W['token']}" />
+		</form>
+	</div>
+	<div style="text-align: center;">
+		{$pager}
+	</div>
+	<div class="panel-heading"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	var category = {php echo json_encode($children)};
+	function setProperty(obj,id,label1,label2,type){
+		$(obj).html($(obj).html() + "...");
+		$.post("{php echo fm_wurl($do,'ajax','update',array('from_ac'=>$ac,'from_op'=>$operation))}"
+			,{id:id,type:type, data: obj.getAttribute("data")}
+			,function(d){
+				$(obj).html($(obj).html().replace("...",""));
+				if(type=='type'){
+				 $(obj).html( d.data=='1'?'实体物品':'虚拟物品');
+				}
+				if(type=='status'){
+				 $(obj).html( d.data=='1'?'上架':'下架');
+				}
+				$(obj).attr("data",d.data);
+				if(d.result==1){
+					$(obj).toggleClass(label1);
+					$(obj).toggleClass(label2);
+				}
+			}
+			,"json"
+		);
+	}
+
+</script>

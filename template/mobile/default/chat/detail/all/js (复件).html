@@ -1,0 +1,631 @@
+<script type="text/javascript" charset="utf-8">
+	mui.init(
+		{
+			swipeBack: false, //启用右滑关闭功能
+			gestureConfig: {
+				tap: true, //默认为true,单击屏幕
+				doubletap: true, //默认为false，双击屏幕
+				longtap: false, //默认为false，长按屏幕
+				hold:false,//默认为false，按住屏幕
+				release:false,//默认为false，离开屏幕
+				swipe: true, //默认为true，滑动（swipeleft  , swiperight,   swipeup,   swipedown )
+				drag: true, //默认为true，拖动  ( dragstart,  drag,   dragend )
+			},
+			beforeback: function() {
+				//窗口关闭前处理其他业务
+			},
+		}
+	);
+	//定义支持区域滚动的层类
+	mui('.mui-scroll-wrapper').scroll();
+	//侧滑容器父节点
+	var offCanvasWrapper = mui('#offCanvasWrapper');
+	//主界面容器
+	var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+	//菜单容器
+	var offCanvasSide = document.getElementById("offCanvasSide");
+	//不是安卓时，隐藏安卓元素
+	if(!mui.os.android) {
+		var spans = document.querySelectorAll('.android-only');
+		for(var i = 0, len = spans.length; i < len; i++) {
+			spans[i].style.display = "none";
+		}
+	}
+	//移动效果是否为整体移动
+	var moveTogether = false;
+	//侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+	var classList = offCanvasWrapper[0].classList;
+
+	//主界面和侧滑菜单界面均支持区域滚动；
+	mui('#offCanvasSideScroll').scroll();
+	mui('#offCanvasContentScroll').scroll();
+
+	//实现ios平台原生侧滑关闭页面；
+	if(mui.os.plus && mui.os.ios) {
+		mui.plusReady(function() { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故直接屏蔽popGesture功能
+			plus.webview.currentWebview().setStyle({
+				'popGesture': 'none'
+			});
+		});
+	}
+</script>
+
+<!-- 监听标题-->
+<script type="text/javascript" >
+	//监听header的双击事件
+	document.querySelector('header').addEventListener('doubletap', function() {
+		//$('#pagename').html('正在刷新…');
+		//refreshLoad("pullrefresh-table");
+		mui('#pullrefresh').pullRefresh().scrollTo(0,0,100);	//回到顶部
+	});
+
+</script>
+<!-- 下拉刷新时实现双击标题栏，让列表快速回滚到顶部的功能 -->
+<!--
+<script type="text/javascript" >
+	var contentWebview = null;
+	//监听header的双击事件
+	document.querySelector('header').addEventListener('doubletap', function() {
+		if(contentWebview==null){
+			if(mui.os.plus) {
+				contentWebview = plus.webview.currentWebview().children()[0];
+			}
+		}
+		//内容区滚动到顶部
+		contentWebview.evalJS("mui('#pullrefresh-table').pullRefresh().scrollTo(0,0,100)");
+		//$('#pagename').html('正在刷新…');
+		//refreshLoad("pullrefresh-table");
+	});
+
+</script>
+-->
+<!-- 上拉下拉事件 -->
+<script type="text/javascript" >
+	mui.init({
+		pullRefresh: {
+			container: '#pullrefresh',
+			down: {
+				auto: true, //自动下拉刷新一次
+				contentover : "{$shopname}提示：立即释放 刷新一下",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+				contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+				contentrefresh : "{$shopname}正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+				callback: pulldownRefresh
+			},
+			up: {
+				height:50,//可选.默认50.触发上拉加载拖动距离
+				contentrefresh: '{$shopname}正在加载...',
+				contentnomore:'到底了，没有更多内容了哦',//可选，请求完毕若没有更多数据时显示的提醒内容；
+				callback: pullupRefresh
+			}
+		}
+	});
+
+	/**
+	 * 下拉刷新具体业务实现
+	 */
+	function pulldownRefresh() {
+		setTimeout(function() {
+			 refreshLoad("pullrefresh-table");
+			mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+		}, 1500);
+	}
+	//页面刷新加载处理
+	function refreshLoad(container) {
+		$('#pagename').html('正在更新');
+		var url = "{$_W['siteurl']}";
+		var data = {};
+		if (container=='') {
+			container = 'pullrefresh';
+		}
+		$.get(url,data,function(res){
+			if (res) {
+				$('#'.container).html(res);//替换内容
+				setTimeout(function(){
+					$('#pagename').html('内容更新完毕');
+					setTimeout(function(){
+						$('#pagename').html('{$pagename}');
+				},500);
+				},1500);
+			}
+		});
+	}
+
+	var count = 0;	//起始计数
+	var maxpages = "{$maxpages}";	//当前情况下的最大页数
+	var subpindex = "{$subpindex}";
+	/**
+	 * 上拉加载具体业务实现
+	 */
+	function pullupRefresh() {
+		subpindex++;
+		count ++;	//累计一次上拉次数
+		setTimeout(function() {
+			mui('#pullrefresh').pullRefresh().endPullupToRefresh((count>maxpages)); //参数为true(累计刷新页数达到最大分页数)代表没有更多数据了
+			loadMore("pullrefresh-table");
+		}, 1500);
+	}
+		//页面上拉加载处理
+	function loadMore(container) {
+		$('#pagename').html('正在加载');
+		var url = "{php echo fm_murl($do,$ac,$operation,array())}";
+		var data = {
+			subpindex:subpindex,
+			subpsize:3,
+		};
+		if (container=='') {
+			container = 'pullrefresh-table';
+		}
+		$.get(url,data,function(res){
+			if (res) {
+				$('#'.container).append(res);//替换内容
+				setTimeout(function(){
+					$('#pagename').html('内容已加载完毕');
+					setTimeout(function(){
+						$('#pagename').html('{$pagename}');
+					},500);
+				},1500);
+			}else {
+				$('#pagename').html('{$pagename}');
+			}
+		},"html");
+	}
+</script>
+
+<!-- 自动修改聊天盒与记录列表框高度 -->
+<script type="text/javascript">
+	var navbar_click_i=0;
+	var toggle_button_html=['点击收起工具栏','再次点击,展开工具栏'];
+	var defaultHtml = toggle_button_html[0];
+
+function newResize() {
+	var pageHeight = document.body.scrollHeight;	//window.screen.height	//取页面可视区域高度
+	var pageWidth = document.body.scrollWidth;	//取页面可视区域宽度
+	var headerHeight =  header.offsetHeight;	//取头部header高度,MUI默认44
+	var navHeight =  document.getElementById('nav-bottom').offsetHeight;		//取导航栏高度	，MUI默认44
+	var chatboxHeight = document.getElementById('chatbox').offsetHeight;		//取聊天盒高度
+
+	var pageWidthMax = 768;	//设定页面最大可视宽
+	var pageWidthMin = 320;	//设定页面最小可视宽
+	var pageHeightMin = 568;	//设定页面最小高度
+	var offCanvasSideWidth = 300;	//设定侧滑导航的最大宽度
+	var pullrefreshHeightMin = 568;		//设定下拉刷新框的最小高度(同页高)
+	var pullrefreshPaddingTop = 0;		//设定下拉刷新框的上部内进高度
+	var pullrefreshPaddingBottom = 172;		//设定下拉刷新框的底部内进高度(底导航+聊天盒子高度)
+	var pullrefreshTabelHeightMin = 396;	//设定下拉刷新数据列表的最小高度(页面高-底部高-聊天盒子高)
+	var pullrefreshTabelPaddingTop = 44;		//设定下拉刷新数据列表的上部内进高度(同header高)
+	var pullrefreshTabelPaddingBottom = 0;		//设定下拉刷新数据列表的底部内进高度
+	var listboxHeightMin = 352;	//设定聊天内容列表盒子的最小高度
+	var chatboxHeightMin = 128;	//设定聊天盒子的最小高度
+	var chatboxBottom  = 48;	//设定聊天盒子与顶部距离
+	var topPocketOffsetHeight = 6; 	//设定距顶高度偏移
+
+	var pageWidthPadding = 0;	//初始化页面左右padding值
+	var pullrefreshTabelHeight =  pageHeight -chatboxHeight - navHeight;	//初始化下拉刷新数据列表高度
+	var listHeight = pageHeight - headerHeight - chatboxHeight - navHeight  - topPocketOffsetHeight;	//初始化聊天内容列表框高度
+			pullrefreshPaddingBottom = navHeight + chatboxHeight;
+			pullrefreshTabelPaddingTop = headerHeight;
+
+	//在微信浏览器中的处理
+	if(mui.os.wechat){
+			listHeight = pageHeight - chatboxHeight - navHeight  - topPocketOffsetHeight;
+			$('header').attr('style','display:none');	//隐藏标题栏
+			$('#pullrefresh').css({"padding-top":"0px"});	//隐藏后调整下拉刷新框样式
+			$('.mui-pull-top-pocket').css({"top": topPocketOffsetHeight + "px"});//调整下拉提示区的距顶高度
+		}
+
+		$('#offCanvasSide').next().attr({"height": pageHeight +"px"}).css({"height": pageHeight +"px"});	//调整侧导航高度
+		$('#pullrefresh').attr({"height": pageHeight +"px"}).css({"height": pageHeight +"px","padding-bottom": pullrefreshPaddingBottom +"px"});	//调整下拉刷新框高度与样式
+		$('#pullrefresh-table').attr({"height": pullrefreshTabelHeight +"px"}).css({"height": pullrefreshTabelHeight +"px","padding-top": pullrefreshTabelPaddingTop +"px"});
+
+		if (pageWidth>pageWidthMax) {
+			pageWidthPadding = (pageWidth - pageWidthMax) / 2;
+			pageWidth = pageWidthMax;
+		}
+		$('#pullrefresh').css({"width": pageWidth +"px"});	//调整下拉刷新框宽度
+		$('#chatbox').css({"width": pageWidth +"px"});	//调整聊天盒子框宽度
+		$('#innerBody').css({"padding-left": pageWidthPadding +"px","padding-right": pageWidthPadding +"px"});	//调整整页宽度
+
+	//以上，页面高宽等样式调整完毕
+}
+
+
+//启动时事件
+	mui.ready(function () {
+		//页面高宽等样式调整
+		newResize();
+		//执行一次下拉,加载数据
+		if (mui.os.plus) {
+			mui.plusReady(function() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().pulldownLoading();
+				}, 1000);
+			});
+		}else{
+			mui.ready(function() {
+				mui('#pullrefresh').pullRefresh().pulldownLoading();
+			});
+		}
+
+	//所有启动事件执行完毕
+});
+
+	$('body').on('tap', '#defaultTab', function(event) {
+		navbar_click_i++;
+		var t = 48;
+		if (navbar_click_i==1) {
+			$('#chatbox').css({"display":"none"});
+			$('#toggle_button').html(toggle_button_html[navbar_click_i]);
+			mui.toast('聊天输入窗口已隐藏,再次点击按钮可显示');
+		}else{
+			$('#chatbox').css({"display":""});
+			navbar_click_i=0;
+			t = chatboxHeight;
+			$('#toggle_button').html(toggle_button_html[navbar_click_i]);
+		}
+		listHeight = pageHeight - navHeight  - t - 10;
+		$('#pullrefresh').css({"height": listHeight +"px"});	//调整下拉刷新框高度
+	});
+
+	//监听页面窗口大小变化
+	$(window).resize(function() {
+		var newPageWidth = $(window).width();
+		//窗口缩小到320px宽后,不再监听
+		if (newPageWidth>=320) {
+			newResize();
+		}
+ 	});
+
+</script>
+
+<!-- 临时禁用或启用上拉刷新功能 -->
+<script type="text/javascript" >
+//pullrefresh为在mui.init方法中配置的pullRefresh节点中的container参数；
+//mui('#pullrefresh').pullRefresh().disablePullupToRefresh();	//禁用
+//mui('#pullrefresh').pullRefresh().enablePullupToRefresh();	//启用
+
+</script>
+
+<!-- 左右滑动触屏菜单 -->
+<script>
+(function($) {
+//方案1
+	//拖拽后显示操作图标，右滑出操作菜单，打开链接，所以暂不监控；
+			$('.huadongcaozong').on('tap', '.mui-btn', function(event) {
+					var elem = this;
+					var id = this.getAttribute('data-id');
+					var LinkUrl = this.getAttribute('data-url');
+					var dotype = this.getAttribute('date-swipe2do');
+					var li = elem.parentNode.parentNode;
+					if (dotype=='delete') {
+						var btnArray = ['不,点错了', '嗯,删除吧'];
+						mui.confirm('确认删除该条记录？', '{$shopname}演示', btnArray, function(e) {
+							if (e.index == 1) {
+								setTimeout(function () {
+									var res = changeOrderStatus(id,'delete');
+									if (res>0) {
+										mui.toast('订单已成功删除');
+										li.parentNode.removeChild(li);
+									}else {
+										mui.toast('网络有点不给力呢，订单删除失败了');
+									}
+									$.swipeoutClose(li);
+								},3000);
+							} else {
+								setTimeout(function() {
+									$.swipeoutClose(li);
+								}, 0);
+							}
+						});
+					} else if (dotype=='recovery') {
+						var btnArray = ['还是不了', '我要恢复'];
+						mui.confirm('确认要恢复该订单？', '{$shopname}请您确认', btnArray, function(e) {
+							if (e.index == 0) {
+								setTimeout(function() {
+									$.swipeoutClose(li);
+								}, 0);
+							} else {
+								setTimeout(function () {
+									var res = changeOrderStatus(id,'recovery');
+									if (res>0) {
+										mui.toast('订单已恢复成功');
+										elem.parentNode.removeChild(elem);
+									}else if (res==0) {
+										mui.alert('抱歉，暂不支持已取消订单直接恢复');
+									}else {
+										mui.toast('网络有点不给力，订单删除失败');
+									}
+									$.swipeoutClose(li);
+								},3000);
+							}
+						});
+					} else if (dotype=='link') {
+						mui.openWindow({
+							id : '',
+							url : LinkUrl
+						});
+					}
+				});
+//方案2
+				var btnArray = ['点错了', '嗯,删除吧'];
+				//向左拖拽后显示操作图标，右滑确认后自动执行删除操作(不太友好，暂不使用)
+				$('.huadong-caozong').on('slideleft', '.mui-table-view-cell', function(event) {
+					var elem = this;
+					mui.confirm('确认要删除该订单？', '{$shopname}请您确认', btnArray, function(e) {
+						if (e.index == 0) {
+							setTimeout(function() {
+								$.swipeoutClose(elem);
+							}, 0);
+						} else {
+								var  id = elem.parentNode.getAttribute('data-id');
+								//取得规格所属类型的id(存放在父节点，方便取用)
+								var res = changeOrderStatus(id,'delete');
+								setTimeout(function () {
+									if (str==undefined) {
+										mui.toast('订单操作遇到未知错误！');
+										elem.parentNode.removeChild(elem);
+									}else if (str>0) {
+										mui.toast('订单删除成功！');
+										elem.parentNode.removeChild(elem);
+									}else{
+										elem.parentNode.removeChild(elem);
+										mui.toast('网络有点不给力，订单删除失败');
+									}
+								},500);
+							$.swipeoutClose(elem);
+						}
+					});
+				});
+
+			})(mui);
+</script>
+<!-- 修改订单状态 -->
+<script>
+	function changeOrderStatus(id,dowhat){
+		//添加async:false.修改为同步请求
+		//等ajax给返回对象赋值完毕后，才执行下面的js部分。而异步的话，还没有来得及赋值，就已经return了。
+		var toBack = false;
+		if (id>0) {
+			var posturl = "{php echo fm_murl($do,$ac,'ajax',array())}" + "&id=" + id + "&todo=" + dowhat;
+			var postdata = {id:id,todo:dowhat};
+			$.ajax(
+				{
+					type: "POST",
+					url: posturl,
+					data: postdata,
+					async: false,
+					success: function (res) {
+						toBack = res;
+					},
+					dataType: "json"
+				}
+			);
+			$.post(posturl,postdata,function (res) {
+				return res;
+			},"json");
+		}
+		return toBack;
+	}
+</script>
+
+<!-- 处理关闭监听 -->
+<script type="text/javascript">
+//备份mui.back，mui.back已将窗口关闭逻辑封装的比较完善（预加载及父子窗口），因此最好复用mui.back
+var old_back = mui.back;
+mui.back = function(){
+  var btn = ["是的，确定","我点错了"];
+  mui.confirm('确认要关闭页面了吗？','微提示',btn,function(e){
+    if(e.index==0){
+    	//执行mui封装好的窗口关闭逻辑；
+    	old_back();
+    }
+  });
+}
+</script>
+
+<!-- 定时自动加载事件 -->
+<script type="text/javascript">
+	getData();
+	myAjaxGet();
+
+	function getData() {
+		var Obj = document.getElementById('numMsgNew');
+		var s = "{php echo intval($allTotal['msg_new'])}";
+		countDown(s,Obj);
+	}
+
+	function countDown(s,Obj) {
+		s++;
+		if (s > 19) {
+			s = "{php echo intval($allTotal['msg_new'])}";
+			Obj.innerHTML = '···';
+			//refresh();
+			setTimeout(function() {
+				countDown(s,Obj)
+			},1000);	//无延迟刷新
+		} else {
+			Obj.innerHTML = s;
+			setTimeout(function() {
+				countDown(s,Obj)
+			},1000);	//1s延迟刷新
+		}
+	}
+
+	function myAjaxGet() {
+		var isDebug = "{php echo $_FM['settings']['onoff']['debug']}";
+		var isConsole = "{php echo $_FM['settings']['onoffs']['console']}";
+		mui.ajax("{php echo fm_murl($do,$ac,'get',array())}",{
+			data:{
+				nowOrderSn:'{php echo $sn}',
+			},
+			dataType:'json',//服务器返回json格式数据
+			type:'get',//HTTP请求类型
+			timeout:5000,//超时时间设置为5秒；
+			success:function(res){
+				if (isConsole==1) {
+					console.log(res);
+				}
+				//服务器返回响应，根据响应结果，分析是否传输成功；
+				if (res.result==1) {
+					var msg = res.messages;
+					formatMsg(msg);
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				//异常处理；
+				console.log(type);
+			}
+		});
+	}
+
+	//格式化消息数据
+	function formatMsg(msg) {
+		for (var i = 0; i < msg.length; i++) {
+			var nowData = msg[i];
+			var nowToken = "{$_W['token']}";
+			var _div = document.createElement('div');
+				_div.className = ' chat_record_l ';
+				_div.className += ' male ';
+				_div.setAttribute('style','background-color:rgba(255,255,255,.01)');
+				_div.innerHTML = '';
+				_div.innerHTML += '<form action="" method="post" id="form-msg-' + nowData.createtime + '" onsubmit="">';
+
+			var _form =  document.createElement('form');
+				_form.className = '';
+				_form.setAttribute('action','');
+				_form.setAttribute('style','');
+				_form.setAttribute('method','post');
+				_form.setAttribute('id','form-msg-' + nowData.createtime);
+				_form.setAttribute('onsubmit','');
+				_form.innerHTML = '';
+				_div.innerHTML += '<input type="hidden" name="id" id="id-msg-' + nowData.id + '" value="' + nowData.id + '" />';
+
+			var _input =  document.createElement('input');
+				_input.className = '';
+				_input.setAttribute('type','hidden');
+				_input.setAttribute('id','id-msg-' + nowData.id);
+				_input.setAttribute('name','id');
+				_input.setAttribute('value',nowData.id);
+				_input.innerHTML = '';
+				$(_form).append(_input);
+
+				_div.innerHTML += '<input type="hidden" name="token" value="'+ nowToken +'" />';
+				_div.innerHTML += '<div style="margin-bottom:1px;">';
+				_div.innerHTML += '<ul data-id="' + nowData.id + '" class="mui-table-view huadongcaozong">';
+				_div.innerHTML += '<li class="mui-table-view-cell" >';
+				_div.innerHTML += '<div class="mui-slider-left mui-disabled">';
+				_div.innerHTML += '<a class="mui-btn mui-btn-red mui-icon mui-icon-close" date-swipe2do="delete" data-id="' + nowData.id + '"><span  style="font-size: 12px;">删除</span></a>';
+				_div.innerHTML += '</div>';
+				_div.innerHTML += '<div class="mui-slider-right mui-disabled">';
+				_div.innerHTML += '<a href="#modal-memeber" class="mui-btn mui-btn-success" date-swipe2do="link"><span  style="font-size: 14px;">管理</span></a>';
+				_div.innerHTML += '</div>';
+				_div.innerHTML += '<div class="mui-slider-handle">';
+				//
+				//插入消息表
+				var orderItem = '';
+				var bgSrc = "{php echo $textbg_l}";
+				orderItem += '<span class="chat_record">';
+				orderItem += '<span class="myoder-hd">';
+				orderItem += '<span class="pull-right">';
+				orderItem += '<span class="user" previewed="0">';
+				orderItem += '<a href="#modal-member" previewed="0"><img src="' + nowData.avatar + '" previewed="0"></a>';
+				orderItem += '我';
+				orderItem += '</span>';
+				orderItem += '</span>';
+				orderItem += '<span class="bg" style="background-image: url('+ bgSrc + ');">&nbsp;</span>';
+				orderItem += '<span class="pull-right">';
+				orderItem += '<span class="text">';
+				orderItem += '<h3>' + nowData.content + '</h3>';
+				orderItem += '<span class="chat_time" style="display:none;"></span>';
+				orderItem += '</span>';
+				orderItem += '</span>';
+				orderItem += '</span>';
+				orderItem += '</span>';
+
+				//
+				_div.innerHTML += orderItem;
+				_div.innerHTML += '</div>';
+				_div.innerHTML += '</li>';
+				_div.innerHTML += '</ul>';
+				_div.innerHTML += '</div>';
+				_div.innerHTML += '</form>';
+				_div.innerHTML += '</div>';
+
+				var listBox = $("#list-box")[0];
+				//下拉刷新，新纪录插到最前面；
+				//listBox.insertBefore(div, listBox.firstChild);
+
+				htm = '<div class="chat_record_l male" style="background-color:rgba(255,255,255,.01);"><form action="" method="post" id="form-msg-' + nowData.createtime + '" onsubmit="">';
+				htm += '<input type="hidden" name="id" id="id-msg-' + nowData.id + '" value="' + nowData.id + '" />';
+				htm += '<input type="hidden" name="token" value="'+ nowToken +'" />';
+				htm += '<div style="margin-bottom:1px;">';
+				htm += '<ul data-id="' + nowData.id + '" class="mui-table-view huadongcaozong">';
+				htm += '<li class="mui-table-view-cell" >';
+				htm += '<div class="mui-slider-left mui-disabled">';
+				htm += '<a class="mui-btn mui-btn-red mui-icon mui-icon-close" date-swipe2do="delete" data-id="' + nowData.id + '"><span  style="font-size: 12px;">删除</span></a>';
+				htm += '</div>';
+				htm += '<div class="mui-slider-right mui-disabled">';
+				htm += '<a href="#modal-memeber" class="mui-btn mui-btn-success" date-swipe2do="link"><span  style="font-size: 14px;">管理</span></a>';
+				htm += '</div>';
+				htm += '<div class="mui-slider-handle">';
+				//
+				//插入消息表
+				var orderItem = '';
+				var bgSrc = "{php echo $textbg_l}";
+				orderItem += '<span class="chat_record">';
+				orderItem += '<span class="myoder-hd">';
+				orderItem += '<span class="pull-right">';
+				orderItem += '<span class="user" previewed="0">';
+				orderItem += '<a href="#modal-member" previewed="0"><img src="' + nowData.avatar + '" previewed="0"></a>';
+				orderItem += '我';
+				orderItem += '</span>';
+				orderItem += '</span>';
+				orderItem += '<span class="bg" style="background-image: url('+ bgSrc + ');">&nbsp;</span>';
+				orderItem += '<span class="pull-right">';
+				orderItem += '<span class="text">';
+				orderItem += '<h3>' + nowData.content + '</h3>';
+				orderItem += '<span class="chat_time" style="display:none;"></span>';
+				orderItem += '</span>';
+				orderItem += '</span>';
+				orderItem += '</span>';
+				orderItem += '</span>';
+
+				//
+				htm += orderItem;
+				htm += '</div>';
+				htm += '</li>';
+				htm += '</ul>';
+				htm += '</div>';
+				htm += '</form>';
+				htm += '</div>';
+				$("#list-box").prepend(htm);
+			}
+	/**
+		switch (e.which) {
+			case 116://F5，刷新
+				return confirm('请确认是否已经保存本页面内容？点击“是(确认)")刚继续刷新！');
+				break;
+			case 112://F1，帮助
+				e.preventDefault();
+				$('#keyModalf1').modal({
+					keyboard: true,
+					backdrop: false,
+				});
+				break;
+		}
+		**/
+		/**
+		for (var i = cells.length, len = i + 3; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						//下拉刷新，新纪录插到最前面；
+						table.insertBefore(li, table.firstChild);
+					}
+		**/
+					setTimeout(function() {
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+
+	}
+	
+	</script>

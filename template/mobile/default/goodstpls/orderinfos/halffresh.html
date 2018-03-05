@@ -1,0 +1,39 @@
+<h5>发往哪里</h5>	
+		<select id='aimareatype' name='halffreshaimareatype' class="form-control">
+		<option value="三亚市内" >三亚市内</option>
+		<option value="省内其他市县" >省内其他市县</option>
+		<option value="岛外">岛外</option>
+		<option value="还没想好" >还没想好</option>
+		</select>
+<h5>市内配送区域</h5>	
+		<select id='incityarea' name='halffreshincityarea' class="form-control">
+		<option value="" >发往三亚市以外时请忽略</option>
+		<option value="天涯区" >天涯区</option>
+		<option value="吉阳镇">吉阳镇</option>
+		<option value="其他" >其他</option>
+		</select>
+<h5>配送地址<span onclick="usedefaultaddress('halffreshaboutsend')"><small class="pull-right"><kbd>[↓↓一键填入联系地址↓↓]<kbd></small></span></h5>	
+		<div id="aboutsend">
+		<input type="text" id="halffreshaboutsend" name='halffreshaboutsend' value="" class="form-control needadress" placeholder="如不填写,将使用默认地址"/>
+		</div>
+<script type="text/javascript" >
+function usedefaultaddress(container){
+	var defaultaddressinfo = "{php echo $defaultaddress['province']}{php echo $defaultaddress['city']}{php echo $defaultaddress['district']}{php echo $defaultaddress['address']}";
+	if (defaultaddressinfo=='') {
+		defaultaddressinfo="您还没有可供使用的地址信息";
+	}
+		$("#"+container).attr("value",defaultaddressinfo);
+	}
+</script>
+<h5>意向配送日期:</h5>
+		<div id="starttime">
+			<input type="text" name="halffreshstarttime" value="{php echo date('Y年m月d日',TIMESTAMP+84399)}" placeholder="请选择日期" readonly class="form_datetime">
+		</div>
+{if $dispatch}
+<h5 class="">发货方式</h5>	
+		<select id='dispatch' name="dispatch" class="form-control">
+	   	{loop $dispatch $d}
+			<option value="{$d['id']}" price='{$d['price']}'>{$d['dispatchname']} (运费：{$d['price']}元)</option>
+		{/loop}
+		</select>
+{/if}

@@ -1,0 +1,362 @@
+
+{if $operation == 'links'}
+<div class="main">
+
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+
+                微餐饮常用链接地址
+
+            </div>
+
+            <div class="panel-body">
+
+                <div class="form-group  col-lg-12">
+                    {loop $links $link}
+                        <a class="js-clip col-lg-12" data-url="{$link['url']}">{$link['title']}:{$link['url']}</a>
+                        {/loop}
+                </div>
+</div>
+{/if}
+
+{if $operation == 'transfer'}
+<div class="main">
+
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+
+                从旧版系统中迁移数据
+
+            </div>
+
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">迁移说明</label>
+                    <div class="col-sm-9">
+                        <p>1：在旧版多店铺版微餐饮中数据较多的用户，可通过此处一键迁移数据。<br />
+                           2：迁移前请先备份好旧版模块的数据，以防意外发生。<br />
+                           3：迁移完成后，旧版模块的数据仍保留在数据库中，用户可选择是否删除。<br />
+                           4：请不要重复迁移，只需迁移一次即可。迁移一次后再迁移将报错。<br />
+                           5：若数据迁移出现问题，可联系技术人员。
+                        </p>
+                    </div>
+                </div>
+                <input type="hidden" name="token" value="{$_W['token']}" />
+        <div class="form-group col-sm-12">
+
+            <input type="submit" name="submit" value="开始迁移" class="btn btn-primary col-lg-1" />
+            <input type="hidden" name="token" value="{$_W['token']}" />
+        </div>
+
+    </form>
+
+</div>
+{/if}
+
+{if $operation == 'display'}
+<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">全局核销员</label>
+                <div class="col-sm-9">
+                    <textarea type="text" name="managers" class="form-control" />{$settings['vfoods']['basic']['managers']}</textarea>
+                    <span class="help-block">说明：可对全部微餐饮订单进行核销;这里填写核销员的微信openid，可填写多个；多个openid之间，用英文半角逗号“,”分隔开;管理员同时拥有核销权限；<a href="{php echo fm_wurl('crm','member','display',array());}" class="btn btn-default" target="_blank">  -->>查找会员OPENID  </a></span>
+                </div>
+    		</div>
+
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否允许现付(当面付款)</label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <label for="is_xianfu" class="control-label">
+                        <input class="" type="radio" name="is_xianfu" value="1" {if $settings['vfoods']['basic']['isxianfu']==1} checked="true" {/if} /> 允许
+                        <input class="" type="radio" name="is_xianfu" value="0" {if !$settings['vfoods']['basic']['isxianfu']} checked="true" {/if} /> 不允许
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否启用短信提醒</label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <label for="is_sms_send" class="control-label">
+                        <input class="" type="radio" name="is_sms_send" value="1" {if $settings['vfoods']['basic']['is_sms_send']==1} checked="true" {/if} /> 启用
+                        <input class="" type="radio" name="is_sms_send" value="0" {if !$settings['vfoods']['basic']['is_sms_send']} checked="true" {/if} /> 不启用
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">全局手机短信提醒</label>
+                <div class="col-sm-9">
+                    <input type="text" name="mobile" class="form-control" value="{$settings['vfoods']['basic']['mobile']}" />
+                    <span class="help-block">说明：开户短信提醒后该手机可接收全部餐饮订单提醒；</span>
+                </div>
+            </div>
+
+            <div class="form-group hidden">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">短信接口账号</label>
+                <div class="col-sm-9">
+                    <input type="text" name="smsnum" class="form-control" value="{$settings['vfoods']['basic']['smsnum']}" />
+                </div>
+            </div>
+            <div class="form-group hidden">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">短信接口密码</label>
+                <div class="col-sm-9">
+                <input type="text" name="smspsw" class="form-control" value="{$settings['vfoods']['basic']['smspsw']}" />
+                <p class="help-block">账号可直接向系统管理员索取注册，短信包有100元，200元，500元等等。</p>
+                </div>
+            </div>
+            <div class="form-group hidden">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">用于测试短信接口的手机号</label>
+                <div class="col-sm-9">
+                    <input type="text" name="smstest" class="form-control" value="{$settings['vfoods']['basic']['smstest']}" />
+                    <p> <a href="{php echo fm_wurl($do,$ac,'smssend', array())}">发送测试短信</a></p>
+                </div>
+            </div>
+		</div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+    			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+                <input type="hidden" name="token" value="{$_W['token']}" />
+    		</div>
+        </div>
+    </div>
+</div>
+</form>
+{/if}
+
+{if $operation == 'diancantypes'}
+<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">堂食模式</label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <input type="text" name="tangshi_title" class="form-control" value="{$diancantypes['tangshi']['title']}" />
+                    <span class="help-block">说明：点餐模式的显示名称，不填则默认；  <a class="js-clip btn btn-default" data-url="{php echo fm_murl('vfoods','tangshi','index',array())}">点击链接复制到手机上预览</a></span>
+                </div>
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    {php echo tpl_form_field_image(tangshi_icon,$diancantypes['tangshi']['icon']);}
+                    <span class="help-block">说明：点餐模式的显示图标，不填则默认</span>
+                </div>
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <input type="text" name="tangshi_des" class="form-control" value="{$diancantypes['tangshi']['des']}" />
+                    <span class="help-block">说明：点餐模式的注释，不填则默认；</span>
+                </div>
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <input type="text" name="tangshi_displayorder" class="form-control" value="{$diancantypes['tangshi']['displayorder']}" />
+                    <span class="help-block">说明：点餐模式的显示排序，不填则默认；</span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">外卖模式</label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <input type="text" name="waimai_title" class="form-control" value="{$diancantypes['waimai']['title']}" />
+                    <span class="help-block">说明：点餐模式的显示名称，不填则默认；  <a class="js-clip btn btn-default" data-url="{php echo fm_murl('vfoods','waimai','index',array())}">点击链接复制到手机上预览</a></span>
+                </div>
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    {php echo tpl_form_field_image(waimai_icon,$diancantypes['waimai']['icon']);}
+                    <span class="help-block">说明：点餐模式的显示图标，不填则默认</span>
+                </div>
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <input type="text" name="waimai_des" class="form-control" value="{$diancantypes['waimai']['des']}" />
+                    <span class="help-block">说明：点餐模式的注释，不填则默认；</span>
+                </div>
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <input type="text" name="waimai_displayorder" class="form-control" value="{$diancantypes['waimai']['displayorder']}" />
+                    <span class="help-block">说明：点餐模式的显示排序，不填则默认；</span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">自取模式</label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <input type="text" name="ziqu_title" class="form-control" value="{$diancantypes['take']['title']}" />
+                    <span class="help-block">说明：点餐模式的显示名称，不填则默认；  <a class="js-clip btn btn-default" data-url="{php echo fm_murl('vfoods','waimai','index',array())}">点击链接复制到手机上预览</a></span>
+                </div>
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    {php echo tpl_form_field_image(ziqu_icon,$diancantypes['take']['icon']);}
+                    <span class="help-block">说明：点餐模式的显示图标，不填则默认</span>
+                </div>
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <input type="text" name="ziqu_des" class="form-control" value="{$diancantypes['take']['des']}" />
+                    <span class="help-block">说明：点餐模式的注释，不填则默认；</span>
+                </div>
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <input type="text" name="ziqu_displayorder" class="form-control" value="{$diancantypes['take']['displayorder']}" />
+                    <span class="help-block">说明：点餐模式的显示排序，不填则默认；</span>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+                <input type="hidden" name="token" value="{$_W['token']}" />
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+{/if}
+
+{if $operation == 'waimai'}
+<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">限定配送范围</label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <label for="is_waimai_fanwei" class="control-label">
+                        <input class="" type="radio" name="is_waimai_fanwei" value="1" {if $settings['vfoods']['waimai']['isfanwei']==1} checked="true" {/if} /> 启用
+                        <input class="" type="radio" name="is_waimai_fanwei" value="0" {if !$settings['vfoods']['waimai']['isfanwei']} checked="true" {/if} /> 停用
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <textarea type="text" name="waimai_fanwei" class="form-control" />{$waimai_fanwei}</textarea>
+                        <span class="help-block">说明：（1）格式：一级范围|二级范围。如：同心家园|一期2栋1001室。（2）每行填写一个，多个请换行。 （3）拖动文本框右下角位置可调整文本框大小。</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">开启购买会员组限制</label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <label for="is_waimai_mc" class="control-label">
+                        <input class="" type="radio" name="is_waimai_mc" value="1" {if $settings['vfoods']['waimai']['ismc']==1} checked="true" {/if} /> 启用
+                        <input class="" type="radio" name="is_waimai_mc" value="0" {if !$settings['vfoods']['waimai']['ismc']} checked="true" {/if} /> 停用
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <textarea type="text" name="waimai_mc" class="form-control" />{$waimai_mc}</textarea>
+                        <span class="help-block">说明：（1）直接填写会员组的数字编号即可。（2）每行填写一个，多个请换行。 （3）拖动文本框右下角位置可调整文本框大小。</span>
+                        <span class="help-block">已有会员组：{loop $mc_groups $groupid $group} <code>{$groupid}</code>:<kbd>{$group['title']}</kbd>{/loop}</span>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+                <input type="hidden" name="token" value="{$_W['token']}" />
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+{/if}
+
+{if $operation == 'tangshi'}
+<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">开启购买会员组限制</label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <label for="is_tangshi_mc" class="control-label">
+                        <input class="" type="radio" name="is_tangshi_mc" value="1" {if $settings['vfoods']['tangshi']['ismc']==1} checked="true" {/if} /> 启用
+                        <input class="" type="radio" name="is_tangshi_mc" value="0" {if !$settings['vfoods']['tangshi']['ismc']} checked="true" {/if} /> 停用
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <textarea type="text" name="tangshi_mc" class="form-control" />{$tangshi_mc}</textarea>
+                        <span class="help-block">说明：（1）直接填写会员组的数字编号即可。（2）每行填写一个，多个请换行。 （3）拖动文本框右下角位置可调整文本框大小。</span>
+                        <span class="help-block">已有会员组：{loop $mc_groups $groupid $group} <code>{$groupid}</code>:<kbd>{$group['title']}</kbd>{/loop}</span>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+                <input type="hidden" name="token" value="{$_W['token']}" />
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+{/if}
+
+{if $operation == 'ziqu'}
+<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">开启购买会员组限制</label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <label for="is_ziqu_mc" class="control-label">
+                        <input class="" type="radio" name="is_ziqu_mc" value="1" {if $settings['vfoods']['ziqu']['ismc']==1} checked="true" {/if} /> 启用
+                        <input class="" type="radio" name="is_ziqu_mc" value="0" {if !$settings['vfoods']['ziqu']['ismc']} checked="true" {/if} /> 停用
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                <div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+                    <textarea type="text" name="ziqu_mc" class="form-control" />{$ziqu_mc}</textarea>
+                        <span class="help-block">说明：（1）直接填写会员组的数字编号即可。（2）每行填写一个，多个请换行。 （3）拖动文本框右下角位置可调整文本框大小。</span>
+                        <span class="help-block">已有会员组：{loop $mc_groups $groupid $group} <code>{$groupid}</code>:<kbd>{$group['title']}</kbd>{/loop}</span>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+                <input type="hidden" name="token" value="{$_W['token']}" />
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+{/if}

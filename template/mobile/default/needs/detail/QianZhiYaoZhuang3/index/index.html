@@ -1,0 +1,49 @@
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/css'}
+<link rel="stylesheet" type="text/css" href="{$appsrc}css/feedback.css" />
+<link rel="stylesheet" type="text/css" href="{$appsrc}/css/mui.picker.min.css" />
+<link href="{$appsrc}/css/mui.picker.css" rel="stylesheet" />
+<link href="{$appsrc}/css/mui.poppicker.css" rel="stylesheet" />
+
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/titlebar'}
+<div class="mui-content feedback" style="padding-bottom: 65px;">
+	<div class="img-rounded" style="text-align:center;">
+	<img src="{$needs['banner']}" alt="{$needs['title']}">
+	</div>
+	<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">{$pagename}</h5>
+	<form action="{php echo fm_murl($do,$ac,'post',array())}" method="post" class="form-horizontal form" id="form-feedback" enctype="multipart/form-data" onsubmit='return formcheck()'>
+	<input type="hidden" name="setfor" value="{$FM_member['uid']}" />
+	<input type="hidden" name="id" value="{$id}" />
+	<input type="hidden" name="sn" value="{$sn}" />
+	<input type="hidden" name="openid" value="{$_W['openid']}" />
+	<input type="hidden" name="template" value="{$needs['template']}" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+
+		{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form'}
+		<button id="submit" class="mui-btn mui-btn-primary mui-btn-outlined" style="display: none;position:fixed;bottom:0;left:50%;margin-left:-30px;width: 60px;height:60px;border-radius:50%;">预约</button>
+	</form>
+	<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">活动参与说明</h5>
+	<div class="mui-content">
+	{$needs['content']}
+	</div>
+	<p  id="PrintError" class="mui-hidden">打印错误消息</p>
+	<div id="qrcode"  class="mui-hidden" style="text-align: center;">
+		<img src="{$qrcodeurl}" style="width:60%;" />
+		<a id="shortcut" style="width: 60%;margin: 15px auto;padding: 5px;" class="mui-hidden mui-btn mui-btn-block mui-btn-red">创建桌面图标</a>
+	</div>
+</div>
+
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/modal/thumb'}
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/modal/thumbLeft'}
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/modal/thumbRight'}
+
+<script src="{$appsrc}/js/mui.picker.js"></script>
+<script src="{$appsrc}/js/mui.poppicker.js"></script>
+<script src="{$appsrc}/js/mui.picker.min.js"></script>
+<!-- 图片放大查看 -->
+<script src="{$appsrc}js/mui.zoom.js"></script>
+<script src="{$appsrc}js/mui.previewimage.js"></script>
+<script type="text/javascript" >
+	mui.previewImage();
+</script>
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/navbar'}
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/js'}

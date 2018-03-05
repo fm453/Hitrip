@@ -1,0 +1,49 @@
+
+<div id="modal-feedback" class="mui-modal mui-scroll-wrapper" style="">
+	<form action="{php echo fm_murl($do,$ac,'feedback',array('i'=>1))}" method="post" class="form-horizontal form" id="form-feedback" enctype="multipart/form-data" onsubmit='return formcheck()'>
+	<input type="hidden" name="uid" value="{$FM_member['uid']}" />
+	<input type="hidden" name="openid" value="{$_W['openid']}" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+	<div class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-close mui-pull-right" href="#modal-feedback"></a>
+		<h1 class="mui-title"  id="pagename">提交反馈</h1>
+	</div>
+	<div class="mui-content ">
+		{template $appstyle.'error/index/feedback/index'}
+		<button id="submit" class="mui-btn mui-btn-primary mui-btn-outlined" style="display: block;width: 120px;margin: 10px auto;">发送</button>
+	</div>
+</form>
+</div>
+
+<script language='javascript'>
+	function formcheck() {
+		var form = document.getElementById('form-feedback');
+		if (form.question.value=='') {
+			alert('请描述一下您要反馈的是什么问题!');
+			form.question.focus();
+			return false;
+		}
+
+		var f_data = {
+			'contact': form.contact.value,
+			'question': form.question.value,
+			'token' : "{$_W['token']}"
+		}
+		getResult('error','index','feedback',f_data);
+		return false;
+	}
+
+	function getResult(f_do,f_ac,f_op,f_data) {
+	$('#pagename').html('正在通知...');
+	var url = js_url(f_do,f_ac,f_op,"{$_W['uniacid']}",'app');
+	var data = f_data;
+	$.post(url,data,function(result){
+		if(result >0 || empty(result)){
+			$('#pagename').html('已经通知！');
+		}else{
+			$('#pagename').html('通知发送失败！');
+			$('#PrintError').html('您好,系统通知失败。如果可以，请您将此页截屏通过公众号发送给我们，以帮助我们找到问题并改进，感谢您的支持！' + result).removeClass('mui-hidden');
+		}
+	});
+}
+</script>

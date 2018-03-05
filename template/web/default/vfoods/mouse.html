@@ -1,0 +1,137 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="Modalimg-mouse" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel">图片查看器</h4>
+         </div>
+         <div class="modal-body" style="text-align: center;word-break: break-all;" contenteditable="true">
+            <pre><img src="" alt="" id="for-Modalimg-mouse"></pre>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+         </div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="Modallink-mouse" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel">链接查看器</h4>
+         </div>
+         <div class="modal-body" style="text-align: center;word-break: break-all;" contenteditable="true">
+            <span class="cancopy" id="for-Modallink-mouse"></span>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+         </div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 利用JQuery监听鼠标 -->
+<link rel="stylesheet" type="text/css" href="{$fm453resource}components/context/context.css">
+<script type="text/javascript" src="{$fm453resource}components/context/context.js"></script>
+<script>
+	$(document).ready(function(){
+	//鼠标按键弹起后，将其所操作的元素值作一些记录，并声明为全局变量
+		$('img,span,a').mouseup(function () {
+			fm453_img={
+			src:$(this).attr('src'),
+			};
+			fm453_span={
+			statuscode: $(this).attr('data-statuscode'),
+			id: $(this).attr('id'),
+			};
+			fm453_a={
+			statuscode: $(this).attr('data-statuscode'),
+			link: $(this).attr('href'),
+			};
+		});
+		context.init({preventDoubleContext: false});
+
+		context.attach('img',
+			[
+				{text: '查看大图',action: function(e){
+				$('#for-Modalimg-mouse').attr('src',fm453_img.src);
+				$('#Modalimg-mouse').modal({
+					keyboard: true,
+					backdrop: true,
+				});
+				}},
+				{text: '编辑图片',action: function(e){
+				$('#for-Modalimg-mouse').attr('src',fm453_img.src);
+					window.open( "{php echo fm_wurl('file','image','',array())}" + "&file=" + fm453_img.src );	//当前窗口打开
+				}},
+			]);
+
+			context.attach('a',
+			[
+				{text: '查看链接',action: function(e){
+				$('#for-Modallink-mouse').html(fm453_a.link);
+				$('#Modallink-mouse').modal({
+					keyboard: true,
+					backdrop: true,
+				});
+				}},
+				{text: '新窗口中打开链接',action: function(e){
+					window.open(fm453_a.link);	//新窗口打开
+				}},
+				{text: '当前窗口中打开链接',action: function(e){
+					window.location.href = fm453_a.link;	//当前窗口打开
+				}}
+			]);
+
+		context.attach('#forsearch', [
+
+		{header: '搜索'},
+		{text: '重置查询', href: '{$direct_url}'},
+		{text: '返回上一页', href: 'javascript:history.go(-1)'},
+		{divider: true},
+		{header: '支持'},
+		{text: '帮助', subMenu: [
+			{header: '快捷键'},
+			{text: 'F1(系统帮助)', action: function(e){
+			e.preventDefault();
+				$('#keyModalf1').modal({
+					keyboard: true,
+					backdrop: false,
+				});
+		}},
+			{text: 'Ctrl+F5(刷新页面)',href: '{$direct_url}'},
+		]},
+	]);
+
+	context.settings({compress: true});
+
+	context.attach('.fm453_newmouse', [
+		{header: '嗨旅行商城'},
+		{text: '返回上一页', href: 'javascript:history.go(-1)'},
+		{text: '刷新', href: '{$direct_url}'},
+		{divider: true},
+		{text: '帮助(F1)', action: function(e){
+			e.preventDefault();
+				$('#keyModalf1').modal({
+					keyboard: true,
+					backdrop: false,
+				});
+		}}
+	]);
+
+
+	$(document).on('mouseover', '.me-codesta', function(){
+		$('.finale h1:first').css({opacity:0});
+		$('.finale h1:last').css({opacity:1});
+	});
+
+	$(document).on('mouseout', '.me-codesta', function(){
+		$('.finale h1:last').css({opacity:0});
+		$('.finale h1:first').css({opacity:1});
+	});
+
+});
+
+</script>

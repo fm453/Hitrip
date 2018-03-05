@@ -1,0 +1,17 @@
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">代理商开放</label>
+	<div class="col-sm-9 col-xs-12">
+		<label for="isagent1" class="radio-inline"><input type="radio" name="isagent" value="1" id="isagent1" {if $item['isagent'] == 1}checked="true"{/if} onclick="$('#foragentcontent').show()" /> 是</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isagent2" class="radio-inline"><input type="radio" name="isagent" value="0" id="isagent2"  {if $item['isagent'] == 0}checked="true"{/if} onclick="$('#foragentcontent').hide()"/> 否</label>
+		<span class="help-block">是否向代理商开放此产品，选择是则代理商商城展示本此产品。</span>
+	</div>
+</div>
+<div  class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">代理商公告</label>
+	<div class="col-sm-9 col-xs-12">
+		{php echo fmFunc_tpl_ueditor('agenttip', $item['agenttip'],'web','html',array('height'=>200,'width'=>800));}
+		<span class="help-block">说明：向全部代理商发布，仅在后台可见；可以是关于该产品本身的代理说明文字</span>
+	</div>
+</div>
+

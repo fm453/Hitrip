@@ -1,0 +1,35 @@
+<div class="mui-col-md-4 mui-col-sm-4 mui-col-xs-4 ">
+<div class="mui-card" style="margin:2px;">
+	{if $goodsdetails[$goods['id']]['title1']}
+	<div class="mui-card-content">
+		<a href="{php echo fm_murl('article', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}">
+			<img src="{php echo tomedia($goodsdetails[$goods['id']]['thumb'])}" alt="" height="140" style="height:140px;width:100%;overflow-y:hidden;" />
+			<p class="ellipsis-p-1"  style="top: 100px;position: absolute;background-color: rgba(0, 149, 246,.5);text-align:center;color:#fff;font-size: 12px;">{$goodsdetails[$goods['id']]['title1']}</p>
+			<p class="ellipsis-p-1"  style="top: 120px;position: absolute;background-color: rgba(0, 149, 246,.8);text-align:center;color:#fff;font-size: 6px;">{$goodsdetails[$goods['id']]['title2']}</p>
+		</a>
+	</div>
+	<div class="mui-card-content-inner" style="text-align:center;padding:2px 5px 2px 5px;margin-bottom: 5px;height:16px;line-height:16px;overflow:hidden;background-color: rgba(0, 149, 246,.01);vertical-align: middle;">
+		<a href="{php echo fm_murl('article', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}">
+		<span style="height:20px;overflow:hidden;font-size: 12px;">{$goodsdetails[$goods['id']]['title']}</span>
+		</a>
+	</div>
+	<div class="mui-card-footer" style="padding:2px 5px 2px 5px;margin-top: 5px;height:30px;overflow:hidden;text-align: center;">
+		<p class="ellipsis-p-2"  style="margin-top:10px;font-size: 10px;">{$goodsdetails[$goods['id']]['description']}</p>
+	</div>
+	{else}
+	<div class="mui-card-content">
+		<a href="{php echo fm_murl('article', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}">
+			<img src="{php echo tomedia($goodsdetails[$goods['id']]['thumb'])}" alt="" height="140" style="height:140px;width:100%;overflow-y:hidden;" />
+		</a>
+	</div>
+	<div class="mui-card-content-inner" style="text-align:center;padding:2px 5px 2px 5px;margin-bottom: 5px;height:16px;line-height:16px;overflow:hidden;vertical-align: middle;">
+		<a href="{php echo fm_murl('article', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}">
+		<span style="height:20px;overflow:hidden;font-size: 12px;">{$goodsdetails[$goods['id']]['title']}</span>
+		</a>
+	</div>
+	<div class="mui-card-footer" style="padding:2px 5px 2px 5px;margin-top: 5px;height:30px;overflow:hidden;">
+		<p class="ellipsis-p-2"  style="margin-top:10px;font-size: 10px;">{$goodsdetails[$goods['id']]['description']}</p>
+	</div>
+	{/if}
+</div>
+</div>

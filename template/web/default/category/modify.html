@@ -1,0 +1,131 @@
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="modify-form1">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				商城分类设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">上级分类</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-3 control-label" style="text-align:left;">
+					{if !empty($psn)}
+					{$parent['name']}
+					{else}
+					无
+					{/if}
+					<span class="help-block">修改时请直接填写ID值</span>
+					</div>
+
+					{if $_W['username'] == $settings['mainuser']  or $_W['isfounder'] }
+					<label class="col-xs-12 col-sm-3 col-md-4 col-lg-1 control-label">修改上级分类ID</label>
+					<div class="col-xs-12 col-sm-9 col-md-2 col-lg-1">
+						<input type="text" name="psn" class="form-control" placeholder="" value="{$psn}" />
+					</div>
+					{/if}
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">所属平台</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-3 control-label" style="text-align:left;">
+					{php echo uni_account_default($category['uniacid'])['name'];}
+					<span class="help-block">修改时请直接填写ID值</span>
+					</div>
+					{if $_W['username'] == $settings['mainuser']  or $_W['isfounder'] }
+					<label class="col-xs-12 col-sm-3 col-md-4 col-lg-1 control-label">修改平台ID</label>
+					<div class="col-xs-12 col-sm-9 col-md-2 col-lg-1">
+						<input type="text" name="uniacid" class="form-control" placeholder="" value="{$category['uniacid']}" />
+					</div>
+					{else}
+					<label class="col-xs-12 col-sm-3 col-md-4 col-lg-1 control-label">平台ID</label>
+					<div class="col-xs-12 col-sm-9 col-md-2 col-lg-1">
+						<input type="text" name="uniacid" class="form-control" placeholder="" value="{$category['uniacid']}" disabled="true" />
+					</div>
+					{/if}
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">排序</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<input type="text" name="displayorder" class="form-control" placeholder="可留空；此处仅可填写数字" value="{$category['displayorder']}" />
+						<span class="help-block">说明：数值越大，位置越靠前</span>
+					</div>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否显示</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<label class='radio-inline'>
+							<input type='radio' name='enabled' value='1' {if abs($category['enabled'])>0} checked {/if} /> 是
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='enabled' value='0' {if abs($category['enabled'])==0} checked {/if} /> 否
+						</label>
+					</div>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">首页推荐</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						 <label class='radio-inline'>
+							 <input type='radio' name='isrecommand' value='1' {if $category['isrecommand']==1} checked {/if} /> 是
+						 </label>
+						 <label class='radio-inline'>
+							 <input type='radio' name='isrecommand' value='0' {if $category['isrecommand']==0} checked {/if} /> 否
+						 </label>
+					</div>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">页面风格</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<input type="text" name="pagestyle" class="form-control" placeholder="无特别要求时，请留空" value="{$category['pagestyle']}" />
+						<span class="help-block">说明：如不清楚，可联系管理员</span>
+					</div>
+
+					
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>分类名称</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 ">
+						<input type="text" name="catename" class="form-control" value="{$category['name']}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>分类类型</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 ">
+						<select name="setfor" class="form-control">
+						{loop $catetype $key $item}
+						<option value="{$key}" {if $key == $nowtype} selected="selected" {/if}>{$item['name']}</option>
+						{/loop}
+					</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>分类图片</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+						{php echo tpl_form_field_image('thumb', $category['thumb'])}
+						<span class="help-block">说明：默认分类图长宽尺寸比：450px:450px;如果您启用自定义的风格，请重新依据新风格要求的尺寸上传。</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">分类描述</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+						<textarea name="description" class="form-control" placeholder="可留空"  >{$category['description']}</textarea>
+					</div>
+				</div>
+				
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">佣金比例(%)</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+						<input type="text" name="commission" class="form-control" value="{$category['commission']}"   placeholder="填写数字即可"  />
+						<span class="help-block">说明：填写数字即可，系统会自动加上百分比进行计算；推荐该分类产品的默认佣金比例（开发中，该功能未上线）
+						</span>
+					</div>
+				</div>
+
+				<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>
+				
+			</div>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,129 @@
+<script type="text/javascript" charset="utf-8">
+	mui.init();
+	mui('.mui-scroll-wrapper').scroll();
+
+	//监听header的双击事件,简便起见，双击结果是直接强制刷新
+	document.querySelector('header').addEventListener('doubletap', function() {
+		var url = location.href;
+		location.replace(url);
+	});
+
+//监听nav栏的按钮点击事件
+mui('body').on('tap','#js_submit',function () {
+		formcheck();
+	});
+
+	//应用评分
+	mui('.icons').on('tap','i',function(){
+		var index = parseInt(this.getAttribute("data-index"));
+		var parent = this.parentNode;
+		var children = parent.children;
+		if(this.classList.contains("mui-icon-star")){
+			for(var i=0;i<index;i++){
+				children[i].classList.remove('mui-icon-star');
+				children[i].classList.add('mui-icon-star-filled');
+			}
+		}else{
+			for (var i = index; i < 5; i++) {
+				children[i].classList.add('mui-icon-star')
+				children[i].classList.remove('mui-icon-star-filled')
+			}
+		}
+		starIndex = index;
+		document.getElementById('stars').setAttribute('value',starIndex);
+	});
+</script>
+
+<script language='javascript'>
+	function formcheck() {
+		var form = document.getElementById('form-feedback');
+		//form.*.value , *表示元素的name属性值,(与name标签相同的id不能出现在另一个元素上)
+		if (form.name.value=='') {
+			mui.alert('请告知我们您的姓名/称谓!', '{$shopname}');
+			form.name.focus();
+			return false;
+		}else if (form.mobile.value=='') {
+			mui.alert('请告知我们您的手机号码!', '{$shopname}');
+			form.mobile.focus();
+			return false;
+		}else if (form.cityarea.value=='') {
+			mui.alert('请选择区域!', '{$shopname}');
+			form.cityarea.focus();
+			return false;
+		}else if (form.address.value=='') {
+			mui.alert('请告知详细地址!', '{$shopname}');
+			form.address.focus();
+			return false;
+		}
+		if (form.house.value=='') {
+			mui.toast('您没有告知我们您的房号/门牌号，虽然这不是必要的，但如果有，我们建议您填写，以便我们更快地上门服务哦。');
+		}else if (form.remark.value=='') {
+			mui.toast('您没有对物品做个简单说明，虽然这不是必要的，但我们建议您填上，以利我们安排。');
+		}else if (form.starttime.value=='') {
+			mui.toast('您没有选择预约时间，我们将默认指定到明天的上班时间。');
+		}
+
+		var f_data = {
+			'id': form.id.value,
+			'sn': form.sn.value,
+			'template': form.template.value,
+			'name': form.name.value,
+			'sex': form.sex.value,
+			'mobile': form.mobile.value,
+			'starttime': form.starttime.value,
+			'cityarea': form.cityarea.value,
+			'street': form.street.value,
+			'address': form.address.value,
+			'house': form.house.value,
+			'stars': form.stars.value,
+			'remark': form.remark.value,
+			'tuijianma': form.tuijianma.value,
+			'token' : "{$_W['token']}"
+		}
+		getResult('needs','detail','post',f_data);
+		return false;
+	}
+
+	function getResult(f_do,f_ac,f_op,f_data) {
+		$('#pagename').html('正在通知...');
+		var url = js_url(f_do,f_ac,f_op,"{$_W['uniacid']}",'app');
+		var data = f_data;
+		$.post(url,data,function(result){
+			if(result >0 || empty(result)){
+				$('#pagename').html('已经通知！');
+				var submit_obj = document.getElementById('submit');
+				submit_obj.setAttribute('disabled','');
+				$("#submit").css({"background-color":"#ccc", "border":"1px #ccc"});
+				countDown(60,submit_obj);
+				$("#submit").removeAttr('disabled');
+				setTimeout(function () {
+					$("#submit").css({"background-color":"", "border":""});
+				},60000);
+			}else{
+				$('#pagename').html('通知发送失败！');
+				$("#qrcode").removeClass('mui-hidden');
+				$('#PrintError').html('您好,系统通知失败。如果可以，请您将此页截屏通过公众号发送给我们，以帮助我们找到问题并改进，感谢您的支持;  我们将根据反馈情况为您提供相应的答谢！' + result).removeClass('mui-hidden');
+			}
+		});
+	}
+
+	function countDown(s,Obj) {
+		s--;
+		if (s == 0) {
+			Obj.innerHTML = '提交';
+		} else {
+			Obj.innerHTML = s + '秒后可重发';
+			setTimeout(function() {
+				countDown(s,Obj)
+			}, 1000);
+		}
+	}
+</script>
+<script type="text/javascript">
+mui('body').on('shown', '.mui-popover', function(e) {
+				//console.log('shown', e.detail.id);//detail为当前popover元素
+			});
+			mui('body').on('hidden', '.mui-popover', function(e) {
+				//console.log('hidden', e.detail.id);//detail为当前popover元素
+			});
+</script>

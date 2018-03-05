@@ -1,0 +1,11 @@
+{if $adboxes[0]}
+<div class="mui-content" id="listbanner" style="min-height: 10px;">
+	{loop $ads[0] $ad}
+	<div class="banner-img" style="margin-bottom: -1px;">
+		<a href="{$ad['link']}" onload="UpdateView('ad','{$ad['id']}')" onclick="UpdateClick('ad','{$ad['id']}')">
+			<img alt="900×225" class="list-img-2"  src="{$ad['thumb']}" width="100%" height="auto" style="" onerror="RepairMyImg(this)" >
+		</a>
+	</div>
+	{/loop}
+</div>
+{/if}

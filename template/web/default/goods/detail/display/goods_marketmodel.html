@@ -1,0 +1,124 @@
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">营销模型</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 " >
+		<label for="ispresale" class="checkbox-inline">
+			<input type="checkbox" name="ispresale" value="1" id="ispresale" {if $item['marketmodel']['ispresale'] == 1}checked="true"{/if} />
+			<a href="#" class="" data-toggle="tooltip"  data-placement="top" data-container="body" title="启用预售前需确保正确设置了产品的销售限时（开且限时，并且，结束时间>开始时间>当前时间）">预售</a>
+		</label>
+		
+		<label for="islimitnum" class="checkbox-inline">
+			<input type="checkbox" name="islimitnum" value="1" id="isnew" {if $item['marketmodel']['islimitnum'] == 1}checked="true"{/if} /> <a href="#" class="" data-toggle="tooltip"  data-placement="top" data-container="body" title="启用限量前需确保正确设置了产品的销量限制（单次最多购买数量、每个用户最高购买数量）">限量</a>
+		</label>
+		<label for="islimittime" class="checkbox-inline">
+			<input type="checkbox" name="islimittime" value="1" id="islimittime" {if $item['marketmodel']['islimittime'] == 1}checked="true"{/if} /> <a href="#" data-toggle="tooltip"  data-placement="top" data-container="body"  title="启用限时前需确保正确设置了产品的销售限时（开且限时，并且，结束时间>开始时间）">限时</a>
+		</label>
+		<label for="isfreedispatch" class="checkbox-inline">
+			<input type="checkbox" name="isfreedispatch" value="1" id="isfreedispatch" {if $item['marketmodel']['isfreedispatch'] == 1}checked="true"{/if} /> <a href="#" data-toggle="tooltip"  data-placement="top" data-container="body" title="（暂未启用）">包邮</a>
+		</label>
+		<label for="isminus" class="checkbox-inline">
+			<input type="checkbox" name="isminus" value="1" id="isminus" {if $item['marketmodel']['isminus'] == 1}checked="true"{/if} /> <a href="#" data-toggle="tooltip"  data-placement="top" data-container="body" title="（暂未启用）">满减</a>
+		</label>
+		<label for="isgiftable" class="checkbox-inline">
+			<input type="checkbox" name="isgiftable" value="1" id="isminus" {if $item['marketmodel']['isgiftable'] == 1}checked="true"{/if} /> <a href="#" data-toggle="tooltip" data-placement="top" data-container="body" data-placement="top" data-container="body"  title="（暂未启用）">满赠</a>
+		</label>
+		<label for="isaddable" class="checkbox-inline">
+			<input type="checkbox" name="isaddable" value="1" id="isaddable" {if $item['marketmodel']['isaddable'] == 1}checked="true"{/if} /> <a href="#" data-toggle="tooltip" data-placement="top" data-container="body"  title="（暂未启用）">加价购</a>
+		</label>
+		<label for="ispintuan" class="checkbox-inline">
+			<input type="checkbox" name="ispintuan" value="1" id="ispintuan" {if $item['marketmodel']['ispintuan'] == 1}checked="true"{/if} /> <a href="#" data-toggle="tooltip" data-placement="top" data-container="body"  title="使用跳转方式跳至新链接进行购买">拼团</a>
+		</label>
+		<label for="isguessable" class="checkbox-inline">
+			<input type="checkbox" name="isguessable" value="1" id="isguessable" {if $item['marketmodel']['isguessable'] == 1}checked="true"{/if} /> <a href="#" data-toggle="tooltip" data-placement="top" data-container="body"  title="（暂未启用）">竞猜</a>
+		</label>
+		<label for="islucky" class="checkbox-inline">
+			<input type="checkbox" name="islucky" value="1" id="islucky" {if $item['marketmodel']['islucky'] == 1}checked="true"{/if} /> <a href="#" data-toggle="tooltip" data-placement="top" data-container="body"  title="（暂未启用）">博奖（1元购）</a>
+		</label>
+		<br>
+		<label for="isdiscount" class="radio-inline"><input type="radio" name="isdiscount" value="0" id="isdiscount0" {if empty($item['marketmodel']['isdiscount']) || $item['marketmodel']['isdiscount'] == '10'}checked="true"{/if}   /> 不打折</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isdiscount" class="radio-inline"><input type="radio" name="isdiscount" value="1" id="isdiscount1" {if $item['marketmodel']['isdiscount'] == '1'}checked="true"{/if}   /> 1折</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isdiscount" class="radio-inline"><input type="radio" name="isdiscount" value="2" id="isdiscount2" {if $item['marketmodel']['isdiscount'] == '2'}checked="true"{/if}   /> 2折</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isdiscount" class="radio-inline"><input type="radio" name="isdiscount" value="3" id="isdiscount3" {if $item['marketmodel']['isdiscount'] == '3'}checked="true"{/if}   /> 3折</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isdiscount" class="radio-inline"><input type="radio" name="isdiscount" value="4" id="isdiscount4" {if $item['marketmodel']['isdiscount'] == '4'}checked="true"{/if}   /> 4折</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isdiscount" class="radio-inline"><input type="radio" name="isdiscount" value="5" id="isdiscount5" {if $item['marketmodel']['isdiscount'] == '5'}checked="true"{/if}   /> 全场半价（5折）</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isdiscount" class="radio-inline"><input type="radio" name="isdiscount" value="6" id="isdiscount6" {if $item['marketmodel']['isdiscount'] == '6'}checked="true"{/if}   /> 6折</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isdiscount" class="radio-inline"><input type="radio" name="isdiscount" value="7" id="isdiscount7" {if $item['marketmodel']['isdiscount'] == '7'}checked="true"{/if}   /> 7折</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isdiscount" class="radio-inline"><input type="radio" name="isdiscount" value="8" id="isdiscount8" {if $item['marketmodel']['isdiscount'] == '8'}checked="true"{/if}   /> 8折</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isdiscount" class="radio-inline"><input type="radio" name="isdiscount" value="9" id="isdiscount9" {if $item['marketmodel']['isdiscount'] == '9'}checked="true"{/if}   /> 9折</label>
+		&nbsp;&nbsp;&nbsp;
+		<br>
+		<label for="isonlynewuser" class="radio-inline"><input type="radio" name="isonlynewuser" value="0" id="isonlynewuser0" {if empty($item['marketmodel']['isonlynewuser']) || $item['marketmodel']['isonlynewuser'] == '0'}checked="true"{/if}   /> 新老用户共享</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isonlynewuser" class="radio-inline"><input type="radio" name="isonlynewuser" value="1" id="isonlynewuser1" {if  $item['marketmodel']['isonlynewuser'] == '1'}checked="true"{/if}   /> 新用户专享</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isonlynewuser" class="radio-inline"><input type="radio" name="isonlynewuser" value="2" id="isonlynewuser2" {if  $item['marketmodel']['isonlynewuser'] == '2'}checked="true"{/if}   /> 老用户专享</label>
+		&nbsp;&nbsp;&nbsp;
+		<br>
+		<label for="isonlyfemale" class="radio-inline"><input type="radio" name="isonlyfemale" value="0" id="isonlyfemale0" {if empty($item['marketmodel']['isonlyfemale']) || $item['marketmodel']['isonlyfemale'] == '0'}checked="true"{/if}   /> 男女用户共享</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isonlyfemale" class="radio-inline"><input type="radio" name="isonlyfemale" value="1" id="isonlyfemale" {if  $item['marketmodel']['isonlyfemale'] == '1'}checked="true"{/if}   /> 女士专享</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isonlyfemale" class="radio-inline"><input type="radio" name="isonlyfemale" value="2" id="isonlynewuser2" {if  $item['marketmodel']['isonlyfemale'] == '2'}checked="true"{/if}   /> 男士专享</label>
+		&nbsp;&nbsp;&nbsp;
+		<br>
+		<label for="isonlymember" class="radio-inline"><input type="radio" name="isonlymember" value="0" id="isonlymember0" {if empty($item['marketmodel']['isonlymember']) || $item['marketmodel']['isonlymember'] == '0'}checked="true"{/if}   /> 粉丝/会员共享</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="isonlymember" class="radio-inline"><input type="radio" name="isonlymember" value="1" id="isonlymember1" {if $item['marketmodel']['isonlymember'] == '1'}checked="true"{/if}   /> 会员专享</label>
+		&nbsp;&nbsp;&nbsp;
+		<span class="help-block">说明：选择了营销模型，前台做营销专题调用时会自动进行筛选匹配</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">假期/活动模型</label>
+	<div class="col-sm-9 col-xs-12">
+		<label for="dateisdefault" class="radio-inline"><input type="radio" name="datemodel" value="default" id="dateisdefault" {if empty($item['datemodel']) || $item['datemodel'] == 'default'}checked="true"{/if}   /> 暂不关联</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="dateislove" class="radio-inline"><input type="radio" name="datemodel" value="love" id="dateislove" {if $item['datemodel'] == 'love'}checked="true"{/if}   /> 情人节</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="dateisnewyeah" class="radio-inline"><input type="radio" name="datemodel" value="newyeah" id="dateisnewyeah" {if $item['datemodel'] == 'newyeah'}checked="true"{/if}   /> 新年</label>
+		&nbsp;&nbsp;&nbsp;
+
+		<span class="help-block">说明：选择了活动/假期模型，一个产品一次只能选定一种活动；前台做专题页/主题页调用时会自动进行筛选匹配</span>
+	</div>
+</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<span style="color:red;font-weight:bolder;">购买链接:</span>部分营销模型启用后，产品购买页将引导用户到模型关联链接进行购买；请在本页中设置好相关的链接
+		</div>
+	</div>
+
+<div class="form-group" style="">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">预售（presale）</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="presale_link" id="presale_link" class="form-control" value="{$_W['siteroot']}app/{php echo str_replace('./','',$this->createMobileUrl('detail', array('id' => $item['id'],'special'=>'presale')))}" placeholder="开启预售后系统自动完成网址" readonly/>
+		<label for="presalelink_isused" class="radio-inline">
+			<input type="checkbox" name="presale_link_isused" value="1" id="presale_link_isused" {if  $item['buylink']['presale']['isused'] == '1'}checked="true"{/if}   /> 是否启用预售链接(不启用则无法在非销售期内购买)
+		</label>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">拼团（pintuan）</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="pintuan_link" id="pintuan_link" class="form-control" value="{$item['buylink']['pintuan']['linkurl']}" />
+		<label for="pintuan_link_isused" class="radio-inline">
+			<input type="checkbox" name="pintuan_link_isused" value="1" id="pintuan_link_isused" {if  $item['buylink']['pintuan']['isused'] == '1'}checked="true"{/if}   /> 是否启用拼团链接(不启用则不在产品详情页的优惠信息中显示拼团提示)
+		</label>
+	</div>
+</div>
+<script src="{$fm453resource}common/js/tooltipbox.js"></script>
+<script>
+require(['bootstrap'],function($){
+	$(function () {
+  	$('[data-toggle="tooltip"]').tooltip();
+	});
+	});
+</script>

@@ -1,0 +1,8 @@
+<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-md-3 " >
+	<a href="{php echo fm_murl('search','article','index',array('keyword'=>$row['realname'],'uid_openid'=>$row['openid']))}">
+		<div style="overflow-y: hidden;border-radius: 50%;z-index: 0;" >
+		<img class="mui-media-object" src="{php echo tomedia($row['avatar'])}">
+		</div>
+		<div class="mui-media-body" style="">{$row['realname']}</div>
+	</a>
+</li>

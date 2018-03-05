@@ -1,0 +1,45 @@
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/css'}
+<link rel="stylesheet" type="text/css" href="{$appsrc}css/feedback.css" />
+<link rel="stylesheet" type="text/css" href="{$appsrc}/css/mui.picker.min.css" />
+<link href="{$appsrc}/css/mui.picker.css" rel="stylesheet" />
+<link href="{$appsrc}/css/mui.poppicker.css" rel="stylesheet" />
+{template $appstyle.'appweb/'.$do.'/'.$ac.'/titlebar'}
+{template $appstyle.'appweb/'.$do.'/'.$ac.'/navbar'}
+<div class="mui-content feedback" style="padding-bottom: 65px;">
+	<h5 style="text-align: center;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;">{$needs['title']}</h5>
+	{if $needs['is_banner']==1 && !empty($needs['banner'])}
+	<div class="img-rounded" style="text-align:center;">
+	<img src="{php echo tomedia($needs['banner'])}" alt="{$needs['title']}">
+	</div>
+	{/if}
+	<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">表单数据</h5>
+	<form action="{php echo fm_murl($do,$ac,'post',array())}" method="post" class="form-horizontal form" id="form-feedback" enctype="multipart/form-data" onsubmit='return formcheck("form-feedback")'>
+	<input type="hidden" name="setfor" value="{$needs['setfor']}" />
+	<input type="hidden" name="id" value="{$id}" />
+	<input type="hidden" name="sn" value="{$sn}" />
+	<input type="hidden" name="openid" value="{$booker['openid']}" />
+	<input type="hidden" name="template" value="{$needs['template']}" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+		{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form'}
+
+		<button class="mui-btn mui-btn-primary mui-btn-outlined" style="left:50%;margin-left:-60px;width: 120px;height:40px;border-radius:5%;">修改信息</button>
+	</form>
+	<p  id="PrintError" class="mui-hidden">打印错误消息</p>
+	<div id="qrcode"  class="mui-hidden" style="text-align: center;">
+		<img src="{$qrcodeurl}" style="width:60%;" />
+		<a id="shortcut" style="width: 60%;margin: 15px auto;padding: 5px;" class="mui-hidden mui-btn mui-btn-block mui-btn-red">创建桌面图标</a>
+	</div>
+</div>
+
+{template $appstyle.'appweb/'.$do.'/'.$ac.'/modal/reply'}
+<script src="{$appsrc}/js/mui.picker.js"></script>
+<script src="{$appsrc}/js/mui.poppicker.js"></script>
+<script src="{$appsrc}/js/mui.picker.min.js"></script>
+<!-- 图片放大查看 -->
+<script src="{$appsrc}js/mui.zoom.js"></script>
+<script src="{$appsrc}js/mui.previewimage.js"></script>
+<script type="text/javascript" >
+	mui.previewImage();
+</script>
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/js'}
+{template $appstyle.'appweb/'.$do.'/'.$ac.'/js'}

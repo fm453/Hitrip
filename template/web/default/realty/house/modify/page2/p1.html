@@ -1,0 +1,79 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#facilities">
+          配套设施<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse in" id="facilities">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-facilities"  onsubmit="return formcheck('setting-form-facilities');return false;" data-noajax = '0'>
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" value="">
+				<input type="hidden" name="setfor" value="peitao" />
+				<input type="hidden" name="sn" value="{$f_sn}" />
+				<input type="hidden" name="s_sn" value="{$s_sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+	<table class="table table-hover">
+		<thead>
+		<tr>
+			<th style='width:50px;'></th>
+			<th>设施名称</th>
+			<th>设施状态
+				<label class="label label-info">(1)建设中</label>
+				<label class="label label-info">(0)正常开放</label>
+				<label class="label label-info">(-1)暂停使用</label>
+			</th>
+		</tr>
+		</thead>
+		<tbody id="param-items" class="sortable">
+			{loop $item['peitao']['facilities'] $k $p}
+			<tr>
+				<td>
+					<a href="javascript:;" class="fa fa-move" title="拖动调整此显示顺序"><i class="fa fa-arrows"></i></a>&nbsp;
+					<a href="javascript:;" onclick="deleteParam(this)" style="margin-top:10px;" title="删除"><i class="fa fa-remove"  style="color:red;"></i></a>
+				</td>
+				
+				<td>
+					<input name="param[facilities][title][{$k}]" type="text" class="form-control param_title" value="{$p['title']}"/>
+				</td>
+				
+				<td>
+					<input type='number' class="form-control" name="param[facilities][status][{$k}]" value="{$p['status']}" id="param[facilities][status][{$k}]" />
+				</td>
+			</tr>
+			{/loop}
+		</tbody>
+		<tbody>
+			<tr>
+				<td colspan="3">
+					<a class="btn btn-default" href="javascript:;" id='add-param' onclick="addParam('param-items')" style="margin-top:10px;"  title="添加设施">添加设施 <i class='fa fa-plus'></i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-facilities" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-facilities" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#facilities">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>
+

@@ -1,0 +1,74 @@
+<div class="navbar" style="z-index:9999;">
+	<div class="" style="background-color: rgba(255,0,0,0.01);">
+		<div class="container-fluid">
+			<a class="btn btn-navbar" data-target=".navbar-responsive-collapse" data-toggle="collapse" style="display: none;"></a>
+			<a class="brand" href="#"  style="display: none;">Home</a>
+			<div class="nav-collapse collapse navbar-responsive-collapse in">
+							<ul class="nav">
+								<li>
+									<a class="{if $ac=='index'} navbar-active {else} navbar-link {/if}" href="{php echo fm_murl('index','index','index',array())}" style="">主页</a>
+								</li>
+								<li>
+									<a  style="color:#ccc;">|</a>
+								</li>
+
+								<li class="dropdown">
+									<a class="dropdown-toggle navbar-link {if $ac=='search'} navbar-active {else}{/if}" data-toggle="dropdown" href="#" style="">楼盘<strong class="caret" style=""></strong></a>
+									<ul class="dropdown-menu">
+										{loop $allareas $k $area}
+										<li>
+											<a href="{php echo fm_murl('realty','search','index',array())}&area={$k}"   style="">{$area}</a>
+										</li>
+										<li class="divider divider-2nd">
+										</li>
+										{/loop}
+										<li class="nav-header">
+											{$_W['account']['name']}为您服务
+										</li>
+									</ul>
+								</li>
+								<li>
+									<a  style="color:#ccc;">|</a>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle navbar-link" data-toggle="dropdown" href="#" style="">城市概况<strong class="caret" style=""></strong></a>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="javascript:;" onclick="LoadModal('aboutcity-haikou')"  style="">海口</a>
+										</li>
+										<li class="divider divider-2nd">
+										</li>
+										<li>
+											<a href="javascript:;" onclick="LoadModal('aboutcity-qionghai')" style="">琼海</a>
+										</li>
+										<li class="divider divider-2nd">
+										</li>
+										<li>
+											<a href="javascript:;" onclick="LoadModal('aboutcity-sanya')" style="">三亚</a>
+										</li>
+										<li class="divider">
+										</li>
+										<li class="nav-header">
+											{$_W['account']['name']}为您服务
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<form class="hidden-md navbar-form navbar-left inline-flex" role="search" id="minisearch" style="" onsubmit="startMiniSearch();return false;" >
+                                <div class="form-group">
+                                    <input class="form-control input-lg" type="text" id="miniSearch-keywords" name="keywords" placeholder="搜索房源特征、地点或项目/楼盘名称" value="{$_GPC['keywords']}" onkeyup="startMiniSearch();" />
+                                </div>
+                                <button type="button" class="btn btn-info btn-lg" onclick="startMiniSearch();"><em class="icon-search"></em></button>
+                            </form>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" >
+	function startMiniSearch() {
+		var keywords = $('#miniSearch-keywords').val();
+		window.location.href = "{php echo fm_murl('realty','search','index',array())}"+'&keywords='+keywords;
+	}
+</script>

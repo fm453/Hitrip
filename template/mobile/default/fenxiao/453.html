@@ -1,0 +1,11 @@
+{template $appstyle.'common/header'}
+<script src="{$appsrc}js/mui.min.js"></script>
+{if $ac == 'order'}
+	{template $appstyle.$do.'/'.$ac}
+{/if}
+{template $appstyle.'common/js_url'}
+{template $appstyle.'common/js_pic'}
+{template $appstyle."common/tip"}
+{template $appstyle.'common/footer'}
+
+{template $appstyle.'common/js_onerror'}

@@ -1,0 +1,346 @@
+{if $operation == 'display'}
+<div class="main">
+	<div class="panel panel-info">
+		<div class="panel-heading">筛选(当前状态下共<span style="color:red"><?php echo $total; ?></span>份点评)-每页展示10份</div>
+			<div class="panel-body">
+				<form action="" method="post" class="form-horizontal" role="form" id="form1">
+					<input type="hidden" name="c" value="site" />
+					<input type="hidden" name="a" value="entry" />
+					<input type="hidden" name="m" value="fm453_duokefu" />
+					<input type="hidden" name="do" value="comment" />
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">联系信息</label>
+						<div class="col-sm-8 col-lg-9 col-xs-12">
+							<input class="form-control" name="from_who" id="" type="text" value="" placeholder="可查询联系人手机号/姓名/下单会员ID/openid">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">是否支付</label>
+						<div class="col-sm-8 col-lg-9 col-xs-12">
+							<select name="ispayed" class="form-control">
+								<option value="" {if $ispayed==""}selected{/if}>不限</option>
+									<option value="0" {if $ispayed=="0"}selected{/if}> 否</option>
+									<option value="1" {if $ispayed=="1"}selected{/if}> 是</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">提交时间</label>
+						<div class="col-sm-4 col-xs-12">
+ 						{php echo tpl_form_field_daterange('createtime',$createtime);}
+						</div>
+
+						<div class="col-sm-4 col-lg-2">
+							<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+							<input type="submit" name="export" value="导出数据" class="btn btn-default" />
+					 <input type="hidden" name="token" value="{$_W['token']}" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	{$pager}
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<table class="table table-hover"  style="table-layout: auto;max-width: 200%;">
+				<thead class="navbar-inner">
+					<tr>
+						<th style="width:10px; text-align:left;">ID</th>
+						<th style="width:80px; text-align:left;">操作</th>
+						<th style="width:300px;">联系信息</th>
+						<th style="width:55px;"> </th>
+						<th style="width:300px;">点评信息</th>
+						<th style="width:280px;">奖励信息</th>
+						<th style="width:350px;">关联信息</th>
+						<th style="width:300px;">第三方调用信息</th>
+					</tr>
+				</thead>
+				<tbody>
+					{loop $list $item}
+					<tr style="overflow-x:visible;">
+					<td>{$item['id']}</td>
+						<td style="white-space: normal;">
+							<a href="{php echo fm_wurl('comment','dianping','', array('op' => 'detail', 'id' => $item['id']))}" class="btn btn-success btn-sm" style="margin-bottom: 5px;">详情</a>
+							<a href="{php echo fm_wurl('comment','dianping','', array('op' => 'pass', 'id' => $item['id']))}" class="btn btn-info btn-sm" style="margin-bottom: 5px;">审核</a>
+							<a href="{php echo fm_wurl('comment','dianping','', array('op' => 'public', 'id' => $item['id']))}" class="btn btn-warning btn-sm" style="margin-bottom: 5px;">公布</a>
+							<a href="{php echo fm_wurl('comment','dianping','', array('op' => 'delete', 'id' => $item['id']))}" class="btn btn-danger btn-sm" style="margin-bottom: 5px;" onclick="return confirm('本功能您确认需要执行操作了吗！');" >删除</a>
+						</td>
+						<td>Openid:{$item['from_openid']}
+							<br>姓名:{$item['username']}(会员ID:{$item['from_uid']})--电话:{$item['mobile']}
+							<br>联系地址:{$item['address']}
+						</td>
+						<td>
+							<a href="{php echo tomedia($item['thumb']);}" target="_blank" title="点击查看评论图附件"><img src="{php echo tomedia($item['thumb']);}" width="50px;" ></img></a>
+						</td>
+						<td style="word-spacing: normal;">
+						订房渠道：{$item['from_channel']} <i class="fa fa-eye" style="color: red;"></i> {$item['view_count']}  <i class="fa fa-thumbs-up" style="color: red;"></i>{$item['up_count']}  <i class="fa fa-thumbs-down" style="color: red;"></i> {$item['down_count']}<br>
+						入住日期：{php echo date('Y-m-d', $item['starttime'])}<br>
+						离店日期：{php echo date('Y-m-d', $item['endtime'])}<br>
+						提交时间:{php echo date('Y-m-d H:i:s', $item['createtime'])}<br>
+						状态:
+						{if $item['ischecked']==0}<span class="label label-warning">未通过审核</span>{/if}
+						{if $item['ischecked']==-1}<span class="label label-info">待审核</span>{/if}
+						{if $item['ischecked']==1}<span class="label label-success">已审核</span>{/if}
+						{if $item['ispublic']==0}<span class="label label-info">未公开</span>{/if}
+						{if $item['ispublic']==1}<span class="label label-success">已公开</span>{/if}
+						<br>
+						</td>
+						<td>
+						状态：<span class="label label-{$item['paystatus']['css']}">{$item['paystatus']['name']}</span><br>
+						奖励发放时间：{if !empty($item['paytime'])}{php echo date('Y-m-d H:i:s', $item['paytime'])}{/if}<br>
+						红包支付流水号：{$item['pay_no']}<br>
+						已奖励金额：{$item['pay_money']}元
+						</td>
+						<td style="white-space: normal;">
+						粉丝备注：{$item['remark']}<br>
+						{if $item['ischecked']==0}
+							审核未通过原因：{$item['why_failure']}
+							<br>
+						{/if}
+						管理员回复：{$item['reply']}
+						</td>
+						<td>
+						第三方调用：<span class="label label-info">{if $item['isapi']==1}是{else}否{/if}</span><br>
+						调用模块：<span class="label label-info">{$item['api_module']}</span><br>
+						附加内容：{$item['api_info']}
+						</td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{$pager}
+
+{else}
+{if $operation == 'detail'}
+<style type="text/css">
+	.main .form-horizontal .form-group{margin-bottom:0;}
+	.main .form-horizontal .modal .form-group{margin-bottom:15px;}
+	#modal-confirmsend .control-label{margin-top:0;}
+</style>
+
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<a href="{php echo $this->createWebUrl('comment', array('ac'=>'dianping','op' => 'pass', 'id' => $item['id']))}" class="btn btn-success" onclick="return confirm('确认此评论可以通过审核吗？');">审核</a>
+		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-refused">拒绝</button>
+		<button type="button" class="btn btn-primary" name="kfreply" onclick="$('#modal-kfreply').modal();" value="yes">回复</button>
+		<a href="{php echo $this->createWebUrl('comment', array('ac'=>'dianping','op' => 'public', 'id' => $item['id']))}" class="btn btn-default" onclick="return confirm('确认此评论可以推送至评论墙吗？');">上墙</a>
+		<button type="button" class="btn btn-warning" name="topay" onclick="$('#modal-topay').modal();" value="yes">奖励</button>
+		<a href="{php echo $this->createWebUrl('comment', array('ac'=>'dianping','op' => 'delete', 'id' => $item['id']))}" class="btn btn-danger" onclick="return confirm('确认删除该评论吗？');">删除</a>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				评论详情(序号:{$item['id']})
+			</div>
+			<div class="panel-body">
+				<div class="form-group  ">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">粉丝信息</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static forcopy">Openid：<a href="javascript:;" target="_blank" title="点击复制">{$item['from_openid']}</a><span style="color:red">(点击可复制)</span>
+						粉丝ID：{$fanid}；  会员ID：{$item['from_uid']}  联系地址：<a href="javascript:;" target="_blank" title="点击复制">{$item['address']}</a></p>
+						<span>
+							<a href="{php echo url('mc/notice/tpl', array('id' => $fanid));}" id="" class="btn btn-success btn-sm sms" target="_blank">微信联系</a>
+							<a href="{php echo url('mc/creditmanage/stat', array('type' => '1','uid' => $item['from_uid']));}" id="" class="btn btn-success btn-sm sms" target="_blank">账户明细</a>
+							<a href="{php echo fm_wurl('crm','member','modify', array('uid' => $item['from_uid']));}" id="" class="btn btn-success btn-sm sms" target="_blank">编辑会员资料</a>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">起止日期 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static">入住：{php echo date('Y-m-d', $item['starttime'])}  离店：{php echo date('Y-m-d', $item['endtime'])}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">房号 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static forcopy"><a href="javascript:;" target="_blank" title="点击复制">{$item['rnumber']}</a></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订房渠道 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static forcopy"><a href="javascript:;" target="_blank" title="点击复制">{$item['from_channel']}</a></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static">
+						{if $item['ischecked']==0}<span class="label label-warning">未通过审核</span>{/if}
+						{if $item['ischecked']==-1}<span class="label label-info">待审核</span>{/if}
+						{if $item['ischecked']==1}<span class="label label-success">已审核</span>{/if}
+						{if $item['ispublic']==0}<span class="label label-info">未公开</span>{/if}
+						{if $item['ispublic']==1}<span class="label label-success">已公开</span>{/if}
+						{if $item['ispayed']==0}<span class="label label-info">未奖励</span>{/if}
+						{if $item['ispayed']==1}<span class="label label-success">已奖励</span>{/if}
+						<span class="label label-warning"><i class="fa fa-eye" style="color: red;"></i> 传播阅读：{$item['view_count']}</span>
+						<span class="label label-warning"><i class="fa fa-thumbs-up" style="color: red;"></i>顶：{$item['up_count']}</span>
+						<span class="label label-warning"><i class="fa fa-thumbs-down" style="color: red;"></i>踩： {$item['down_count']}</span>
+						</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">提交时间 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static">{php echo date('Y-m-d H:i:s', $item['createtime'])}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">粉丝备注 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static forcopy"><a href="javascript:;" target="_blank" title="点击复制">{$item['remark']}</a></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">客服回复 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static forcopy"><a href="javascript:;" target="_blank" title="点击复制">{$item['reply']}</a></p>
+					</div>
+				</div>
+				{if !empty($item['paytime'])}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">奖励发放时间 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static">{php echo date('Y-m-d H:i:s', $item['paytime'])}</p>
+					</div>
+				</div>
+				{/if}
+				{if !empty($item['why_failure'])}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">审核不通过原因 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static forcopy"><a href="javascript:;" target="_blank" title="点击复制">{$item['why_failure']}</a></p>
+					</div>
+				</div>
+				{/if}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">红包奖励记录 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static forcopy">
+							支付流水号：<a href="javascript:;" target="_blank" title="点击复制">{$item['pay_no']}</a>；
+							支付金额：{$item['pay_money']}元
+						</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">附件 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<a href="{php echo tomedia($item['thumb']);}" target="_blank" title="点击查看评论图附件"><img src="{php echo tomedia($item['thumb']);}" width="750px;" ></img></a>
+					</div>
+				</div>
+				{if $item['isapi']==1}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">第三方调用信息 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static forcopy">
+							第三方调用：<span class="label label-info">{if $item['isapi']==1}是{else}否{/if}</span><br>
+							调用模块：<span class="label label-info">{$item['api_module']}</span><br>
+							附加内容：{$item['api_info']}
+						</p>
+					</div>
+				</div>
+				{/if}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">操作记录 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static forcopy">{$item['log']}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" name="token" value="{$_W['token']}" />
+
+		<!-- 审核不通过原因 -->
+		<div id="modal-refused" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:600px;margin:0px auto;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+						<h3>审核不通过</h3>
+					</div>
+					<div class="modal-body">
+						<label>原因</label>
+						<textarea style="height:150px;" class="form-control" name="why_failure" autocomplete="off"></textarea>
+						<div id="module-menus"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary" name="confirmrefuse" value="yes">确认拒绝</button>
+						<a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 客服回复 -->
+		<div id="modal-kfreply" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:600px;margin:0px auto;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+						<h3>客服回复</h3>
+					</div>
+					<div class="modal-body">
+						<div class="form-group hidden">
+							<label class="col-xs-10 col-sm-3 col-md-3 control-label">是否审核该评论</label>
+							<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+								<label for="radio_2" class="radio-inline">
+									<input type="radio" name="ischeck" id="radio_2" value="0" onclick="$('#replypanel').hide();"> 否
+								</label>
+								<label for="radio_1" class="radio-inline">
+									<input type="radio" name="ischeck" id="radio_1" value="1" onclick="$('#replypanel').show();" checked> 是
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-10 col-sm-3 col-md-3 control-label">回复内容</label>
+							<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+								<textarea style="height:150px;" class="form-control"name="reply" autocomplete="off"></textarea>
+							</div>
+						</div>
+						<div id="module-menus"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary span2" name="confirmreply" value="yes">确认回复</button>
+						<a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 发放奖励 -->
+		<div id="modal-topay" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:600px;margin:0px auto;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+						<h3>发放奖励</h3>
+					</div>
+					<div class="modal-body">
+						<label>红包支付流水号</label>
+						<input  class="form-control" name="pay_no" autocomplete="off" type="number" />
+						<label>发放总金额</label>
+						<input  class="form-control" name="pay_money" autocomplete="off" type="number" />
+						<div id="module-menus"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary span2" name="confirmpay" value="yes">确认发放</button>
+						<a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script>
+	require(['jquery', 'util'], function($, u){
+		$('.forcopy a').each(function(){
+			u.clip(this, $(this).text());
+		});
+	});
+</script>
+{/if}
+{/if}

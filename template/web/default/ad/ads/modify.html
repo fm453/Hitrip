@@ -1,0 +1,72 @@
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit='return formcheck()'>
+		<input type="hidden" name="id" value="{$ads['id']}" />
+		<input type="hidden" name="token" value="{$_W['token']}" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				广告设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="displayorder" class="form-control" placeholder="可留空；此处仅可填写数字" value="{$ads['displayorder']}" />
+						<span class="help-block">说明：数值越大，位置越靠前</span>
+					</div>					
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>广告标题</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id='name' name="adname" class="form-control" value="{$ads['adname']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">广告图片</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('thumb', $ads['thumb'])}
+						<span class="help-block">说明：广告图片长宽尺寸：默认为900px:225px；具体请参照设计稿要求，根据商城风格及引用位置选择合适的尺寸。</span>
+					</div>
+				</div>
+				<div class="form-group">
+	               <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>广告位</label>
+	               <div class="col-sm-8 col-xs-12">
+		              {php echo tpl_form_field_category_2level('category', $parent, $children, $ads['pcate'], $ads['ccate'])}
+		              <span class="help-block">说明：图片必须选择二级分类，否则不会被调用</span>
+	               </div>
+         </div>
+				 <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">广告链接</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="link" class="form-control"  placeholder="如http://vcms.hiluker.com" value="{$ads['link']}" />
+						<span class="help-block">说明：可以链接到其他页面；站外链接必须添加http或https等类型的开头</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否显示</label>
+					<div class="col-sm-9 col-xs-12">
+						<label class='radio-inline'>
+							<input type='radio' name='enabled' value='1' {if $ads['enabled']==1}checked{/if} /> 是
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='enabled' value='0' {if $ads['enabled']==0}checked{/if} /> 否
+						</label>
+						<span class="help-block">说明：设置是否显示。</span>
+					</div>
+				</div>
+			</div>
+		</div>
+<div class="form-group col-sm-12">
+	<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+	</div>
+	</form>
+</div>
+
+<script language='javascript'>
+	function formcheck() {
+		if ($("#adname").isEmpty()) {
+			Tip.focus("adname", "请填写广告名称!");
+			return false;
+		}
+		return true;
+	}
+</script>

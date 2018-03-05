@@ -1,0 +1,192 @@
+<script type="text/javascript" >
+//(标签标识必须大写)
+	var allIMGs = document.getElementsByTagName('IMG');
+	for (var len = allIMGs.length, i = 0; i < len; i++) {
+		var ThisIMG= allIMGs[i];
+		//添加onerror检测img是否存在
+		ThisIMG.setAttribute('onerror','RepairMyImg(this)');
+		//给图片加上放大浏览的功能(图片的父级元素或图片本身有标明支持图片预览时)
+		if(ThisIMG.parentNode.getAttribute("previewed") !=0 || ThisIMG.getAttribute("previewed") !=0){
+			ThisIMG.setAttribute('data-preview-src','');
+			ThisIMG.setAttribute('data-preview-group','1');
+		}
+		//修复图片尺寸及链接
+		ThisIMG.style.maxWidth = '100%';
+		ThisIMG.setAttribute('width','');
+		var TempSrc = ThisIMG.getAttribute("src");
+		if(TempSrc.indexOf('/./attachment/') == 0) {
+			var siteroot = "{$_W['siteroot']}";
+			var newsrc = siteroot ;
+			newsrc = TempSrc.replace('/./attachment/','attachment/');
+			newsrc = siteroot + newsrc;
+			ThisIMG.setAttribute('src',newsrc);
+		}
+	}
+	//图片onerror时处理
+	function RepairMyImg(obj){
+		obj.src = 'https://public.hiluker.com/vcms/nopic.jpg'; //使用加载动态图替换
+		//obj.style.display = 'none';
+	}
+</script>
+<!-- 延迟加载 -->
+<script src="{$appsrc}js/mui.lazyload.js"></script>
+<script src="{$appsrc}js/mui.lazyload.img.js"></script>
+<script>
+	(function($) {
+		$(document).imageLazyload({
+			placeholder: 'https://public.hiluker.com/vcms/loader.gif'
+		});
+	})(mui);
+</script>
+<style type="text/css">
+	.mui-preview-image.mui-fullscreen {
+		position: fixed;
+		z-index: 20;
+		background-color: rgba(0,0,0,1);
+	}
+	.mui-preview-header, .mui-preview-footer {
+		position: absolute;
+		width: 100%;
+		left: 0;
+		z-index: 10;
+	}
+	.mui-preview-header {
+		height: 44px;
+		top: 0;
+		text-align: center;
+	}
+	.mui-preview-footer {
+		height: 50px;
+		bottom: 0px;
+	}
+	.mui-preview-header .mui-preview-indicator {
+		/** display: block;**/
+		line-height: 25px;
+		color: #fff;
+		text-align: center;
+		margin: 15px auto 4;
+		width: 70px;
+		background-color: rgba(0, 0, 0, 0.4);
+		border-radius: 12px;
+		font-size: 16px;
+	}
+	.mui-preview-image {
+		display: none;
+		-webkit-animation-duration: 0.5s;
+		animation-duration: 0.5s;
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+	}
+	.mui-preview-image.mui-preview-in {
+		-webkit-animation-name: fadeIn;
+		animation-name: fadeIn;
+	}
+	.mui-preview-image.mui-preview-out {
+		background: none;
+		-webkit-animation-name: fadeOut;
+		animation-name: fadeOut;
+	}
+	.mui-preview-image.mui-preview-out .mui-preview-header,	.mui-preview-image.mui-preview-out .mui-preview-footer {
+		display: none;
+	}
+	.mui-zoom-scroller {
+		position: absolute;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		align-items: center;
+		-webkit-box-pack: center;
+		-webkit-justify-content: center;
+		justify-content: center;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		-webkit-backface-visibility: hidden;
+	}
+	.mui-zoom {
+		-webkit-transform-style: preserve-3d;
+		transform-style: preserve-3d;
+	}
+	.mui-slider .mui-slider-group .mui-slider-item img {
+		width: auto;
+		height: auto;
+		max-width: 100%;
+		max-height: 100%;
+	}
+	.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+		width: 100%;
+	}
+	.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+		display: inline-table;
+	}
+	.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+		display: table-cell;
+		vertical-align: middle;
+	}
+	.mui-preview-loading {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		display: none;
+	}
+	.mui-preview-loading.mui-active {
+		display: block;
+	}
+	.mui-preview-loading .mui-spinner-white {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-left: -25px;
+		margin-top: -25px;
+		height: 50px;
+		width: 50px;
+	}
+	.mui-preview-image img.mui-transitioning {
+		-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+		transition: transform 0.5s ease, opacity 0.5s ease;
+	}
+	@-webkit-keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+	@-webkit-keyframes fadeOut {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+	@keyframes fadeOut {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+	p img {
+		max-width: 100%;
+		height: auto;
+	}
+</style>

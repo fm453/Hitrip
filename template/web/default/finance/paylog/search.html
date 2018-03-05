@@ -1,0 +1,48 @@
+<div class="panel panel-info" id="forsearch">
+	<div class="panel-heading">筛选与导出</div>
+	<div class="panel-body">
+		<form action="" method="get" class="form-horizontal" role="form" id="search-form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="m" value="{FM_NAME}" />
+			<input type="hidden" name="do" value="{$do}" />
+			<input type="hidden" name="ac" value="{$ac}" />
+			<input type="hidden" name="op" value="{$operation}" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">用户</label>
+				<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+					<input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}" placeholder="可按用户openid或会员uid进行查询">
+				</div>
+
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">支付方式</label>
+				<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+					<select name="type" class="form-control">
+						{loop $paytype $key $item}
+						<option value="{$key}" {if $_GPC['type'] == $key} selected="selected" {/if}>{$item['name']}</option>
+						{/loop}
+					</select>
+				</div>
+
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">状态</label>
+				<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+					<select name="status" class="form-control">
+						{loop $paylogstatus $key $item}
+						<option value="{$key}" {if $_GPC['status'] == $key} selected="selected" {/if}>{$item['name']}</option>
+						{/loop}
+					</select>
+				</div>
+
+				<label for="onlyfm453" class="control-label"><input type="checkbox" name="module" value="1" id="onlyfm453" {if $onlyfm453 == 1}checked="true"{/if} /> 仅看本模块</label>
+
+			</div>
+			<div class="form-group" style="text-align: center;">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<button class="btn btn-default" type="submit" name="search" value="yes" data-toggle="tooltip" data-placement="top" title="用于搜索或筛选分类"><i class="fa fa-search"></i> 搜索|筛选</button>
+					<a  class="btn btn-warning" href="{php echo fm_wurl($do,$ac,'export',array('haslimit'=>'all','export'=>TRUE))}"  data-toggle="tooltip" data-placement="left" title="先筛选，后导出；默认仅导出本页数据" onclick="return confirm('全量导出对数据服务器会造成一定压力，建议尽量在用户访问量较少时进行。如仍继续，请再次确认！')" ><i class="fa fa-plus-sign-alt"></i> 导出全部筛选结果</a>
+					<a  class="btn btn-info" href="{php echo fm_wurl($do,$ac,'export',array('haslimit'=>'page','export'=>TRUE))}"  data-toggle="tooltip" data-placement="left" title="先筛选，后导出；默认仅导出本页数据"><i class="fa fa-plus-sign-alt"></i> 仅导出本页数据</a>
+				</div>
+			</div>
+			</form>
+	</div>
+</div>

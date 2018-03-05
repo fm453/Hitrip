@@ -1,0 +1,204 @@
+<div id="search-table" class="row" style="">
+	<div class="panel panel-default" id="forsearch">
+	<div class="panel-heading hidden">筛选</div>
+	<div class="panel-body">
+		<form action="" method="post" class="form-horizontal" role="form" id="search-form" onsubmit="return formcheck('search-form');return false;" data-noajax = '0'>
+			<input type="hidden" name="ajax" value="1" />
+			<input type="hidden" name="area" id="form-input-area" value="{$area}" />
+			<input type="hidden" name="s_sn" value="{$s_sn}" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+			<div class="form-group">
+
+				<label class="control-label search-lt area-label">区域</label>
+				<div class="search-rt">
+					{if $isShowAllAreas}
+					<label for="areas[pcate]" class="checkbox-inline">
+					{loop $allareas $k $v}
+					<input type="radio" name="areas[pcate]" value="{$k}"  class="no-margin" onselect="changeArea('{$k}');" onclick="linkTo('{$k}')">
+					<span data-toggle="tooltip"  data-placement="top" data-container="body" title="当前选中的为{$v}区域范围内的楼盘">{$v}</span>
+					{/loop}
+					</label>
+					<hr>
+					<label for="areas[ccate]" class="checkbox-inline">
+					{loop $allareas $k $v}
+					{loop $areas[$k] $kk $vv}
+					<input type="checkbox" name="areas[ccate][{$kk}]" value="{$kk}"  class="no-margin area-ccate {$k} hidden" onselect="form-check('search-form');">
+					<span class="area-ccate {$k} hidden" data-toggle="tooltip"  data-placement="top" data-container="body" title="该选项对应{$v}-{$vv}区域范围内的楼盘">{$vv}</span>
+					{/loop}
+					{/loop}
+					&nbsp;&nbsp;&nbsp;
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择全部区域" onclick="selectall('area-ccate',this)">全选</button>
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择当前所选区域以外的全部区域" onclick="changeselect('area-ccate')">反选</button>
+					</label>
+
+					{else}
+
+					<label for="areas[pcate]" class="checkbox-inline">
+					<input type="checkbox" name="areas[pcate][{$area}]" value="{$area}"  class="no-margin" onselect="form-check('search-form');">
+					<span class="" data-toggle="tooltip"  data-placement="top" data-container="body" title="当前选中的为{$area_pcate_name}区域范围内的楼盘">{$area_pcate_name}</span>
+					</label>
+					<hr>
+					<label for="areas[ccate]" class="checkbox-inline">
+					{loop $areas[$area_pcate] $k $v}
+					<input type="checkbox" name="areas[ccate][{$k}]" value="{$k}"  class="no-margin area-ccate" onselect="form-check('search-form');">
+					<span class="" data-toggle="tooltip"  data-placement="top" data-container="body" title="该选项对应{$area_pcate_name}-{$v}区域范围内的楼盘">{$v}</span>
+					{/loop}
+					&nbsp;&nbsp;&nbsp;
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择全部区域" onclick="selectall('area-ccate',this)">全选</button>
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择当前所选区域以外的全部区域" onclick="changeselect('area-ccate')">反选</button>
+					</label>
+					{/if}
+				</div>
+
+				<hr>
+
+				<label class="control-label search-lt">售价</label>
+				<div class="search-rt">
+					<label for="prices" class="checkbox-inline">
+					{loop $allprices $k $v}
+					<input type="checkbox" name="prices[{$k}]" value="{$k}"  class="no-margin prices" onselect="form-check('search-form');">
+					<span class="" data-toggle="tooltip"  data-placement="top" data-container="body" title="当前选中的为{$v}条件范围内的楼盘;已选择了“不限”条件的将自动忽略本条件下的其他限制">{$v}</span>
+					{/loop}
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择全部条件并即时动态刷新匹配结果" onclick="selectall('prices',this)">全选</button>
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择当前所选条件以外的全部条件并即时动态刷新匹配结果" onclick="changeselect('prices')">反选</button>
+					</label>
+				</div>
+
+				<label class="control-label search-lt">特色</label>
+				<div class="search-rt">
+					<label for="features" class="checkbox-inline">
+					{loop $allfeatures $k $v}
+					<input type="checkbox" name="features[{$k}]" value="{$k}"  class="no-margin features" onselect="form-check('search-form');">
+					<span class="" data-toggle="tooltip"  data-placement="top" data-container="body" title="当前选中的为{$v}条件范围内的楼盘;已选择了“不限”条件的将自动忽略本条件下的其他限制">{$v}</span>
+					{/loop}
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择全部条件并即时动态刷新匹配结果" onclick="selectall('features',this)">全选</button>
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择当前所选条件以外的全部条件并即时动态刷新匹配结果" onclick="changeselect('features')">反选</button>
+					</label>
+				</div>
+
+				<label class="control-label search-lt">户型</label>
+				<div class="search-rt">
+					<label for="roomtypes" class="checkbox-inline">
+					{loop $allroomtypes $k $v}
+					<input type="checkbox" name="roomtypes[{$k}]" value="{$k}"  class="no-margin roomtypes" onselect="form-check('search-form');">
+					<span class="" data-toggle="tooltip"  data-placement="top" data-container="body" title="当前选中的为{$v}条件范围内的楼盘;已选择了“不限”条件的将自动忽略本条件下的其他限制">{$v}</span>
+					{/loop}
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择全部条件并即时动态刷新匹配结果" onclick="selectall('roomtypes',this)">全选</button>
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择当前所选条件以外的全部条件并即时动态刷新匹配结果" onclick="changeselect('roomtypes')">反选</button>
+					</label>
+				</div>
+
+				<label class="control-label search-lt">类型</label>
+				<div class="search-rt">
+					<label for="housetypes" class="checkbox-inline">
+					{loop $allhousetypes $k $v}
+					<input type="checkbox" name="housetypes[{$k}]" value="{$k}"  class="no-margin housetypes" onselect="form-check('search-form');">
+					<span class="" data-toggle="tooltip"  data-placement="top" data-container="body" title="当前选中的为{$v}条件范围内的楼盘;已选择了“不限”条件的将自动忽略本条件下的其他限制">{$v}</span>
+					{/loop}
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择全部条件并即时动态刷新匹配结果" onclick="selectall('housetypes',this)">全选</button>
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择当前所选条件以外的全部条件并即时动态刷新匹配结果" onclick="changeselect('housetypes')">反选</button>
+					</label>
+				</div>
+
+				<hr>
+
+				<label class="hidden col-xs-12 col-sm-6 col-md-2 col-lg-1 control-label">平台</label>
+				<div class="hidden col-xs-12 col-sm-6 col-md-2 col-lg-2">
+					<select name="fromplats" class='form-control'>
+						<option value="all" {if $_GPC['fromplats'] == 'all'} selected="selected" {/if}>全部</option>
+						{if $supplydians}
+						{loop $supplydians $key $item}
+						<option value="{$item}" {if $_GPC['fromplats'] == $item} selected="selected" {/if}>{$accounts[$item]}</option>
+						{/loop}
+						{/if}
+					</select>
+				</div>
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 search-keywords">
+					<input class="form-control input-lg search-query" type="text" name="keywords" ng-model="keywords" placeholder="请输入房源特征、地点或项目/楼盘名称" value="{$keywords}" />
+					<button type="button" class="btn btn-info search-button" id="form-search-button" contenteditable="false" onclick="formcheck('search-form');" data-toggle="tooltip" data-placement="top" title="根据所选条件及关键词,在当前城市({$area_pcate_name})范围内查找匹配的房源" >房源查找</button>
+					<button type="button" class="hidden btn btn-success search-button" id="form-search-button" contenteditable="false" onclick="formcheck('search-form');" data-toggle="tooltip" data-placement="top" title="在我们全部布点城市中查找与关键词及其他条件相关的房源" >全城找房</button>
+				</div>
+				<div class="hidden search-rec">
+						{template $appstyle.$do.'/'.$ac.'/list_rec'}
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+<script type="text/javascript">
+
+	var area_pcate = "{$area_pcate}";
+	changeArea(area_pcate);
+
+	function changeArea(area) {
+		area_pcate = area;
+		$('[value="' + area_pcate + '"]').attr('checked','cheched');	//所有value=当前区域的复选框，添加被选中状态
+		$('.area-ccate').removeAttr('checked').addClass('hidden').css('display','none');
+		$('.' + area_pcate).removeClass('hidden').show();
+		$('#form-input-area').val(area_pcate);
+	}
+
+	function linkTo(area) {
+		top.location.href = '{php echo fm_murl($do,$ac,$operation,array())}' + '&area=' + area;
+		return;
+	}
+
+	function selectall(classname,obj) {
+		var hasclicked = $(obj).attr('data-hasclicked');
+		var selected = true;
+		var newlabel = '全选';
+		if (hasclicked==1) {
+			selected =false;
+			$(obj).attr('data-hasclicked',0);
+		}else{
+			newlabel = '取消全选';
+			$(obj).attr('data-hasclicked',1);
+		}
+		var f=document.getElementsByClassName(classname);
+		for(var i=0;i<f.length;i++)
+		{
+			f[i].checked=selected;
+			$(obj).html(newlabel);
+		}
+		formcheck('search-form');
+	}
+
+	function changeselect(classname) {
+		var f=document.getElementsByClassName(classname);
+		for(var i=0;i<f.length;i++)
+		{
+			if(f[i].checked==false)
+			{
+				f[i].checked=true;
+			}else {
+				f[i].checked=false;
+			}
+		}
+		formcheck('search-form');
+	}
+
+	function formcheck(formid){
+		var form = document.getElementById(formid);
+		var noajax = $('#'+ formid).attr('data-noajax');	//使用noajax标记来临时改用非ajax的提交方法
+		if (noajax == 1) {
+			form.submit();
+			return;
+		}
+		var formdata = Form_format(formid); //自有方法格式化表单元素，返回数组
+		var url = "{php echo fm_murl($do,$ac,'ajax',array())}";
+		var data = formdata;
+		$('#form-search-button').html("请稍候,正在为您查询");
+		$.post(url,data,function(res){
+			if (res) {
+				$('#form-search-button').html("已为您查询到相关房源");
+				$('#list-houses').html(res);
+			}else{
+				$('#form-search-button').html("房源查询");
+			}
+			console.log(res);
+		},'html');
+		return false;
+	}
+</script>

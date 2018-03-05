@@ -1,0 +1,140 @@
+<!--step1-->
+<div class="container" style="padding: 0;text-align: center;width: 100%;max-width: 900px;" id="footbar-1">
+	<div class="row" style="margin: 0;text-align: center;">
+		<div class="footbar" style="margin-bottom: 0;">
+		<input type="hidden"  id="optionid" name="optionid" value="" />
+		{if $goods['status']!=1 || $goods['deleted']==1  || $isavailable==0}
+			<a href="javascript:void(0)" class="btn btn-default"  style="width:100%;" >此商品已下架</a>
+		{else}
+		 {if $allowedtobebuy=="0" }
+		 <table class="fbtable" style="margin: 0;"  contenteditable="false">
+		<tbody>
+			<tr>
+				<td style="width:30%;background-color: #eee;">
+					<a href="tel:{$kefuphone}"  style="color: #aaa;width: 100%;padding:0;"  class="btn ">
+						<i class="glyphicon glyphicon-earphone" style="font-size:20px;top: 5px;"></i>
+						<h6 style="margin-top: 5px;color:#fff;">
+								联系客服
+						</h6>
+					</a>
+				</td>
+				<td style="width:70%;background-color: #fda94f;color:#fff;">
+						<h4>
+								{if $timenotstarted=="1"}
+								还未开始,请稍候
+								{/if}
+								{if $timeended=="1"}
+								已结束，下次请趁早哦
+								{/if}
+						</h4>
+				</td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+		</table>
+		{else}
+		<table class="fbtable" style="margin: 0;"  contenteditable="false">
+		<tbody>
+			<tr>
+				<td style="width:15%;">
+					<a href="{php echo fm_murl('index','index','index',array())}" style="color: #aaa;width: 100%;padding:0;border-radius:0;border:0;" class="btn btn-default">
+						<i class="glyphicon glyphicon-home" style="font-size:20px;top: 5px;"></i>
+						<h6 style="color: #aaa;margin-top: 5px;">
+								首页
+						</h6>
+					</a>
+				</td>
+				<td style="width:15%;">
+					<a href="{php echo fm_murl('search','index','index',array())}" style="color: #aaa;width: 100%;padding:0;border-radius:0;border:0;" class="btn btn-default">
+						<i class="glyphicon glyphicon-search" style="font-size:20px;top: 5px;"></i>
+						<h6 style="color: #aaa;margin-top: 5px;">
+								搜索
+						</h6>
+					</a>
+				</td>
+				<td style="width:15%;">
+					<a href="tel:{$kefuphone}"  style="color: #aaa;width: 100%;padding:0;border-radius:0;border:0;" class="btn btn-default">
+						<i class="glyphicon glyphicon-earphone" style="font-size:20px;top: 5px;"></i>
+						<h6 style="color: #aaa;margin-top: 5px;">
+								客服
+						</h6>
+					</a>
+				</td>
+				{if $goods['status']!=1 || $goods['deleted']==1  || $isavailable==0}
+				<td style="width:55%;background-color: #fda94f;">
+						<i class="glyphicon glyphicon-shopping-cart" style="font-size:20px;top: 5px;"></i>
+						<h4>
+								此商品已下架
+						</h4>
+				</td>
+				{else}
+				<td style="width:55%;background-color: #fda94f;">
+					<a style="color: #fff;width: 100%;padding:0;" data-toggle="collapse" data-parent="#footbar-1"
+          href="#modal-buy" id="tobuy"  class="btn btn-warning" data-changeid="#footbar-2">
+						<i class="glyphicon glyphicon-shopping-cart" style="font-size:20px;top: 5px;"></i>
+						<h6 style="margin-top: 5px;color:#fff;">
+								立即购买
+						</h6>
+					</a>
+				</td>
+				{/if}
+			</tr>
+		</tbody>
+		</table>
+		{/if}
+	{/if}
+	</div>
+	</div>
+</div>
+
+<!--step2-->
+<div class="container" style="display:none;padding: 0;text-align: center;width: 100%;max-width: 900px;" id="footbar-2">
+	<div class="row" style="margin: 0;text-align: center;">
+		<div class="footbar">
+		<input type="hidden"  id="optionid" name="optionid" value="" />
+		{if $goods['status']!=1 || $goods['deleted']==1  || $isavailable==0}
+			<a href="javascript:void(0)" class="btn btn-default"  style="width:100%;" >此商品已下架</a>
+		{else}
+		<table class="fbtable" style="margin: 0;"  contenteditable="false">
+			<tbody>
+				<tr>
+					<td style="width:15%;background-color: #eee;">
+						<a style="color: #aaa;background-color:#eee;width:100%;padding:0;border-radius:0;border:0;" data-toggle="collapse" data-parent="#footbar-2"	href="#modal-buy" id="hideoption"  class="btn btn-default" data-changeid="#footbar-1">
+							<i class=" glyphicon glyphicon-download" style="font-size:20px;top: 5px;"></i>
+							<h6 style="margin-top: 5px;">
+								再看看
+							</h6>
+						</a>
+					</td>
+					<td style="width:15%;background-color: #eee;">
+						<a href="tel:{$kefuphone}"  style="color:#aaa;background-color:#eee;width: 100%;padding:0;border-radius:0;border:0;" class="btn  btn-default">
+							<i class="glyphicon glyphicon-earphone" style="font-size:20px;top: 5px;"></i>
+							<h6 style="margin-top: 5px;">
+								客服
+							</h6>
+						</a>
+					</td>
+					<td style="width:40%;background-color: #fda94f;">
+						<a href="javascript:void(0)" onclick='buy()' style="color: #fff;padding:0;width: 100%;"  class="btn " id="gotoconfirm">
+							<i class="glyphicon glyphicon-share" style="font-size:20px;top: 5px;"></i>
+							<h6 style="margin-top: 5px;color:#fff;">
+								选好了，去付款
+							</h6>
+						</a>
+					</td>
+					<td style="width:30%;background-color: #f7615d;">
+						<a href="javascript:void(0)" onclick='addtocart()' style="color: #fff;padding:0;width: 100%;"  class="btn ">
+							<i class="glyphicon glyphicon-compressed" style="font-size:20px;top: 5px;"></i>
+							<h6 style="margin-top: 5px;color:#fff;">
+								 先放购物车
+							</h6>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		{/if}
+		</div>
+	</div>
+</div>

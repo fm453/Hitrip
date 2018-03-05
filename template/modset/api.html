@@ -1,0 +1,225 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+<div class="main">
+	<form action="{php echo $this->createWebUrl('modset')}" method="post" class="form-horizontal form" id="setting-form">
+	<input type="hidden" name="ac" value="api" />
+	<input type="hidden" name="op" value="modify" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+		{if $_FM['isSuper']  || $_W['isfounder']}
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				API设置-<span style="color: red;font-weight: bolder;">本设置项只有超级管理员及站长可见</span>
+			</div>
+			<div class="panel-body">
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  control-label">
+						畅言评论(changyan)
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-1">
+						<div class="input-group ">
+							<span class="input-group-addon">Appid</span>
+							<input type="text" name="changyan_appId" id="changyan_appId" class="form-control" style="width:200px;" value="{$settings['api']['changyan_appId']}" />
+							<span class="input-group-addon hidden">appid</span>
+							<span class="input-group-addon">AppKey</span>
+								<input type="text" name="changyan_appKey" id="changyan_appKey" class="form-control" style="width:400px;"  value="{$settings['api']['changyan_appKey']}" />
+							<span class="input-group-addon hidden">appkey</span>
+							<span class="input-group-addon">conf</span>
+								<input type="text" name="changyan_conf" id="changyan_conf" class="form-control" style="width:200px;"  value="{$settings['api']['changyan_conf']}" />
+							<span class="input-group-addon"><a target="_blank" href="http://changyan.kuaizhan.com/">去申请</a></span>
+							<span class="input-group-addon hidden">
+									<a class="js-clip" data-url="{php echo fm_murl('api','changyan','callback',array())}"> 复制回调接口地址
+									</a>
+								</span>
+						</div>
+					</div>
+
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  control-label">
+						地址链接(点击可复制)
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+						<span class="help-block">
+							回调接口地址：
+							<a class="js-clip" data-url="{$api_changyan['callback_url']}" title="点击复制">{$api_changyan['callback_url']}
+							</a>
+						</span>
+						<span class="help-block">
+							单点登陆wap登陆页地址：
+							<a class="js-clip" data-url="{$api_changyan['oss_login_url']}" title="点击复制">{$api_changyan['oss_login_url']}
+							</a>
+						</span>
+						<span class="help-block">
+							获取用户信息接口URL：
+							<a class="js-clip" data-url="{$api_changyan['oss_userinfo_url']}" title="点击复制">{$api_changyan['oss_userinfo_url']}
+							</a>
+						</span>
+						<span class="help-block">
+							用户退出接口URL：
+							<a class="js-clip" data-url="{$api_changyan['oss_logout_url']}" title="点击复制">{$api_changyan['oss_logout_url']}
+							</a>
+						</span>
+					</div>
+
+				</div>
+				<hr>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  control-label">
+						企业微信(https://work.weixin.qq.com)
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-1">
+						<div class="input-group ">
+							<span class="input-group-addon">agentid</span>
+							<input type="text" name="workweixin_agentid" id="workweixin_agentid" class="form-control" style="width:150px;" value="{$settings['api']['workweixin_agentid']}" title="企业号应用的ID" />
+
+							<span class="input-group-addon">corpid</span>
+							<input type="text" name="workweixin_corpid" id="workweixin_corpid" class="form-control" style="width:180px;" value="{$settings['api']['workweixin_corpid']}" />
+
+							<span class="input-group-addon">secret</span>
+								<input type="text" name="workweixin_corpsecret" id="workweixin_corpsecret" class="form-control" style="width:400px;"  value="{$settings['api']['workweixin_corpsecret']}" />
+
+							<span class="input-group-addon"><a target="_blank" href="https://work.weixin.qq.com/api/doc#10013/术语介绍">查看官方说明</a></span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  control-label">
+
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-1">
+						<div class="input-group ">
+							<span class="input-group-addon">Token</span>
+							<input type="text" name="workweixin_app_Token" id="workweixin_app_Token" class="form-control" style="width:150px;" value="{$settings['api']['workweixin_app_Token']}" />
+
+							<span class="input-group-addon">EncodingAESKey</span>
+								<input type="text" name="workweixin_app_EncodingAESKey" id="workweixin_app_EncodingAESKey" class="form-control" style="width:450px;"  value="{$settings['api']['workweixin_app_EncodingAESKey']}" />
+
+							<span class="input-group-addon"><a target="_blank" href="https://work.weixin.qq.com/api/doc#10514">填写指引</a></span>
+							<span class="input-group-addon"><a class="js-clip"  data-url="{$api_workweixin['app_msg_api']}">复制URL</a></span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  control-label">
+						地址链接(点击可复制)
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+						<span class="help-block">
+							消息服务器URL：
+							<a class="js-clip" data-url="{$api_workweixin['app_msg_api']}" title="点击复制">{$api_workweixin['app_msg_api']}
+							</a>
+						</span>
+						<span class="help-block">
+							工作台应用主页：
+							<a class="js-clip" data-url="{$api_workweixin['app_home']}" title="点击复制">{$api_workweixin['app_home']}
+							</a>
+						</span>
+					</div>
+
+				</div>
+				<hr>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  control-label">
+						百度地图接口(lbsyun.baidu.com)
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-1">
+						<div class="input-group ">
+							<span class="input-group-addon">网页JS访问AK</span>
+							<input type="text" name="baidu_map_ak" id="baidu_map_ak" class="form-control" style="width:450px;" value="{$settings['api']['baidu_map_ak']}" />
+								<span class="input-group-addon"><a target="_blank" href="http://lbsyun.baidu.com/apiconsole/key?application=key">去申请</a></span>
+						</div>
+					</div>
+				</div>
+				<hr>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  control-label">
+						腾讯地图接口(lbs.qq.com)
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-1">
+						<div class="input-group ">
+							<span class="input-group-addon">网页JS开发密钥</span>
+							<input type="text" name="map_qq_js" id="baidu_map_ak" class="form-control" style="width:450px;" value="{$settings['api']['map_qq_js']}" />
+								<span class="input-group-addon"><a target="_blank" href="http://lbs.qq.com/console/mykey.html">去申请</a></span>
+						</div>
+					</div>
+				</div>
+				<hr>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2  control-label">
+						云数据接口账号(api.hiluker.com)
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-1">
+						<div class="input-group ">
+							<span class="input-group-addon">用户名</span>
+							<input type="text" name="dacms_username" id="dacms_username" class="form-control" style="width:150px;" value="{$settings['api']['dacms_username']}" />
+
+							<span class="input-group-addon">密码</span>
+								<input type="password" name="dacms_password" id="dacms_password" class="form-control" style="width:300px;"  value="{$settings['api']['dacms_password']}" />
+
+								<span class="input-group-addon"><a target="_blank" href="https://api.hiluker.com/">去申请</a></span>
+						</div>
+					</div>
+				</div>
+				<hr>
+
+				<div class="panel-body">
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+			<div class="col-sm-10 col-xs-10" >
+				<input type="submit" name="save" value="保存" class="btn btn-primary" />
+				<a class="btn btn-primary" href="{php echo fm_wurl('modset','test','',array('aim'=>'dacms'));}" target="_blank">测试数据接口</a>
+				<a class="btn btn-primary" href="{php echo fm_wurl('modset','test','',array('aim'=>'workweixin'));}" target="_blank">测试企业微信接口</a>
+			</div>
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+				</div>
+
+			</div>
+		</div>
+		{/if}
+
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				云数据接口-<span style="color: red;font-weight: bolder;">https://api.hiluker.com （DACMS系统）</span>
+			</div>
+			<div class="panel-body">
+				<div class="col-sm-1 col-xs-1" >
+				</div>
+				<div class="form-group col-sm-10 col-xs-10" contenteditable="true">
+					<kbd>站点id</kbd>:&nbsp;&nbsp;<code>{$api_data_test['siteId']}</code>;<br>
+					<kbd>站点名称</kbd>:&nbsp;&nbsp;<code>{$api_data_test['siteName']}</code>;<br>
+					<kbd>授权IP</kbd>:&nbsp;&nbsp;
+						{loop $api_data_test['suIp'] $ip}
+						<code>{$ip}</code>;
+						{/loop}
+						<br>
+					<kbd>授权域名</kbd>:&nbsp;&nbsp;
+						{loop $api_data_test['suDomain'] $domain}
+						<code>{$domain}</code>;
+						{/loop}
+						<br>
+					<kbd>授权状态</kbd>:&nbsp;&nbsp;<code>{if $api_data_test['status']==1}正常可用{else}{if $api_data_test['status']==0}只读{/if}{/if}</code>;<br>
+					{if isset($api_data_test['uniacid'])}
+					<kbd>绑定公众号</kbd>:&nbsp;&nbsp;<code>{$api_data_test['uniacid']}</code>;<br>
+					{/if}
+					{if isset($api_data_test['platid'])}
+					<kbd>绑定平台代号</kbd>:&nbsp;&nbsp;<code>{$api_data_test['platid']}</code>;<br>
+					{/if}
+					<br>
+					<kbd>授权码</kbd>:&nbsp;&nbsp;<code>{$api_data_test['code']}</code>;<br><br>
+
+					{if $_W['isfounder'] && FM_DEBUG}
+						<pre>{php print_r($api_data_test);}</pre>
+					{/if}
+				</div>
+			</div>
+		</div>
+
+	</form>
+</div>
+{template 'common/footer'}

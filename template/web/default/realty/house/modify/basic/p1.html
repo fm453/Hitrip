@@ -1,0 +1,180 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#basicSetting">
+          基础信息<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse in" id="basicSetting">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-basicSetting" {if $sn>0} onsubmit="return formcheck('setting-form-basicSetting');return false;" {/if} data-noajax=0>
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" value="" />
+				<input type="hidden" name="setfor" value="" />
+				<input type="hidden" name="s_sn" value="{$s_sn}" />
+				<input type="hidden" name="sn" value="{$sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">{if $sn>0}楼盘别名{else}楼盘名称{/if}</label>
+	<div class="col-xs-12 col-sm-9 ">
+		<input type="text" name="data[title]" id="title" class="form-control" value="{$data['title']}" />
+		<span class="help-block">说明：请填写楼盘全称</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">楼盘地址</label>
+	<div class="col-xs-12 col-sm-9 col-md-4 col-lg-5">
+		<input type="text" name="data[address]" id="address" class="form-control" value="{$item['address']}" />
+		<span class="help-block">说明：楼盘的详细地址</span>
+	</div>
+
+	<div class="col-xs-12 col-sm-9 col-md-4 col-lg-5">
+		{php echo tpl_form_field_coordinate('data[location]',$item['location']);}
+		<span class="help-block">说明：楼盘的经纬度位置</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">楼盘简介</label>
+	<div class="col-xs-12 col-sm-9 ">
+		<input type="text" name="data[description]" id="description" class="form-control" value="{$item['description']}" />
+		<span class="help-block">说明：楼盘简介用于在分享、推荐页等处</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">所属区域</label>
+	<div class="col-xs-12 col-sm-9 ">
+		<label class="radio-inline">主区域:</label>
+		{loop $item['areas']['pcates'] $v}
+			<label for="data[area][pcate]" class="radio-inline area_pcate_{$v['key']}">
+				<input type="radio" name="data[area][pcate]" value="{$v['key']}" id="area_pcate_{$v['key']}" {if $item['area']['pcate']==$v['key']} checked="checked" {/if}  onclick="changeArea('{$v['key']}');">{$v['title']}
+			</label>
+		{/loop}
+		<br>
+		<label class="radio-inline">次区域:</label>
+		{loop $item['areas']['ccates'] $v}
+			<label for="data[area][ccate]" class="{if $v['pcate'] !== $item['area']['pcate']} hidden {/if} radio-inline area_ccate area_ccate_{$v['pcate']}">
+				<input type="radio" name="data[area][ccate]" value="{$v['key']}" id="area_ccate_{$v['key']}" {if $item['area']['ccate']==$v['key']} checked="checked" {/if} >{$v['title']}
+			</label>
+		{/loop}
+
+		<span class="help-block">说明：用于按区域搜索、展示楼盘时</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">楼盘详细介绍</label>
+	<div class="col-xs-12 col-sm-9 ">
+		{php echo fmFunc_tpl_ueditor('value',$data['value'],'web','html',array('height'=>200,'width'=>800));}
+		<span class="help-block">说明：该介绍资料将在查看楼盘详情的时候被调用；根据前台页面设计情况决定是否展示</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">产权</label>
+	<div class="col-xs-12 col-sm-9 col-md-4 col-lg-3 ">
+		<input type="number" name="data[property][years]" id="property_years" class="form-control" value="{$item['property']['years']}" />
+		<span class="help-block">说明：该楼盘的产权所剩年限</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">开盘时间</label>
+	<div class="col-xs-12 col-sm-9  col-md-4 col-lg-3">
+		{php echo tpl_form_field_date('opendate',$item['opendate'],false);}
+		<span class="help-block">说明：该楼盘的实际或预计开盘时间</span>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">交房时间</label>
+	<div class="col-xs-12 col-sm-9  col-md-4 col-lg-3">
+		{php echo tpl_form_field_date('jiaofangdate',$item['jiaofangdate'],false);}
+		<span class="help-block">说明：该楼盘的实际或预计（首次）交房时间</span>
+	</div>
+
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否启用</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[status]' value='1' {if $data['status'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[status]' value='0' {if $data['status'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">首页推荐</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[rec]' value='1' {if $item['rec'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[rec]' value='0' {if $item['rec'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否热门</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[hot]' value='1' {if $item['hot'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[hot]' value='0' {if $item['hot'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否删除</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[deleted]' value='1' {if $data['deleted'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[deleted]' value='0' {if $data['deleted'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">有否开盘</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[open]' value='1' {if $item['open'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[open]' value='0' {if $item['open'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">有否交房</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[jiaofang]' value='1' {if $item['jiaofang'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[jiaofang]' value='0' {if $item['jiaofang'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+</div>
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-basicSetting" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-basicSetting" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#basicSetting">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>

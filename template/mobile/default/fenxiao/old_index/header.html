@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 	<title>{php if(isset($pagename)) echo $_W['page']['title'] = $pagename}-{if !empty($_W['account']['name'])}{$_W['account']['name']}{/if}</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <meta name="format-detection" content="telephone=no, address=no,  email=no"><!-- 禁止苹果设备自动为号码、邮箱、地址添加链接支持 -->
+ <meta name="x5-page-mode" content="app"/>
+ <meta name="renderer" content="webkit"> <!--使用高速模式渲染页面，360浏览器支持 -->
+ <meta name="apple-mobile-web-app-capable" content="yes" />
+ <meta name="apple-touch-fullscreen" content="yes"/>
+ <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+ <meta name="author" content="LukerFang" />
+ <meta name="generator" content="Bluefish 2.2.7" />
+ <meta name="date" content="2016-04-09T23:11:09+0800" />
+ <meta name="version" content="{$shopversion}" />
+ <meta name="keywords" content="{if empty($_W['page']['keywords'])}{if IMS_FAMILY != 'x'}VCMS,微信,微信公众平台,vcms.hiluker.com{/if}{else}{$_W['page']['keywords']}{/if}" />
+ <meta name="description" content="{if empty($_W['page']['description'])}{if IMS_FAMILY != 'x'}分时度假管理引擎，简称微旅行商城，是嗨路客电子商务团队结合海南酒店旅游从业经验，针对旅行社线上转型、酒店服务营销之所需而定制的微信公众平台管理系统，是业内最完善移动网站及移动互联网技术解决方案之一。{/if}{else}{$_W['page']['description']}{/if}" />
+ <meta http-equiv="X-UA-Compatible" content="IE=Edge"><!-- 兼容IE -->
+ <link rel="apple-touch-icon-precomposed" size="144x144" href="{$fm453resource}images/favicon.png">
+ <link rel="shortcut icon" href="{$fm453resource}images/favicon.png">
+ <!-- 优先引入bs样式表,核心 CSS 文件 -->
+ <link href="{$fm453resource}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+ <link rel="stylesheet" href="{$fm453resource}common/font/font-awesome.min.css"><!--图标字体样式-->
+ <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+ <!--<link href="{$fm453resource}bootstrap/css/bootstrap-theme.css">-->
+<!-- 分销使用的CSS文件-->
+<link rel='stylesheet' type='text/css' href='{$fm453resource}common/css/product-intro.css' />
+<link rel='stylesheet' type='text/css' href='{$fm453resource}common/css/credit-style.css' />
+<link rel="stylesheet" type="text/css" href="{$fm453resource}common/css/xmapp.css"/>
+ <!--引用AMD异步模块定义及其配置文件，先于全部js文件引入 -->
+ 	<script src="{$_W['siteroot']}app/resource/js/require.js"></script>
+	<script src="{$_W['siteroot']}app/resource/js/app/config.js"></script>
+ <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+ <script type="text/javascript" src="{$fm453resource}common/jquery-2.1.4.min.js"></script>
+ <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+ <script type="text/javascript" src="{$fm453resource}bootstrap/js/bootstrap.min.js"></script>
+
+ <script type="text/javascript" src="{$fm453resource}common/headroom.min.js"></script>
+ <script type="text/javascript">
+   if(navigator.appName == 'Microsoft Internet Explorer'){
+    if(navigator.userAgent.indexOf("MSIE 5.0")>0 || navigator.userAgent.indexOf("MSIE 6.0")>0 || navigator.userAgent.indexOf("MSIE 7.0")>0) {
+     alert('您使用的 IE 浏览器版本过低, 推荐使用 Chrome 浏览器或 IE8 及以上版本浏览器.');
+      }
+     }
+
+   $(function () {
+  var nua = navigator.userAgent
+  var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1)
+  if (isAndroid) {
+    $('select.form-control').removeClass('form-control').css('width', '100%')
+  }
+}) /** 修复android 4.1浏览器对选项框边框样式的不兼容问题 **/
+     {php define('HEADER', true);}
+
+	window.sysinfo = {
+{if !empty($_W['uniacid'])}
+		'uniacid': '{$_W['uniacid']}',
+{/if}
+{if !empty($_W['acid'])}
+		'acid': '{$_W['acid']}',
+{/if}
+{if !empty($_W['openid'])}
+		'openid': '{$_W['openid']}',
+{/if}
+{if !empty($_W['uid'])}
+		'uid': '{$_W['uid']}',
+{/if}
+		'siteroot': '{$_W['siteroot']}',
+		'siteurl': '{$_W['siteurl']}',
+		'attachurl': '{$_W['attachurl']}',
+{if defined('MODULE_URL')}
+		'MODULE_URL': '{MODULE_URL}',
+{/if}
+		'cookie' : {'pre': '{$_W['config']['cookie']['pre']}'}
+	};
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+	// 是否启用调试
+	jssdkconfig.debug = false;
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'hideMenuItems',
+		'showMenuItems',
+		'hideAllNonBaseMenuItem',
+		'showAllNonBaseMenuItem',
+		'translateVoice',
+		'startRecord',
+		'stopRecord',
+		'onRecordEnd',
+		'playVoice',
+		'pauseVoice',
+		'stopVoice',
+		'uploadVoice',
+		'downloadVoice',
+		'chooseImage',
+		'previewImage',
+		'uploadImage',
+		'downloadImage',
+		'getNetworkType',
+		'openLocation',
+		'getLocation',
+		'hideOptionMenu',
+		'showOptionMenu',
+		'closeWindow',
+		'scanQRCode',
+		'chooseWXPay',
+		'openProductSpecificView',
+		'addCard',
+		'chooseCard',
+		'openCard'
+	];
+	</script>
+	<script>
+	function _removeHTMLTag(str) {
+		if(typeof str == 'string'){
+			str = str.replace(/<script[^>]*?>[\s\S]*?<\/script>/g,'');
+			str = str.replace(/<style[^>]*?>[\s\S]*?<\/style>/g,'');
+			str = str.replace(/<\/?[^>]*>/g,'');
+			str = str.replace(/\s+/g,'');
+			str = str.replace(/&nbsp;/ig,'');
+		}
+		return str;
+	}
+	</script>
+</head>

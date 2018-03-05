@@ -1,0 +1,14 @@
+<div class="mui-content" style="background-color: rgba(255,255,255,1);">
+	<div class="mui-content-padded" style="margin-top: 4px;">
+		<div class="page-bizinfo">
+			<div class="header">
+				<h2 id="activity-name">{$article['title']}</h2>
+				<p class="activity-info">
+					<span id="post-date" class="activity-meta">发布日期:{php echo date("Y-m-d", $article['createtime']);}</span>
+					{if !empty($article['author'])}<span id="author-info" class="activity-meta">{$article['author']}</span>{/if}
+					<a href="{$subscribeurl}"  id="account-info" class="activity-meta">{$_W['account']['name']}</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

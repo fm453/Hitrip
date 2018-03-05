@@ -1,0 +1,51 @@
+<blockquote><h1>楼栋信息</h1></blockquote>
+<table class="table " contenteditable="true">
+    <thead>
+        <tr class="firstRow">
+            <th>
+                属性
+            </th>
+            <th>
+                说明
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="params-title">
+                开发商
+            </td>
+            <td class="params-var">
+            	<span class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            	{php print_r($HouseData['params']['developer']['name'])}
+            	</span>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="params-title">
+                配套设施
+            </td>
+            <td class="params-var">
+            	{loop $HouseData['params']['peitao']['facilities'] $k $v}
+            		<span class="col-xs-6 col-sm-3 col-md-2 col-lg-1">{$v['title']} </span>
+            	{/loop}
+            </td>
+        </tr>
+        <tr>
+            <td class="params-title">
+                规划信息
+            </td>
+            <td class="params-var">
+                <span class="col-xs-12 col-sm-6 col-md-4 col-lg-3">占地面积：{$HouseData['params']['plan']['cover_area']} m<sup>2</sup></span>
+                <span class="col-xs-12 col-sm-6 col-md-4 col-lg-3">建筑面积：{$HouseData['params']['plan']['structure_area']} m<sup>2</sup></span>
+                <span class="col-xs-12 col-sm-6 col-md-4 col-lg-3">容积率：{$HouseData['params']['plan']['capacity_ratio']} %</span>
+                <span class="col-xs-12 col-sm-6 col-md-4 col-lg-3">绿化率：{$HouseData['params']['plan']['green_ratio']} %</span>
+                <span class="col-xs-12 col-sm-6 col-md-4 col-lg-3">车位数：{$HouseData['params']['plan']['parking_lot_num']} </span>
+                <span class="col-xs-12 col-sm-6 col-md-4 col-lg-3">户数：{$HouseData['params']['plan']['house_num']} </span>
+                <span class="col-xs-12 col-sm-12 col-md-6 col-lg-6">楼层状况：{$HouseData['params']['plan']['floors']} </span>
+            </td>
+        </tr>
+
+    </tbody>
+</table>

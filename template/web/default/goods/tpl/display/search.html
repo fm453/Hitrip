@@ -1,0 +1,64 @@
+<div class="panel panel-info" id="forsearch">
+	<div class="panel-heading">筛选与导出</div>
+	<div class="panel-body">
+		<form action="" method="post" class="form-horizontal" role="form" id="search-form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="m" value="{FM_NAME}" />
+			<input type="hidden" name="do" value="{$do}" />
+			<input type="hidden" name="ac" value="{$ac}" />
+			<input type="hidden" name="op" value="{$operation}" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">关键字</label>
+				<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+					<input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}" placeholder="可按参数项名称关键字进行查询">
+				</div>
+
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">状态</label>
+				<div class="col-xs-12 col-sm-4 col-md-2 col-lg-1 ">
+					<select name="status" class="form-control">
+						{loop $gtplstatus $key $item}
+						<option value="{$key}" {if $status == $key} selected="selected" {/if}>{$item['name']}</option>
+						{/loop}
+					</select>
+				</div>
+
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">产品模型</label>
+				<div class="col-xs-12 col-sm-4 col-md-2 col-lg-1 ">
+					<select name="type" class="form-control">
+						<option value="all" >全部</option>
+						{loop $gtpltype $key $item}
+						<option value="{$key}" {if $type == $key} selected="selected" {/if}>{$item['name']}</option>
+						{/loop}
+					</select>
+				</div>
+
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">适用于</label>
+				<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+					<select name="isform" class="form-control">
+						<option value="" {if $_GPC['isform'] == 0} selected="selected" {/if}>全部</option>
+						<option value="-1" {if $_GPC['isform'] == -1} selected="selected" {/if}>信息展示</option>
+						<option value="1" {if $_GPC['isform'] == 1} selected="selected" {/if}>数据收集</option>
+					</select>
+				</div>
+				<div class="col-xs-12 col-sm-4 col-md-2 col-lg-1 ">
+					<select name="isfront" class="form-control">
+						<option value="" {if $_GPC['isfront'] == 0} selected="selected" {/if}>全部</option>
+						<option value="-1" {if $_GPC['isfront'] == -1} selected="selected" {/if}>后台</option>
+						<option value="1" {if $_GPC['isfront'] == 1} selected="selected" {/if}>前台</option>
+					</select>
+				</div>
+
+			</div>
+			<div class="form-group" style="text-align: center;">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<button class="btn btn-info" type="submit" name="search" value="yes" data-toggle="tooltip" data-placement="top" title="用于搜索或筛选分类"><i class="fa fa-search"></i> 搜索|筛选</button>
+					<input class="btn btn-default" type="submit" name="export" value="导出数据" data-toggle="tooltip" data-placement="top" title="将数据导出为csv表格文件"/>
+					<a  class="btn btn-info" href="{php echo fm_wurl('goods','tpl','modify', array())}"><i class="fa fa-plus-sign-alt"></i> 添加新参数</a>
+				 <input type="hidden" name="token" value="{$_W['token']}" />
+				</div>
+			</div>
+			</form>
+	</div>
+</div>

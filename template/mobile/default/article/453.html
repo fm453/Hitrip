@@ -1,0 +1,35 @@
+{if $_GPC['needguide']}
+	{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/'.$operation.'/guide'}
+{else}
+	{if $ac == 'detail'}
+		{template $appstyle.'common/header'}
+		<script src="{$appsrc}js/mui.min.js"></script>
+		{if $operation == 'index'}
+			{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/'.$operation.'/index'}
+		{/if}
+		{if $operation == 'phonebook'}
+			{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/phonebook'}
+		{/if}
+	{/if}
+	{if $ac == 'list'}
+		{template $appstyle.'common/header_mui'}
+		<script src="{$appsrc}js/mui.min.js"></script>
+		{if $operation == 'index'}
+			{template $appstyle.$do.'/'.$ac.'/'.$operation.'/index'}
+		{/if}
+		{if $operation == 'rec'}
+			{template $appstyle.$do.'/'.$ac.'/mainpage'}
+		{/if}
+		{if $operation == 'subcate'}
+			{template $appstyle.$do.'/'.$ac.'/mainpage'}
+		{/if}
+		{if $operation == 'loadmore'}
+			{template $appstyle.$do.'/'.$ac.'/'.$operation.'/page'}
+		{/if}
+	{/if}
+	{template $appstyle.'common/js_url'}
+	{template $appstyle.'common/js_pic'}
+	{template $appstyle.'common/js_array'}
+	{template $appstyle.'common/js_form'}
+	{template $appstyle.'common/footer'}
+{/if}

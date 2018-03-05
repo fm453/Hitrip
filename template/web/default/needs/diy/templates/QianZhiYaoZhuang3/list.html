@@ -1,0 +1,5 @@
+<!-- 可借助此页面植入自定义数据格式的php代码 -->
+<?php  ?>
+{loop $FM_LISTCOLS[$needs['template']] $key $title}
+	<span> <label class="label label-info"> {$title} </label>&nbsp;&nbsp; {$item[$key]} ;</span>
+{/loop}

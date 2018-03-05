@@ -1,0 +1,188 @@
+<div class="form-group forcopy">
+    <label class="col-xs-12 col-sm-3 col-md-2 control-label">直接链接</label>
+    <div class="col-sm-9 col-xs-12">
+        <p class="help-block">点击复制<a href="javascript:;" target="_blank" title="点击复制">{php echo fm_murl('article','detail','index',array('id' => $item['id']))}</a></p>
+        <img src="{$qrcode_preview}"><span>微信扫码，预览该文章</span>
+    </div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">文章模型</label>
+	<div class="col-sm-9 col-xs-12">
+	{loop $gtpltype $gindex $gtpl}
+		<label for="gtis{$gindex}" class="radio-inline"><input type="radio" name="a_tpl" value="{$gindex}" id="gtis{$gindex}" {if empty($item['a_tpl']) || $item['a_tpl'] == $gindex} checked="true"{/if}   /> {$gtpl['name']}</label>
+	{/loop}
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>文章名称</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="title" id="title" class="form-control" value="{$item['title']}" />
+		<span class="help-block">说明：微网站文章标题</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">主标题</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="title1" id="title1" class="form-control" value="{$item['title1']}" />
+		<span class="help-block">说明：文章主标题，部分文章列表页等页面引用</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">副标题</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="title2" id="title2" class="form-control" value="{$item['title2']}" />
+		<span class="help-block">说明：文章副标题，部分文章列表页等页面引用</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>关键词</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="keywords" id="keywords" class="form-control" value="{$item['keywords']}" />
+		<span class="help-block">说明：搜索词中含有这些关键词时即可关联到该文章；最多255个字节(122汉字)；多个关键词可用英文逗号隔开</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">文章属性</label>
+	<div class="col-sm-9 col-xs-12" >
+		<label for="isdashang" class="checkbox-inline">
+			<input type="checkbox" name="isdashang" value="1" id="isdashang" {if $item['isdashang'] == 1}checked="true"{/if} /> 开启打赏
+		</label>
+		<label for="iscomment" class="checkbox-inline">
+			<input type="checkbox" name="iscomment" value="1" id="iscomment" {if $item['iscomment'] == 1}checked="true"{/if} /> 开启评论
+		</label>
+		<label for="isrecommand" class="checkbox-inline">
+			<input type="checkbox" name="isrecommand" value="1" id="isrecommand" {if $item['isrecommand'] == 1}checked="true"{/if} /> 推荐
+		</label>
+		<label for="isnew" class="checkbox-inline">
+			<input type="checkbox" name="isnew" value="1" id="isnew" {if $item['isnew'] == 1}checked="true"{/if} /> 新品
+		</label>
+		<label for="ishot" class="checkbox-inline">
+			<input type="checkbox" name="ishot" value="1" id="ishot" {if $item['ishot'] == 1}checked="true"{/if} /> 热卖
+		</label>
+		<label for="isdiscount" class="checkbox-inline">
+			<input type="checkbox" name="isdiscount" value="1" id="isdiscount" {if $item['isdiscount'] == 1}checked="true"{/if} /> 折扣
+		</label>
+		<label for="istime" class="checkbox-inline">
+			<input type="checkbox" name="istime" value="1" id="istime" {if $item['istime'] == 1}checked="true"{/if} /> 限时
+		</label>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">限时售卖时间</label>
+	<div class="col-sm-4 col-xs-6">
+		{php echo tpl_form_field_date('timestart', !empty($item['timestart']) ? date('Y-m-d H:i',$item['timestart']) : date('Y-m-d H:i'), 1)}
+	</div>
+	<div class="col-sm-4 col-xs-6">
+		{php echo tpl_form_field_date('timeend', !empty($item['timeend']) ? date('Y-m-d H:i',$item['timeend']) : date('Y-m-d H:i'), 1)}
+	</div>
+</div>
+{if $category}
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>文章分类</label>
+	<div class="col-sm-8 col-xs-12">
+		{php echo tpl_form_field_category_2level('category', $parent, $children, $item['pcate'], $item['ccate'])}
+	</div>
+</div>
+{/if}
+{if $sysCategory}
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>系统栏目分类</label>
+	<div class="col-sm-8 col-xs-12">
+		{php echo tpl_form_field_category_2level('sysCategory', $sysParent, $sysChildren, $item['sysPcate'], $item['sysCcate'])}
+	</div>
+</div>
+{/if}
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">文章缩略图</label>
+	<div class="col-sm-9 col-xs-12">
+		<span class="help-block">文章缩略图说明：默认图片长宽尺寸比为300px:300px；如果您启用了新的商城前台风格，请重新依据新风格尺寸上传；展示在文章列表、详情等页</span>
+		{php echo tpl_form_field_image('thumb', $item['thumb'])}
+	</div>
+</div>
+
+<div class="form-group hidden">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">幻灯片组合</label>
+	<div class="col-sm-9 col-xs-12">
+		<span class="help-block">图片说明：默认图片长宽尺寸比为900px:500px;全部图片尺寸必须一致；根据前台页面风格，可用在展示在部分文章列表、详情等页</span>
+		{php echo tpl_form_field_multi_image('thumbs', $item['thumbs'])}
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">付费阅读价格</label>
+	<div class="col-sm-9 col-xs-12">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>销售价</span>
+			<input type="text" name="marketprice" id="marketprice" class="form-control" placeholder="必须填写，不填写时用户将无法购买" value="{$item['marketprice']}" />
+			<span class="input-group-addon">元</span>
+		</div>
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>市场参考价</span>
+			<input type="text" name="cankaoprice" id="cankaoprice" class="form-control" placeholder="建议填写，用于微商城客户端计算折扣" value="{$item['cankaoprice']}" />
+			<span class="input-group-addon">元</span>
+		</div>
+		<div class="input-group form-group">
+			<span class="input-group-addon">成本价</span>
+			<input type="text" name="costprice" id="costprice" class="form-control" value="{$item['costprice']}" />
+			<span class="input-group-addon">元</span>
+		</div>
+		<div class="input-group form-group">
+			<span class="input-group-addon">原价</span>
+			<input type="text" name="originalprice" id="originalprice" class="form-control" placeholder="建议填写，用于计算文章折扣"  value="{$item['originalprice']}" />
+			<span class="input-group-addon">元</span>
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">已付费阅读数(虚拟)</label>
+	<div class="col-sm-6 col-xs-12">
+		<div class="input-group">
+			<input type="text" name="sales" id="sales" class="form-control" value="{$item['sales']}" />
+			<span class="input-group-addon">人次</span>
+		</div>
+		<span class="help-block">说明：显示在文章详情页/介绍页，可以有效刺激潜在客人成交</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">真实付费阅读次数</label>
+	<div class="col-sm-6 col-xs-12">
+		<div class="input-group">
+			{if empty($item['realsales'])}
+				{if $_W['isfounder']}
+					<input type="text" name="realsales" id="realsales" class="form-control" value="{$item['sales']}" />
+				{else}
+					<input type="text" name="realsales" id="realsales" class="form-control" value="{$item['sales']}" readonly="true"/>
+				{/if}
+			{else}
+				<input type="text" name="realsales" id="realsales" class="form-control" value="{$item['realsales']}" readonly="false"/>
+			{/if}
+			<span class="input-group-addon">人次</span>
+		</div>
+		<span class="help-block">说明：系统自动记录，无须更改。
+			{if $_W['username'] == $settings['mainuser']  or $_W['isfounder'] }
+			<a href="javascript:;" onclick="fixrealsales()"  class="btn btn-default">校正真实销量</a>
+			{/if}
+		</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">创建时间</label>
+	<div class="col-sm-6 col-xs-12">
+	{if $item['createtime']}
+		<p class="help-block">{php echo date('Y年m月d日 H:i:s 星期w',$item['createtime'])} ；更新于{php echo date('Y年m月d日 H:i:s 星期w',$item['updatetime'])}  ; 对应系统微站功能文章编号：{$item['sn']}</p>
+	{/if}
+	</div>
+</div>
+<script type="text/javascript" >
+function fixrealsales() {
+	$("#realsales").removeAttr("readonly");//去除只读属性
+}
+</script>

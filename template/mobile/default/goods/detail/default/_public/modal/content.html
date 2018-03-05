@@ -1,0 +1,16 @@
+<div id="modal-content" class="mui-modal mui-scroll-wrapper" style="background-color:rgba(0,0,0,.5);">
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-close mui-pull-right" href="#modal-content"></a>
+		<h1 class="mui-title" id="modal-content-title">产品详情</h1>
+	</header>
+
+	<div class="mui-content " style="background-color: #fff;">
+		<div class="mui-content-padded">
+			{$goods['content']}
+		</div>
+	</div>
+
+	<footer style="z-index:99999;">
+		{template $appstyle.$do.'/'.$ac.'/'.$goodtpl."/_public/footbar/modal"}
+	</footer>
+</div>

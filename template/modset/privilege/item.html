@@ -1,0 +1,100 @@
+<div class="main">
+	<form action="{php echo $this->createWebUrl('modset')}" method="post" class="form-horizontal form" id="setting-form">
+	<input type="hidden" name="ac" value="privilege" />
+	<input type="hidden" name="op" value="modify" />
+	<input type="hidden" name="nowdo" value="{$nowdo}" />
+	<input type="hidden" name="nowuid" value="{$nowuid}" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+		<div class="panel panel-info">
+			<div class="panel-heading">{$shopname}后台权限分配
+			<span style="color:red;">||</span>
+			<span style="color:red;">用户：{$users[$nowuid]['username']} ( {$nowuid} )</span>
+			&nbsp;&nbsp;&nbsp;
+			<a href="{php echo fm_wurl('modset','privilege','display',array('nowuid'=>'','nowdo'=>$nowdo,'nowplat'=>$nowplat))}" >重新选择</a>
+			<span style="color:red;">||</span>
+			<span style="color:red;">入口：{$routes[$nowdo]['title']} ( {$nowdo} )</span>
+			&nbsp;&nbsp;&nbsp;
+			<a href="{php echo fm_wurl('modset','privilege','display',array('nowuid'=>$nowuid,'nowdo'=>'','nowplat'=>$nowplat))}" >重新选择</a>
+			<span style="color:red;">||</span>
+			<span style="color:red;">公号：{$accounts[$nowplat]['name']} ( {$nowplat} )</span>
+			&nbsp;&nbsp;&nbsp;
+			<a href="{php echo fm_wurl('modset','privilege','display',array('nowuid'=>$nowuid,'nowdo'=>$nowdo,'nowplat'=>''))}" >重新选择</a>
+			</div>
+
+				<div class="alert alert-warning alert-dismissible fade in" role="alert">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+						<h4>说明：    </h4>
+						<div>
+							<ol>
+								<li>只允许针对当前公号所涉的全部分店进行设置;</li>
+								<li>对于同一用户在不同的公号内管理属于同一分店时，亦会有不同的权限；</li>
+								<li>用户角色决定该用户所能看到或操作的数据范围,各角色的具体范围由系统统一定义；</li>
+								<li><span style="color:red;font-weight: bold;">为了简便起见，默认情况下某入口不进行任何设置时，可拥有全部权限；</span></li>
+								<li><span style="color:red;font-weight: bold;">为了简便起见，目前权限控制除少部分外，均只设置到了路径入口级别，暂未对某项功能进行细化的判断(后期将进一步细化—浏览、编辑、删除、角色等)</span></li>
+							</ol>
+						</div>
+				</div>
+
+			<div class="panel-heading" style="text-align: center;">
+			&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="selectnode" value="0" onclick="changeselect('do')" />全选
+			&nbsp;&nbsp;&nbsp;
+			<input  type="radio" name="selectnode" value="1" onclick="unsetselect('do')" />取消全选
+			&nbsp;&nbsp;&nbsp;
+			<input  type="radio" name="selectnode" value="-1" onclick="unchangeselect('do')" />反选
+			&nbsp;&nbsp;&nbsp;||
+			{loop $roles $role_key $role}
+			&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="selectrole" value="{$role_key}" onclick="changeselect('{$role_key}')" />{$role['name']}
+			{/loop}
+			</div>
+
+			<div class="panel-body">
+				<div class="form-group">
+					<label for="{$do_key}" class="col-xs-12 col-sm-3 col-md-2  col-lg-1 control-label ">
+						<input class="do" type="checkbox" name="{$do_key}" value="{$do_key}" id="{$do_key}" {if $privilege[$do_key]==1} checked="true"{/if} onclick="changeselect('{$do_key}')" /> {$d_o['title']}:
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-10  col-lg-11 " style="border-bottom: 1px solid #ccc;">
+						{loop $d_o['ac'] $ac_key $a_c}
+						<label for="{$do_key}_{$ac_key}" class="control-label">
+							{php $thisprivilege = $privilege[$do_key.'_'.$ac_key] }
+							<input class="do {$do_key}" type="checkbox" name="{$do_key}_{$ac_key}" value="{$ac_key}" id="{$do_key}-{$ac_key}" {if $thisprivilege==1} checked="true"{/if}  onclick="changeselect('{$do_key}-{$ac_key}')" onchange="checkselect('{$do_key}','{$ac_key}','')" /> {$a_c['title']}
+						</label>
+						&nbsp;&nbsp;&nbsp;
+						<input  type="checkbox" onclick="unchangeselect('{$do_key}-{$ac_key}')" />反选
+						<div class="" style="border-bottom: 1px solid #333;">
+							{loop $a_c['op'] $op_key $o_p}
+							{php $thisprivilege = $privilege[$do_key.'_'.$ac_key.'_'.$op_key] }
+							<input class="do {$do_key} {$do_key}-{$ac_key}" type="checkbox" name="{$do_key}_{$ac_key}_{$op_key}" value="{$op_key}" id="{$do_key}-{$ac_key}-{$op_key}" {if $thisprivilege==1} checked="true"{/if}  onclick="changeselect('{$do_key}-{$ac_key}-{$op_key}')" onchange="checkselect('{$do_key}','{$ac_key}','{$op_key}')"/> {$o_p['title']} <i class="fa fa-arrow-circle-right"></i>
+							{php $thisprivilege = $privilege[$do_key.'_'.$ac_key.'_'.$op_key.'_view'] }
+							<input  class="do {$do_key} {$do_key}-{$ac_key} {$do_key}-{$ac_key}-{$op_key}" type="checkbox" name="{$do_key}_{$ac_key}_{$op_key}_view" value="1" id="{$do_key}_{$ac_key}_{$op_key}_view" {if $thisprivilege==1} checked="true"{/if}  onclick="checkselect('{$do_key}','{$ac_key}','{$op_key}')" /> 查看数据
+							{php $thisprivilege = $privilege[$do_key.'_'.$ac_key.'_'.$op_key.'_modify'] }
+							<input class="do {$do_key} {$do_key}-{$ac_key} {$do_key}-{$ac_key}-{$op_key}" type="checkbox" name="{$do_key}_{$ac_key}_{$op_key}_modify" value="1" id="{$do_key}_{$ac_key}_{$op_key}_modify" {if $thisprivilege==1} checked="true"{/if}  onclick="checkselect('{$do_key}','{$ac_key}','{$op_key}')" /> 编辑数据
+							{php $thisprivilege = $privilege[$do_key.'_'.$ac_key.'_'.$op_key.'_delete'] }
+							<input class="do {$do_key} {$do_key}-{$ac_key} {$do_key}-{$ac_key}-{$op_key}" type="checkbox" name="{$do_key}_{$ac_key}_{$op_key}_delete" value="1" id="{$do_key}_{$ac_key}_{$op_key}_delete" {if $thisprivilege==1} checked="true"{/if}  onclick="checkselect('{$do_key}','{$ac_key}','{$op_key}')" /> 删除数据
+							&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-user"></i>
+							{php $thisprivilege = $privilege[$do_key.'_'.$ac_key.'_'.$op_key.'_role'] }
+							<label for="{$do_key}_{$ac_key}_{$op_key}_role">角色类型</label>
+							{loop $roles $role_key $role}
+								<input class="{$role_key}" type="radio" name="{$do_key}_{$ac_key}_{$op_key}_role" value="{$role['value']}" id="{$do_key}-{$ac_key}-{$op_key}-role"  {if $thisprivilege== $role['value']} checked="true"{/if} onclick="" /> {$role['name']}
+							{/loop}
+							<br>
+							{/loop}
+						</div>
+						{/loop}
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-body">
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+			<div class="col-sm-10 col-xs-10" >
+				<input type="submit" name="save" value="保存" class="btn btn-primary" />
+			</div>
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+			</div>
+		</div>
+	</form>
+</div>

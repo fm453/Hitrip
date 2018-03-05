@@ -1,0 +1,54 @@
+<div class="mui-card">
+	<div class="mui-card-content">
+		<a href="{php echo fm_murl('goods', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}">
+			<img src="{$goodsdetails[$goods['id']]['thumb']}" alt="" width="100%"  />
+		</a>
+	</div>
+	<div class="mui-card-content-inner" style="padding:2px 10px 2px 10px;">
+		<a href="{php echo fm_murl('goods', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}">
+		{if $goodslabels[$goods['id']]}
+		<button type="button" class="mui-btn" {if $goodslabels[$goods['id']][1]['value']} {php echo ' style="background-color:'.$goodslabels[$goods['id']][1]['value'].';color:#fff;padding:0;" '} {else} style="background-color:#0095f6;color:#fff;padding:0;" {/if} >
+			{$goodslabels[$goods['id']][1]['title']}
+		</button>
+		{/if}
+		<span>{$goodsdetails[$goods['id']]['title']}</span>
+		<p style="color: #333;">{$goodsdetails[$goods['id']]['description']}</p>
+		<span>
+			<i class="mui-icon-extra mui-icon-extra-trend"></i>
+			&nbsp; 已售&nbsp;
+			<span class="mui-badge mui-badge-warning mui-badge-inverted">  {$goodsdetails[$goods['id']]['sales']} </span>
+			{$goodsdetails[$goods['id']]['unit']}
+			{if $goodsdetails[$goods['id']]['originalprice']>0}
+			&nbsp; 原价&nbsp;
+			<span class="mui-badge mui-badge-warning mui-badge-inverted">
+				<del>{$goodsdetails[$goods['id']]['originalprice']}</del>
+			</span>元
+			&nbsp; &nbsp;
+			<span class="mui-badge mui-badge-warning mui-badge-inverted">
+			 	{php echo round($goodsdetails[$goods['id']]['marketprice'] / $goodsdetails[$goods['id']]['originalprice']*10,1) }
+			 </span>折
+			{else}
+				{if $goodsdetails[$goods['id']]['cankaoprice']}
+				&nbsp; 参考价&nbsp;
+				<span class="mui-badge mui-badge-warning mui-badge-inverted">
+					<del>{$goodsdetails[$goods['id']]['cankaoprice']}</del>
+				</span>元
+				{/if}
+			{/if}
+		</span>
+		</a>
+	</div>
+	<div class="mui-card-footer">
+		<a class="mui-pull-left" style="float:left;" href="{php echo fm_murl('goods', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}" >
+			&nbsp; <span class="mui-badge mui-badge-warning mui-badge-inverted">
+			{$goodsdetails[$goods['id']]['marketprice']}
+			</span>元 起&nbsp;
+		</a>
+		<a class="mui-card-link " href="{php echo fm_murl('goods', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}" style="">
+			查看详情
+		</a>
+		<a class="mui-card-link" href="{php echo fm_murl('goods', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}" data-gid="{$goods['id']}" >
+			<span class="mui-badge mui-badge-warning" style="font-weight:bolder;font-size: large;">+</span>
+		</a>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<div class="span12" style="width:100%;padding:0;margin: 0;">
+	<div style="padding:5px 10px 5px 10px; ">
+		<div style="text-align: center;color: #ccc;">打榜粉丝团</div>
+        <section data-custom="rgb(89, 195, 249)" data-color="rgb(89, 195, 249)" class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="24">
+            <section class="135brush layout" style="margin: 3px auto; padding: 15px; color: rgb(62, 62, 62); line-height: 24px; box-shadow: 0px 0px 3px rgb(170, 170, 170); border: 2px solid rgb(240, 240, 240); box-sizing: border-box;border-radius: 5px;">
+                <p style="white-space: normal;color: #ccc;" id="listbox-dianzaner">
+                    <a id="listbox-dianzaner-0" previewed="0">
+                    {if empty($DianzanList)}
+                    ～～朋友们还没有留下足迹
+                    {else}
+                    <img src="{$appsrc}/images/user-photo.png" style="width:34px;height:34px;margin-right:6px;border-radius: 50%;display:none;" class="" previewed="0">
+                    {/if}
+                    </a>
+                    {loop $DianzanList $dianzaner}
+                    <a href="{php echo fm_murl('article','index','member',array('mid'=>$dianzaner['uid']))}"  previewed="0">
+                    {if !empty($dianzaner['avatar'])}
+                    	<img src="{php echo tomedia($dianzaner['avatar'])}" style="width:34px;height:34px;margin-right:6px;border-radius: 50%;" class="" previewed="0">
+                	{else}
+                        <img src="{$appsrc}/images/user-photo.png" style="width:34px;height:34px;margin-right:6px;border-radius: 50%;" class="" previewed="0">
+                    {/if}
+                    </a>
+                    {/loop}
+                </p>
+            </section>
+            <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+        </section>
+	</div>
+</div>

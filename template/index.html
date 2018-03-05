@@ -1,0 +1,117 @@
+{template 'web/default/common/_header'}
+<div class="main">
+		<div class="panel panel-info">
+			<div class="panel-heading" style="text-align:center;">
+				{$shopname}前端入口设置
+			</div>
+
+			<div class="panel-body">
+			{loop $menus['cover'] $cover}
+				<a  class="btn btn-default" href="{$cover['url']}" style="margin-bottom:10px;"><i class="{$cover['icon']}"></i> {$cover['title']}</a>
+			{/loop}
+			<a  class="btn btn-warning" href="{php echo url('platform/reply', array('m' => FM_NAME))}" data-toggle="tooltip" data-placement="top" title="此功能可通过产品标题关键词匹配后以图文消息回复给用户" style="margin-bottom:10px;">
+				<i class="fa fa-comments"></i>
+				<span>关键词回复规则列表</span>
+			</a>
+			<a class="btn btn-warning" href="{php echo url('site/nav/home', array('m' => FM_NAME))}" data-toggle="tooltip" data-placement="top" title="此功能可将商城的一些访问入口通过系统扩展至微站导航中" style="margin-bottom:10px;">
+					<i class="fa fa-home"></i>
+					<span>微站首页导航</span>
+			</a>
+			<a class="btn btn-warning" href="{php echo url('site/nav/profile', array('m' => FM_NAME))}" data-toggle="tooltip" data-placement="top" title="此功能可将商城的一些访问入口扩展至系统的粉丝个人中心导航中" style="margin-bottom:10px;">
+					<i class="fa fa-user"></i>
+					<span>个人中心导航</span>
+			</a>
+			<a class="btn btn-warning" href="{php echo url('site/nav/shortcut', array('m' => FM_NAME))}" data-toggle="tooltip" data-placement="top" title="此功能可将商城的一些访问入口扩展至微网站的快捷菜单中" style="margin-bottom:10px;">
+					<i class="fa fa-plane"></i>
+					<span>快捷菜单</span>
+			</a>
+			</div>
+		</div>
+</div>
+<div class="main">
+	<div class="panel panel-warning">
+			<div class="panel-heading" style="text-align:center;">
+				{$shopname}后台业务功能菜单
+			</div>
+			<div class="panel-body">
+			{loop $routes_do $d_o}
+				<a class="btn {if $d_o==$do} btn-info {else} btn-default {/if}" href="{php echo fm_wurl($d_o,'','',array())}" target="_parent" style="margin-bottom:10px;"><i class="{$routes[$d_o]['icon']}"></i> {$routes[$d_o]['title']}</a>
+			{/loop}
+			</div>
+	</div>
+</div>
+<div class="main">
+	<div class="panel panel-primary">
+		<div class="panel-heading" style="text-align:center;">
+				常用前台入口的链接汇总(点击可复制)
+		</div>
+		<div class="panel-body" style="">
+		{loop $fastlinks $k $links}
+			<ol class="col-md-3">
+			{loop $links $link}
+			<li>
+				<a class="js-clip" data-url="{$link['url']}">{$link['title']}</a>
+			</li>
+			{/loop}
+			</ol>
+		{/loop}
+		</div>
+		<div class="panel-body">
+		</div>
+	</div>
+</div>
+<script type="text/javascript" >
+	$(function () {
+		window.optionchanged = false;
+		$('#myTab_index a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content,使用该功能前提是a链接中加上data-toggle="tab"
+		})
+	});
+
+	require(['bootstrap'],function($){
+		$('.btn,.hastooltip').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+
+
+</script>
+<script type="text/javascript">
+	{if $_W['isfounder']}
+	function checkupgradeModule() {
+		require(['util'], function(util) {
+			if (util.cookie.get('checkupgrade_{$m}')) {
+				return;
+			}
+			$.getJSON("{url 'utility/checkupgrade/module' array('m' => $m)}", function(ret){
+				if (ret.message.errno == -1) {
+					$('body').prepend('<div id="upgrade-tips-module" class="upgrade-tips"><a href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODAwMzEzOV8xNzEwOTZfNDAwMDgyODUwMl8yXw" target="_blank">' + ret.message.message + '</a></div>');
+					if ($('#upgrade-tips').size()) {
+						$('#upgrade-tips-module').css('top', '25px');
+					}
+				} else if (ret && ret.message && ret.message.upgrade == '1') {
+					$('body').prepend('<div id="upgrade-tips-module" class="upgrade-tips"><a class="module" href="./index.php?c=cloud&a=upgrade&">【'+ret.message.name+'】检测到新版本'+ret.message.version+'，请尽快更新！</a><span class="tips-close" onclick="checkupgradeModule_hide()"><i class="fa fa-times-circle"></i></span></div>');
+					if ($('#upgrade-tips').size()) {
+						$('#upgrade-tips-module').css('top', '25px');
+					}
+				}
+			});
+		});
+	}
+	function checkupgradeModule_hide() {
+		require(['util'], function(util) {
+			util.cookie.set('checkupgrade_{$m}', 1, 3600);
+			$('#upgrade-tips-module').hide();
+		});
+	}
+	$(function(){
+		checkupgradeModule();
+	});
+	{/if}
+</script>
+{template 'web/default/common/js_data'}
+{template 'web/default/common/js_websocket'}
+{template 'web/default/common/_footer'}

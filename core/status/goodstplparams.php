@@ -1,0 +1,29 @@
+<?php
+//产品模型参数状态
+$status['code']=array(
+	'name'=>'不限',
+	'value'=>'all',
+	'des'=>'',
+);
+$status['code0']=array(
+	'name'=>'新创建(待审核)',
+	'value'=>'0',
+	'des'=>'',
+);
+$status['code2']=array(
+	'name'=>'隐藏',
+	'value'=>'2',
+	'des'=>'',
+);
+$status['code-1']=array(
+	'name'=>'已删除',
+	'value'=>'-1',
+	'des'=>'',
+);
+$status['code64']=array(
+	'name'=>'可见',
+	'value'=>'64',
+	'des'=>'',
+);
+
+?>

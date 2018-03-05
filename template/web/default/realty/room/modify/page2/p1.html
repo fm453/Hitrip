@@ -1,0 +1,59 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#picture">
+          单张图片<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse in" id="picture">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-picture"  onsubmit="return formcheck('setting-form-picture');return false;" data-noajax = '0'>
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" value="noajax">
+				<input type="hidden" name="setfor" value="" />
+				<input type="hidden" name="s_sn" value="{$s_sn}" />
+				<input type="hidden" name="f_sn" value="{$f_sn}" />
+				<input type="hidden" name="sn" value="{$sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">缩略图</label>
+	<div class="col-xs-12 col-sm-9 ">
+		<span class="help-block">说明：默认图片长宽尺寸比为300px:300px；首页热点楼盘展示、分享等情况下使用；
+		如果您启用了新的页面风格，请重新依据新风格尺寸上传；</span>
+		{php echo tpl_form_field_image('thumb', $item['thumb'])}
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">推荐展示图</label>
+	<div class="col-xs-12 col-sm-9 ">
+		<span class="help-block">说明：默认图片长宽尺寸比为360px:200px；首页推荐楼盘、搜索页列表等情况下使用；
+		如果您启用了新的页面风格，请重新依据新风格尺寸上传；</span>
+		{php echo tpl_form_field_image('rec_thumb', $item['rec_thumb'])}
+	</div>
+</div>
+
+
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-picture" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-picture" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#picture">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>
+

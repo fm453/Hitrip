@@ -1,0 +1,24 @@
+                <div class="mui-btn mui-btn-default mui-btn-block mui-btn-outlined teamer teamer-{$i}">
+                <textarea class="" style="border: 1px;" disabled="disabled" readonly="readonly">
+{if isset($teammember['name'])} 姓名：{$teammember['name']},{/if}
+{if isset($teammember['age'])} 年龄：{$teammember['age']},{/if}
+{if isset($teammember['gender'])} 性别：{$teammember['gender']},{/if}
+{if isset($teammember['mobile'])} 手机：{$teammember['mobile']},{/if}
+{if isset($teammember['clothessize'])} 服装尺寸：{$teammember['clothessize']},{/if}
+{if isset($teammember['idcard'])} 身份证号：{$teammember['idcard']},{/if}
+                </textarea>
+                {if isset($teammember['avatar'])}
+                <img src="{$teammember['avatar']}" alt="" style="width:50px;height:50px;border-radius:50%;position: absolute;right:5px;bottom:5px;" />
+                {else}
+                <a href="{php echo fm_murl($do,$ac,'invite',array('id'=>$id))}" class="mui-hidden mui-btn mui-btn-primary" style="width:50px;height:50px;border-radius:50%;position: absolute;right:5px;bottom:5px;padding: 0;line-height: 50px;">邀请</a>
+                {/if}
+                <a class="mui-btn mui-btn-warning delete-teamer"  data-teamer-id="{$i}" style="width:50px;height:50px;border-radius:50%;position: absolute;right:5px;bottom:5px;padding: 0;line-height: 50px;">删除</a>
+                <input type="hidden" name="team[{$i}][name]" value="{if isset($teammember['name'])}{$teammember['name']}{/if}"></input>
+                <input type="hidden" name="team[{$i}][age]" value="{if isset($teammember['age'])}{$teammember['age']}{/if}"></input>
+                <input type="hidden" name="team[{$i}][mobile]" value="{if isset($teammember['mobile'])}{$teammember['mobile']}{/if}"></input>
+                <input type="hidden" name="team[{$i}][gender]" value="{if isset($teammember['gender'])}{$teammember['gender']}{/if}"></input>
+                <input type="hidden" name="team[{$i}][sex]" value="{if isset($teammember['sex'])}{$teammember['sex']}{/if}"></input>
+                <input type="hidden" name="team[{$i}][clothessize]" value="{if isset($teammember['clothessize'])}{$teammember['clothessize']}{/if}"></input>
+                <input type="hidden" name="team[{$i}][openid]" value="{if isset($teammember['openid'])}{$teammember['openid']}{/if}"></input>
+                <input type="hidden" name="team[{$i}][avatar]" value="{if isset($teammember['avatar'])}{$teammember['avatar']}{/if}"></input>
+                </div>

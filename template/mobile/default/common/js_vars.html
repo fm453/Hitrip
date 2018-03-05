@@ -1,0 +1,88 @@
+<script type="text/javascript">
+/*
+*	定义一些变量，页首引用，可保证页面后续全部可使用
+*/
+	//console.log("{$_FM['settings']['brands']['shopname']}");
+
+/*
+@sysinfo	系统信息，全局变量
+*/
+	window.sysinfo = {
+		{if !empty($_W['uniacid'])}
+			'uniacid': "{$_W['uniacid']}",
+		{/if}
+		{if !empty($_W['acid'])}
+			'acid': "{$_W['acid']}",
+		{/if}
+		{if !empty($_W['openid'])}
+			'openid': "{$_W['openid']}",
+		{/if}
+		{if !empty($_W['uid'])}
+			'uid': "{$_W['uid']}",
+		{/if}
+		'siteroot': "{$_W['siteroot']}",
+		'siteurl': "{$_W['siteurl']}",
+		'attachurl': "{$_W['attachurl']}",
+		'attachurl_local': "{$_W['attachurl_local']}",
+		'attachurl_remote': "{$_W['attachurl_remote']}",
+		{if defined('MODULE_URL')}
+			'MODULE_URL': '{MODULE_URL}',
+		{/if}
+		'cookie' : {'pre': "{$_W['config']['cookie']['pre']}"}
+	};
+	//console.log(sysinfo);
+/*
+@jssdk config 微信js对象,隐性全局变量
+*/
+	//
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+	// 是否启用调试
+	jssdkconfig.debug = false;
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'hideMenuItems',
+		'showMenuItems',
+		'hideAllNonBaseMenuItem',
+		'showAllNonBaseMenuItem',
+		'translateVoice',
+		'startRecord',
+		'stopRecord',
+		'onRecordEnd',
+		'playVoice',
+		'pauseVoice',
+		'stopVoice',
+		'uploadVoice',
+		'downloadVoice',
+		'chooseImage',
+		'previewImage',
+		'uploadImage',
+		'downloadImage',
+		'getNetworkType',
+		'openLocation',
+		'getLocation',
+		'hideOptionMenu',
+		'showOptionMenu',
+		'closeWindow',
+		'scanQRCode',
+		'chooseWXPay',
+		'openProductSpecificView',
+		'addCard',
+		'chooseCard',
+		'openCard'
+	];
+
+/*
+@FM_DEBUG 	是否开启调试模式
+*/
+	var FM_DEBUG = false;
+	{if defined('FM_APP_DEBUG')}
+		FM_DEBUG = "{FM_APP_DEBUG}";
+	{/if}
+	if (FM_DEBUG) {
+		console.log('APP调试模式已开启');
+	}
+</script>

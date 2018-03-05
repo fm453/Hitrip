@@ -1,0 +1,109 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+<div class="main">
+	<form action="{php echo $this->createWebUrl('modset')}" method="post" class="form-horizontal form" id="setting-form">
+	<input type="hidden" name="ac" value="brands" />
+	<input type="hidden" name="op" value="modify" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+		<div class="panel panel-info">
+			<div class="panel-heading">{$shopname}品牌信息</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">品牌名称</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="shopname" class="form-control"  placeholder="如：微旅行" value="{$settings['brands']['shopname']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">官方网址</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="input-group">
+							<input type="text" name="officialweb" class="form-control"  placeholder="如：{php echo $_SERVER['HTTP_HOST'];}" value="{$settings['brands']['officialweb']}" />
+							<span class="input-group-addon"><a target="_blank" href="{$settings['brands']['officialweb']}">预览</a></span>
+						</div>
+						<span class="help-block">
+						<ol>
+						<li>
+							请到把引导页面链接缩短成短网址形式，以防止报错！<a target="_blank" href="http://www.dwz.cn">百度短网址</a>
+						</li>
+						<li>
+							本系统内置官网入口页地址：<a class="js-clip" data-url="{php echo fm_murl('index','site','index',array('showguide'=>false))}"> {php echo fm_murl('index','site','index',array('showguide'=>false))}</a>
+						</li>
+						</ol>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">品牌LOGO</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('logo',$settings['brands']['logo'])}
+						<span class="help-block">说明：品牌图片长宽尺寸建议：100px:100px；商城手机页面默认模板的首页顶部自动调用该图片;具体情况根据所使用的前端模板而定</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">公众号二维码</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('qrcode',$settings['brands']['qrcode'])}
+						<span class="help-block">说明：部分错误提示、关注引导、文章底部名片等地方，均可能会用到</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">小程序二维码</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('qrcode_wxapp',$settings['brands']['qrcode_wxapp'])}
+						<span class="help-block">说明：部分错误提示、关注引导、文章底部名片等地方，均可能会用到</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">联系电话</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="phone" class="form-control" value="{$settings['brands']['phone']}" />
+						<span class="help-block">说明：商城手机页面默认模板的产品详情页会自动调用该号码作为客服热线</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">所在地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="address" class="form-control" value="{$settings['brands']['address']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">ICP备案号</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="icp" class="form-control" value="{$settings['brands']['icp']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">版权</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="copyright" class="form-control" value="{$settings['brands']['copyright']}" placeholder="hitrip@vcms.hiluker.com" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">商城简介</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea id="share_des" name="share_des" class="form-control">{$settings['brands']['share_des']} </textarea>
+						<span class="help-block">说明：商城简介将作为商城首页、分类页、搜索页等页面的默认转发描述文字</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">品牌介绍</label>
+					<div class="col-sm-9 col-xs-12">
+					   {php echo tpl_ueditor('description', $settings['brands']['description']);}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+			<div class="col-sm-10 col-xs-10" >
+				<input type="submit" name="save" value="保存" class="btn btn-primary" />
+				<a class="btn btn-warning" href="{php echo $this->createWebUrl('modset',array('ac'=>'brands','m'=>'fm453_shopping','op' => 'delete'))}">清除品牌设置</a>
+			</div>
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

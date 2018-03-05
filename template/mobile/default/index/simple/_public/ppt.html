@@ -1,0 +1,54 @@
+{if $advs}
+<div class="mui-content" style="">
+	<div id="slider" class="mui-slider">
+		<div class="mui-slider-group mui-slider-loop">
+			<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<a href="{$lastadv['link']}">
+					<img src="{$lastadv['thumb']}">
+					<p class="mui-slider-title">{$lastadv['advname']}</p>
+				</a>
+			</div>
+
+			{loop $advs $adv}
+			<div class="mui-slider-item">
+				<a href="{$adv['link']}">
+					<img src="{$adv['thumb']}">
+					<p class="mui-slider-title">{$adv['advname']}</p>
+				</a>
+			</div>
+			{/loop}
+
+			<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<a href="{$firstadv['link']}">
+					<img src="{$firstadv['thumb']}">
+					<p class="mui-slider-title">{$firstadv['advname']}</p>
+				</a>
+			</div>
+
+		</div>
+		<div class="mui-slider-indicator mui-text-right">
+			{loop $advs $a_k $adv}
+			<div class="mui-indicator {if $a_k==0} mui-active {/if}"></div>
+			{/loop}
+		</div>
+	</div>
+</div>
+{else}
+<div class="mui-content">
+	<div id="slider" class="mui-slider">
+		<div class="mui-slider-group mui-slider-loop">
+
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<a href="#">
+					<img src="{MODULE_URL}resource/images/default/ppt.jpg">
+					<p class="mui-slider-title">{$shopname} 精心为您，品质保障</p>
+				</a>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+{/if}

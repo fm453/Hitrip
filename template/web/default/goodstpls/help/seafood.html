@@ -1,0 +1,30 @@
+<h5>发往哪里</h5>	
+		<select id='aimareatype' name='seafoodaimareatype' class="form-control">
+		<option value="市内" >市内</option>
+		<option value="省内其他市县" >省内其他市县</option>
+		<option value="岛外">岛外</option>
+		<option value="还没想好" >还没想好</option>
+		</select>
+<h5>市内配送区域</h5>	
+		<select id='incityarea' name='seafoodincityarea' class="form-control">
+		<option value="不在三亚市" >不在三亚市</option>
+		<option value="天涯区" >天涯区</option>
+		<option value="吉阳镇">吉阳镇</option>
+		<option value="其他" >其他</option>
+		</select>		
+<h5>意向配送时间:</h5>
+		<div id="seafoodstarttime">
+		{php echo tpl_form_field_date(seafoodstarttime, '', false);}
+		</div>
+		
+<h5>其他送货备注（如果有，请填写）</h5>	
+		<div id="aboutsend">
+		<input type="text" id="seafoodaboutsend" name='seafoodaboutsend' value="" class="form-control" />
+		</div>
+
+<h5 class="">发货方式</h5>	
+		<select id='dispatch' name="dispatch" class="form-control hidden">
+	   	{loop $dispatch $d}
+			<option value="{$d['id']}" price='{$d['price']}'>{$d['dispatchname']} (运费：{$d['price']}元)</option>
+		{/loop}
+		</select>

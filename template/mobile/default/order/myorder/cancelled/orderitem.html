@@ -1,0 +1,49 @@
+<div class="myoder img-rounded">
+	<div class="myoder-hd">
+		<span class="pull-left">订单编号：{$item['ordersn']}</span>
+		<span class="pull-right">
+		{if $order['paytype'] == 3}
+			{if $order['status'] == -1}
+			<span class="text-muted">{$item['status']}</span>
+			{elseif $order['status'] < 3}
+			<span class="text-danger">{$item['status']}</span>
+			{else}
+			<span class="text-success">{$item['status']}</span>
+			{/if}
+		{else}
+			{if $order['status'] == -1}
+			<span class="text-muted">{$item['status']}</span>
+			{elseif $order['status'] == 0}
+			<span class="text-danger">{$item['status']}</span>
+			{elseif $order['status'] == 1}
+			<span class="text-warning">{$item['status']}</span>
+			{elseif $order['status'] == 2}
+			<span class="text-warning">{$item['status']}</span>
+			{else}
+			<span class="text-success">{$item['status']}</span>
+			{/if}
+		{/if}
+		</span>
+	</div>
+
+		{template $appstyle.$do.'/'.$ac.'/'.$operation.'/goodsinfo'}
+
+	<div class="myoder-total">
+		<span>
+			共计：<span class="false">
+				{if $item['wuliu']['dispatchprice']<=0}
+				{$item['price']} 元
+				{else}
+				{$item['price']} 元 (配送费用 {$item['dispatchprice']} 元)
+				{/if}</span>
+		</span>
+		</div>
+
+		<div style="height:30px;">
+		{if $order['paytype'] != 3 && $order['status'] == 0}
+			<a href="{php echo fm_murl('confirm', 'pay', 'index', array('id' => $item['id']))}" class="btn btn-success pull-right btn-sm" style="margin-left:5px;">立即支付</a>
+		{/if}
+			<a href="{php echo fm_murl('order', 'detail', 'index', array('id' => $item['id']))}" class="btn btn-success pull-left btn-sm" >订单详情</a>
+		</div>
+
+</div>

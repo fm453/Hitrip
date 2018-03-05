@@ -1,0 +1,45 @@
+{template 'common/header-base'}
+{template 'web/default/common/_common'}
+{template 'modset/tab_formodule'}
+<script>
+	require(['jquery', 'util'], function($, u){
+		$('.forcopy p a').each(function(){
+			u.clip(this, $(this).text());
+		});
+	});
+	 $(function () { $("[data-toggle='tooltip']").tooltip(); });
+</script>
+<div class="main">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+{template 'help/tab_forhelp'}
+			</div>
+			<div class="panel-body">
+				<ul class="nav nav-tabs" id="myTab">
+					<li class="active" ><a href="#tab_basic" data-toggle="tab">基本说明</a></li>
+					<li><a href="#tab_style" data-toggle="tab">模板定制</a></li>
+					<li><a href="#tab_function" data-toggle="tab">内置函数</a></li>
+					<li><a href="#tab_zujian" data-toggle="tab">内置组件</a></li>
+					<li><a href="#tab_data" data-toggle="tab">数据处理</a></li>
+
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade in active" id="tab_basic">{template 'help/develop/basic'}</div>
+					<div class="tab-pane fade" id="tab_style">{template 'help/develop/style'}</div>
+					<div class="tab-pane fade" id="tab_function">{template 'help/develop/function'}</div>
+					<div class="tab-pane fade" id="tab_zujian">{template 'help/develop/zujian'}</div>
+					<div class="tab-pane fade" id="tab_data">{template 'help/develop/data'}</div>
+				</div>
+			</div>
+		</div>
+</div>
+<script type="text/javascript" >
+	$(function () {
+		window.optionchanged = false;
+		$('#myTab_dev a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content,使用该功能前提是a链接中加上data-toggle="tab"
+		})
+	});
+</script>
+{template 'common/footer'}

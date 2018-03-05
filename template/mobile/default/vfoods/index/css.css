@@ -1,0 +1,116 @@
+
+	/*跨webview需要手动指定位置*/
+	.mui-plus header.mui-bar {
+		display: none!important;
+	}
+
+	.mui-plus .mui-bar-nav~.mui-content {
+		padding: 0!important;
+	}
+
+	.mui-plus .plus {
+		display: inline;
+	}
+
+	.plus {
+		display: none;
+	}
+
+	/** 页面及段落通用 **/
+	/*html,body {
+		background-color: #efeff4;
+	}*/
+
+	/** 段落缩进**/
+	p {
+		text-indent: 22px;
+	}
+	/** 输入框**/
+	input {
+		color: #f00;
+	}
+
+	/** 下拉提示文本框 **/
+	.mui-pull-top-pocket{
+		top:4px;
+	}
+	.mui-bar-nav~.mui-content .mui-pull-top-pocket {
+		top: 4px;
+	}
+
+/*滑动指示条*/
+	.mui-scrollbar-vertical {
+		width:0;
+	}
+
+	/** 侧导航 **/
+	.mui-off-canvas-left {
+		color: #fff;
+	}
+	.title {
+		margin: 35px 15px 10px;
+	}
+	.title+.content {
+		margin: 10px 15px 35px;
+		color: #bbb;
+		text-indent: 1em;
+		font-size: 14px;
+		line-height: 24px;
+	}
+
+/*————————页面样式——————*/
+	/** 标题及导航栏 **/
+	.mui-bar {
+		/**background-color: #eee;**/
+	}
+	.mui-bar .mui-pull-left .mui-icon {
+		padding-right: 5px;
+		font-size: 28px;
+	}
+	.mui-bar .mui-btn {
+		font-weight: normal;
+		font-size: 17px;
+	}
+	.mui-bar .mui-btn-link {
+		top: 1px;
+	}
+
+	#offCanvasContentScroll{
+		background:#efeff4 url()  no-repeat fixed center center;	/*未生效*/
+	}
+	/*9宫格*/
+	span.mui-icon {
+		font-size: 14px;
+		margin-left:0;
+		padding-right: 10px;
+	}
+
+/*——————模态框——————*/
+	.mui-modal.mui-active{
+		top:0px;
+		background-color:#fff;
+	}
+
+/*———————其他—————*/
+/*段落文本双行溢出省略号*/
+ .ellipsis-p-2{
+    width: 100%;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+    -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+    -webkit-line-clamp: 2; /** 显示的行数 **/
+    overflow: hidden;  /** 隐藏超出的内容 **/
+    text-indent: 1px;
+}
+
+ .ellipsis-p-1{
+    width: 100%;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+    -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+    -webkit-line-clamp: 1; /** 显示的行数 **/
+    overflow: hidden;  /** 隐藏超出的内容 **/
+    text-indent: 1px;
+}

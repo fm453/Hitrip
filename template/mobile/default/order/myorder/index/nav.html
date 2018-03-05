@@ -1,0 +1,36 @@
+<nav class="mui-bar mui-bar-tab">
+			<a id="defaultTab" class="mui-tab-item" href="{php echo fm_murl('search','goods','index',array(''))}">
+				<span class="mui-icon mui-icon-search">
+				</span>
+				<span class="mui-tab-label">搜产品</span>
+			</a>
+			<a class="mui-tab-item {if $operation=='index'} mui-active {/if}" href="{php echo fm_murl('order','myorder','index',array())}">
+				<span class="mui-icon mui-icon-plus">
+				</span>
+				<span class="mui-tab-label">订单</span>
+			</a>
+			<a class="mui-tab-item  {if $operation=='payed'} mui-active {/if}" href="{php echo fm_murl('order','myorder','payed',array())}">
+				<span class="mui-icon mui-icon-plus">
+					<span class="mui-badge" id="num-total-payed">{php echo intval($alltotal['payed'])}</span>
+				</span>
+				<span class="mui-tab-label">已支付</span>
+			</a>
+			<a class="mui-tab-item  {if $operation=='success'} mui-active {/if}" href="{php echo fm_murl('order','myorder','success',array())}">
+				<span class="mui-icon mui-icon-plus">
+					<span class="mui-badge" id="num-total-success">{php echo intval($alltotal['success'])}</span>
+				</span>
+				<span class="mui-tab-label">已完成</span>
+			</a>
+			<a class="mui-tab-item  {if $operation=='nopay'} mui-active {/if}" href="{php echo fm_murl('order','myorder','nopay',array())}">
+				<span class="mui-icon mui-icon-plus">
+					<span class="mui-badge" id="num-total-nopay">{php echo intval($alltotal['nopay'])}</span>
+				</span>
+				<span class="mui-tab-label">待支付</span>
+			</a>
+			<a class="mui-tab-item  {if $operation=='all'} mui-active {/if}" href="{php echo fm_murl('order','myorder','all',array())}">
+				<span class="mui-icon mui-icon-plus">
+					<span class="mui-badge" id="num-total-all">{php echo intval($alltotal['all'])}</span>
+				</span>
+				<span class="mui-tab-label">全部</span>
+			</a>
+</nav>

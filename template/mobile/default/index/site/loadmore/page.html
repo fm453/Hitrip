@@ -1,0 +1,12 @@
+<div class="mui-content">
+	<div class="mui-content-padded" style="margin: 5px;text-align: center;">
+		<a href="#offCanvasSide"  class="mui-btn mui-btn-primary mui-btn-outlined" style="display: block;width: 220px;margin: 10px auto;">
+			当前第{$rpindex}页,共有{$maxpages}页
+		</a>
+		<div id="info">
+		</div>
+	</div>
+</div>
+{loop $allarticle $id $row}
+	{template $appstyle.'index/site/_public/article/item_rec'}
+{/loop}

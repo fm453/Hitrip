@@ -1,0 +1,516 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+<div class="main">
+	<form action="{php echo $this->createWebUrl('modset')}" method="post" class="form-horizontal form" id="setting-form">
+	<input type="hidden" name="ac" value="basic" />
+	<input type="hidden" name="op" value="modify" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				各项参数设置-<span style="color: red;font-weight: bolder;">本设置项只有管理员及开发者可见</span>
+			</div>
+			<div class="panel-body">
+				{if $_FM['isSuper']  || $_W['isfounder'] }
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">所在行业</label>
+					<div class="col-sm-8">
+						<label for="industry" >
+							<input type="radio" name="industry" value="ota" id="fm453industry" {if $settings['industry']=='ota'|| empty($settings['industry'])}checked="true"{/if} /> 旅行社&nbsp;&nbsp;&nbsp;
+						</label>
+						<label for="industry" >
+							<input type="radio" name="industry" value="ebiz" id="fm453industry" {if $settings['industry']=='ebiz'}checked="true"{/if} /> IT科技/互联网/电子商务&nbsp;&nbsp;&nbsp;
+						</label>
+						<label for="industry" >
+							<input type="radio" name="industry" value="hotel" id="fm453industry" {if $settings['industry']=='hotel'}checked="true"{/if} />酒店
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-9 col-xs-12 help-block">
+						<ol>
+							<li>请根据您微信公众号的实际情况选择；&nbsp;&nbsp;&nbsp;（不同行业对应的消息通知模板不同）</li>
+							<li>如果您还没有启用模板消息，请您按此处的行业来选择一个并申请启用</li>
+						</ol>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">提醒接收邮箱</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="noticeemail" class="form-control" value="{$settings['noticeemail']}" />
+						<span class="help-block">说明：客人成功下单后，该邮箱可接收订单通知</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">提醒短信号码</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="mobile" class="form-control" value="{$settings['mobile']}" />
+						<span class="help-block">
+						说明：客人成功下单后，该号码可接收短信通知（短信包需另行购买，请联系管理员）
+						</span>
+					</div>
+				</div>
+
+				{if $_W['isfounder'] || $_FM['isSuper']}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">管理员微信</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="input-group">
+							<input type="text" name="manageropenids" class="form-control" value="{$settings['manageropenids']}" />
+							<span class="input-group-addon"><a href="{php echo fm_wurl('modset','basic','modify',array('test'=>'manageropenids'))}" onclick="return confirm('确认已保存好设置的内容了吗？')">测试(请先保存)</a></span>
+						</div>
+						<span class="help-block">
+						说明：填写店主手机微信的openid，用于接收管理员相关模板消息通知。
+						</span>
+					</div>
+				</div>
+
+				{/if}
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">免邮金额</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="input-group">
+							<input type="text" name="free_dispatch" class="form-control small" value="{$settings['free_dispatch']}" />
+							<span class="input-group-addon">元</span>
+						</div>
+						<span class="help-block">
+						说明：订单金额不足这个数字时，需支付邮费/配送费用；此选项为全局选项，与商城的配送方式等规则并存。
+						</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单不满足免邮条件时需支付的额外费用</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="input-group">
+							<input type="text" name="free_dispatch_price" class="form-control" value="{$settings['free_dispatch_price']}" />
+							<span class="input-group-addon">元</span>
+						</div>
+						<span class="help-block">
+						说明：与商城配送设置的按照重量计算的规则不同，此处是根据订单金额来判断的。
+						</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">在线客服QQ</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="input-group">
+							<input type="text" name="kefuqq" class="form-control" value="{$settings['kefuqq']}" placeholder="请填写QQ号数字"/>
+							<span class="input-group-addon"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$settings['kefuqq']}&site=qq&menu=yes">发起Q聊</a></span>
+						</div>
+						<span class="help-block">说明：致站长——提供技术支持用的QQ，填写在此处方便您的系统用户在线联系您以便获取售后服务</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">后台网页客服(美洽-企业编号)</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="input-group">
+							<input type="text" name="webkf_meiqia" class="form-control" value="{$settings['webkf_meiqia']}" placeholder="请填写您申请的美洽企业编号"/>
+							<span class="input-group-addon"><a target="_blank" href="http://meiqia.com/">去申请</a></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">前台网页客服(美洽-企业编号)</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="input-group">
+							<input type="text" name="appkf_meiqia" class="form-control" value="{$settings['appkf_meiqia']}" placeholder="请填写您申请的美洽企业编号"/>
+							<span class="input-group-addon"><a target="_blank" href="http://meiqia.com/">去申请</a></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">后台自定义导航条的子栏目个数</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="navmenusnum" class="form-control" value="{$settings['navmenusnum']}" placeholder="请填写数字"/>
+						<span class="help-block">说明：您可以在自定义导航条添加一个新栏目，可用于一些您的常用功能链接</span>
+					</div>
+				</div>
+
+				{/if}
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页限时特卖</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="input-group">
+							<input type="text" name="temai_num" class="form-control small " value="{$settings['index']['temai_num']}" />
+							<span class="input-group-addon">个产品</span>
+						</div>
+						<span class="help-block">说明：首页显示的限时特卖类产品条数，暂未启用</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">强制开启微信网页授权</label>
+					<div class="col-sm-3">
+						<label for="force_wxAuth" >
+							<input type="radio" name="force_wxAuth" value="0"  {if $settings['force_wxAuth']=='0'|| empty($settings['force_wxAuth'])} checked="true" {/if} /> 否&nbsp;&nbsp;&nbsp;
+						</label>
+						<label for="force_wxAuth" >
+							<input type="radio" name="force_wxAuth" value="1"  {if $settings['force_wxAuth']=='1'} checked="true" {/if} /> 是 &nbsp;&nbsp;&nbsp;
+						</label>
+					</div>
+					<div class="help-block">
+						<ol>
+							<li>启用后，粉丝进入前会要求允许微信网页授权，获取头像昵称等信息；默认不启用</li>
+							<li>非认证服务号请不要启用，微信官方的限制，无法使用</li>
+						</ol>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">强制要求登陆</label>
+					<div class="col-sm-3">
+						<label for="force_login" >
+							<input type="radio" name="force_login" value="0"  {if $settings['force_login']=='0'|| empty($settings['force_login'])} checked="true" {/if} /> 否&nbsp;&nbsp;&nbsp;
+						</label>
+						<label for="force_login" >
+							<input type="radio" name="force_login" value="1"  {if $settings['force_login']=='1'} checked="true" {/if} /> 是 &nbsp;&nbsp;&nbsp;
+						</label>
+					</div>
+					<div class="help-block">
+						<ol>
+							<li>启用后，粉丝必须登陆才能访问；默认不启用</li>
+						</ol>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">会员注册地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="input-group">
+							<input type="text" name="member_regUrl" class="form-control small " value="{$settings['member_regUrl']}" />
+							<span class="input-group-addon"><a target="_blank" href="{$settings['member_regUrl']}">预览</a></span>
+						</div>
+						<span class="help-block">默认使用系统自带的会员注册页！<a class="js-clip" data-url="./index.php?i={$uniacid}&c=mc&a=profile">./index.php?i={$uniacid}&c=mc&a=profile</a></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">强制要求关注</label>
+					<div class="col-sm-3">
+						<label for="force_follow" >
+							<input type="radio" name="force_follow" value="0"  {if $settings['force_follow']=='0'|| empty($settings['force_follow'])} checked="true" {/if} /> 否&nbsp;&nbsp;&nbsp;
+						</label>
+						<label for="force_follow" >
+							<input type="radio" name="force_follow" value="1"  {if $settings['force_follow']=='1'} checked="true" {/if} /> 是 &nbsp;&nbsp;&nbsp;
+						</label>
+					</div>
+					<div class="help-block">
+						<ol>
+							<li>启用后，粉丝必须关注主公众号({$_W['uniaccount']['name']})才能访问；默认不启用</li>
+						</ol>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">引导关注页面</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="input-group">
+							<input type="text" name="follow_url" class="form-control small " value="{$settings['follow_url']}" />
+							<span class="input-group-addon"><a target="_blank" href="{$settings['follow_url']}">预览</a></span>
+						</div>
+						<span class="help-block">如果启用强制关注，则请不要用本商城系统的内部链接作为引导关注网页，以免造成死循环！建议使用把引导页面链接缩短成短网址形式，以防止报错！<a target="_blank" href="http://www.dwz.cn">百度短网址</a></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">强制拉取系统会员信息</label>
+					<div class="col-sm-3">
+						<label for="force_mcInfo" >
+							<input type="radio" name="force_mcInfo" value="0"  {if $settings['force_mcInfo']=='0'|| empty($settings['force_mcInfo'])} checked="true" {/if} /> 否&nbsp;&nbsp;&nbsp;
+						</label>
+						<label for="force_mcInfo" >
+							<input type="radio" name="force_mcInfo" value="1"  {if $settings['force_mcInfo']=='1'} checked="true" {/if} /> 是 &nbsp;&nbsp;&nbsp;
+						</label>
+					</div>
+					<div class="help-block">
+						<ol>
+							<li>启用后，强制取微擎系统会员信息；此功能要求同时开启微擎系统的自动注册功能；默认启用</li>
+						</ol>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">强制拉取模块会员信息</label>
+					<div class="col-sm-3">
+						<label for="force_agentInfo" >
+							<input type="radio" name="force_agentInfo" value="0"  {if $settings['force_agentInfo']=='0'|| empty($settings['force_agentInfo'])} checked="true" {/if} /> 否&nbsp;&nbsp;&nbsp;
+						</label>
+						<label for="force_agentInfo" >
+							<input type="radio" name="force_agentInfo" value="1"  {if $settings['force_agentInfo']=='1'} checked="true" {/if} /> 是 &nbsp;&nbsp;&nbsp;
+						</label>
+					</div>
+					<div class="help-block">
+						<ol>
+							<li>启用后，强制取本模块内置会员信息；默认不启用</li>
+						</ol>
+					</div>
+				</div>
+
+				<div class="form-group" ng-app="" ng-init="testindex_url='{$settings['index']['url']}'">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">自定义首页地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<div class="input-group">
+							<input type="text" name="index_url" class="form-control small " value="{$settings['index']['url']}" ng-model="testindex_url" />
+							<span class="input-group-addon"><a target="_blank" href="{{testindex_url}}">预览</a></span>
+						</div>
+						<span class="help-block">不建议使用本商城系统外部的链接，避免用户跳出后无法回到商城，造成流失！<a target="_blank" href="./index.php?c=home&a=welcome&do=ext&m={FM_NAME}">前台常用链接入口汇总</a></span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		{if $_FM['isSuper']  || $_W['isfounder'] }
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				风格模板设置-<span style="color: red;font-weight: bolder;">本设置项只有管理员及站长可见</span>
+			</div>
+			<div class="panel-body">
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-1 control-label">店铺类型</label>
+					<div class="col-sm-3">
+						<label for="shoptype" >
+							<input type="radio" name="shoptype" value="home"  {if $settings['shoptype']=='home'|| empty($settings['shoptype'])} checked="true" {/if} /> 综合版&nbsp;&nbsp;&nbsp;
+						</label>
+						<label for="shoptype" >
+							<input type="radio" name="shoptype" value="simple"  {if $settings['shoptype']=='simple' } checked="true" {/if} /> 极简版&nbsp;&nbsp;&nbsp;
+						</label>
+						<label for="shoptype" >
+							<input type="radio" name="shoptype" value="site"  {if $settings['shoptype']=='site' } checked="true" {/if} /> 微站版&nbsp;&nbsp;&nbsp;
+						</label>
+
+					</div>
+					<div class="col-sm-8 col-xs-12 help-block">
+						<ol>
+							<li>综合版拥有较为丰富的首页内容展示，适用于拥有大量可展示内容、产品的店铺；默认启用</li>
+							<li>极简版减少了许多页面尤其是首页的链接及炫酷效果，精减部分购物流程，适用于产品少、更新频次低、内容少的店铺。推荐运营前期、单品类的商户使用。</li>
+							<li>微站版首页会直接进入到简版微网站，适用于内容展示。</li>
+							<li>后期可自行切换修改店铺类型。</li>
+						</ol>
+					</div>
+				</div>
+
+				{if $settings['onoffs']['isappstyle'] == 1}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-1 control-label">前台页面</label>
+					<div class="col-sm-3">
+						<label for="appstyle" >
+							<input type="radio" name="appstyle" value="default" id="appstyle" {if $settings['appstyle']=='default/'|| empty($settings['appstyle'])} checked="true" {/if} /> 系统默认&nbsp;&nbsp;&nbsp;
+						</label>
+						<label for="appstyle"  >
+							<input type="radio" name="appstyle" value="other" id="appstyle" {if $settings['appstyle'] !='default/' & !empty($settings['appstyle'])} checked="true" {/if} />自定义
+							<input type="text" name="appstyle_new" class="form-control" value="{$settings['appstyle']}"/>
+						</label>
+					</div>
+					<div class="col-sm-8 col-xs-12 help-block">
+						<ol>
+							<li>系统内置了默认的前台风格模板，目录为default/</li>
+							<li>如果您需要自行定制其他模板，可参照默认模板进行设计并上传到风格模板文件目录内；自定义填写目录结尾要有"/"</li>
+						</ol>
+					</div>
+				</div>
+				{/if}
+
+				{if $settings['onoffs']['isfm453style'] == 1}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-1 control-label">后台页面</label>
+					<div class="col-sm-3">
+						<label for="fm453style" >
+							<input type="radio" name="fm453style" value="default" id="fm453style" {if $settings['shopstyle']=='web/default/'|| empty($settings['shopstyle'])}checked="true"{/if} /> 系统默认&nbsp;&nbsp;&nbsp;
+						</label>
+						<label for="fm453style"  >
+							<input type="radio" name="fm453style" value="other" id="fm453style" {if $settings['shopstyle'] !='web/default/' & !empty($settings['shopstyle'])}checked="true"{/if} />自定义
+							<input type="text" name="fm453style_new" class="form-control" value="{$settings['shopstyle']}"/>
+						</label>
+					</div>
+					<div class="col-sm-8 col-xs-12 help-block">
+						<ol>
+							<li>系统默认的后台风格模板目录为web/default/</li>
+							<li>如果您需要自行定制其他模板，可参照默认模板进行设计并上传到风格模板文件目录内；自定义填写目录结尾要有"/"</li>
+						</ol>
+					</div>
+				</div>
+				{/if}
+
+			</div>
+		</div>
+		{/if}
+
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				平台规则设置-<span style="color: red;font-weight: bolder;">本设置项只有管理员及站长可见</span>
+			</div>
+			<div class="panel-body">
+				{if $_FM['isAdminer']  || $_W['isfounder']}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">平台类型</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 ">
+						<label for="plattype" >
+							<input type="radio" name="plattype" value="default" id="plattype-default" {if $settings['plattype']==='default'|| empty($settings['plattype'])}checked="true"{/if} /> 系统默认(单店版,当前商城的数据完全为本公众号自有，与其他平台无关联；前台仅展现当前公众平台对应商城的信息，后台仅能管理当前公众平台对应商城的信息)
+						</label>
+						<label for="plattype"  >
+							<input type="radio" name="plattype" value="fendian" id="plattype-fendian" {if $settings['plattype'] ==='fendian'}checked="true"{/if} />分店版(当前商城为某个公众平台的分店，自身无产品库;前台仅展现上级店所在公众平台对应商城的信息；后台仅能管理当前公众平台对应商城的基础信息及订单等数据)
+						</label>
+						<label for="plattype"  >
+							<input type="radio" name="plattype" value="zongdian" id="plattype-zongdian" {if $settings['plattype'] ==='zongdian'}checked="true"{/if} />总店版(当前商城为总店，管理下辖全部分店的信息；前台仅展现当前公众号的信息，各分店继承调用总店自有产品库；后台允许管理所含各分店对应商城的信息)
+						</label>
+						<label for="plattype"  >
+							<input type="radio" name="plattype" value="multi" id="plattype-multi" {if $settings['plattype'] ==='multi'}checked="true"{/if} />多店版(当前商城包含多个供应商店铺的内容，并允许本公众平台有自己的产品库，但无下级分店。 前台允许展现多店信息；后台允许管理所自有商城信息、读取供应商商城相应信息)
+						</label>
+						<label for="plattype"  >
+							<input type="radio" name="plattype" value="pingtai" id="plattype-pingtai" {if $settings['plattype'] ==='pingtai'}checked="true"{/if} />平台版(当前商城既有多供应商、同时也有多分销商，上级店铺允许是下级店铺允许是多店/总店/单店版本，下级店铺允许是多店/总店/分店版本。前台调用展现平台内各店可用产品库，后台允许管理平台内全部供应商、分销商商城的信息)
+						</label>
+						{if $_W['isfounder'] && $_W[uid]=='1' && $_W['username']==='fm453'}
+						<label for="plattype"  >
+							<input type="radio" name="plattype" value="os" id="plattype-OS" {if $settings['plattype'] ==='os'}checked="true"{/if} />超级版(站长独有权限，整个系统内仅允许存在一个，管理全部商城产品信息，仅排除个别指定店铺或指定产品)
+						</label>
+						{/if}
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 help-block">
+						<ol>
+							<li>以上项请务必不要自行随意设置；设置前请联系站长或您的管理人员进行确认</li>
+							<li>版本层级关系：[I类：单店版]&nbsp;&nbsp; && &nbsp;&nbsp; [II类：分店版《总店版《多店版] &nbsp;&nbsp; || &nbsp;&nbsp; [III类：平台版]</li>
+						</ol>
+					</div>
+				</div>
+				{/if}
+			</div>
+
+			<div class="panel-heading">
+				平台uniacid设定
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">分销商店铺IDs</label>
+					<div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
+						<input type="text" name="fendianids" class="form-control" value="{$settings['plat']['fendianids']}" />
+						<span class="help-block">
+							说明：填写各分销店对应公众号的uniacid，有多个分销商店时用英文半角逗号( , )分隔开；保存后刷新页面，即可查看所设置的各公众号名称等信息;<br>
+							总店版\多店版\平台版 需要进行此项设置； 没有分销商店时请留空
+						</span>
+					</div>
+					<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label"></label>
+					<div class="col-xs-12 col-sm-8 col-md-9 col-lg-10" style="margin: 0;padding: 0;">
+						<div class="input-group multi-img-details">
+							{loop $row['fendian'] $item}
+							<div class="multi-item" style="text-align: center;width: 120px;height:120px;vertical-align: middle;position: relative;">
+								<img src="{$item['headimg']}" alt="" onerror="this.src='./resource/images/nopic.jpg'; this.title='图片未找到.'" style="width: 80px;height:80px;"><br>
+								<span {if $accounts[$accountheadimg[$item['uniacid']]]==$accountname[$item['uniacid']]}class="red"{/if} style="width: 120px;height:30px;">{$item['name']}(id:{$item['uniacid']})</span>
+							</div>
+							{/loop}
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">供应商店铺IDs</label>
+					<div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
+						<input type="text" name="supplydianids" class="form-control" value="{$settings['plat']['supplydianids']}" />
+						<span class="help-block">
+							说明：填写各供应商店对应公众号的uniacid，有多个时用英文半角逗号( , )分隔开；保存后刷新页面，即可查看所设置的各公众号名称等信息;<br>
+							多店版\平台版 需要进行此项设置； 没有时请留空
+						</span>
+					</div>
+					<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label"></label>
+					<div class="col-xs-12 col-sm-8 col-md-9 col-lg-10" style="margin: 0;padding: 0;">
+						<div class="input-group multi-img-details">
+							{loop $row['supplydian'] $item}
+							<div class="multi-item" style="text-align: center;width: 120px;height:120px;vertical-align: middle;position: relative;">
+								<img src="{$item['headimg']}" alt="" onerror="this.src='./resource/images/nopic.jpg'; this.title='图片未找到.'" style="width: 80px;height:80px;"><br>
+								<span {if $accounts[$accountheadimg[$item['uniacid']]]==$accountname[$item['uniacid']]}class="red"{/if} style="width: 120px;height:30px;">{$item['name']}(id:{$item['uniacid']})</span>
+							</div>
+							{/loop}
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">排除指定店铺IDs</label>
+					<div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
+						<input type="text" name="blackids" class="form-control" value="{$settings['plat']['blackids']}" />
+						<span class="help-block">
+							说明：填写各指定商店对应公众号的uniacid，有多个时用英文半角逗号( , )分隔开；保存后刷新页面，即可查看所设置的各公众号名称等信息;<br>
+							排除后，前后台均不再展示\继承对应店铺相关信息，但不排除其成为分销门店。 没有时请留空
+						</span>
+					</div>
+					<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label"></label>
+					<div class="col-xs-12 col-sm-8 col-md-9 col-lg-10" style="margin: 0;padding: 0;">
+						<div class="input-group multi-img-details">
+							{loop $row['black'] $item}
+							<div class="multi-item" style="text-align: center;width: 120px;height:120px;vertical-align: middle;position: relative;">
+								<img src="{$item['headimg']}" alt="" onerror="this.src='./resource/images/nopic.jpg'; this.title='图片未找到.'" style="width: 80px;height:80px;"><br>
+								<span {if $accounts[$accountheadimg[$item['uniacid']]]==$accountname[$item['uniacid']]}class="red"{/if} style="width: 120px;height:30px;">{$item['name']}(id:{$item['uniacid']})</span>
+							</div>
+							{/loop}
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">授权公众号</label>
+					<div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
+						<select name="oauthid" class="form-control">
+							{loop $accounts $acid $name}
+							<option value="{$acid}" {if $settings['plat']['oauthid'] == $acid}selected{/if}>{$name}</option>
+							{/loop}
+						</select>
+						<span class="help-block">
+							说明：选择本店铺所使用的授权公众号;本处默认调用了系统的公众号借权信息。选择保存后，在支付时，将使用授权公众号的支付功能参数；如不选择使用，则会自动被替换为当前默认的公众号{$_W['uniacid']}。（此授权不影响系统的粉丝登陆授权oauth接口）
+						</span>
+					</div>
+					<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label"></label>
+					<div class="col-xs-12 col-sm-8 col-md-9 col-lg-10" style="margin: 0;padding: 0;">
+						<div class="input-group multi-img-details">
+							<div class="multi-item" style="text-align: center;width: 120px;height:120px;vertical-align: middle;position: relative;">
+								<img src="{$auth['headimg']}" alt="" onerror="this.src='./resource/images/nopic.jpg'; this.title='图片未找到.'" style="width: 80px;height:80px;"><br>
+								<span style="width: 120px;height:30px;">{$auth['name']}(id:{$auth['uniacid']})</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="panel-body">
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+			<div class="col-sm-10 col-xs-10" >
+				<input type="submit" name="save" value="保存" class="btn btn-primary" />
+			</div>
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+		</div>
+
+		<div class="panel panel-info">
+			<div class="panel-heading">系统公众号列表(红色为已认证服务号)</div>
+			<div class="panel-body">
+				<div class="form-group">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin: 0;padding: 0;">
+							<div class="input-group multi-img-details">
+							{loop $accountids $id}
+						<div class="btn btn-default btn-md" >
+							<span {if $accounts[$accountheadimg[$id]]==$accountname[$id]} style="color:red;"{/if}>{$accountname[$id]}(id:{$id})</span>
+						</div>
+						{/loop}
+
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

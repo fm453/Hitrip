@@ -1,0 +1,68 @@
+<div class="panel-body table-responsive" style="padding:0px;">
+<span class="help-block">说明：产品标签展示在产品列表页，可用于调用相关标签图、样式。按照顺序，第一条为标签图，第二条为产品标题前缀</span>
+	<table class="table table-hover sortable">
+		<thead>
+		<tr>
+			<th style='width:50px;'></th>
+			<th>标签名称</th>
+			<th>标签值</th>
+		</tr>
+		</thead>
+		<tbody id="label-items">
+			{loop $item['labels'] $p}
+			<tr>
+				<td>
+					<a href="javascript:;" class="fa fa-move" title="拖动调整此显示顺序"><i class="fa fa-arrows"></i></a>&nbsp;
+					<a href="javascript:;" onclick="deletelabel(this)" style="margin-top:10px;" title="删除"><i class="fa fa-remove"  style="color:red;"></i></a>
+				</td>
+				<td>
+					<input name="label_title[]" type="text" class="form-control label_title" value="{$p['title']}"/>
+					<input name="label_id[]" type="hidden" class="form-control" value="{$p['id']}"/>
+				</td>
+				<td>
+					<input name="label_value[]" type="text" class="form-control label_value" value="{$p['value']}"/>
+				</td>
+			</tr>
+			{/loop}
+		</tbody>
+		<tbody>
+			<tr>
+				<td colspan="3">
+					<a class="btn btn-default"  href="javascript:;" id='add-label' onclick="addlabel()" style="margin-top:10px;"  title="添加标签">添加标签 <i class='fa fa-plus'></i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<script language="javascript">
+	require(['jquery', 'jquery.ui'],function($){
+		$("#label-items").sortable({handle:'.fa-move'});
+	});
+	$(function(){
+		$("#chkoption").click(function(){
+			var obj =$(this);
+			if(obj.get(0).checked){
+				$("#tboption").show();
+				$(".trp").hide();
+			}
+			else{
+				$("#tboption").hide();
+				$(".trp").show();
+			}
+		});
+	})
+	function addlabel() {
+		var url = "{php echo fm_wurl('goods','addons','label',array())}";
+		$.ajax({
+			"url": url ,
+			success:function(data){
+				$('#label-items').append(data);
+			}
+		});
+		return;
+	}
+	function deletelabel(o) {
+		$(o).parent().parent().remove();
+	}
+</script>

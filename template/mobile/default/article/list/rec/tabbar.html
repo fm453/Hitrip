@@ -1,0 +1,27 @@
+
+            <div class="mui-card">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#" style="">点击快速选择分类</a>
+						<div class="mui-collapse-content">
+							<a class="mui-btn mui-btn-primary mui-btn-outlined {if $operation=='rec'} mui-active {/if}" href="{php echo fm_murl('article','list','rec',array('isrecommend'=>1))}" style="margin-bottom:10px;">
+					        推荐
+					        </a>
+				{loop $allcategory['parent'] $ci $caterow}
+					<a class="mui-btn mui-btn-primary mui-btn-outlined  {if $caterow['id']==$pcate} mui-active {/if}" href="{php echo fm_murl('article','list','subcate',array('pcate'=>$caterow['id']))}" style="margin-bottom:10px;">
+					{$caterow['name']}
+					</a>
+					{if $children[$caterow['id']]}
+						{loop $children[$caterow['id']] $pi $childrow}
+							<a class="mui-btn mui-btn-success mui-btn-outlined  {if $childrow['id']==$ccate} mui-active {/if}" href="{php echo fm_murl('article','list','subcate',array('ccate'=>$childrow['id']))}" style="margin-bottom:10px;">
+							{$childrow['name']}
+							</a>
+						{/loop}
+					{/if}
+				{/loop}
+					
+						</div>
+					</li>
+					
+				</ul>
+			</div>

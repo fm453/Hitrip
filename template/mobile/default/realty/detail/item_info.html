@@ -1,0 +1,40 @@
+<blockquote>
+<h3>楼盘信息</h3>
+</blockquote>
+				<p class="inline-flex">
+        	<span class="lt-label" style="">开发商:</span> <span class="lt-val">{$HouseData['params']['developer']['name']}</span>
+        </p>
+        <p class="inline-flex">
+        	<span class="lt-label">楼层状况：</span>  <span class="lt-val">{$HouseData['params']['plan']['floors']}</span>
+        </p>
+        <p class="inline-flex">
+        	<span class="lt-label">占地面积:</span>  <span class="lt-val newwidth">{$HouseData['params']['plan']['cover_area']} m<sup>2</sup></span>
+        	<span class="lt-label">建筑面积:</span>  <span class="lt-val">{$HouseData['params']['plan']['structure_area']} m<sup>2</sup></span>
+        </p>
+        <p class="inline-flex">
+        	<span class="lt-label">容积率：</span>  <span class="lt-val newwidth">{$HouseData['params']['plan']['capacity_ratio']} %</span>
+        	<span class="lt-label">绿化率：</span>  <span class="lt-val">{$HouseData['params']['plan']['green_ratio']} %</span>
+        </p>
+        <p class="inline-flex">
+        	<span class="lt-label">车位数：</span>  <span class="lt-val newwidth">{$HouseData['params']['plan']['parking_lot_num']}</span>
+        	<span class="lt-label">户数：</span>  <span class="lt-val">{$HouseData['params']['plan']['house_num']}</span>
+        </p>
+
+<table class="table " contenteditable="true">
+    <thead>
+        <tr class="firstRow">
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="params-title">
+							配套设施
+            </td>
+            <td class="params-var">
+            	{loop $HouseData['params']['peitao']['facilities'] $k $v}
+            		<span class="col-xs-6 col-sm-3 col-md-2 col-lg-1">{$v['title']} </span>
+            	{/loop}
+            </td>
+        </tr>
+    </tbody>
+</table>

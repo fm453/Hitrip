@@ -1,0 +1,79 @@
+<?php
+$tables['goods']=array(
+	'name'=>'商品表',
+	'type'=>array("goods","system","all")
+);
+$tables['goods']['sql']="CREATE TABLE IF NOT EXISTS ".tablename('fm453_shopping_goods')." (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,  PRIMARY KEY (`id`))ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='商品表' ;";
+
+$tables['goods']['columns']['id']                ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`id` int(11) NOT NULL AUTO_INCREMENT".";";
+$tables['goods']['columns']['uniacid']           ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`uniacid` int(11) UNSIGNED NOT NULL COMMENT '所属公众账号'".";";
+$tables['goods']['columns']['sn']                ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`sn` int(11) NOT NULL COMMENT '产品记录编号'".";";
+$tables['goods']['columns']['pcate']             ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`pcate` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '当前分类'".";";
+$tables['goods']['columns']['ccate']             ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`ccate` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '上级分类，为0时表示当前为一级分类'".";";
+$tables['goods']['columns']['type']              ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`type` tinyint(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT '1为实体，2为虚拟'".";";
+$tables['goods']['columns']['status']            ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`status` tinyint(1) UNSIGNED NOT NULL DEFAULT '1'".";";
+$tables['goods']['columns']['displayorder']      ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`displayorder` int(10) UNSIGNED NOT NULL DEFAULT '0'".";";
+$tables['goods']['columns']['title']             ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`title` varchar(100) NOT NULL DEFAULT ''".";";
+$tables['goods']['columns']['thumb']             ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`thumb` varchar(255) DEFAULT ''".";";
+$tables['goods']['columns']['sharethumb']        ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`sharethumb` varchar(255) DEFAULT NULL COMMENT '转发分享时用的缩略图'".";";
+$tables['goods']['columns']['xsthumb']           ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`xsthumb` varchar(255) CHARACTER SET utf8 DEFAULT NULL".";";
+$tables['goods']['columns']['unit']              ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`unit` varchar(5) NOT NULL DEFAULT ''".";";
+$tables['goods']['columns']['description']       ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`description` varchar(1000) NOT NULL DEFAULT ''".";";
+$tables['goods']['columns']['content']           ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`content` text NOT NULL".";";
+$tables['goods']['columns']['goodssn']           ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`goodssn` varchar(50) NOT NULL DEFAULT ''".";";
+$tables['goods']['columns']['productsn']         ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`productsn` varchar(50) NOT NULL DEFAULT ''".";";
+$tables['goods']['columns']['marketprice']       ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`marketprice` decimal(10,2) NOT NULL DEFAULT '0.00'".";";
+$tables['goods']['columns']['cankaoprice']       ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`cankaoprice` decimal(10,2) NOT NULL DEFAULT '0.00'".";";
+$tables['goods']['columns']['costprice']         ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`costprice` decimal(10,2) NOT NULL DEFAULT '0.00'".";";
+$tables['goods']['columns']['originalprice']     ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`originalprice` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '原价'".";";
+$tables['goods']['columns']['total']             ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`total` int(10) NOT NULL DEFAULT '0' COMMENT '对外库存总量'".";";
+$tables['goods']['columns']['stock']             ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`stock` int(10) NOT NULL DEFAULT '0' COMMENT '真实库存总量'".";";
+$tables['goods']['columns']['totalcnf']          ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`totalcnf` int(11) DEFAULT '0' COMMENT '0 拍下减库存 1 付款减库存 2 永久不减'".";";
+$tables['goods']['columns']['sales']             ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`sales` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '外显销售量'".";";
+$tables['goods']['columns']['realsales']         ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`realsales` int(10) UNSIGNED DEFAULT NULL COMMENT '真实销售量'".";";
+$tables['goods']['columns']['lastsales']         ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`lastsales` int(10) UNSIGNED DEFAULT NULL COMMENT '上一次填写的销售量'".";";
+$tables['goods']['columns']['spec']              ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`spec` varchar(5000) NOT NULL".";";
+$tables['goods']['columns']['weight']            ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`weight` decimal(10,2) NOT NULL DEFAULT '0.00'".";";
+$tables['goods']['columns']['credit']            ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`credit` decimal(10,2) NOT NULL DEFAULT '0.00'".";";
+$tables['goods']['columns']['maxbuy']            ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`maxbuy` int(11) DEFAULT '0'".";";
+$tables['goods']['columns']['usermaxbuy']        ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`usermaxbuy` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '用户最多购买数量'".";";
+$tables['goods']['columns']['hasoption']         ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`hasoption` int(11) DEFAULT '0'".";";
+$tables['goods']['columns']['dispatch']          ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`dispatch` int(11) DEFAULT '0'".";";
+$tables['goods']['columns']['thumb_url']         ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`thumb_url` text".";";
+$tables['goods']['columns']['goodtpl']           ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`goodtpl` varchar(255) NOT NULL DEFAULT 'default' COMMENT '产品模型'".";";
+$tables['goods']['columns']['datemodel']         ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`datemodel` varchar(255) DEFAULT NULL COMMENT '活动/假期模型'".";";
+$tables['goods']['columns']['isagent']           ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`isagent` int(11) NOT NULL DEFAULT '1' COMMENT '是否允许代理商出售，1为允许，0为不允许。默认为允许。'".";";
+$tables['goods']['columns']['agentprice']        ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`agentprice` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '代理结算价格'".";";
+$tables['goods']['columns']['agentsaleprice']    ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`agentsaleprice` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '代理商销售价格'".";";
+$tables['goods']['columns']['agenttip']          ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`agenttip` text NOT NULL COMMENT '发给代理商的公告'".";";
+$tables['goods']['columns']['agentcontent']      ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`agentcontent` text NOT NULL COMMENT '代理商所用的产品描述（全局通用）'".";";
+$tables['goods']['columns']['goodadm']           ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`goodadm` varchar(255) NOT NULL COMMENT '总店的代理专员'".";";
+$tables['goods']['columns']['kefuphone']         ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`kefuphone` varchar(20) DEFAULT '' COMMENT '客服专线电话'".";";
+$tables['goods']['columns']['isnew']             ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`isnew` int(11) DEFAULT '0'".";";
+$tables['goods']['columns']['ishot']             ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`ishot` int(11) DEFAULT '0'".";";
+$tables['goods']['columns']['isdiscount']        ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`isdiscount` int(11) DEFAULT '0'".";";
+$tables['goods']['columns']['isrecommand']       ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`isrecommand` int(11) DEFAULT '0'".";";
+$tables['goods']['columns']['istime']            ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`istime` int(11) DEFAULT '0'".";";
+$tables['goods']['columns']['timestart']         ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`timestart` int(11) DEFAULT '0'".";";
+$tables['goods']['columns']['timeend']           ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`timeend` int(11) DEFAULT '0'".";";
+$tables['goods']['columns']['viewcount']         ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`viewcount` int(11) DEFAULT '0' COMMENT'浏览次数'".";";
+$tables['goods']['columns']['sharecount']        ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`sharecount` int(11) DEFAULT '0' COMMENT'分享次数'".";";
+$tables['goods']['columns']['uv']                ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`uv` int(11) DEFAULT '0' COMMENT'独立访客数'".";";
+$tables['goods']['columns']['commission']        ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`commission` int(3) NOT NULL".";";
+$tables['goods']['columns']['commission2']       ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`commission2` int(3) DEFAULT NULL".";";
+$tables['goods']['columns']['commission3']       ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`commission3` int(3) DEFAULT NULL".";";
+$tables['goods']['columns']['statuscode']        ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`statuscode` tinyint(3) NOT NULL COMMENT '状态码'".";";
+$tables['goods']['columns']['deleted']           ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'".";";
+$tables['goods']['columns']['freedispatchlimit'] ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`freedispatchlimit` int(11) DEFAULT  NULL COMMENT '免运费的最低购买数量'".";";
+$tables['goods']['columns']['freedispatchprice'] ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`freedispatchprice` int(11) DEFAULT  NULL COMMENT '免运费的最低消费金额'".";";
+$tables['goods']['columns']['createtime']        ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`createtime` int(11) UNSIGNED NOT NULL".";";
+$tables['goods']['columns']['updatetime']        ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`updatetime` int(11) UNSIGNED NOT NULL".";";
+//添加产品的差价属性   目前只有一日游产品用到
+$tables['goods']['columns']['makeupprice']       ="ALTER TABLE ".tablename('fm453_shopping_goods')." ADD "."`makeupprice` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '差价'".";";
+
+$tables['goods']['indexes']['id']           ="`id` (`id`)";
+$tables['goods']['indexes']['sn']           ="`sn` (`sn`)";
+$tables['goods']['indexes']['uniacid']      ="`uniacid` (`uniacid`)";
+$tables['goods']['indexes']['displayorder'] ="`displayorder` (`displayorder`)";
+$tables['goods']['indexes']['statuscode']   ="`statuscode` (`statuscode`)";
+//结束

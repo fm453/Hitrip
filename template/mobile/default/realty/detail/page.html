@@ -1,0 +1,75 @@
+<div id="page-detail" class="container-fluid" style="">
+	<div  id=""  class="row-fluid" style="">
+		<div class="span1">
+		</div>
+
+		<div class="span7">
+			<div class="row-fluid">
+				<div class="span12 page-detail-lt">
+					{template $appstyle.$do.'/'.$ac.'/list'}
+				</div>
+			</div>
+		</div>
+
+		<div class="span3">
+			<div class="row-fluid">
+				<div class="span12 page-detail-rt" id="abouthouse">
+					{template $appstyle.$do.'/'.$ac.'/abouthouse'}
+				</div>
+			</div>
+		</div>
+
+		<div class="span1">
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(window).scroll(function () {
+		//页面滚动到幻灯片高度时-未完成
+		if ($(window).scrollTop() >= $("#ppt-{$ac}").height()) {
+			$("#top").hide();
+			$("#tabbar").attr('style','position:fixed;top:0px;margin-left: -30%;margin-right:-30%;padding-left:30%;background-color:#222;');
+			$("#abouthouse").attr('style','position:fixed;top:0px;width:360px;');
+			$("#abouthouse-high-hidden").hide();
+			$("#baoming-form").show();
+			$(".gotop").show();
+		}
+		//页面滚动到底部时
+		else if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+			//$("#tabbar").attr('style','position:fixed;top:120px;');
+		}else{
+			$("#tabbar").attr('style','');
+			$("#abouthouse").attr('style','');
+			$("#abouthouse-high-hidden").show();
+			$("#baoming-form").hide();
+			$("#top").show();
+			$(".gotop").hide();
+		}
+	});
+</script>
+
+<script type="text/javascript">
+	function formcheck(formid){
+		var form = document.getElementById(formid);
+		var noajax = $('#'+ formid).attr('data-noajax');	//使用noajax标记来临时改用非ajax的提交方法
+		if (noajax == 1) {
+			$('input[name="opp"]').val('noajax');
+			form.submit();
+			return;
+		}
+		var formdata = Form_format(formid); //自有方法格式化表单元素，返回数组
+		var url = $('#'+ formid).attr('action');
+		var data = formdata;
+		$('.' + formid).html("正在提交");
+		$.post(url,data,function(res){
+			console.log(res);
+			if (res.errno==0) {
+				$('.' + formid).html("已提交");
+			}else{
+				$('.' + formid).html("系统繁忙，请稍后再试");
+			}
+		},'json');
+		return false;
+	}
+</script>

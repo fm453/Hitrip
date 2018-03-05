@@ -1,0 +1,31 @@
+{template $appstyle.$do.'/'.$ac.'/css'}
+<header>
+
+</header>
+<div class="mui-content" style="background-color:#fff">
+	<ul class="mui-table-view mui-grid-view">
+		{loop $category $row}
+		<li class="mui-table-view-cell mui-media mui-col-xs-6">
+			<a href="{php echo fm_murl('search','goods','',array('pcate'=>$row['id']))}">
+				<img class="mui-media-object" src="{$row['thumb']}">
+				<div class="mui-media-body">{$row['name']}</div>
+			</a>
+		</li>
+		{if $children[$row['parentid']]}
+		{loop $children[$row['parentid']] $row}
+			<li class="mui-table-view-cell mui-media mui-col-xs-6">
+			<a href="{php echo fm_murl('search','goods','',array('ccate'=>$row['id']))}">
+				<img class="mui-media-object" src="{$row['thumb']}">
+				<div class="mui-media-body">{$row['name']}</div>
+			</a>
+			</li>
+		{/loop}
+		{/if}
+		{/loop}
+	</ul>
+</div>
+<script type="text/javascript" charset="utf-8">
+	mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+</script>

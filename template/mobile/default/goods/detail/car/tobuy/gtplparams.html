@@ -1,0 +1,73 @@
+<link rel="stylesheet" type="text/css" href="{$appsrc}css/mui.picker.min.css" />
+<link href="{$appsrc}css/mui.picker.css" rel="stylesheet" />
+<link href="{$appsrc}css/mui.poppicker.css" rel="stylesheet" />
+<script src="{$appsrc}js/mui.picker.min.js"></script>
+<script src="{$appsrc}js/mui.poppicker.js"></script>
+<script src="{$appsrc}js/city.data.js" type="text/javascript" charset="utf-8"></script>
+<script src="{$appsrc}js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+
+				<h5 class="mui-content-padded"><span style="color:#f00;">*</span>入住日期:<span id='result_indate' ></span> (默认为当前时间)</h5>
+				<input  id="indate" name="_package_hxindate" data-options='{"type":"hour","customData":{"h":[{"text":"上午","value":"12"},{"text":"下午","value":"18"},{"text":"晚上","value":"24"}]},"labels":["年", "月", "日", "时段"]}' class="btn mui-btn mui-btn-block choosedate" value="请选择您的入住时段 ...">
+				<input  type="hidden" id="indate2" name="package_hxindate" value="" />
+
+				<h5 class="mui-content-padded"><span style="color:#f00;">*</span>入住人数：成人<span id='result_adults' ></span>&nbsp;位；儿童<span id='result_kids' ></span>&nbsp;名</h5>
+				<div class="mui-button-row">
+				<input  id='adults' name="_package_hxadults" class="mui-btn mui-btn-pull-left choose1l" type='button' style="width: 49%;" value="成人数量">
+				<input type="hidden" id='adults2'  name="package_hxadults" value="" />
+				<input  id='kids' name="_package_hxkids" class="mui-btn mui-btn-pull-right choose1l" type='button'  style="width: 49%;" value="儿童数量">
+				<input type="hidden" id='kids2'  name="package_hxkids" value="" />
+				</div>
+
+<h5 class="hidden">发货方式</h5>	
+		<select id='dispatch' name="dispatch" class="form-control hidden">
+	   	{loop $dispatch $d}
+			<option value="{$d['id']}" price="{$d['price']}">{$d['dispatchname']} (运费：{$d['price']}元)</option>
+		{/loop}
+		</select>
+
+<script type="text/javascript" >
+	function defaultGtplParams(key) {
+		if(key=='_package_hxadults'){
+			var adultsData = [{value: 0,text: '还不确定'},{value: 1,	text: '1位'},{value: 2,text: '2位'},{value: 3,text: '3位'},{value: 4,	text: '4位'},{value: 5,	text: '5位'},{value: 6,text: '6位'},{value: 7,text: '7位'},{value: 8,text: '8位'},{value: 9,	text: '9位'},{value: 10,text: '10位'}];
+			return adultsData;
+		}else if(key=="_package_hxkids"){
+			return [{value: 0,text: '还不确定'},{value: 1,text: '1名'},{value: 2,text: '2名'},{value: 3,text: '3名'},{value: 4,text: '4名'	},{value: 5,text: '5名'}];
+		}
+	}
+
+	function checkGtplParams(j) {
+		var form = document.getElementById("form");
+		var indate = document.getElementById("indate2").value;
+		var checkresult = 0;	//必填项的检查结果
+		var canempty = 0;	//非必选项的检查结果
+		if(!indate){
+			checkresult += 1;
+			mui.alert('您需要选择合适的入住日期','{$shopname}提示',function () {
+				$("#indate").focus();
+			});
+		}
+		if (checkresult>0) {
+			return 1;
+		}
+
+		var adults =  document.getElementById("adults2").value;
+		if(!adults && j==0){
+			canempty += 1;
+			mui.toast('您未选择成人数量，虽然这不影响成功下单；您可以忽略本通知，但我们还是请您确认一下');
+		}
+
+		var kids =  document.getElementById("kids2").value;
+		if(!kids && j==0){
+			canempty  += 1;
+			mui.toast('您未选择儿童数量，虽然这不影响成功下单；您可以忽略本通知，但我们还是请您确认一下');
+		}
+
+		if (canempty>0) {
+			return 1;
+		}
+
+		if (checkresult==0) {
+			return 0;
+		}
+	}
+</script>

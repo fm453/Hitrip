@@ -1,0 +1,26 @@
+
+<script type="text/javascript" charset='utf-8'>
+	function Array_indexOf(array,val) {
+		for (var i = 0; i < array.length; i++) {
+			if (array[i] == val){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	function Array_remove(array,val) {
+		var index = Array_indexOf(array,val);
+		if (index > -1) {
+			array.splice(index, 1);
+		}
+	}
+
+	function Array_getValue(array,val) {
+		for (var i = 0; i < array.length; i++) {
+			if (array[i] == val) {
+				return array[i];
+			}
+		}
+	};
+</script>

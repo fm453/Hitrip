@@ -1,0 +1,170 @@
+<script type="text/javascript" charset="utf-8">
+	mui.init();
+	mui('.mui-scroll-wrapper').scroll();
+
+	//监听header的双击事件,简便起见，双击结果是直接强制刷新
+	document.querySelector('header').addEventListener('doubletap', function() {
+		var url = location.href;
+		location.replace(url);
+	});
+//监听nav栏的按钮点击事件
+mui('body').on('tap','#js_submit',function () {
+		formcheck();
+	});
+
+	//应用评分
+	mui('.icons').on('tap','i',function(){
+		var index = parseInt(this.getAttribute("data-index"));
+		var parent = this.parentNode;
+		var children = parent.children;
+		if(this.classList.contains("mui-icon-star")){
+			for(var i=0;i<index;i++){
+				children[i].classList.remove('mui-icon-star');
+				children[i].classList.add('mui-icon-star-filled');
+			}
+		}else{
+			for (var i = index; i < 5; i++) {
+				children[i].classList.add('mui-icon-star')
+				children[i].classList.remove('mui-icon-star-filled')
+			}
+		}
+		starIndex = index;
+		document.getElementById('stars').setAttribute('value',starIndex);
+	});
+</script>
+
+<script language='javascript'>
+	function formcheck() {
+		var form = document.getElementById('form-feedback');
+		if (form.question.value=='') {
+			mui.alert('请描述一下您的需求，以便我们更好地为您作回复处理!', '{$shopname}');
+			form.question.focus();
+			return false;
+		}
+		if (form.name.value=='') {
+			mui.alert('请告知我们您的姓名/称谓!', '{$shopname}');
+			form.name.focus();
+			return false;
+		}
+		if (form.mobile.value=='') {
+			mui.alert('请告知我们您的手机号码!', '{$shopname}');
+			form.mobile.focus();
+			return false;
+		}
+		if (form.wxhao.value=='') {
+			mui.toast('您没有填写微信号，虽然这不是必要的，但我们建议您填上，加个好友，以后交流很方便哦');
+		}
+		var f_data = {
+			'id': form.id.value,
+			'name': form.name.value,
+			'sex': form.sex.value,
+			'mobile': form.mobile.value,
+			'age': form.age.value,
+			'wxhao': form.wxhao.value,
+			'stars': form.stars.value,
+			'question': form.question.value,
+			'token' : "{$_W['token']}"
+		}
+		getResult('needs','detail','post',f_data);
+		return false;
+	}
+
+	function getResult(f_do,f_ac,f_op,f_data) {
+		$('#pagename').html('正在通知...');
+		var url = js_url(f_do,f_ac,f_op,"{$_W['uniacid']}",'app');
+		var data = f_data;
+		$.post(url,data,function(result){
+			if(result >0 || empty(result)){
+				$('#pagename').html('已经通知！');
+				var submit_obj = document.getElementById('submit');
+				submit_obj.setAttribute('disabled','');
+				$("#submit").css({"background-color":"#ccc", "border":"1px #ccc"});
+				countDown(60,submit_obj);
+				$("#submit").removeAttr('disabled');
+				setTimeout(function () {
+					$("#submit").css({"background-color":"", "border":""});
+				},60000);
+			}else{
+				$('#pagename').html('通知发送失败！');
+				$("#qrcode").removeClass('mui-hidden');
+				$('#PrintError').html('您好,系统通知失败。如果可以，请您将此页截屏通过公众号发送给我们，以帮助我们找到问题并改进，感谢您的支持;  我们将根据反馈情况为您提供相应的答谢！' + result).removeClass('mui-hidden');
+			}
+		});
+	}
+
+	function countDown(s,Obj) {
+		s--;
+		if (s == 0) {
+			Obj.innerHTML = '提交';
+		} else {
+			Obj.innerHTML = s + '秒后可重发';
+			setTimeout(function() {
+				countDown(s,Obj)
+			}, 1000);
+		}
+	}
+</script>
+
+<!-- 更新点赞数 -->
+<script type="text/javascript" >
+	var dianzanBtn = document.getElementById("_DianZan");
+	var url = "{php echo fm_murl('needs','detail','dianzan',array())}";
+	var data = {
+			'setfor': 'needs',
+			'id': '{$id}',
+			'd_o': 'DianZan'
+		};
+	if (dianzanBtn) {
+		dianzanBtn.addEventListener('tap', function() {
+		$.get(url,data,function(res){
+		//console.log(res);
+		var errorcode = parseInt(res);
+		var hasdianzaner = ("{php intval($needs['dianzanount'])}") >0 ? true : false;
+		//console.log(errorcode);
+			switch(errorcode) {
+				case 0:
+					//正常
+					mui.alert('感谢您的支持！', '{$shopname}提示', function() {
+					//
+					});
+					var temp = '';
+					temp = parseInt("{$needs['dianzancount']}") + 1;
+					$("#DianzanCount").html(temp);
+
+				break;
+
+				case 1:
+					//已点赞且不允许重复
+					mui.toast('亲，这个您已经点过赞了；感谢您的支持哦!');
+				break;
+
+				case 2:
+					//点赞次数已达上限
+					mui.toast('亲，这个您的点赞次数已达上限了；感谢您的支持哦!');
+				break;
+
+				case -1:
+					//需要登陆才能继续点赞
+					var btnArray = ['哦,算了', '好,登陆支持'];
+						mui.confirm('当前操作需要登陆了才能继续操作', '{$shopname}提示', btnArray, function(e) {
+							if (e.index == 1) {
+								location.href = js_url("{$do}","{$ac}","index","{$_W['uniacid']}",'app') + "&checklogin=1&id={$id}&dianzan=1";
+							} else {
+								setTimeout(function() {
+									//
+								}, 0);
+							}
+						});
+				break;
+			}
+
+		});
+	},'json');
+
+	}
+
+</script>
+<!-- 为详情内容添加长按复制功能监听（MUI默认禁用了） -->
+<script>
+	$('.mui-content-padded').find('*').css({"-webkit-touch-callout":"text","-webkit-user-select":"text","-khtml-user-select":"text","-moz-user-select":"text","-ms-user-select":"text","user-select":"text"});
+</script>

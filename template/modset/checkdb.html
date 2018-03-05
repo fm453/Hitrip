@@ -1,0 +1,28 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+<style type='text/css'>
+	.tab-pane {padding:20px 0 20px 0;}
+</style>
+{if $_W['isfounder'] || $_FM['isSuper']}
+
+{template 'modset/checkdb/display'}
+
+{else}
+
+<div class="panel panel-danger">
+	<div class="panel-heading" >
+		抱歉,你不是站长,无权限进行此操作!
+	</div>
+</div>
+
+{/if}
+<script type="text/javascript">
+	$(function () {
+		window.optionchanged = false;
+		$('#myTab a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content,使用该功能前提是a链接中加上data-toggle="tab"
+		})
+	});
+</script>
+{template 'common/footer'}

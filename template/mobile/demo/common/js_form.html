@@ -1,0 +1,25 @@
+
+<script type="text/javascript" charset='utf-8'>
+	function Form_format(formid){
+		var formid = (typeof(formid)=="string" ? formid : '');
+		if (!formid) {
+			return false;
+		}
+		var x = document.getElementById(formid);
+		var result={};
+		for (var i=0;i<x.length;i++)  {
+			var obj = x.elements[i];
+			var key = obj.name;
+			result[key] = obj.value;
+			//document.write(obj.name);
+			//document.write('-');
+			//document.write(obj.value);
+			//document.write('-');
+			//document.write(obj.type);
+			//document.write('-');
+			//document.write(obj.id);
+			//document.write('\r\n');
+		}
+		return result;
+	}
+</script>

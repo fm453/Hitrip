@@ -1,0 +1,26 @@
+<!-- 根据产品模型获取对应参数项，以便编辑录入各项值 -->
+<div id="tplparams-detail">
+{loop $goodstplparams $tplindex $param}
+<label class="col-xs-12 col-sm-12 col-md-12 col-lg-12 control-label label label-info" style="text-align: center;margin-bottom: 5px;">{if $param['isneeded']==1}<span style='color:red'>*</span>{/if}参数项：{$param['value']}（字段名：{$tplindex} 字段类型：{$datatype[$param['datatype']]['name']}({$param['datatype']}) （带红星<span style='color:red'>*</span>标记的为必填项））</label>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label"><span style='color:red'>*</span>该参数的显示值(title)：</label>
+	<div class="col-xs-12 col-sm-6 col-md-7 col-lg-8 ">
+		<input type="text" name="tplparams[{$tpl}][{$tplindex}][title]" id="tplparams[{$tpl}][{$tplindex}][title]" class="form-control" value="{$item['goodstplparams'][$tpl][$tplindex]['title']}" />
+		<span class="help-block">填写说明：如该处留空，则自动删除该参数值。</span>
+	</div>
+
+	<label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">对该参数值的附加描述(value)：</label>
+	<div class="col-xs-12 col-sm-6 col-md-7 col-lg-8 ">
+		<textarea name="tplparams[{$tpl}][{$tplindex}][value]" id="tplparams[{$tpl}][{$tplindex}][value]" class="form-control">{$item['goodstplparams'][$tpl][$tplindex]['value']}</textarea>
+		<span class="help-block">填写说明：对该参数进行追加说明，前台部分地方将根据情况进行调用，具体视前台模板情况；</span>
+	</div>
+
+	<label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">对该参数值的进行自定义排序(displayorder)：</label>
+	<div class="col-xs-12 col-sm-6 col-md-7 col-lg-8 ">
+		<input type="text" name="tplparams[{$tpl}][{$tplindex}][displayorder]" id="tplparams[{$tpl}][{$tplindex}][displayorder]" class="form-control" value="{$item['goodstplparams'][$tpl][$tplindex]['displayorder']}" />
+		<span class="help-block">填写说明：排序优先级：自定义排序>系统参数项排序</span>
+	</div>
+
+</div>
+{/loop}
+</div>

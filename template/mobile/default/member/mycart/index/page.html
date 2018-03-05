@@ -1,0 +1,18 @@
+<div class="shopcart-main img-rounded">
+{if count($list)>0}
+{loop $list $item}
+	{php $price += $item['totalprice'];}
+	{php $goods = $item['goods'];}
+	{template $appstyle.$do.'/'.$ac.'/_public/list-item'}
+	{php $n++;}
+{/loop}
+{/if}
+	{template $appstyle.$do.'/'.$ac.'/_public/empty'}
+
+</div>
+<div style='height:80px;width:100%;'>&nbsp;</div>
+<div id="cartfooter" class="shopcart-footer" style="{if count($list)<=0}display:none;{/if}z-index:3;">
+	<span class="pull-left">合计：<span id="pricetotal">{$price}</span> 元</span>
+	<a href="{php echo fm_murl('confirm','fromcart','index',array())}" class="btn btn-success pull-right">立即结算</a>
+</div>
+{template $appstyle.'common/designedby'}

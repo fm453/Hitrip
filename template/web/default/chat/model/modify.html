@@ -1,0 +1,202 @@
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="modify-form1" onsubmit="return formcheck('modify-form1')">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				有求必应表单——基础信息<a href="{php echo fm_wurl($do,$ac,'data', array('id' => $id,'pindex' => $pindex))}"class="btn btn-default btn-md" data-toggle="tooltip" data-placement="top" title="查看已收集数据"><i class="fa fa-database"></i></a>
+			</div>
+			<div class="panel-body">
+				<div class="form-group forcopy">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">直接链接</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="help-block">点击复制<a href="javascript:;" target="_blank" title="点击复制">{php echo fm_murl('needs', 'detail','index',array('id' => $id))}</a></p>
+						<img src="{$qrcode_preview}"><span>微信扫码，预览表单</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>表单名称</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 ">
+						<input type="text" name="title" class="form-control" value="{$needs['title']}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>表单模板</label>
+					<div class="col-xs-12 col-sm-9 col-md-2 col-lg-2 ">
+						<select name="template" class="form-control">
+						{loop $templates $key $item}
+						<option value="{$key}" {if $needs['template'] == $key} selected="selected" {/if}>{$item}</option>
+						{/loop}
+					</select>
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">启用状态</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-4">
+						<label class='radio-inline'>
+							<input type='radio' name='status' value='1' {if $needs['status']==1}checked{/if} /> 进行中
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='status' value='-1' {if $needs['status']==-1}checked{/if} /> 已停止
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='status' value='0' {if $needs['status']==0 || empty($needs['status'])}checked{/if} /> 未开始(默认)
+						</label>
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-1 col-lg-1 control-label">排序</label>
+					<div class="col-xs-12 col-sm-3 col-md-1 col-lg-2">
+						<input type="text" name="displayorder" class="form-control" placeholder="可留空；此处仅可填写数字" value="{$needs['displayorder']}" />
+						<span class="help-block">说明：数值越大，位置越靠前</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">封面图</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-9">
+						{php echo tpl_form_field_image('thumb', $needs['thumb'])}
+						<span class="help-block">说明：封面图建议为正方形，将在转发时用到。</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">
+						显示Banner图
+						<input type='checkbox' name='is_banner' value='1' {if $needs['is_max']==1}checked{/if} />
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-8 col-lg-9">
+						{php echo tpl_form_field_image('banner', $needs['banner'])}
+						<span class="help-block">说明：BANNER图建议尺寸比为900:250。</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">表单简述</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+						<textarea name="description" class="form-control" placeholder="将在分享转发时用到，如不填写，将引用系统全局设定的分享文字"  >{$needs['description']}</textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">提交提示</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+						<textarea name="res" class="form-control" placeholder="用户提交表单信息成功后收到的系统提示"  >{$needs['res']}</textarea>
+						<span class="help-block">说明：用户提交表单信息成功后收到的系统提示,如：“您的信息我们已收到，将尽快答复您”。</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">详情内容</label>
+					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
+						{php echo tpl_ueditor('content',$needs['content']);}
+<script type="text/javascript">
+	var editor = UE.getEditor('content', ueditoroption);
+	editor.addListener('contentChange', function() {
+        //此处增加了侦听编辑器内容变化的事件
+    });
+
+    editor.addListener('ready', function(){
+        //此处增加了侦听编辑器初始化的事件
+    });
+</script>
+						<span class="help-block">说明：可对表单的内容(如活动行程、项目说明、预约要求等方面做一个较为详细的介绍)</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-heading">
+				基础规则设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						 <label class='control-label'>
+							 <input type='checkbox' name='is_max' value='1' {if $needs['is_max']==1}checked{/if} /> 限制总参与人次
+						 </label>
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">最大可参与人次</label>
+					<div class="col-xs-12 col-sm-3 col-md-1 col-lg-1">
+						<input type="text" name="max_times" class="form-control" placeholder="可留空；此处仅可填写数字" value="{$needs['max_times']}" />
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						 <label class='control-label'>
+							 <input type='checkbox' name='is_cycle' value='1' {if $needs['is_cycle']==1}checked{/if} /> 启用生命周期
+						 </label>
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">生命周期(测试中)</label>
+					<div class="col-xs-12 col-sm-3 col-md-1 col-lg-2">
+						<select name="cycle" class="form-control">
+						{loop $cycles $key $item}
+						<option value="{$key}" {if $needs['cycle'] == $key} selected="selected" {/if}>{$item}</option>
+						{/loop}
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-3 control-label">单个生命周期内单人最大参与次数</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+						<input type="text" name="single_times" class="form-control" value="{$needs['single_times']}" />
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-3 control-label">单个生命周期内最大总参与人次</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+						<input type="text" name="single_all_times" class="form-control" value="{$needs['single_all_times']}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">
+						时效限制
+						<input type='checkbox' name='is_time' value='1' {if $needs['is_time']==1}checked{/if} />
+					</label>
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
+						限制开始时间
+						<input type='checkbox' name='is_timestart' value='1' {if $needs['is_timestart']==1}checked{/if} />
+					</label>
+					<label class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
+						限制结束时间
+						<input type='checkbox' name='is_timeend' value='1' {if $needs['is_timeend']==1}checked{/if} />
+					</label>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">开始时间</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						{php echo tpl_form_field_date('starttime',$needs['starttime'],true);}
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">开始时间</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						{php echo tpl_form_field_date('endtime',$needs['endtime'],true);}
+					</div>
+
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">知会通知</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<input type="text" name="notice_mobile" class="form-control" placeholder="管理员手机号" value="{$needs['notice_mobile']}" />
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<input type="text" name="notice_openid" class="form-control" placeholder="管理员微信opendid" value="{$needs['notice_openid']}" />
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<input type="text" name="notice_email" class="form-control" placeholder="管理员邮箱" value="{$needs['notice_email']}" />
+					</div>
+				</div>
+
+			</div>
+			{if $operation == 'modify'}
+			<div class="panel-heading">
+				表单自定义参数设定(测试中，暂不生效)
+			</div>
+			<div class="panel-body">
+				{template $fm453style.$do.'/'.$ac.'/templates/'.$needs['template'].'/params'}
+			</div>
+			{/if}
+
+			<div class="panel-heading">
+			</div>
+			<div class="panel-body">
+				<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+					<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

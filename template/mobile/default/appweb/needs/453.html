@@ -1,0 +1,17 @@
+{template $appstyle.'common/header'}
+<script src="{$appsrc}js/mui.min.js"></script>
+{if $do == 'needs'}
+	{if $ac == 'detail'}
+		{if $operation == 'index'}
+		{template $appstyle.'appweb/'.$do.'/'.$ac.'/index'}
+		{/if}
+	{/if}
+	{if $ac == 'list'}
+		{template $appstyle.$do.'/'.$ac.'/mainpage'}
+	{/if}
+{/if}
+{template $appstyle.'common/js_url'}
+{template $appstyle.'common/js_pic'}
+{template $appstyle.'common/js_array'}
+{template $appstyle.'common/js_form'}
+{template $appstyle.'common/footer'}

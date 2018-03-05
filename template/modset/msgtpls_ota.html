@@ -1,0 +1,139 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+<div class="main">
+	<form action="{php echo $this->createWebUrl('modset')}" method="post" class="form-horizontal form" id="setting-form">
+	<input type="hidden" name="ac" value="msgtpls" />
+	<input type="hidden" name="op" value="modify" />
+	<input type="hidden" name="industry" value="ota" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				消息模板设置({$fm453industry_name})
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单状态变更通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_order_status" class="form-control" value="{$settings['msgtpls']['ota_order_status']}" />
+						<span class="help-block">
+						说明：用于订单的生成、取消、确认、修改等的知会。其中，订单生成通知会同时知会商家客服、对应产品的货主(ota_order_status)
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">预订成功通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_book_success" class="form-control" value="{$settings['msgtpls']['ota_book_success']}" />
+						<span class="help-block">
+						说明：用于在线支付订单后的成功通知。(ota_book_success)
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">咨询服务跟踪通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_ask_responce" class="form-control" value="{$settings['msgtpls']['ota_ask_responce']}" />
+						<span class="help-block">
+						说明：用于客服对客人的咨询、投诉等事项的跟进通知；通知接收方为客户；若是投诉类，则会同时给店主微信推送通知。(ota_ask_responce)
+						</span>
+					</div>
+				</div>
+ 				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单信息补充提醒 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_order_addinfos" class="form-control" value="{$settings['msgtpls']['ota_order_addinfos']}" />
+						<span class="help-block">说明：对订单进行追加信息的提醒通知。</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">酒店预订确认通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_hotel_confirm" class="form-control" value="{$settings['msgtpls']['ota_hotel_confirm']}" />
+						<span class="help-block">说明：酒店类订单，确认后追加通知到用户。</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">上门服务预约通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_book_service" class="form-control" value="{$settings['msgtpls']['ota_book_service']}" />
+						<span class="help-block">说明：有求必应模块应用，用户提交需求后接收到通知。</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动报名成功通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_activity_success" class="form-control" value="{$settings['msgtpls']['ota_activity_success']}" />
+						<span class="help-block">
+						说明：适用于团体出游类产品的预约报名通知。
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">退款通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_money_refun" class="form-control" value="{$settings['msgtpls']['ota_money_refun']}" />
+						<span class="help-block">
+						说明：用户退款申请的状态变更通知；申请状态的通知会同步推送至店主微信。
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">积分兑换服务通知</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_credit_exchange" class="form-control" value="{$settings['msgtpls']['ota_credit_exchange']}" />
+						<span class="help-block">说明：用于积分商城的兑换通知。</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">卡券核验通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_coupon_confirm" class="form-control" value="{$settings['msgtpls']['ota_coupon_confirm']}" />
+						<span class="help-block">说明：卡券核验消费后通知到用户。</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">确认收货通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_goods_confirm" class="form-control" value="{$settings['msgtpls']['ota_goods_confirm']}" />
+						<span class="help-block">说明：订单状态变更为已收货状态时知会给用户。</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">分销订单下单成功通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_order_fenxiao" class="form-control" value="{$settings['msgtpls']['ota_order_fenxiao']}" />
+						<span class="help-block">说明：分销商下线支付订单后接收到通知。</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">分销佣金结算通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_cash_to_fenxiao" class="form-control" value="{$settings['msgtpls']['ota_cash_to_fenxiao']}" />
+						<span class="help-block">说明：分销商佣金结算状态（待审核、审核中、驳回、同意等）的通知。</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">返现到账通知</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_cash_to_confirm" class="form-control" value="{$settings['msgtpls']['ota_cash_to_confirm']}" />
+						<span class="help-block">说明：客户成功消费设置了返现的商品后，可申请返现。</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">返礼码获取通知</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ota_gift_code_send" class="form-control" value="{$settings['msgtpls']['ota_gift_code_send']}" />
+						<span class="help-block">说明：针对消费过的客人发送返礼码，适用于做二次营销。</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+              <div class="col-sm-9 col-xs-12">
+				    <input type="submit" name="submit" value="保存" class="btn btn-primary col-lg-1"  />
+					
+              </div>
+        </div>
+	</form>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,17 @@
+
+<div class="mui-content" style="padding: 6px 15px 11px 15px;">
+<form action="" class="" style="" id="sendbox"  method="post" enctype="multipart/form-data" onsubmit='return formcheck()'>
+	<input type="hidden" class="mui-hidden" style="" id="token" name="token" value="{$_W['token']}">
+	<div class="mui-input-row ">
+		<textarea id='content' name='content' class="mui-input-clear" style="margin-bottom: 5px;" required="true" placeholder="此刻，我有话想说…" >{$cookie['content']}</textarea>
+	</div>
+	<div class="mui-button-row">
+
+		<button id="send_submit" type="button" class="mui-btn mui-btn-primary">发送</button>
+		<button id="send_reset" type="reset" class="mui-btn mui-btn-danger" >取消</button>
+		<a href="#offCanvasSide" class="mui-btn mui-btn-warning mui-pull-left mui-btn-outlined mui-icon mui-icon-gear" ></a>
+		<a href="#modal-member" class="mui-btn mui-btn-warning mui-pull-right mui-btn-outlined mui-icon mui-icon-contact" ></a>
+
+	</div>
+</form>
+</div>

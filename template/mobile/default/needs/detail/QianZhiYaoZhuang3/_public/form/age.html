@@ -1,0 +1,26 @@
+	<div class="mui-input-row">
+		<label>年龄：</label>
+		<input id='age' type="text" name="age" class="mui-hidden" value="{$needs_data['age']}" />
+		<input id='agePicker' type="text" name="agePicker" class="mui-input-clear" placeholder="{if $needs_data['age']}{$needs_data['age']}{else}点击选择年龄{/if}" value="{$needs['age'][$needs_data['age']]}" />
+	</div>
+	<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var id="age";
+					var idPicker = new $.PopPicker();
+					var pickData = {php echo $needs_age};
+					idPicker.setData(pickData);
+					var showPickerButton = doc.getElementById(id+'Picker');
+					var pickResult = doc.getElementById('Result_'+id);
+					showPickerButton.addEventListener('tap', function(event) {
+						idPicker.show(function(items) {
+							showPickerButton.value = JSON.stringify(items[0].text);
+							document.getElementById(id).setAttribute('value',items[0].value);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+	</script>

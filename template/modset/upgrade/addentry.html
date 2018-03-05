@@ -1,0 +1,114 @@
+<div class="panel panel-default">
+		<div class="panel-heading">
+			<a data-toggle="collapse" data-parent="#accordion"
+          href="#addentry">
+          添加入口专用，自助添加微信端入口（关键词触发）<span class="pull-right">点击收缩该栏目</span>
+       </a>
+		</div>
+</div>
+<div class="container-fluid panel-collapse collapse" id="addentry">
+		<div class="row-fluid">
+			<div class="span12 forcopy">
+				<ol>
+					<li>
+						<ul style="list-style: none;">
+						<li hidden="true">
+						<pre id="addentry_code_1">
+INSERT INTO `{$tablepre}modules_bindings` (`module`, `entry`, `call`, `title`, `do`, `state`, `direct`, `url`, `icon`, `displayorder`) VALUES
+('fm453_shopping', 'cover', '', '分类入口', 'category', '', 1, '', '', 0);
+						</pre>
+						<code>如果您默认使用的表前缀不是{$tablepre}，请在执行前将“{$tablepre}”换成您的数据表前缀。</code>
+						</li>
+							<li>
+							<button type="submit" class="btn btn-warning" onclick="return confirm('本功能您确认需要执行操作了吗！');" name="addentry_code_1" value="yes">添加分类入口</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<ul style="list-style: none;">
+						<li hidden="true">
+						<pre id="addentry_code_2">
+INSERT INTO `{$tablepre}modules_bindings` (`module`, `entry`, `call`, `title`, `do`, `state`, `direct`, `url`, `icon`, `displayorder`) VALUES
+('fm453_shopping', 'cover', '', '专题入口', 'special', '', 1, '', '', 0);
+						</pre>
+						<code>如果您默认使用的表前缀不是{$tablepre}，请在执行前将“{$tablepre}”换成您的数据表前缀。</code>
+						</li>
+							<li>
+							<button type="submit" class="btn btn-warning" onclick="return confirm('本功能您确认需要执行操作了吗！');" name="addentry_code_2" value="yes">添加专题入口</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<ul style="list-style: none;">
+						<li hidden="true">
+						<pre id="addentry_code_3">
+INSERT INTO `{$tablepre}modules_bindings` (`module`, `entry`, `call`, `title`, `do`, `state`, `direct`, `url`, `icon`, `displayorder`) VALUES
+('fm453_shopping', 'cover', '', '订单管理入口', 'appwebordermanage', '', 1, '', '', 0);
+						</pre>
+						<code>如果您默认使用的表前缀不是{$tablepre}，请在执行前将“{$tablepre}”换成您的数据表前缀。</code>
+						</li>
+							<li>
+							<button type="submit" class="btn btn-warning" onclick="return confirm('本功能您确认需要执行操作了吗！');" name="addentry_code_3" value="yes">添加订单管理入口</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<ul style="list-style: none;">
+						<li hidden="true">
+						<pre id="addentry_code_4">
+INSERT INTO `{$tablepre}modules_bindings` (`module`, `entry`, `call`, `title`, `do`, `state`, `direct`, `url`, `icon`, `displayorder`) VALUES
+('fm453_shopping', 'rule', '', '回复规则列表入口', '', '', 1, '', '', 0);
+						</pre>
+						<code>如果您默认使用的表前缀不是{$tablepre}，请在执行前将“{$tablepre}”换成您的数据表前缀。</code>
+						</li>
+							<li>
+							<button type="submit" class="btn btn-warning" onclick="return confirm('本功能您确认需要执行操作了吗！');" name="addentry_code_4" value="yes">添加回复规则列表入口</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<ul style="list-style: none;">
+						<li hidden="true">
+						<pre id="emptyentry_code">
+DELETE FROM `{$tablepre}modules_bindings` WHERE `module` LIKE '%fm453_shopping%' AND `entry` LIKE '%cover%'  ;
+						</pre>
+						<code>如果您默认使用的表前缀不是{$tablepre}，请在执行前将“{$tablepre}”换成您的数据表前缀。</code>
+						</li>
+							<li>
+							<button type="submit" class="btn btn-warning" onclick="return confirm('本功能您确认需要执行操作了吗！');" name="emptyentry_code" value="yes">清空入口</button>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<ul style="list-style: none;">
+						<li hidden="true">
+						<pre  id="addentry_code_last">
+DELETE FROM `{$tablepre}modules_bindings` WHERE `module` LIKE '%fm453_shopping%' AND `entry` LIKE '%menu%'  ;
+INSERT INTO `{$tablepre}modules_bindings` (`module`, `entry`, `call`, `title`, `do`, `state`, `direct`, `url`, `icon`, `displayorder`) VALUES
+('fm453_shopping', 'menu', '', '订单管理', 'order', '', 0, '', 'fa fa-archive', 0),
+('fm453_shopping', 'menu', '', '商品管理', 'goods', '', 0, '', 'fa fa-cubes', 0),
+('fm453_shopping', 'menu', '', '分类管理', 'category', '', 0, '', 'fa fa-database', 0),
+('fm453_shopping', 'menu', '', '幻灯片管理', 'adv', '', 0, '', 'fa fa-file-powerpoint-o', 0),
+('fm453_shopping', 'menu', '', 'Banner图管理', 'banner', '', 0, '', 'fa fa-file-picture-o', 0),
+('fm453_shopping', 'menu', '', '积分兑换管理', 'credit', '', 0, '', 'fa fa-money', 0),
+('fm453_shopping', 'menu', '', '积分商品设置', 'award', '', 0, '', 'fa fa-gift', 0),
+('fm453_shopping', 'menu', '', 'CRM会员管理', 'charge', '', 0, '', 'fa fa-group', 0),
+('fm453_shopping', 'menu', '', '代理管理', 'fansmanager', '', 0, '', 'fa fa-briefcase', 0),
+('fm453_shopping', 'menu', '', '佣金审核', 'commission', '', 0, '', 'fa fa-legal', 0),
+('fm453_shopping', 'menu', '', '发货方式', 'dispatch', '', 0, '', 'fa fa-bug', 0),
+('fm453_shopping', 'menu', '', '分销规则', 'rules', '', 0, '', 'fa fa-share-alt-square', 0),
+('fm453_shopping', 'menu', '', '维权售后', 'notice', '', 0, '', 'fa fa-exclamation-circle', 0),
+('fm453_shopping', 'menu', '', '广告管理', 'ad', '', 0, '', 'fa fa-cloud-upload', 0),
+('fm453_shopping', 'menu', '', '系统配置', 'settings', '', 0, '', 'fa fa-cogs', 0);
+						</pre>
+						<code>如果您默认使用的表前缀不是{$tablepre}，请在执行前将“{$tablepre}”换成您的数据表前缀。</code>
+						</li>
+							<li>
+							<button type="submit" class="btn btn-warning" onclick="return confirm('本功能您确认需要执行操作了吗！');" name="addentry_code_last" value="yes">修复业务功能菜单</button>
+							</li>
+						</ul>
+					</li>
+				</ol>
+			</div>
+		</div>
+	</div>

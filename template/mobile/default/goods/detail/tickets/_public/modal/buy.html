@@ -1,0 +1,27 @@
+<div id="modal-buy" class="mui-modal mui-scroll-wrapper" style="background-color:rgba(0,0,0,.5);">
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-close mui-pull-right" href="#modal-buy"></a>
+		<h1 class="mui-title" id="modal-buy-title">产品购买</h1>
+	</header>
+
+	<div class="mui-content " style="">
+		<p class="mui-content-padded">
+			<!-- 规格页 -->
+			{template $appstyle.$do.'/'.$ac.'/'.$goodtpl."/_public/option"}
+		</p>
+	</div>
+
+	<footer style="z-index:99999;">
+		{template $appstyle.$do.'/'.$ac.'/'.$goodtpl."/_public/footbar/modal"}
+	</footer>
+<!-- 监听关闭操作-->
+<script type="text/javascript" >
+//本窗口关闭时，如果有图片放大浏览的窗口在，就把它也关掉
+	document.querySelector('#hideoption').addEventListener('tap', function() {
+		//切换底部菜单栏
+		$('#footbar-2').hide();
+		$('#footbar-1').show();
+		$('#__MUI_PREVIEWIMAGE').hide();	//本方法会导致放大浏览功能失效，需刷新页面才可修复
+	});
+</script>
+</div>

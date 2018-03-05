@@ -1,0 +1,80 @@
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist" id="tabbar">
+    <li class="active">
+        <p class="">
+            <a href="#list-rooms" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true">楼盘户型</a>
+        </p>
+    </li>
+    <li class="">
+        <p class="">
+            <a href="#list-news" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">楼盘动态</a>
+        </p>
+    </li>
+    <li class="">
+        <p class="">
+            <a href="#list-albums" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false">楼盘相册</a>
+        </p>
+    </li>
+    <li class="">
+        <p class="">
+            <a href="#detail-house" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false">楼盘详情</a>
+        </p>
+    </li>
+    <li class="hidden">
+        <p class="">
+            <a href="#detail-info" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false">楼栋信息</a>
+        </p>
+    </li>
+    <li class="">
+        <p class="">
+            <a href="#detail-peripheral" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false">周边情况</a>
+        </p>
+    </li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content" style="">
+    <div role="tabpanel" class="tab-pane active" id="list-rooms">
+    <!-- 户型弹窗样式 -->
+ 		<link rel="stylesheet" href="{$appsrc}css/room-image-div.css">
+ 		<!-- 遮罩背景 -->
+		<div class="mask_bg"></div>
+ 		<!-- 户型弹窗JS -->
+		<script src="{$appsrc}js/velocity.min.js"></script>
+		<script src="{$appsrc}js/room-image-div.js"></script>
+    {loop $listRoom $k $item}
+    {template $appstyle.$do.'/'.$ac.'/room_image_div'}
+			{template $appstyle.$do.'/'.$ac.'/item_room'}
+		{/loop}
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="list-news">
+    	{template $appstyle.$do.'/'.$ac.'/item_news'}
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="list-albums">
+    <!-- 楼盘图片展示样式 -->
+ 		<link rel="stylesheet" href="{$appsrc}css/baguettebox.min.css">
+ 		<link rel="stylesheet" href="{$appsrc}css/thumbnail-gallery.css">
+		{loop $listAlbum $k $itemAlbum}
+			{template $appstyle.$do.'/'.$ac.'/item_album'}
+		{/loop}
+		<!-- 图片浏览 -->
+ 		<script type="text/javascript" src="{$appsrc}js/baguettebox.min.js"></script>
+		<script type="text/javascript">
+			baguetteBox.run('.tz-gallery');
+		</script>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="detail-house">
+    	 {template $appstyle.$do.'/'.$ac.'/item_info'}
+       {template $appstyle.$do.'/'.$ac.'/item_detail'}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="detail-info">
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="detail-peripheral">
+    	 {template $appstyle.$do.'/'.$ac.'/item_zhoubian'}
+       {template $appstyle.$do.'/'.$ac.'/item_trip'}
+       {template $appstyle.$do.'/'.$ac.'/item_traffic'}
+    </div>
+</div>

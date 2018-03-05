@@ -1,0 +1,8 @@
+{if $allnotice}
+<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">
+	公告
+	</h5>
+{loop $allnotice  $id $row}
+	{template $appstyle.'index/site/_public/article/item_notice'}
+{/loop}
+{/if}

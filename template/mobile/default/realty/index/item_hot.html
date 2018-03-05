@@ -1,0 +1,15 @@
+<div class="span3">
+        <div class="thumbnail" style="background-image: url({$item['params']['thumb']});">
+        <a class="forhover" href="{php echo fm_murl('realty','detail','index',array('sn'=>$item['sn']))}" target="_blank">
+            <img  alt="300x200" src="{$appsrc}img/hover.png" style="" />
+            <div class="caption" contenteditable="false">
+                <h5 style="">
+                    {$item['title']} - {$item['params']['plan']['cover_area']} m<sup>2</sup>
+                </h5>
+                <p style="">
+                    {$item['params']['description']}
+                </p>
+            </div>
+            </a>
+        </div>
+    </div>

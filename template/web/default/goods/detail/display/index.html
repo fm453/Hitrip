@@ -1,0 +1,152 @@
+<!-- 编辑器配置文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="{$fm453resource}components/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<div class="main">
+	<div class="panel panel-default">
+		<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="m" value="{FM_NAME}" />
+			<input type="hidden" name="do" value="{$do}" />
+			<input type="hidden" name="ac" value="{$ac}" />
+			<input type="hidden" name="op" value="modify" />
+			<input type="hidden" name="id" value="{$id}" />
+			<input type="hidden" name="uniacid" value="{$platid}" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+			<div class="panel-heading panel-primary">
+				{if empty($item['id'])}添加商品{else}编辑商品{/if}（受浏览器加载效率影响，当点击页面或各栏目无响应时，请按<span style="color:red;font-weight:bolder;">CTRL+F5</span>强制刷新页面。{if $item['id']}当前{$item['id']}号产品：{$item['title']}{/if}）
+			</div>
+			<div class="panel-body">
+				<ul class="nav nav-tabs" id="myTab">
+					<li class="active" ><a href="#tab_basic" data-toggle="tab">基本信息</a></li>
+					<li><a href="#tab_des" data-toggle="tab">商品描述</a></li>
+					<li ><a href="#tab_tplparam" data-toggle="tab" id="tplparams">产品模型参数</a></li>
+					<li><a href="#tab_param" data-toggle="tab">自定义参数</a></li>
+					<li><a href="#tab_biaoqian" data-toggle="tab">自定义标签</a></li><!--标签英文label为系统保留字段，此处换成中文biaoqian-->
+					<li><a href="#tab_option" data-toggle="tab">商品规格</a></li>
+					<li><a href="#tab_marketmodel" data-toggle="tab">营销规则</a></li>
+					<li><a href="#tab_other" data-toggle="tab">上架销售设置</a></li>
+					<li><a href="#tab_fenxiao" data-toggle="tab">分销设置</a></li>
+					<li><a href="#tab_des_agent" data-toggle="tab">代理描述</a></li>
+					<li><a href="#tab_agent" data-toggle="tab">代理设置</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade in active" id="tab_basic">{template $fm453style.$do.'/'.$ac.'/'.$operation.'/goods_basic'}</div>
+					<div class="tab-pane fade" id="tab_des">{template $fm453style.$do.'/'.$ac.'/'.$operation.'/goods_des'}</div>
+					<div class="tab-pane fade" id="tab_tplparam">{template $fm453style.$do.'/'.$ac.'/'.$operation.'/goods_tplparams'}</div>
+					<div class="tab-pane fade" id="tab_param">{template $fm453style.$do.'/'.$ac.'/'.$operation.'/goods_param'}</div>
+					<div class="tab-pane fade" id="tab_biaoqian">{template $fm453style.$do.'/'.$ac.'/'.$operation.'/goods_label'}</div>
+					<div class="tab-pane fade" id="tab_option">{template $fm453style.$do.'/'.$ac.'/'.$operation.'/goods_option'}</div>
+					<div class="tab-pane fade" id="tab_marketmodel">{template $fm453style.$do.'/'.$ac.'/'.$operation.'/goods_marketmodel'}</div>
+					<div class="tab-pane fade" id="tab_other">{template $fm453style.$do.'/'.$ac.'/'.$operation.'/goods_other'}</div>
+					<div class="tab-pane fade" id="tab_fenxiao">{template $fm453style.$do.'/'.$ac.'/'.$operation.'/goods_fenxiao'}</div>
+					<div class="tab-pane fade" id="tab_des_agent">{template $fm453style.$do.'/'.$ac.'/'.$operation.'/goods_des_agent'}</div>
+					<div class="tab-pane fade" id="tab_agent">{template $fm453style.$do.'/'.$ac.'/'.$operation.'/goods_agent'}</div>
+				</div>
+				<div class="form-group col-sm-12">
+					{if $id}
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-default col-lg-1" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-primary col-lg-2" style="margin:0 10px;" />
+					{else}
+						<input type="submit" name="submit_withoutNotice" value="提交" class="btn btn-primary col-lg-1" style="margin:0 10px;"  />
+					{/if}
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var category = {php echo json_encode($children)};
+	$(function () {
+		window.optionchanged = false;
+		$('#myTab a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content,使用该功能前提是a链接中加上data-toggle="tab"
+		});
+	});
+
+	function changeGoodsTpl(gtpl,gsn) {
+		if (gtpl=='default') {
+			$('#tplparams').parent().removeClass("active").addClass("sr-only");
+		}else {
+			$('#tplparams').parent().removeClass("sr-only");
+			$('#tplparams').html("<i class='icon-spinner icon-spin'></i>切换产品模型...");
+			$('#tplparams-detail').html('');//清除旧HTML
+			var url = "{php echo fm_wurl('goods','addons','goodstpl',array())}";
+			var data = {
+				'goodstpl': gtpl,
+				'gsn':gsn,
+			};
+			$.get(url,data,function(html){
+				$('#tplparams-detail').append(html);
+				$('#tplparams').html("请填写产品模型参数");
+			});
+			//$('#tplparams').parent().addClass("active");
+			$('#tplparams').tab('show');
+
+		}
+	}
+
+	function formcheck(){
+		if($("#pcate").val()=='0'){
+			Tip.focus("pcate","请选择商品分类!","right");
+			return false;
+		}
+		if($("#goodsname").isEmpty()) {
+			$('#myTab a[href="#tab_basic"]').tab('show');
+			Tip.focus("title","请输入商品名称!","right");
+			return false;
+		}
+		{if empty($id)}
+		if ($.trim($(':file[name="thumb"]').val()) == '') {
+			$('#myTab a[href="#tab_basic"]').tab('show');
+			$('#myTab a[href="#tab_basic"]').tab('show');
+			Tip.focus('thumb_div', '请上传缩略图.', 'right');
+			return false;
+		}
+		{/if}
+		if($("#goodsname").isEmpty()) {
+			$('#myTab a[href="#tab_basic"]').tab('show');
+			Tip.focus("goodsname","请输入商品名称!","right");
+			return false;
+		}
+		var full = checkoption();
+		if(!full){return false;}
+		if(optionchanged){
+			$('#myTab a[href="#tab_option"]').tab('show');
+			message('规格数据有变动，请重新点击 [刷新规格项目表] 按钮!','','error');
+			return false;
+		}
+		return true;
+	}
+
+	function checkoption(){
+		var full = true;
+		if($("#hasoption").get(0).checked){
+			$(".spec_title").each(function(i){
+				if($(this).isEmpty()) {
+					$('#myTab a[href="#tab_option"]').tab('show');
+					Tip.focus(".spec_title:eq(" + i + ")","请输入规格名称!","top");
+					full =false;
+					return false;
+				}
+			});
+			$(".spec_item_title").each(function(i){
+				if($(this).isEmpty()) {
+					$('#myTab a[href="#tab_option"]').tab('show');
+					Tip.focus(".spec_item_title:eq(" + i + ")","请输入规格项名称!","top");
+					full =false;
+					return false;
+				}
+			});
+			}
+		if(!full) {
+		 return false;
+		}
+		return full;
+	}
+</script>

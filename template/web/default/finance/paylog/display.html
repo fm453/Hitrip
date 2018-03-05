@@ -1,0 +1,42 @@
+<div class="panel panel-info">
+	<div class="panel-heading">总数：<span style="color:red;">{$total}</span>
+		<a href="{$_W['siteurl']}" class="pull-right" style="color:red;"><i class="fa fa-spinner"></i>刷新</a>
+	</div>
+	<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th class="row-hover">支付ID</th>
+					<th class="row-hover">支付单号</th>
+					<th class="row-hover">类型</th>
+					<th class="row-hover">金额</th>
+					<th class="row-hover">状态</th>
+					<th class="row-hover">用户</th>
+					<th class="row-hover">模块</th>
+					<th class="row-hover">平台</th>
+					<th class="row-hover">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			{loop $list $item}
+				<tr>
+					<td>{$item['plid']}</td>
+					<td>{$item['tid']}</td>
+					<td>{if $item['type']=='charge'}充值{else}{$paytype[$item['type']]['name']}消费{/if}</td>
+					<td>{$item['fee']}元	</td>
+					<td>{$item['status']}	</td>
+					<td {if !empty($_GPC['keyword']) && $item['openid'] !=$_GPC['keyword']} style="color:#f00;" {/if} >{$item['openid']}</td>
+					<td>{$item['module']}</td>
+					<td>{$accounts[$item['uniacid']]}</td>
+					<td>
+						<a href="{php echo fm_wurl($do,$ac,'detail', array('id' => $item['plid']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="查看详情" target='_blank'><i class="fa fa-pencil"></i></a>
+					</td>
+				</tr>
+			{/loop}
+			</tbody>
+		</table>
+	</div>
+	<div style="text-align: center;">
+		{$pager}
+	</div>
+</div>

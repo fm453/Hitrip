@@ -1,0 +1,64 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#SalesDepartmentSetting">
+          售楼接待处信息<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse" id="SalesDepartmentSetting">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-SalesDepartmentSetting" onsubmit="return formcheck('setting-form-SalesDepartmentSetting');return false;">
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" value="" />
+				<input type="hidden" name="setfor" value="" />
+				<input type="hidden" name="s_sn" value="{$s_sn}" />
+				<input type="hidden" name="sn" value="{$sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">接待时间</label>
+	<div class="col-xs-12 col-sm-9  col-md-4 col-lg-5">
+		<input type="text" name="data[worktime][start]" class="form-control" value="{$item['worktime']['start']}" />
+		<span class="help-block">说明：售楼部工作开始时间</span>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label sr-only">接待时间</label>
+	<div class="col-xs-12 col-sm-9  col-md-4 col-lg-5">
+		<input type="text" name="data[worktime][end]" class="form-control" value="{$item['worktime']['end']}" />
+		<span class="help-block">说明：售楼部工作结束时间</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">办公地址</label>
+	<div class="col-xs-12 col-sm-9 col-md-4 col-lg-5">
+		<input type="text" name="data[slb_address]" id="slb_address" class="form-control" value="{$item['slb_address']}" />
+		<span class="help-block">说明：售楼部的详细地址</span>
+	</div>
+
+	<div class="col-xs-12 col-sm-9 col-md-4 col-lg-5">
+		{php echo tpl_form_field_coordinate('data[slb_location]',$item['slb_location']);}
+		<span class="help-block">说明：售楼部的经纬度位置</span>
+	</div>
+</div>
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-SalesDepartmentSetting" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-SalesDepartmentSetting" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#SalesDepartmentSetting">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>

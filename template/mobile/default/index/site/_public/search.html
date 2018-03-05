@@ -1,0 +1,39 @@
+<div class="mui-content mui-hidden" >
+	<div class="mui-content-padded" style="margin: 5px;">
+		<form action="{php echo fm_murl($do,$ac,'index',array())}" method="post" class="mui-input-group" id="form1" enctype="multipart/form-data" onsubmit='return formcheck()'>
+		<input type="hidden" name="token" value="{$_W['token']}" />
+			<div class="mui-input-row">
+				<input id="search" type="search" name="keyword" class="mui-input-speech mui-input-clear voice-search" value="{$_GPC['keyword']}" placeholder="输入关键词可查询">
+			</div>
+			<button type="submit" class="hidden" style="display: none;"></button>
+		</form>
+	</div>
+</div>
+<!-- 语音识别完成事件 -->
+<script>
+	document.getElementById("search").addEventListener('recognized', function(e) {
+		console.log(e.detail.value);
+	});
+</script>
+<script language='javascript'>
+	function formcheck() {
+		var form = document.getElementById('form1');
+		var container = 'pullrefresh';
+		var url = "{php echo fm_murl($do,$ac,'index',array())}";
+		var data = {
+			'rpage': 1,
+			'psize': '{$rpsize}',
+			'pcate': '{$pcate}',
+			'ccate': '{$ccate}',
+			'keyword': form.keyword.value,
+			'token' : "{$_W['token']}"
+		};
+		$('#search').html('正在搜索…');//替换内容
+		$.get(url,data,function(res){
+			$('#'+container).html(res);//替换内容
+		});
+		$('#search').html('结果已刷新!');//替换内容
+		form.keyword.focus();
+		//return false;
+	}
+</script>

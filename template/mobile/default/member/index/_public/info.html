@@ -1,0 +1,31 @@
+<div id="info" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>
+				</button>
+				<h1 class="mui-center mui-title">关于{$shopname}</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<a href="{php echo fm_murl('help','aboutus','index',array())}" class="mui-navigate-right">关于{$shopname}</a>
+							</li>
+						</ul>
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<a id="feedback-btn" href="{php echo fm_murl('help','advise','index',array())}" class="mui-navigate-right">意见与反馈</a>
+							</li>
+						</ul>
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell ">
+								<a id="welcome" href="{php echo fm_murl('index','index','index',array('showguide'=>true))}" class="mui-navigate-right">欢迎页</a>
+							</li>
+						</ul>
+
+					</div>
+				</div>
+			</div>
+		</div>

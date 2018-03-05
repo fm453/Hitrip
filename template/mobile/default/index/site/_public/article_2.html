@@ -1,0 +1,8 @@
+{if $rec_articles}
+<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">
+	推荐阅读
+	</h5>
+{loop $alldetail  $id $row}
+	{template $appstyle.'index/site/_public/article/item_rec'}
+{/loop}
+{/if}

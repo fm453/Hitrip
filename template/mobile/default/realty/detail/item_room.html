@@ -1,0 +1,42 @@
+
+
+<div class="row-fluid">
+	<div class="">
+    <div class="s-l-lt cd-item">
+
+			<div class="cd-item">
+				<img src="{$item['params']['thumb']}" alt="Item Preview">
+				<a href="#0" class="cd-trigger">样板间</a>
+			</div>
+
+    </div>
+    <div class="s-l-rt">
+
+    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="">
+        <div class="thumbnail" style="">
+            <div class="caption" contenteditable="false">
+                <h3 style="">
+                    <span class="title">{$item['title']}</span>
+                </h3>
+                 <p style="">
+                    {$item['params']['sleeping_room_num']}室{$item['params']['guest_room_num']}厅{$item['params']['toilet_room_num']}卫
+                    <span class="area">建筑面积约 {$item['params']['covered_area']} m<sup>2</sup></span>
+                </p>
+                <p style="">
+                		{if $item['params']['status']==1}<label class="label label-info">{else}<label class="label label-warning">{/if} {$item['params']['feature']} </label>
+                </p>
+                <h4>估算总价
+                	<span class="price">{php echo intval($item['params']['price']['start']/10000);}</span> ~ <span class="price">{php echo intval($item['params']['price']['end']/10000);}</span>
+                	<span class="unit">万元</span>
+                </h4>
+                <!--
+                <p>
+                	<button class="btn btn-success btn-xs" onclick="LoadModal('showimage');"><i class="fa fa-eye"></i>&nbsp;&nbsp;>>样板间</button>
+                </p>
+                -->
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>

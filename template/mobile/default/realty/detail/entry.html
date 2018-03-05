@@ -1,0 +1,39 @@
+ <!-- 加入headroom特效 -->
+ <script type="text/javascript" src="{$fm453resource}components/headroom/Headroom.js"></script>
+	{template $appstyle.$do.'/_public/style'}
+	{template $appstyle.$do.'/_public/top'}
+
+	<!-- 初始状态 -->
+<header class="headroom"  id="header" >
+	{template $appstyle.$do.'/'.$ac.'/ppt'}
+</header>
+
+	{template $appstyle.$do.'/'.$ac.'/page'}
+	{template $appstyle.$do.'/'.$ac.'/bottom'}
+	{template $appstyle.$do.'/'.$ac.'/modals'}
+
+<script>
+(function() {
+    var header = new Headroom(document.querySelector("#header"), {
+        tolerance: 5,
+        offset : 205,
+        classes: {
+          initial: "animated",
+          pinned: "slideDown",
+          unpinned: "slideUp"
+        }
+    });
+    header.init();
+
+    var bttHeadroom = new Headroom(document.getElementById("btt"), {
+        tolerance : 0,
+        offset : 500,
+        classes : {
+            initial : "slide",
+            pinned : "slide--reset",
+            unpinned : "slide--down"
+        }
+    });
+    bttHeadroom.init();
+}());
+</script>

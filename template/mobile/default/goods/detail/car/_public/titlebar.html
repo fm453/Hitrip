@@ -1,0 +1,14 @@
+<header id="header" class="mui-bar mui-bar-transparent">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="padding-top:5px;padding-bottom:7px;margin-top:8px;width:30px;height: 30px;background-color:rgba(0,0,0,0.1); color: #fff; border-radius:50%;" ></a>
+	<h1 class="mui-title mui-hidden"  id="pagename" style="color:#0095f6;">{$pagename}</h1>
+		<a href="{php echo fm_murl('order','mycart','index',array())}" class="mui-pull-right" style="padding-top:5px;padding-bottom:7px;margin-top:8px;width:30px;height: 30px;background-color:rgba(0,0,0,0.1); color: #fff; border-radius:50%;padding-left: 7px;margin-left:5px;">
+		<span class="glyphicon glyphicon-shopping-cart"></span>
+		<span class="buy-num mui-badge img-circle" id="carttotal" style="position:absolute;top:5px;right:5px;background-color:#f0ad4e;">{$carttotal}</span>
+	</a>
+	<a href="{php echo fm_murl('member', 'index', 'index', array())}" class="mui-pull-right" style="padding-top:5px;padding-bottom:7px;margin-top:8px;width:30px;height: 30px;background-color:rgba(0,0,0,0.1); color: #fff; border-radius:50%;padding-left: 7px;margin-left:5px;">
+		<span class="glyphicon glyphicon-user"></span>
+	</a>
+	<a href="" class="mui-pull-right btn-refresh" style="padding-top:5px;padding-bottom:7px;margin-top:8px;width:30px;height: 30px;background-color:rgba(0,0,0,0.1); color: #fff; border-radius:50%;padding-left: 7px;margin-left:5px;">
+		<i class="glyphicon glyphicon-refresh"></i>
+	</a>
+</header>

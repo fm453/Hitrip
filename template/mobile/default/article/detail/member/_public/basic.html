@@ -1,0 +1,27 @@
+<div class="mui-content" style="background-color: rgba(255,255,255,1);">
+	<div class="mui-content-padded" style="margin-top: 4px;">
+		<div class="page-bizinfo">
+			<div class="header">
+				<div>
+    <section style="margin: 5px auto;white-space: normal;">
+        <section style="border:0 none;padding:0;box-sizing:border-box;margin:10px 0;font-size:15px;font-family:微软雅黑">
+            <section class="bc" style="margin-top:0;margin-bottom:0;padding:10px;max-width:100%;line-height:2em;word-wrap:break-word;word-break:normal;text-align:center;background-color:#499ef3;box-sizing:border-box">
+                <span style="color:#fff">{$article['title']}</span>
+            </section>
+            <p style="margin-top:0;white-space:normal">
+                <img src="http://vcms.hiluker.com/addons/ewei_shopv2/plugin/article/static/images/10068.jpg" style="height:auto!important;width:100%"/>
+            </p>
+            <section style="width:0;height:0;clear:both;box-sizing:border-box;padding:0;margin:0"></section>
+        </section>
+    </section>
+</div>
+
+				<p class="activity-info mui-hidden">
+					<span id="post-date" class="activity-meta">{php echo date("Y-m-d", $article['createtime']);}</span>
+					{if !empty($article['author'])}<span id="author-info" class="activity-meta">{$article['author']}</span>{/if}
+					<a href="{$subscribeurl}"  id="account-info" class="activity-meta">{$_W['account']['name']}</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

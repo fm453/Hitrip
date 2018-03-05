@@ -1,0 +1,37 @@
+{template $appstyle.$do.'/'.$ac.'/css'}
+		<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-scalable">
+			<!--侧滑菜单部分-->
+			<aside id="offCanvasSide" class="mui-off-canvas-left">
+				{template $appstyle.'common/aside'}
+			</aside>
+			<!--主界面部分-->
+			<div  class="mui-inner-wrap mui-scroll-wrapper">
+				<header class="mui-bar mui-bar-nav">
+					{template $appstyle.$do.'/'.$ac.'/titlebar'}
+				</header>
+				<!-- 左右滑动页面主体部分 -->
+				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+					<!--下拉刷新容器-->
+					<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<div id="pullrefresh-table" style="margin-top:48px;">
+								<!-- 容器内固定数据，刷新追加-->
+								{template $appstyle.$do.'/'.$ac.'/load/page'}
+							</div>
+						</div>
+					</div>
+					<!-- 下拉容器结束 -->
+					<!-- 模态框 -->
+					{template $appstyle.$do.'/'.$ac.'/_public/modal/buy'}
+					<!-- off-canvas backdrop -->
+					<div class="mui-off-canvas-backdrop"></div>
+				</div>
+				<!---底部菜单栏-->
+				<footer class="mui-bar mui-bar-footer">
+					<nav class="mui-bar mui-bar-tab" style="border-top:1px dotted #ccc;">
+						{template $appstyle.$do.'/'.$ac.'/navbar'}
+					</nav>
+				</footer>
+			</div>
+		</div>
+		{template $appstyle.$do.'/'.$ac.'/js'}

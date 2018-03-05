@@ -1,0 +1,26 @@
+	<div class="mui-input-row">
+		<label>学历：</label>
+		<input id='diploma' type="text" name="diploma" class="mui-hidden" value="{$needs_data['diploma']}" />
+		<input id='diplomaPicker' type="text" name="diplomaPicker" class="mui-input-clear" placeholder="{if $needs_data['diploma']}{$needs_data['diploma']}{else}点击选择最高学历{/if}" value="{$needs['diploma'][$needs_data['diploma']]}" />
+	</div>
+	<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var id="diploma";
+					var idPicker = new $.PopPicker();
+					var pickData = {php echo $needs_diploma};
+					idPicker.setData(pickData);
+					var showPickerButton = doc.getElementById(id+'Picker');
+					var pickResult = doc.getElementById('Result_'+id);
+					showPickerButton.addEventListener('tap', function(event) {
+						idPicker.show(function(items) {
+							showPickerButton.value = JSON.stringify(items[0].text);
+							document.getElementById(id).setAttribute('value',items[0].value);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+	</script>

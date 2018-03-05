@@ -1,0 +1,118 @@
+<div class="panel panel-default">
+			<div class="panel-heading">
+			<a data-toggle="collapse" data-parent="#accordion"
+          href="#function_1">
+          全局类函数<span class="pull-right">（点击展示）</span>
+        </a>
+			</div>
+</div>
+<div class="container-fluid panel-collapse collapse in" id="function_1">
+	<div class="row-fluid">
+		<div class="span12">
+			<ol>
+				<li>
+					<ul>
+						<li>系统版本号
+						<code>$shopversion = FM_VERSION;
+						</code>
+						</li>
+						<li>结果值
+						<code>文本
+						</code>
+						<pre>
+{php echo FM_VERSION}
+						</pre>
+						</li>
+					</ul>
+				</li>
+
+<p></p>
+				<li>
+					<ul>
+						<li>商城资源包路径（js\css\fonts等文件）
+						<code>$fm453resource =FM_RESOURCE;
+						</code>
+						</li>
+						<li>结果值
+						<code>文本
+						</code>
+						<pre>
+../addons/fm453_shopping/resource/
+						</pre>
+						</li>
+					</ul>
+				</li>
+
+<p></p>
+				<li>
+					<ul>
+						<li>商城后台风格（根据风格名调用风格模板对应文件夹中的文件）
+						<code>$fm453style =$this->shopstyle();
+						</code>
+						</li>
+						<li>结果值
+						<code>文本
+						</code>
+						<pre>
+web/default/
+						</pre>
+						</li>
+					</ul>
+				</li>
+
+<p></p>
+				<li>
+					<ul>
+						<li>商城前台风格（根据风格名调用风格模板对应文件夹中的文件）
+						<code>$appstyle =$this->appstyle();
+						</code>
+						</li>
+						<li>结果值
+						<code>文本
+						</code>
+						<pre>
+default/
+						</pre>
+						</li>
+					</ul>
+				</li>
+
+<p></p>
+				<li>
+					<ul>
+						<li>商城前台风格关联的默认资源文件夹（根据风格名调用风格模板对应文件夹中的453文件夹）
+						<code>$appsrc =fmFunc_ui_appsrc();
+						</code>
+						</li>
+						<li>结果值
+						<code>文本
+						</code>
+						<pre>
+default/453/
+						</pre>
+						</li>
+					</ul>
+				</li>
+
+<p></p>
+				<li>
+					<ul>
+						<li>商城使用的主行业标准（不同行业使用不同的知会模板，在个别业务逻辑、流程等都会有所差异）
+						<code>$fm453industry =fmFunc_industry();
+						</code>
+						</li>
+						<li>结果值
+						<code>文本
+						</code>
+						<pre>
+商城规划了3种行业标准，hotel-酒店住宿类；ota-旅行社平台类；ebiz-电子商务类。
+考虑到酒店住宿类与旅行社平台类在业务上的相似性，目前使用的微信消息通知模板，仅设计了ota旅行社类、ebiz电子商务类
+						</pre>
+						</li>
+					</ul>
+				</li>
+
+			</ol>
+		</div>
+	</div>
+</div>

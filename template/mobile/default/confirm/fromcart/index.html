@@ -1,0 +1,152 @@
+{template $appstyle.$do.'/'.$ac.'/header'}
+{template $appstyle.$do.'/'.$ac.'/css'}
+{template $appstyle.$do.'/'.$ac.'/tip'}
+<link href="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<script src="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<div class="head">
+	<a href="javascript:history.back();" class="bn pull-left pxlogo"><i class="icon-reply"></i></a>
+	<span class="title">结算</span>
+	<a href="{php echo fm_murl('member','mycart','index',array())}" class="bn pull-right hidden"><i class="glyphicon glyphicon-shopping-cart"></i><span class="buy-num img-circle hidden"> {$carttotal} </span></a>
+</div>
+
+<form class="form-horizontal" method="post" role="form" onsubmit='return check();'>
+	<input type="hidden" name="goodstype" value="{$goodstype}" />
+	<input type="hidden" name="address" value="{$defaultaddress['id']}" />
+	<div class="order-main ">
+		<h5>联系方式:</h5>
+		<div id="myaddress">
+			{if !empty($defaultaddress)}
+			<div id="address_{$defaultaddress['id']}" class="shopcart-main img-rounded " style="margin:0;padding:10px;margin-bottom:10px;cursor:pointer;" onclick="changeAddress()">
+				<span>{$defaultaddress['username']}, {$defaultaddress['mobile']}</span>
+				<span style="float:right;"> &nbsp;&nbsp;
+					<a href="{php echo fm_murl('member','address','index',array('from'=>'confirm','returnurl'=>urlencode($returnurl)))}">
+					管理联系方式
+					</a>
+				</span>
+				{if !empty($defaultaddress['address'])}
+			<h5>默认联系地址:</h5>
+			<input id="defaultaddress" value="{$defaultaddress['province']}-{$defaultaddress['city']}-{$defaultaddress['district']}-{$defaultaddress['address']}" class="form-control" readonly="true" />
+			{/if}
+			</div>
+			{else}
+			<div>
+				<button type="button" class="btn btn-danger" onclick='location.href="{php echo fm_murl('member','address','index',array('from'=>'confirm','returnurl'=>urlencode($returnurl)))}"'><i class="glyphicon glyphicon-plus"></i> 添加/修改(首次需设置，以后自动调用)</button>
+			</div>
+			{/if}
+		</div>
+
+		{template $appstyle.'goodstpls/confirm/'.$goodstpl}
+		<h5>订单详情</h5>
+		<div class="order-detail">
+			<table class="table">
+				<thead style='background-color:#f9c616;'>
+				<tr>
+					<th class="name">商品</th>
+					<th class="num">数量</th>
+					<th class="total">单价</th>
+				</tr>
+				</thead>
+				<tbody>
+				{loop $allgoods $item}
+				<tr>
+					<td class="name">
+						<span  style="float:left;">
+							<a href="{php echo fm_murl('goods','detail','index',array('id'=>$item['id']))}">{$item['title']}</a>
+							{if !empty($item['optionname'])}<br/>
+							<span style='font-size:12px;color:#666'> {$item['optionname']}</span>
+							{/if}
+						</span>
+					</td>
+					<td class="num">
+						{$item['total']}{if !empty($item['unit'])}{$item['unit']}{/if}
+					</td>
+					<td class="total">
+						<span style="display: none;">{$item['total']}</span>
+						<span class='goodsprice'>{$item['marketprice']} 元</span>
+						<span style="display: none;">{$item['marketprice']}</span>
+					</td>
+				</tr>
+				{/loop}
+				</tbody>
+			</table>
+			<div class="order-detail-hd">
+				<span class="pull-right" style="color:#E74C3C;">
+					[合计：<span id='totalprice'>{$totalprice}元</span>]
+				</span>
+				{if $totalprice<$settings['free_dispatch']}
+				<span class="pull-right" id="add_dispatch_price" style="">温馨提示：您的订单金额不足{$settings['free_dispatch']}元，我们需加收{$settings['free_dispatch_price']}元配送费用</span>
+				{/if}
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+		<h5>备注</h5>
+		<div class="message-box">
+			<textarea class="form-control" rows="3" name="remark" placeholder="亲，请将您的预订人姓名、电话或其他相关信息填写在此处，以便客服与您联系和进一步确认。"></textarea>
+		</div>
+		<button type="submit" name="submit" value="yes" class="btn btn-warning order-submit btn-lg" style="margin-bottom:20px;">提交订单</button>
+		<input type="hidden" name="token" value="{$_W['token']}" />
+	</div>
+</form>
+
+<script language='javascript'>
+	function changeAddress(){
+		location.href = "{php echo fm_murl('member', 'address','index', array('from'=>'confirm','returnurl'=>urlencode($returnurl)))}";
+	}
+//不需要强制填写收货联系地址时，可将上面的的链接改为引用mobordercantact
+	function check(){
+		var hasaddress =document.getElementById("defaultaddress").value;
+		var isneedaddress="{$isneedaddress}";
+		if($("#defaultaddress").length <=0 && isneedaddress==true){
+			alert("亲，请先补充您的联系方式！");
+			return false;
+		}
+		return true;
+	}
+
+	$('.mui-calendar-picker').datetimepicker({
+		language:  'zh-CN',
+		format: 'yyyy-mm-dd H:i',
+		weekStart: 0,
+		todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,	//0 or 'hour' for the hour view  1 or 'day' for the day view  2 or 'month' for month view (the default)  3 or 'year' for the 12-month overview  4 or 'decade' for the 10-year overview. Useful for date-of-birth datetimepicker
+		forceParse: 0,
+		minuteStep: 30,
+		showMeridian: 1,
+		//minView: "month",//设置只显示到月份,不显示时分
+	});
+
+	$("#dispatch").change(canculate);
+
+	function canculate(){
+		var prices = 0;
+		$(".goodsprice").each(function() {
+			var total = $(this).prev().text();
+			var price = $(this).next().text();
+			var temp = parseFloat(total * price);
+			temp = temp.toFixed(2);
+			prices = Number(prices) + Number(temp);	//利用Number进行强制数字格式转换
+		});
+		var free_dispatch = "{php echo $settings['free_dispatch']}";
+		free_dispatch = parseFloat(free_dispatch).toFixed(2);
+		var free_dispatch_price = "{php echo $settings['free_dispatch_price']}";
+		free_dispatch_price = parseFloat(free_dispatch_price).toFixed(2);
+		if(prices < free_dispatch){	/*订单金额不足免邮额时，加收预设运费*/
+			prices = Number(prices) + Number(free_dispatch_price);
+			$("#add_dispatch_price").show();
+		}
+		$("#totalprice").html(prices + '元');
+		var dispatchprice = parseFloat($("#dispatch").find("option:selected").attr("price"));
+		if (dispatchprice > 0){
+			prices =  Number(prices) +  Number(dispatchprice);
+			$("#totalprice").html(prices + " 元 (含运费"+dispatchprice + "元)");
+		}
+	}
+	$(function(){
+		canculate();
+	});
+</script>
+{template $appstyle.$do.'/'.$ac.'/designedby'}
+{template $appstyle.$do.'/'.$ac.'/footer'}

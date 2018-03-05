@@ -1,0 +1,103 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+{if $nowuid<=0}
+	{template 'modset/privilege/selectuid'}
+{else}
+	{if empty($nowdo)}
+		{template 'modset/privilege/selectdo'}
+	{else}
+		{if $nowplat<=0}
+			{template 'modset/privilege/selectplat'}
+		{else}
+			{php $do_key=$nowdo}
+			{php $d_o=$routes[$do_key]}
+			{template 'modset/privilege/item'}
+		{/if}
+	{/if}
+{/if}
+<script type="text/javascript" >
+	function changeselect(classname) {
+		var f=document.getElementsByClassName(classname);
+		for(var i=0;i<f.length;i++)
+		{
+			f[i].checked=true;
+		}
+	}
+	function unsetselect(classname) {
+		$("."+classname).removeAttr("checked");
+	}
+	function unchangeselect(classname) {
+		var f=document.getElementsByClassName(classname);
+		for(var i=0;i<f.length;i++)
+		{
+			if(f[i].checked==false)
+			{
+				f[i].checked=true;
+			}else {
+				f[i].checked=false;
+			}
+		}
+	}
+	function checkselect(doname,acname,opname){
+		var ischecked=false;
+		if (opname) {
+			var f_op=document.getElementById(doname +'-'+ acname +'-'+ opname);
+			var f_ac=document.getElementById(doname +'-'+ acname);
+			var f_do=document.getElementById(doname);
+			var classname = doname +'-'+acname +'-'+ opname;
+			var f=document.getElementsByClassName(classname);
+			for(var i=0;i<f.length;i++)
+			{
+				if(f[i].checked==true)
+				{
+					var ischecked=true;
+				}
+			}
+			if (ischecked)
+			{
+				f_op.checked=true;
+				f_ac.checked=true;
+				f_do.checked=true;
+			}
+		}
+		else{
+			if (acname) {
+				var f_ac=document.getElementById(doname +'-'+ acname);
+				var f_do=document.getElementById(doname);
+				var classname = doname +'-'+acname;
+				var f=document.getElementsByClassName(classname);
+				for(var i=0;i<f.length;i++)
+				{
+					if(f[i].checked==true)
+					{
+						var ischecked=true;
+					}
+				}
+				if (ischecked)
+				{
+					f_ac.checked=true;
+					f_do.checked=true;
+				}
+			}
+			else {
+				if (doname) {
+					var f_do=document.getElementById(doname);
+					var classname = doname;
+					var f=document.getElementsByClassName(classname);
+					for(var i=0;i<f.length;i++)
+					{
+						if(f[i].checked==true)
+						{
+							var ischecked=true;
+						}
+					}
+					if (ischecked)
+					{
+						f_do.checked=true;
+					}
+				}
+			}
+		}
+	}
+</script>
+{template 'common/footer'}

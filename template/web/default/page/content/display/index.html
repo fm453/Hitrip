@@ -1,0 +1,113 @@
+<div class="main">
+	<div class="panel panel-info">
+	<div class="panel-heading"></div>
+	<div class="panel-body table-responsive">
+	<form action="" method="post" class="form-horizontal" role="form" id="list-form">
+		<table class="table table-hover " style="white-space: normal;overflow: visible;text-overflow: ellipsis;">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="text-align:center; width:30%;">操作</th>
+					<th style="width:10%;">SN&nbsp;<button  class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="下列各行在双击后进入编辑状态可复制"><i class="fa fa-question"></i></button></th>
+					<th style="width:30%;">实例</th>
+					<th style="width:30%;">内容页</th>
+					<th style="width:20%;">属性及状态</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td style="text-align:left;">
+					<p>
+						<a href="{php echo fm_wurl($do,'ajax','delete', array('sn' => $item['sn'],'from_ac'=>$ac,'from_op'=>$operation,'delete'=>$do,'sn' => $item['sn']))}" onclick="return confirm('再确认一下，要删除此页面内容吗？此操作不可恢复！');return false;" class="hidden btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times" style="color:red;"></i></a>&nbsp;&nbsp;
+
+						<a href="{php echo fm_wurl($do,$ac,'delete', array('sn' => $item['sn'],'s_sn' => $item['s_sn'],'f_sn' => $item['f_sn'],'from_ac'=>$ac,'from_op'=>$operation,'delete'=>$do))}" onclick="return confirm('再确认一下，要删除此页面内容吗？此操作不可恢复！');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times" style="color:red;"></i></a>&nbsp;&nbsp;
+						
+						<a href="{php echo fm_wurl($do,$ac,'copy', array('sn' => $item['sn'],'s_sn' => $item['s_sn'],'f_sn' => $item['f_sn'], 'pindex' => $pindex))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="复制页面内容基本信息后再编辑保存为新页面内容"><i class="fa fa-copy"></i>&nbsp;基础复制</a>&nbsp;&nbsp;
+
+						<a href="{php echo fm_wurl($do,$ac,'modify', array('sn' => $item['sn'],'s_sn' => $item['s_sn'],'f_sn' => $item['f_sn'],'pindex' => $pindex,'copy'=>1))}"class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="复制该页面全部内容后新建"><i class="fa fa-copy"></i>&nbsp;高级复制</a>&nbsp;&nbsp;
+
+						<a href="{php echo fm_murl($do,$ac,'index', array('sn' => $item['sn'].'_'.$item['f_sn'].'_'.$item['s_sn']))}"class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="前台直接访问链接"><i class="fa fa-link"></i></a>&nbsp;&nbsp;
+
+					</p>
+					<p>
+						<a href="{php echo fm_wurl($do,$ac,'modify', array('sn' => $item['sn'],'s_sn' => $item['s_sn'],'f_sn' => $item['f_sn'],'pindex' => $pindex))}"class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="编辑该页面内容"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
+					</p>
+					</td>
+					<td style="word-break:break-all;" contenteditable="true" >
+					<span class="cancopy"> {$item['sn']}_{$f_sn}_{$s_sn}</span>
+					</td>
+					<td>
+					<p>
+						{$InstanceData['title']}
+					</p>
+					<p style="color:#bbb;">
+						
+					</p>
+					</td>
+					<td>
+					<p>
+						{$item['title']}
+					</p>
+					<p style="color:#bbb;">
+						
+					</p>
+					</td>
+					<td>
+					<p>
+						<label data="{$item['status']}" class="label {if $item['status']==1}label-success{else}label-warning{/if}" onclick="setProperty(this,{$item['sn']},'label-success','label-warning','status')">{if $item['status']==1}启用{else}停用{/if}</label>
+
+						<label data="{$item['deleted']}" class="label {if $item['deleted']==0}label-success{else}label-danger{/if}" onclick="setProperty(this,{$item['sn']},'label-success','label-warning','deleted')">{if $item['deleted']==1}已删除{else}使用中{/if}</label>
+
+						<label data="{$item['params']['open']}" class="label {if $item['params']['open']==1}label-success{else}label-warning{/if}" onclick="setProperty(this,{$item['sn']},'label-success','label-warning','open')">{if $item['params']['open']==1}开放{else}关闭{/if}</label>
+
+						<label data="{$item['params']['rec']}" class="label {if $item['params']['rec']==1}label-success{else}label-default{/if}" onclick="setProperty(this,{$item['sn']},'label-success','label-warning','rec')">推荐</label>
+
+						<label data="{$item['params']['hot']}" class="label {if $item['params']['hot']==1}label-success{else}label-default{/if}" onclick="setProperty(this,{$item['sn']},'label-success','label-warning','hot')">热门</label>
+
+					</p>
+					
+						<p>
+						平台：{$item['plataccount']['name']}({$item['uniacid']})
+						</p>
+						
+					</td>
+					
+				</tr>
+				{/loop}
+			</tbody>
+			<tfoot>
+			</tfoot>
+		</table>
+		<input name="submit" type="submit" class="btn btn-primary" value="提交">
+		<input type="hidden" name="token" value="{$_W['token']}" />
+		</form>
+	</div>
+	<div style="text-align: center;">
+		{$pager}
+	</div>
+	<div class="panel-heading"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	var category = {php echo json_encode($children)};
+	function setProperty(obj,id,label1,label2,type){
+		return;//暂时不启用该AJAX
+		$(obj).html($(obj).html() + "...");
+		$.post("{php echo fm_wurl($do,'ajax','update',array('from_ac'=>$ac,'from_op'=>$operation))}"
+			,{id:id,type:type, data: obj.getAttribute("data")}
+			,function(d){
+				$(obj).html($(obj).html().replace("...",""));
+				if(type=='status'){
+				 $(obj).html( d.data=='1'?'启用':'停用');
+				}
+				$(obj).attr("data",d.data);
+				if(d.result==1){
+					$(obj).toggleClass(label1);
+					$(obj).toggleClass(label2);
+				}
+			}
+			,"json"
+		);
+	}
+
+</script>

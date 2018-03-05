@@ -1,0 +1,52 @@
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+<input type="hidden" name="op" value="add" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				新增状态
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态编码</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="sn" class="form-control" placeholder="不可留空；此处仅可填写数字" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态名</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="showname" class="form-control" placeholder="状态的展示名" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>归属表</label>
+					<div class="col-sm-9 col-xs-12">
+						<select class="form-control" name="setfor"  id="setfor">
+							<option value="all" data-name="">全局</option>
+							{loop $tables $key $table}
+							<option value="{$key}" data-name="">{$table}</option>
+							{/loop}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">工作顺序</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="workflow" class="form-control" placeholder="不可留空；此处仅可填写数字" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态描述</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea name="description" class="form-control" placeholder="可留空"  cols="70"></textarea>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="add" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>

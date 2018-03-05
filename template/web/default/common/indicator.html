@@ -1,0 +1,5 @@
+{php $fm453_indicator['onoff'] = !empty($fm453_indicator['onoff']) ? $fm453_indicator['onoff'] : 'hidden';}
+
+<div id="fm453-indicator" class="{$fm453_indicator['onoff']}" style="width:100%;position: fixed;top:50px;color:#fff;text-align: center;font-weight: bold;">
+<span style="background-color: #f00;height:50px;line-height:40px;border-radius: 5px;padding: 5px;">新通知：{$fm453_indicator['detail']}</span>
+</div>

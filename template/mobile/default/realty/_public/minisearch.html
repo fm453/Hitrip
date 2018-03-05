@@ -1,0 +1,39 @@
+<div id="minisearch-table" class="row" style="">
+		<form action="" method="post" class="form-horizontal" role="form" id="minisearch-form" onsubmit="return formcheck('minisearch-form');return false;" data-noajax = '0'>
+			<input type="hidden" name="ajax" value="1" />
+			<input type="hidden" name="area" id="form-input-area" value="{$area}" />
+			<input type="hidden" name="s_sn" value="{$s_sn}" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+			<div class="form-group">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 search-keywords">
+					<input class="form-control input-lg search-query" type="text" name="keywords" ng-model="keywords" placeholder="请输入房源特征、地点或项目/楼盘名称" />
+					<button type="button" class="btn btn-success search-button" id="form-search-button" contenteditable="false" onclick="formcheck('search-form');" data-toggle="tooltip" data-placement="top" title="在我们全部布点城市中查找与关键词及其他条件相关的房源" >全城找房</button>
+				</div>
+			</div>
+		</form>
+</div>
+<script type="text/javascript">
+
+	function formcheck(formid){
+		var form = document.getElementById(formid);
+		var noajax = $('#'+ formid).attr('data-noajax');	//使用noajax标记来临时改用非ajax的提交方法
+		if (noajax == 1) {
+			form.submit();
+			return;
+		}
+		var formdata = Form_format(formid); //自有方法格式化表单元素，返回数组
+		var url = "{php echo fm_murl($do,$ac,'ajax',array())}";
+		var data = formdata;
+		$('#form-search-button').html("请稍候,正在为您查询");
+		$.post(url,data,function(res){
+			if (res) {
+				$('#form-search-button').html("已为您查询到相关房源");
+				$('#list-houses').html(res);
+			}else{
+				$('#form-search-button').html("房源查询");
+			}
+			console.log(res);
+		},'html');
+		return false;
+	}
+</script>

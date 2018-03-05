@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#zhoubiangaikuang2">
+          周边交通概况<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse" id="zhoubiangaikuang2">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-zhoubiangaikuang2"  onsubmit="return formcheck('setting-form-zhoubiangaikuang2');return false;" data-noajax = '0'>
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" value="">
+				<input type="hidden" name="setfor" value="peripheral" />
+				<input type="hidden" name="sn" value="{$f_sn}" />
+				<input type="hidden" name="s_sn" value="{$s_sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">交通情况</label>
+	<div class="col-xs-12 col-sm-9 ">
+		{php echo fmFunc_tpl_ueditor('peripheral_traffic',$item['peripheral']['traffic'],'web','html',array('height'=>200,'width'=>800));}
+		<span class="help-block">说明：可描述与主要交通要道、观景点或其他地标区域的距离说明等</span>
+	</div>
+</div>
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-zhoubiangaikuang2" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-zhoubiangaikuang2" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#zhoubiangaikuang2">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>
+

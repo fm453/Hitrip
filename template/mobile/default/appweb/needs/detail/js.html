@@ -1,0 +1,24 @@
+<script language='javascript'>
+function formCheckReply(formid=null) {
+	var form = document.getElementById('form-reply');
+	if (formid) {
+		form = document.getElementById(formid);
+	}
+	if (formid=='form-reply') {
+		if (form.reply.value=='') {
+			mui.alert('请填写回复内容，如所使用的表单无须对客户进行针对性回复，可直接关闭本页面，不使用回复功能!', '{$shopname}');
+			form.reply.focus();
+			return false;
+		}
+		var f_data = {
+			'id': form.id.value,
+			'sn': form.sn.value,
+			'setfor': form.setfor.value,
+			'reply': form.reply.value,
+			'token' : "{$_W['token']}"
+		}
+		getResult('appwebneeds','detail','post',f_data);
+		return false;
+	}
+}
+</script>

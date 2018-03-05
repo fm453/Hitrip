@@ -1,0 +1,18 @@
+{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/css'}
+{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/titlebar'}
+
+<!--下拉刷新容器-->
+<div class="mui-content" style="background-color: rgba(255,255,255,1);overflow-x:hidden;" >
+{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/'.$operation.'/page'}
+</div>
+<!-- 下拉容器结束 -->
+{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/nav'}
+<!-- 模态框 -->
+{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/modal/buy'}
+{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/js'}
+<!-- 图片放大查看 -->
+<script src="{$appsrc}js/mui.zoom.js"></script>
+<script src="{$appsrc}js/mui.previewimage.js"></script>
+<script type="text/javascript" >
+	mui.previewImage();
+</script>

@@ -1,0 +1,38 @@
+<h5>入住日期:</h5>
+		<div id="indate">
+		{php echo tpl_form_field_date('hotelindate');}
+		</div>
+<h5>离店日期:</h5>
+		<div id="outdate">
+		{php echo tpl_form_field_date('hoteloutdate');}
+		</div>
+<h5>人住成人</h5>	
+		<select id='adults' name="hoteladults" class="form-control">		
+		<option value="2" adults='2'>2位</option>
+		<option value="1" adults='1'>1位</option>
+		<option value="3" adults='3'>3位</option>
+		<option value="4" adults='4'>4位</option>
+		<option value="5" adults='5'>5位</option>
+		<option value="6" adults='6'>6位</option>
+		<option value="7" adults='7'>7位</option>
+		<option value="8" adults='8'>8位</option>
+		<option value="9" adults='9'>9位</option>
+		<option value="10" adults='10'>10位</option>
+		</select>
+
+<h5>人住儿童</h5>	
+		<select id='kids' name="hotelkids" class="form-control">
+		<option value="1" adults='1'>1名</option>
+		<option value="0" adults='0'>无</option>
+		<option value="2" adults='2'>2名</option>
+		<option value="3" adults='3'>3名</option>
+		<option value="4" adults='4'>4名</option>
+		<option value="5" adults='5'>5名</option>
+		</select>
+
+<h5 class="hidden">发货方式</h5>	
+		<select id='dispatch' name="dispatch" class="form-control hidden">
+	   	{loop $dispatch $d}
+			<option value="{$d['id']}" price='{$d['price']}'>{$d['dispatchname']} (运费：{$d['price']}元)</option>
+		{/loop}
+		</select>

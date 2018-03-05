@@ -1,0 +1,15 @@
+{template $fm453style.'common/_header'}
+{template $fm453style.'common/tabnav'}
+{if $operation == 'modify'}
+{template $fm453style.'report/log/modify'}
+{/if}
+{if $operation == 'detail'}
+{template $fm453style.'report/log/detail'}
+{/if}
+{if $operation == 'display' || $operation == 'mine'}
+{template $fm453style.'report/log/search'}
+{template $fm453style.'report/log/display'}
+{/if}
+{template $fm453style.'report/key-js'}
+{template $fm453style.'report/mouse'}
+{template $fm453style.'common/_footer'}

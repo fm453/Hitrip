@@ -1,0 +1,22 @@
+<p>您的意见与建议</p>
+<div class="row mui-input-row ">
+	<textarea id='question' name='question' class="mui-input-clear question" placeholder="您有任何意见与建议的可以在这里提交给我们..." value="{$info}"></textarea>
+</div>
+
+<p>联系方式(选填,方便我们联系您)</p>
+<div class="mui-input-row">
+	<input id='contact' type="text" name="contact" class="mui-input-clear contact form-control" placeholder="(QQ/邮箱/微信/手机号等 )" value="{$contact}" />
+</div>
+<div class="mui-content-padded">
+	<div class="mui-inline">星级</div>
+		<div class="icons mui-inline" style="margin-left: 6px;">
+			{if $stars>=1}<i data-index="1" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="1" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=2}<i data-index="2" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="2" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=3}<i data-index="3" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="3" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=4}<i data-index="4" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="4" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=5}<i data-index="5" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="5" class="mui-icon mui-icon-star"></i>{/if}
+
+		</div>
+</div>
+<input type="hidden" id="stars" name="stars" value="" />
+<p  id="PrintError" class="mui-hidden">打印错误消息</p>

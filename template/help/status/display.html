@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#forstatus">
+			状态清单<span class="pull-right">（点击展示/收起）</span>
+		</a>
+	</div>
+</div>
+<div class="container-fluid panel-collapse collapse in" id="forstatus">
+	<div class="row-fluid">
+		<div class="span12 forcopy">
+			<div class="alert" style="    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 8px 35px 8px 14px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);">
+				 <button type="button" class="close" data-dismiss="alert">×</button>
+				<h4>
+					说明：状态取值范围为-127～127，有效状态类为共32级；本规范主要为了方便后期的权限控制、工作流管理
+				</h4> <strong>数值说明：</strong> 64是一个数据临界点，以下为针对当前公众号，以上为适用于平台；负数值表示正数值相反的意思，正负值的区分主要是为了前后台区别留用；statuscode为负值时，表示其当前绝对值对应的状态未通过审核，因此前台状态取值标准为其绝对值对应状态的上一级状态。
+			</div>
+			<ol>
+		{loop $tables $key $table}
+			{if !empty($lists[$key])}
+				<li>{$key}表说明： {$table}
+					<ol>
+			{loop $lists[$key] $item}
+				<li >状态码：<span class="label label-primary"> {$item['sn']} </span> 状态名：<span class="label label-info">{$item['showname']} </span> 工作顺序：<kbd>{$item['workflow']}</kbd>状态说明：<code>{$item['des']} </code></span>；<a class="label label-info" href="{php echo $this->createWebUrl('status',array('id'=>$item['id'],'op'=>'modify'))}" >修改{$item['id']}</a>
+				</li>
+			{/loop}
+					</ol>
+				</li>
+			{/if}
+		{/loop}
+			</ol>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,135 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#forSearchSetting">
+          搜索条件设置<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse in" id="forSearchSetting">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-forSearchSetting" onsubmit="return formcheck('setting-form-forSearchSetting');return false;" data-noajax='1'>
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" value="" />
+				<input type="hidden" name="setfor" value="search" />
+				<input type="hidden" name="s_sn" value="{$s_sn}" />
+				<input type="hidden" name="sn" value="{$sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">售价</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+
+					{loop $allprices $k $v}
+					<label for="prices" class="checkbox-inline">
+					<input type="checkbox" name="prices[{$k}]" value="{$k}"  class="no-margin prices" {if isset($searchs['prices']) && in_array($k,$searchs['prices'])}  checked="checked" {/if}>
+					<span class="hastooltip" data-toggle="tooltip"  data-placement="top" data-container="body" title="当前选中的为{$v}条件范围内的楼盘;已选择了“不限”条件的将自动忽略本条件下的其他限制">{$v}</span>
+					</label>
+					{/loop}
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择全部条件" onclick="selectall('prices',this)">全选</button>
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择当前所选条件以外的全部条件" onclick="changeselect('prices')">反选</button>
+
+	</div>
+</div>
+
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">特色</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+
+					{loop $allfeatures $k $v}
+					<label for="features" class="checkbox-inline">
+					<input type="checkbox" name="features[{$k}]" value="{$k}"  class="no-margin features" {if isset($searchs['features']) && in_array($k,$searchs['features'])}  checked="checked" {/if}>
+					<span class="hastooltip" data-toggle="tooltip"  data-placement="top" data-container="body" title="当前选中的为{$v}条件范围内的楼盘;已选择了“不限”条件的将自动忽略本条件下的其他限制">{$v}</span>
+					</label>
+					{/loop}
+					<button class="btn btn-default hastooltip" type="button" data-toggle="tooltip" data-placement="top" title="选择全部条件" onclick="selectall('features',this)">全选</button>
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择当前所选条件以外的全部条件" onclick="changeselect('features')">反选</button>
+
+	</div>
+</div>
+
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">户型</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+
+					{loop $allroomtypes $k $v}
+					<label for="roomtypes" class="checkbox-inline">
+					<input type="checkbox" name="roomtypes[{$k}]" value="{$k}"  class="no-margin roomtypes" {if isset($searchs['roomtypes']) && in_array($k,$searchs['roomtypes'])}  checked="checked" {/if}>
+					<span class="hastooltip" data-toggle="tooltip"  data-placement="top" data-container="body" title="当前选中的为{$v}条件范围内的楼盘;已选择了“不限”条件的将自动忽略本条件下的其他限制">{$v}</span>
+					</label>
+					{/loop}
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择全部条件" onclick="selectall('roomtypes',this)">全选</button>
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择当前所选条件以外的全部条件" onclick="changeselect('roomtypes')">反选</button>
+
+	</div>
+</div>
+
+<div class="form-group">
+<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">类型</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+
+					{loop $allhousetypes $k $v}
+					<label for="housetypes" class="checkbox-inline">
+					<input type="checkbox" name="housetypes[{$k}]" value="{$k}"  class="no-margin housetypes" {if isset($searchs['housetypes']) && in_array($k,$searchs['housetypes'])}  checked="checked" {/if}>
+					<span class="hastooltip" data-toggle="tooltip"  data-placement="top" data-container="body" title="当前选中的为{$v}条件范围内的楼盘;已选择了“不限”条件的将自动忽略本条件下的其他限制">{$v}</span>
+					</label>
+					{/loop}
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择全部条件" onclick="selectall('housetypes',this)">全选</button>
+					<button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" title="选择当前所选条件以外的全部条件" onclick="changeselect('housetypes')">反选</button>
+
+	</div>
+</div>
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-forSearchSetting" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-forSearchSetting" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#forSearchSetting">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	function selectall(classname,obj) {
+		var hasclicked = $(obj).attr('data-hasclicked');
+		var selected = true;
+		var newlabel = '全选';
+		if (hasclicked==1) {
+			selected =false;
+			$(obj).attr('data-hasclicked',0);
+		}else{
+			newlabel = '取消全选';
+			$(obj).attr('data-hasclicked',1);
+		}
+		var f=document.getElementsByClassName(classname);
+		for(var i=0;i<f.length;i++)
+		{
+			f[i].checked=selected;
+			$(obj).html(newlabel);
+		}
+	}
+
+	function changeselect(classname) {
+		var f=document.getElementsByClassName(classname);
+		for(var i=0;i<f.length;i++)
+		{
+			if(f[i].checked==false)
+			{
+				f[i].checked=true;
+			}else {
+				f[i].checked=false;
+			}
+		}
+	}
+</script>

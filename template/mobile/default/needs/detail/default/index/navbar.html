@@ -1,0 +1,53 @@
+			<nav class="mui-bar mui-bar-tab">
+				<a class="mui-tab-item" href="tel:{$kefuphone}">
+				<span class="mui-tab-label mui-icon mui-icon-phone">
+				</span>
+				<span class="mui-tab-label">咨询热线</span>
+			</a>
+			{if $needs['is_pay']}
+			<a class="mui-tab-item {if $needs['price']} mui-active {/if}" href="#modal-buy">
+				<span class="mui-link mui-icon mui-icon-extra mui-icon-extra mui-icon-extra-prech">
+				</span>
+				<span class="mui-tab-label">{if $needs['price']<20}表达心意{else}支付酬劳{/if}</span>
+			</a>
+            {/if}
+            {if $needs['is_dianzan']}
+			<a class="mui-tab-item" id="_DianZan">
+				<span class="mui-link mui-icon mui-icon-extra mui-icon-extra-like">
+				</span>
+				<span class="mui-tab-label">点赞支持</span>
+			</a>
+            {/if}
+			{if $availabe}
+			<a class="mui-tab-item" id="js_submit">
+				<span class="mui-icon mui-icon-compose">
+				</span>
+				<span class="mui-tab-label">提交意向</span>
+			</a>
+			{else}
+			<a class="mui-tab-item" >
+				<span class="mui-icon mui-icon-compose">
+				</span>
+				<span class="mui-tab-label">暂停预约</span>
+			</a>
+			{/if}
+
+			</nav>
+
+<div id="Popover_0" class="mui-popover mui-bar-popover" style="">
+			<div class="mui-popover-arrow"></div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a class="mui-tab-item" href="#modal-member">
+						<span class="mui-icon mui-icon-contact"></span>
+						<span class="mui-tab-label">会员</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-tab-item " href="{php echo fm_murl($do,'list','index',array('id'=>$id));}">
+						<span class="mui-icon mui-icon-list"></span>
+						<span class="mui-tab-label">我的记录</span>
+					</a>
+				</li>
+			</ul>
+		</div>

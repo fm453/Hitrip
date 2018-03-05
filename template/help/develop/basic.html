@@ -1,0 +1,151 @@
+<div class="panel panel-info">
+	<div class="panel-heading">
+			本系统UI基于mui框架+bootstrap框架+Jquery.js插件开发；遵循本原则将让您的开发工作事半功倍。
+	</div>
+			<div class="alert alert-warning alert-dismissible fade in" role="alert">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				<h4>
+					各插件版本说明：
+				</h4>
+				<div>
+						<strong>1、Bootstrap相关：</strong>V3.3.5（JS文件、CSS文件等，默认支持glyphicons-halflings-regular字体图标）
+				</div>
+				<div>
+						<strong>2、Fontawesome相关：</strong>V3.2.1（CSS文件、字体文件等）
+				</div>
+				<div>
+						<strong>3、Jquery：</strong>V2.2.3
+				</div>
+				<div>
+						<strong>4、Jquery UI：</strong>V1.10.2
+				</div>
+				<div>
+						<strong>5、jQuery UI Touch Punch：</strong>V 0.2.2
+				</div>
+				<div>
+						<strong>6、MUI相关：</strong>V3.3.0（JS文件、CSS文件等）
+				</div>
+				<div>
+						<strong>7、其他：</strong>
+				</div>
+			</div>
+</div>
+
+<div class="panel panel-default">
+			<div class="panel-heading">
+			<a data-toggle="collapse" data-parent="#accordion" href="#file">
+          文档结构说明<span class="pull-right">（点击展示）</span>
+        </a>
+			</div>
+</div>
+<div class="container-fluid panel-collapse collapse in" id="file">
+	<div class="row-fluid">
+		<div class="span12">
+			<ol>
+				<li><i class="fa fa-folder-open"></i>基本原则：框架使用了$do \ $ac \ $operation 的路由方式；程序文件、模板文件，都大致上遵循了该方式进行相应文件的命名。
+				</li>
+				<li><i class="fa fa-folder-open"></i>core：主要核心程序文件目录
+					<ol>
+						<li><i class="fa fa-folder"></i>app：手机端功能程序；
+						</li>
+						<li><i class="fa fa-folder"></i>web：后台管理及核心业务处理程序；
+						</li>
+						<li><i class="fa fa-folder"></i>appweb：前端核销管理功能程序；
+						</li>
+						<li><i class="fa fa-folder"></i>function：常用工具函数文件集合；
+						</li>
+						<li><i class="fa fa-folder"></i>class：常用工具类文件集合；
+						</li>
+						<li><i class="fa fa-folder"></i>model：常用业务模型文件集合；
+						</li>
+						<li><i class="fa fa-folder"></i>public：公用文件集合；
+						</li>
+						<li><i class="fa fa-folder"></i>msgtpls：消息模板文件存档
+						</li>
+						<li><i class="fa fa-folder"></i>status：状态集文件存档
+						</li>
+						<li><i class="fa fa-folder"></i>tables：数据表处理文件集合
+						</li>
+					</ol>
+				</li>
+
+				<li><i class="fa fa-folder-open"></i>plugin：插件程序及插件文件；
+				</li>
+
+				<li><i class="fa fa-folder-open"></i>resource：资源文件夹，如样式表、默认图片包、js脚本等
+					<ol>
+						<li><i class="fa fa-folder"></i>components：组件资源
+						</li>
+						<li><i class="fa fa-folder"></i>common：通用类型的资源
+						</li>
+						<li><i class="fa fa-folder"></i>images：通用图片包
+						</li>
+						<li><i class="fa fa-folder"></i>uphelpsql：后台自助升级程序调用的升级sql命令
+						</li>
+					</ol>
+				</li>
+				<li><i class="fa fa-folder-open"></i>template：风格模板文件，按模板名称对应文件夹
+					<ol>
+						<li><i class="fa fa-folder"></i>web：后台风格
+							<ul>
+								<li><i class="fa fa-folder-open-o"></i>default：默认风格
+									<ol>
+										<li><i class="fa fa-folder-o"></i>common：通用的、重复使用的，如头部、脚部文件、页卡导航条、样式文件等；
+										</li>
+									</ol>
+								</li>
+							</ul>
+						</li>
+						<li><i class="fa fa-folder"></i>mobile：前台风格
+							<ul>
+								<li><i class="fa fa-folder-open-o"></i>default：默认风格；新添加风格时，可复制本文件夹重命名后直接进行具体修改，请务必保正各文件的完整性
+									<ol>
+										<li><i class="fa fa-folder-o"></i>453：模板内用的一些资源文件；
+										</li>
+										<li><i class="fa fa-folder-o"></i>common：通用的、重复使用的，如头部、脚部文件、页卡导航条、样式文件等；
+										</li>
+									</ol>
+								</li>
+							</ul>
+						</li>
+						<li><i class="fa fa-folder"></i>help：帮助文件资料包，操作指引、开发文档、状态说明等。
+						</li>
+						<li><i class="fa fa-folder"></i>modset：模块设置文件。
+						</li>
+					</ol>
+				</li>
+			</ol>
+		</div>
+	</div>
+</div>
+<div class="panel panel-default">
+			<div class="panel-heading">
+			<a data-toggle="collapse" data-parent="#accordion"
+          href="#server">
+          服务器环境<span class="pull-right">（点击展示）</span>
+        </a>
+			</div>
+</div>
+<div class="container-fluid panel-collapse collapse" id="server">
+	<div class="row-fluid">
+		<div class="span12">
+			<ol>
+				<li>
+					本程序开发时运行环境：
+					服务器OS： Ubuntu;
+					PHP版本：5.6.15;
+					数据库服务器版本：10.1.9-MariaDB - Source distribution;
+					数据库：mysql;
+				</li>
+				<li>
+					当前服务器信息：<br>
+					<pre>
+{loop $systemInfo $info}
+{$info['name']}{$info['value']}<br>
+{/loop}
+					</pre>
+				</li>
+			</ol>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,147 @@
+<!-- 编辑器配置文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="{$fm453resource}components/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<div class="main">
+	<div class="panel {if $data['status']==1} panel-warning {/if} {if $data['status']==0} panel-success {/if}">
+		<div class="panel-heading">
+			内容编码:
+			<span style="color:red;font-weight:bolder;">
+			{if !empty($o_sn)}
+				{$o_sn}_{$f_sn}_{$s_sn}
+			{else}
+				待生成
+			{/if}
+			</span>
+			（该编码由服务器自动生成后返回）|当前内容：{$data['title']}
+		</div>
+
+		<div class="panel-body">
+			<ul class="nav nav-tabs" id="myTab">
+				<li class="active" ><a href="#tab_basic" data-toggle="tab">内容管理</a></li>
+
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="tab_basic">
+					{template $fm453style.$do.'/'.$ac.'/modify/_basic'}
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function () {
+		window.optionchanged = false;
+		$('#myTab a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content,使用该功能前提是a链接中加上data-toggle="tab"
+		});
+	});
+
+	require(['jquery', 'jquery.ui'],function($){
+		$("#param-items").sortable({handle:'.fa-move'});
+	});
+
+	function formcheck(formid){
+		var form = document.getElementById(formid);
+		var noajax = $('#'+ formid).attr('data-noajax');	//使用noajax标记来临时改用非ajax的提交方法
+		if (noajax == 1) {
+			$('input[name="opp"]').val('noajax');
+			form.submit();
+			return;
+		}
+		var formdata = Form_format(formid); //自有方法格式化表单元素，返回数组
+		var url = "{$_W['siteurl']}";
+		var data = formdata;
+		$('.' + formid).val("正在保存");
+		$.post(url,data,function(res){
+			if (res==1) {
+				$('.' + formid).val("已保存");
+			}else{
+				$('.' + formid).val("保存失败");
+			}
+			console.log(res);
+		},'json');
+		return false;
+	}
+
+	function changeVal(obj,objId) {
+		var a = obj.val();
+		$('#' + objId).val(a);
+	}
+
+	function readable(objId) {
+		$('#' + objId).removeAttr("readonly");//去除只读属性
+	}
+
+
+	function addHtml(container,op,opp) {
+	//响应内容装载容器，请求的操作，附加opp数据
+		var f_do = '{$do}';
+		var f_ac = 'addon';
+		var f_op = op;
+		var f_i = '{$_W["uniacid"]}';
+		var f_type = 'web';
+		var _url = js_url(f_do,f_ac,f_op,f_i,f_type);
+		var _data = {
+				"opp" :opp,
+				"sn" : "{$s_sn}",
+				"s_sn" : "{$s_sn}",
+  			};
+
+		$.ajax({
+			url: _url ,
+			data: _data,
+			success:function(res){
+				$(container).append(res);
+				//console.log(res);
+			}
+		});
+		
+		return;
+	}
+	
+	function deleteParam(o) {
+		$(o).parent().parent().remove();
+	}
+
+	function getPinyin(k) {
+		var _char = $("#char_cn_"+ k).val();
+		//console.log(_char);
+		var f_do = '{$do}';
+		var f_ac = 'addon';
+		var f_op ='ajax';
+		var f_i = '{$_W["uniacid"]}';
+		var f_type = 'web';
+		var _url = js_url(f_do,f_ac,f_op,f_i,f_type);
+		var _data = {
+				"opp" : 'pinyin',
+				"var" : _char
+  			};
+//console.log(_url);
+//console.log(_data);
+		$.ajax({
+			url: _url ,
+			data: _data,
+			dataType:'json',
+			success:function(res){
+				$("#char_en_"+ k).val(res);
+				console.log(res);
+			},
+			error:function () {
+				alert('sorry,转换失败,请手动输入');
+			}
+		});
+
+		return;
+	}
+
+	function clearValue(obj){
+    //console.log(obj);
+    obj.value = '';
+  }
+</script>

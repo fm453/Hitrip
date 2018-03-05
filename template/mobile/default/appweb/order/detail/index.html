@@ -1,0 +1,150 @@
+{template $appstyle.'common/header_bs'}
+{template $appstyle.'appweb/'.$do.'/'.$ac.'/'.'css'}
+{template $appstyle."common/tip"}
+<link href="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<script src="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+<div class="head">
+		<span class="title">订单详情</span>
+	</div>
+	<div class="myoder img-rounded">
+		<div class="myoder-hd">
+			<span class="pull-left">订单编号：{$item['ordersn']}</span>
+			<span class="pull-right">{php echo date('Y-m-d H:i', $item['createtime'])}</span>
+		</div>
+		{loop $goods $g}
+		<div class="myoder-detail">
+			<a href="{php echo fm_murl('goods','detail','index',array('id' => $g['id']))}">
+				<img src="{php echo tomedia($g['thumb']);}" />
+
+			<div class="pull-left">
+				<div class="name">{$g['title']}</div>
+				<div class="price">
+					<span>{$g['marketprice']} 元{if $g['unit']} / {$g['unit']}{/if}</span>
+					<span class="num">{$g['total']}  {if $g['unit']} {$g['unit']}{/if}</span>
+				</div>
+			</div>
+			</a>
+		</div>
+		{/loop}
+		<div class="myoder-express">
+			<span class="express-company">订单状态</span>
+			<span class="express-num">
+				{if $item['paytype'] == 3}
+					{if $item['status'] == -1}
+					<span class="text-muted">订单取消</span>
+					{elseif $item['status'] < 3}
+					<span class="text-danger">货到付款 / 未付款</span>
+					{else}
+					<span class="text-success">已完成</span>
+					{/if}
+				{else}
+					{if $item['status'] == -1}
+					<span class="text-muted">订单取消</span>
+					{elseif $item['status'] == 0}
+					<span class="text-danger">未付款</span>
+					{elseif $item['status'] == 1}
+					<span class="text-warning">已付款</span>
+					{elseif $item['status'] == 2}
+					<span class="text-warning">已发货</span>
+					{else}
+					<span class="text-success">已完成</span>
+					{/if}
+				{/if}
+			</span>
+		</div>
+		<div class="myoder-express" style='margin-top:10px;'>
+			<span class="express-company">发货方式</span>
+			<span class="express-num">{$dispatch['dispatchname']}</span>
+		</div>
+		{if !empty($item['remark'])}
+		<div class="myoder-express" style='margin-top:10px;'>
+			<span class="express-company">订单备注&nbsp;&nbsp;:&nbsp;&nbsp;{$item['remark']}</span>
+		</div>
+		{/if}
+		{if ($item['status'] == '2' || $item['status']==3) && !empty($item['expresssn'])}
+		<div class="myoder-express">
+			<span class="express-company">快递: {$item['expresscom']}</span>
+			<span class="express-num">
+				单号: {$item['expresssn']}
+			</span>
+		</div>
+		{/if}
+		<div class="myoder-total">
+			<span>共计：
+				<span class="false">
+				{if $item['dispatchprice']<=0}
+					{$item['price']} 元
+				{else}
+					{$item['price']} 元 (含运费 {$item['dispatchprice']} 元)
+				{/if}
+				</span>
+			</span>
+			<div class="form-group">
+				{if $item['status'] == '2' && !empty($item['expresssn'])}
+				<a href="http://m.kuaidi100.com/index_all.html?type={$item['express']}&postid={$item['expresssn']}#input" class="btn btn-success pull-right btn-sm" >查看快递</a>
+				{/if}
+			</div>
+		</div>
+		<div class="myoder-hd">
+			<span class="pull-left">联系人信息：</span>
+	</div>
+		<div class="myoder-total">
+			<address>
+				姓名：{$item['username']}<br>
+				<a href="tel:{$item['mobile']}">手机：{$item['mobile']}</a><br>
+				下单设备：{$item['ucontainer']}； 操作系统： {$item['uos']}
+			</address>
+		</div>
+	</div>
+	{template $appstyle.'goodstpls/orderinfos/'.$goodstpl}
+	<script>
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+
+		<script type="text/javascript">
+		$(".remove-starttime").click(function() { //当点击该类元素时触发，用于清除日期选择
+			$('#starttime').remove();//显示第一个导航条
+		});
+		$(".remove-endtime").click(function() { //当点击该类元素时触发，用于清除日期选择
+			$('#endtime').remove();//显示第一个导航条
+		});
+    $('.form_datetime').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 0,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		minuteStep: 30,
+        showMeridian: 1
+    });
+	$('.form_date').datetimepicker({
+     language:  'zh-CN',
+     weekStart: 1,
+     todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 1,
+		minView: 0,
+		maxView: 1,
+		forceParse: 0
+    });
+</script>
+
+{template $appstyle."common/designedby"}
+{template $appstyle.'common/footer'}

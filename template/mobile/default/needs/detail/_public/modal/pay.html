@@ -1,0 +1,19 @@
+<div id="modal-buy" class="mui-modal" style="background-color: rgba(245,245,245,1);">
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-close mui-pull-right" href="#modal-buy"></a>
+		<h1 class="mui-title" id="modal-buy-title">在线支付</h1>
+	</header>
+
+	<div class="mui-content " style="">
+		<p class="mui-content-padded">
+			<!-- 规格页 -->
+			{template $appstyle.$do.'/'.$ac.'/_public/payoption'}
+		</p>
+	</div>
+
+	<footer style="position:relative;width:100%;top:50px;text-align:center;display:none;">
+		<div  class="mui-btn-danger mui-btn-outlined" id="_FM-INFO-PAYRESULT" style="padding:10px 0;">
+				支付通知
+		</div>
+	</footer>
+</div>

@@ -1,0 +1,74 @@
+
+<script type="text/javascript" charset='utf-8'>
+/*
+* 格式化表单
+* 返回以表单元素及对象值构成的数组对象
+* 170425 解决单选、复选、下拉框等元素name多对一时显示不正确的BUG
+*/
+
+	function Form_format(formid){
+		var formid = (typeof(formid)=="string" ? formid : '');
+		var _index, _text, _value, _length;
+		if (!formid) {
+			return false;
+		}
+		var x = document.getElementById(formid);
+		var result={};
+		for (var i=0;i<x.length;i++)  {
+			var obj = x.elements[i];
+			var key = obj.name;
+			if (obj.type=='radio') {
+				if(obj.checked){
+					result[key] = obj.value;
+				}
+			}else if (obj.type=='select-one') {
+				//单选下拉框取值，返回单一值
+				_index = obj.selectedIndex; // 选中索引
+				_text = obj.options[_index].text; // 选中文本
+				_value = obj.options[_index].value; // 选中值
+				result[key] = _value;
+			}else if (obj.type=='select-multiple') {
+				//多选下拉框取值，返回数组多值
+				_value =[];
+				_length = obj.options.length;
+				for(var j=0;j<_length;j++){
+					if(obj.options[j].selected){
+						_value.push(obj.options[j].value);
+					}
+				}
+				result[key] = _value;
+			}else if (obj.type=='checkbox') {
+				//取复选框的值，多选项时返回数组
+				if(obj.checked){
+					if(result[key]==null || !isArray(result[key])){
+						result[key] = [];
+					}
+					result[key].push(obj.value);
+				}
+			}else{
+				result[key] = obj.value;
+			}
+			//以下用于打印调试结果
+			//document.write(obj.name);
+			//document.write('-');
+			//document.write(obj.value);
+			//document.write('-');
+			//document.write(obj.type);
+			//document.write('-');
+			//document.write(obj.id);
+			//document.write('<br>');
+		}
+		//过滤空数组,各项的具体值为仅包含一个元素的数组时，改数组为单一值
+		for(k in result){
+			if(isArray(result[k])){
+				if (result[k].length==0) {
+					result.splice(k, 1);
+				}else if (result[k].length==1) {
+					result[k] = result[k][0];
+				}
+			}
+		}
+		//console.log(result);
+		return result;
+	}
+</script>

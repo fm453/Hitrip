@@ -1,0 +1,93 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+
+<div class="main {if !FM_DEBUG || !$_W['isfounder'] } hidden {/if}">
+	<form action="{php echo $this->createWebUrl('modset')}" method="post" class="form-horizontal form" id="updates-form">
+	<input type="hidden" name="ac" value="updates" />
+	<input type="hidden" name="op" value="check" />
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			检查服务器版本
+		</div>
+		<div class="panel-body">
+			<ol>
+				<li>当前系统版本号为：{if empty($currentversion)}<span style="color:red;">获取本地版本号失败!</span>{else}{$currentversion}{/if}</li>
+				<li>服务器版本号为：{if empty($newversion)}<span style="color:red;">还未获取服务器版本号!</span>{else}{$newversion}{/if}
+				{if $newversion>$currentversion}<label class="label label-danger">有更新了</label>{else}<label class="label label-success">程序是最新的</label>{/if}
+				<a href="{php echo $this->createWebUrl('modset',array('ac'=>'updates','op'=>'display'))}" class="btn btn-primary " />重新检查版本</a>
+				</li>
+				<li>服务器端版本列表：
+					<p style="">
+						<p>
+						<?php for($i=count($serversion)-1;$i>-1;$i--) { ?>
+							<input name="version" type="radio" value="{$i}" class="btn btn-success" {if $_GPC['version']==$i} checked="true" {/if} />
+						 {if $versions[$i]['version']>$currentversion}<label  class="label label-danger" >{else}<label class="label label-success">{/if}
+							{$versions[$i]['version']}
+							</label>
+
+								<span>&nbsp;&nbsp;&nbsp;&nbsp;说明:<br>
+								{$versions[$i]['remark']}
+								</span>
+
+							<br>
+						<?php } ?>
+						</p>
+						<p>
+						{if !empty($newversion)  && !empty($currentversion) && $newversion > $currentversion }
+							<input type="submit" name="getDownLink" value="获取下载地址" class="btn btn-success" />
+							<input type="submit" name="downOnline" value="直接在线下载" class="btn btn-warning" />
+						{else}
+							请耐心等待当前远程更新；您也可以移步后台模块管理页通过官方服务器检查更新
+						{/if}
+						</p>
+					</p>
+				</li>
+				<li>在线下载更新包需要您的服务器环境支持并启用了FTP组件</li>
+				<li>下载过程中请不要关闭浏览器，直到页面提示下载完成</li>
+				<li>在线升级具体有一定的风险，请谨慎操作；升级前请备份好数据及文件</li>
+				<li>在线解压时将会直接使用更新包覆盖本应用文件；为避免不必要的错误，请尽量在关闭站点后再操作</li>
+			</ol>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</div>
+  </form>
+  </div>
+
+  {$tips}
+
+  <div class="main">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			检查本地更新包
+		</div>
+		<div class="panel-body">
+			{if $localPatches}
+			<ol>
+						<?php for($i=count($localPatches)-1;$i>-1;$i--) { ?>
+						<li>
+						 {if $localversions[$i]>$currentversion}<label  class="label label-danger" >{else}<label class="label label-success">{/if}
+							{$localversions[$i]}
+							</label>
+							&nbsp;&nbsp;
+							{if $localversions[$i]>$currentversion}
+							<a class="btn btn-danger" href="{php echo $this->createWebUrl('modset',array('ac'=>'updates','op'=>'modify','opp'=>'unzip','version'=>$localversions[$i]))}"  onclick="return confirm('为了防止误操作，请您再确认一下，是否继续安装？安装过程中请不要关闭本页面！')" />解压安装</a>
+							{elseif $localversions[$i]==$currentversion}
+							<a class="btn btn-default" href="{php echo $this->createWebUrl('modset',array('ac'=>'updates','op'=>'modify','opp'=>'unzip','version'=>$localversions[$i]))}" onclick="return confirm('为了防止误操作，请您再确认一下，是否继续安装？安装过程中请不要关闭本页面！')" />重新安装</a>
+							{/if}
+							<a class="btn btn-warning" href="{php echo $this->createWebUrl('modset',array('ac'=>'updates','op'=>'modify','opp'=>'clearDir','version'=>$localversions[$i]))}" onclick="return confirm('为了防止误操作，请您再确认一下，是否继续操作？')" />清空目录</a>
+						<p>
+							对应文件：{$localPatches[$i]}
+						</p>
+						</li>
+						<?php } ?>
+			</ol>
+			{else}
+				本地暂无更新包文件
+			{/if}
+		</div>
+	</div>
+  </div>
+
+{template 'common/footer'}

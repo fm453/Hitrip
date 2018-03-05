@@ -1,0 +1,60 @@
+{template $fm453style.'webapp/_header'}
+<title>旅行微商城产品概览</title>
+{template $fm453style.'webapp/_common'}
+<style>
+body {
+  font-family: "Microsoft Yahei", Arial, sans-serif;
+  font-size: 14px;
+  background: #fff;
+  overflow-x:hidden;
+}
+</style>
+<body>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<h3 class="text-center">
+				当前共查询到<span style="color:red;">{$total}</span>款产品
+			</h3>
+			<div class="text-center">{$pager}</div>
+			<ol>
+				{loop $ds $item}
+				<li>
+					<table class="table table-condensed table-hover table-bordered">
+					<thead>产品标题：<a href="{$_W['siteroot']}app/{php echo $this->createMobileUrl('detail', array('id' => $item['id']))}" target="_blank" title="以当前公众平台身份前往" target="_blank">{$item['title']}</a></thead>
+					<tbody>
+					<tr class="success">
+						<td>产品链接</td>
+						<td><a href="{php echo fm_murl('detail','','',array('id' => $item['id'],'i'=>$item['uniacid']))}"> {php echo fm_murl('detail','','',array('id' => $item['id'],'i'=>$item['uniacid']))} </a> </td>
+					</tr>
+					<tr>
+						<td>产品简述</td>
+						<td><?php echo cutstr($item['description'],250, '...') ?></td>
+					</tr>
+					<tr class="info">
+						<td>信息摘要</td>
+						<td><span class="soldnum pull-left">已售{$item['sales']}件;  库存：{php echo round($item['total']-$item['sales'],2)}  售价：{$item['marketprice']}元；  浏览量：{$item['viewcount']}次;</span>——所属平台：{$accounts[$item['uniacid']]}({$item['uniacid']})
+						</td>
+					</tr>
+					<tr class="warning">
+						<td>产品缩略图</td>
+						<td><img src="{php echo tomedia($item['thumb']);}"  width="100px"></td>
+					</tr>
+					</tbody>
+					</table>
+					
+				</li>
+				{/loop}
+				{if count($ds)<=0}
+				<li>
+					未找到产品
+				</li>
+				{/if}
+			</ol>	
+		</div>
+		<div class="text-center">{$pager}</div>
+	</div>
+{template $fm453style.'webapp/_footerbar'}
+</div>
+</body>
+</html>

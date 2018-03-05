@@ -1,0 +1,29 @@
+<script type="text/javascript" charset="utf-8">
+	mui.init(
+		{
+			swipeBack: true, //启用右滑关闭功能
+			gestureConfig: {
+				doubletap: true //启用双击监听
+			}
+		}
+	);
+
+	//定义支持区域滚动的层类
+	mui('.mui-scroll-wrapper').scroll();
+
+//监听header的双击事件,简便起见，双击结果是直接强制刷新
+	document.querySelector('header').addEventListener('doubletap', function() {
+		var url = location.href;
+		location.replace(url);
+	});
+</script>
+
+<!-- 弹出菜单 -->
+<script>
+	mui('body').on('shown', '.mui-popover', function(e) {
+		//console.log('shown', e.detail.id);//detail为当前popover元素
+	});
+	mui('body').on('hidden', '.mui-popover', function(e) {
+		//console.log('hidden', e.detail.id);//detail为当前popover元素
+	});
+</script>

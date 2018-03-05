@@ -1,0 +1,52 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+<div class="main">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				关于{php echo $this->module['title']}的说明
+			</div>
+			<div class="panel-body">
+				<div class="alert alert-warning alert-dismissible fade in" role="alert">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+					<div>
+						<strong>模块名称：</strong>{php echo $this->module['title']};
+						<strong>当前版本：</strong>{php echo $this->module['version']}；
+					</div>
+					<div>
+						<strong>作者：</strong>{php echo $this->module['author']};
+						<strong>链接：</strong>{php echo $this->module['url']}；
+					</div>
+					<strong>模块简介：</strong>{php echo $this->module['ability']}
+				</div>
+		      <ol>
+		          <li>为了获得最好的后台操作体验，我们建议您使用最新版Goole浏览器。（火狐等部分浏览器不支持点击粘贴功能）</li>
+		          <li>模块中大部分操作采用的是追加数据的方式；为了简化设计，我们对很多链接使用了在新窗口中打开的方式，以便于同步操作与保存。</li>
+		          <li><span style="font-weight: bold;color: #f00;">请务必设置好前一个页卡的各项内容后再进入到下一步</span></li>
+		          <li><span style="font-weight: bold;color: #f00;">如果您是初次安装或者刚更新过系统，请务必先检查一下数据表的完整性——</span><a href="{php echo $this->createWebUrl('modset',array('ac'=>checkdb))}" class="btn btn-warning" >现在就去检查数据</a></li>
+		          </ol>
+		     </div>
+		</div>
+		<div class="panel panel-info">
+			<div class="panel-body">
+				<a href="{php echo $this->createWebUrl('modset',array('ac'=>'index','m'=>FM_NAME,'op' => 'display'))}" class="col-lg-12 btn btn-info pull-right">去进行系统设置</a>
+		     </div>
+		</div>
+		{if $_W['isfounder'] || $_FM['isSuper']}
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				{$shopname}(V{$shopversion})<span style="color:red;font-weight: bolder;">模块原生配置列表(利用系统的模块配置方法保存的配置数据)</span>——本项仅有站长可见
+			</div>
+			<div class="panel-body">
+				<pre class="">{php print_r($settings)}</pre>
+			</div>
+		</div>
+    {/if}
+</div>
+<script>
+	require(['jquery', 'util'], function($, u){
+		$('.forcopy').each(function(){
+			u.clip(this, $(this).text());
+		});
+	});
+</script>
+{template 'common/footer'}

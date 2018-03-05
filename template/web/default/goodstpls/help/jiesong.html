@@ -1,0 +1,35 @@
+<h5>计划出发的日期与时间:</h5>
+		<div id="indate">
+		{php echo tpl_form_field_date('line', '', true);}
+		</div>
+
+<h5>出发地</h5>	
+		<div id="startarea">
+		<input type="text" id="startarea" name="startarea" value="" class="form-control" />
+		</div>
+<h5>目的地</h5>	
+		<div id="aimarea">
+		<input type="text" id="aimarea" name="aimarea" value="" class="form-control" />
+		</div>
+<h5>航班号/动车车次</h5>	
+		<div id="transno">
+		<input type="text" id="transno" name="transno" value="" class="form-control" />
+		</div>
+<h5>总人数（含儿童/婴儿）</h5>	
+		<select id='peoples' name="peoples" class="form-control">
+		<option value="1～3" adults=''>1～3位</option>
+		<option value="4～7" adults=''>4～7位</option>
+		<option value="7～12" adults=''>7～12位</option>
+		<option value="更多" adults=''>更多</option>
+		</select>		
+<h5>行李情况</h5>	
+		<div class="message-box">
+			<textarea class="form-control" rows="3" name="luggage" placeholder="亲，请描述一下您的行李情况，以便我们为您合理安全。"></textarea>
+		</div>
+		
+<h5 class="hidden">发货方式</h5>	
+		<select id='dispatch' name="dispatch" class="form-control hidden">
+	   	{loop $dispatch $d}
+			<option value="{$d['id']}" price='{$d['price']}'>{$d['dispatchname']} (运费：{$d['price']}元)</option>
+		{/loop}
+		</select>

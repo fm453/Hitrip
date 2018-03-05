@@ -1,0 +1,43 @@
+
+<script type="text/javascript" charset='utf-8'>
+/*
+* JS数组格式
+* array=[val1,val2,val3,'','','',]
+*/
+
+//判断是否为数组
+function isArray(o){
+	if(Object.prototype.toString.call(o)=='[object Array]'){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+//判断数组包含
+	function Array_indexOf(array,val) {
+		for (var i = 0; i < array.length; i++) {
+			if (array[i] == val){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+//从数组中移除
+	function Array_remove(array,val) {
+		var index = Array_indexOf(array,val);
+		if (index > -1) {
+			array.splice(index, 1);
+		}
+	}
+
+//从数组中取值
+	function Array_getValue(array,val) {
+		for (var i = 0; i < array.length; i++) {
+			if (array[i] == val) {
+				return array[i];
+			}
+		}
+	};
+</script>

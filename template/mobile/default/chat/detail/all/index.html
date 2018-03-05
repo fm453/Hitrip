@@ -1,0 +1,46 @@
+{template $appstyle.$do.'/'.$ac.'/'.$operation.'/css'}
+<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-scalable mui-slide-in" style="">
+	<!--侧滑菜单部分-->
+	<aside id="offCanvasSide" class="mui-off-canvas-left" style="max-width:300px;">
+		{template $appstyle.'common/aside'}
+	</aside>
+	<!--主界面部分-->
+	<div  class="mui-inner-wrap" style="min-height: 568px;max-width:768px;">
+	<!-- 左右滑动页面主体部分 -->
+		<header id="headerbar" class="mui-bar mui-bar-nav" style="">
+			{template $appstyle.$do.'/'.$ac.'/'.$operation.'/titlebar'}
+		</header>
+		<div id="offCanvasContentScroll" class="mui-content" style="background:#efeff4 url({$fm453resource}images/default/background-logo.png)  no-repeat fixed center center;">
+			<!--下拉刷新容器-->
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="background-image:url({$placeholderImg});background-size:contain;background-attachment:scroll;background-repeat:no-repeat;background-position:center;min-height: 568px;padding-top:0;padding-bottom:172px;">
+				<div class="mui-scroll">
+				<!--数据列表-->
+					<div  id="pullrefresh-table" class="mui-content"  style="background-color:transparent;min-height: 396px;padding-top:44px;" ><!-- 该ID必须存在且不允许更改 -->
+						{template $appstyle.$do.'/'.$ac.'/'.$operation.'/listbox'}
+					</div>
+				</div>
+			</div>
+			<div  id="chatbox" style="position: absolute;bottom:48px;width:100%;min-height: 128px;z-index:99;">
+				{template $appstyle.$do.'/'.$ac.'/'.$operation.'/chatbox'}
+			</div>
+			<!-- 下拉容器结束 -->
+			<!-- 弹出模态框 -->
+			{template $appstyle.$do.'/'.$ac.'/'.$operation.'/modal/member'}
+			<!-- off-canvas backdrop -->
+			<div class="mui-off-canvas-backdrop"></div>
+		</div>
+		<!---底部菜单栏-->
+		<footer class="mui-bar mui-bar-footer">
+			{template $appstyle.$do.'/'.$ac.'/'.$operation.'/nav'}
+		</footer>
+	</div>
+</div>
+<!-- 页面内建控制JS -->
+{template $appstyle.$do.'/'.$ac.'/'.$operation.'/js'}
+
+<!-- 图片放大查看 -->
+<script src="{$appsrc}js/mui.zoom.js"></script>
+<script src="{$appsrc}js/mui.previewimage.js"></script>
+<script type="text/javascript" >
+	mui.previewImage();
+</script>

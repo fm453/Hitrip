@@ -1,0 +1,74 @@
+<!-- 编辑器配置文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="{$fm453resource}components/ueditor/lang/zh-cn/zh-cn.js"></script>
+<div class="main fm453_newmouse">
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{$item['id']}" />
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {if empty($item['id'])}添加奖品{else}编辑奖品{/if}
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖品名称</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="title" class="form-control" value="{$item['title']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">宣传图</label>
+                    <div class="col-sm-9 col-xs-12">
+                        {php echo tpl_form_field_image('logo', $item['logo'] =='' ? $setting['thumb'] : $item['logo']);}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">剩余可兑换奖品数</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="amount" class="form-control" value="{$item['amount']}" />
+                        <div class="help-block">此设置项设置该奖品剩余奖品数。为0时不对外显示，不接受兑换。</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">兑奖截止日期</label>
+                    <div class="col-sm-6 col-xs-6">
+                        {php echo tpl_form_field_date('deadline',$item['deadline'], true)}
+                        <div class="help-block">超过该日期后不可兑奖!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖品实际价格</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="price" class="form-control" value="{$item['price']}" />
+                        <span class="help-block">此设置项设置奖品价格。</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">兑换消耗积分数</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="credit_cost" class="form-control" value="{$item['credit_cost']}" />
+                        <span class="help-block">此设置项设置该奖品剩余奖品数。为0时不对外显示，不接受兑换。</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">内容</label>
+                    <div class="col-sm-9 col-xs-12">
+                    		{php echo fmFunc_tpl_ueditor('content',$item['content'],'web','html',array('height'=>200,'width'=>800));}
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input name="submit" type="submit" value="提交" class="btn btn-primary span3">
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>

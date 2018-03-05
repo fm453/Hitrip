@@ -1,0 +1,82 @@
+<div class="mui-content-padded">
+	<form action="" method="post" id="form1" onsubmit="return checkform()">
+		<input type="hidden" name="addressid" id="addressid" value="{$defaultaddress['id']}" />
+		<input type="hidden" name="address" value="{$defaultaddress}" />
+		<input type="hidden" name="goodstype" value="{$goodstype}" />
+		<input type="hidden" name="container" id="ucontainer" value="{$_W['container']}" />
+		<input type="hidden" name="os" id="uos" value="{$_W['os']}" />
+		<input type="hidden" name="token" value="{$_W['token']}" />
+		<!-- 产品模型字段 -->
+		{template $appstyle.$do.'/'.$ac.'/'.$goodtpl."/tobuy/gtplparams"}
+		<!-- 产品摘要 -->
+		{template $appstyle.$do.'/'.$ac.'/'.$goodtpl."/tobuy/goodsinfo"}
+			<!-- 合计 -->
+			<div class="order-detail-hd">
+				<span class="pull-right" style="color:#E74C3C;">
+					[合计：<span id='totalprice'>{$totalprice}元</span>]
+				</span>
+				{if $isNeedDispatch}
+				{if $totalprice<$settings['free_dispatch']}
+				<span class="pull-right" id="add_dispatch_price" style="">温馨提示：您的订单金额不足{$settings['free_dispatch']}元，我们需加收{$settings['free_dispatch_price']}元配送费用</span>
+				{/if}
+				{/if}
+			</div>
+
+			<div style="clear:both;"></div>
+		</div>
+		<h5>备注</h5>
+		<div class="message-box">
+			<textarea class="form-control" rows="3" name="remark" placeholder="亲，请将您的预订人姓名、电话或其他相关信息填写在此处，以便客服与您联系和进一步确认。"></textarea>
+		</div>
+
+		<div class=""  style="text-align: center;">
+			<input type="submit" name="submit" class="mui-btn mui-btn-outlined" value="提交订单">
+
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript" >
+	//检测客户端的基本情况
+	var uos = document.getElementById("uos");
+	var ucontainer = document.getElementById("ucontainer");
+	ucontainer.value = "";
+	uos.value = "";
+	if(mui.os.ios){
+   	uos.value = "ios (" + parseFloat(mui.os.version) + ")";
+   	if(mui.os.iphone){
+   		ucontainer.value = "iphone";
+ 		}else if(mui.os.ipad){
+   		ucontainer.value = "ipad";
+ 		}else{
+ 			ucontainer.value = "其他IOS设备";
+ 		}
+ 	}else if (mui.os.android ) {
+		uos.value = "android (" + parseFloat(mui.os.version) + ")";
+   	if(mui.os.isBadAndroid){
+   		ucontainer.value = "android (非Chrome环境)";
+ 		}else{
+ 			ucontainer.value = "android";
+ 		}
+ 	}
+ 	if(mui.os.wechat){
+		ucontainer.value +="(wechat)";
+	}
+	var form = document.getElementById("form1");	//DOM节点
+	var testmsg = ''; 	//测试页面提示
+	var checknums = 0;
+	function checkform() {
+		checknums++;
+		var address = $('#address').val();
+		var addressid = $('#addressid').val();
+		var res = checkGtplParams(checknums);
+		if (res==0) {
+			//form.submit();
+			return true;
+		}else {
+			return false;
+		}
+
+		//form.submit();
+	}
+</script>

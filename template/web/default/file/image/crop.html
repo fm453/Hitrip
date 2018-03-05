@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>{php if(isset($pagename))  $_W["page"]["title"] = $pagename}{$_W["page"]["title"]}
+ {if !empty($_W["page"]["title"])}-{/if}
+ {if !empty($_W["account"]["name"])}{$_W["account"]["name"]}{/if}
+ -{$_W["page"]["copyright"]["sitename"]}
+ </title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <meta name="format-detection" content="telephone=no, address=no,  email=no"><!-- 禁止苹果设备自动为号码、邮箱、地址添加链接支持 -->
+ <meta name="x5-page-mode" content="app"/>
+ <meta name="renderer" content="webkit"> <!--使用高速模式渲染页面，360浏览器支持 -->
+ <meta name="apple-mobile-web-app-capable" content="yes" />
+ <meta name="apple-touch-fullscreen" content="yes"/>
+ <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+ <meta name="author" content="Luker.Fang(Fm453)" />
+ <meta name="generator" content="Bluefish 2.2.6" />
+ <meta name="date" content="2017-03-01T14:20:48+0800" />
+ <meta name="version" content="{$shopversion}" />
+ <meta name="keywords" content='{if empty($_W["page"]["keywords"])}{if IMS_FAMILY != "x"}VCMS,微信,微信公众平台,vcms.hiluker.com{/if}{else}{$_W["page"]["keywords"]}{/if}' />
+<meta name="description" content='{if empty($_W["page"]["description"])}{if IMS_FAMILY != "x"}分时度假管理引擎，简称微旅行商城，是嗨路客电子商务团队结合海南酒店旅游从业经验，针对旅行社线上转型、酒店服务营销之所需而定制的微信公众平台管理系统，是业内最完善移动网站及移动互联网技术解决方案之一。{/if}{else}{$_W["page"]["description"]}{/if}' />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"><!-- 兼容IE -->
+<link rel="apple-touch-icon-precomposed" size="144x144" href="{$fm453resource}images/favicon.png">
+<link rel="shortcut icon" href="{$fm453resource}images/favicon.png">
+<!-- 优先引入bs样式表,核心 CSS 文件 -->
+<link rel="stylesheet" href="{$fm453resource}components/bootstrap/css/bootstrap.min.css" media="screen">
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+
+ <!--加入自行添加的一些全局CSS与JS-->
+ <link rel="stylesheet" href="{$fm453resource}components/font-awesome/css/font-awesome-new.css"><!--icon图标字体样式-->
+ <link rel="stylesheet" href="{$fm453resource}components/font-awesome/css/font-awesome-old.min.css"><!--fa图标字体样式-->
+
+ <link rel="stylesheet" type="text/css" href="{$fm453resource}components/croper/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="{$fm453resource}components/croper/css/default.css">
+<link href="{$fm453resource}components/croper/cropper.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{$fm453resource}components/croper/css/main.css">
+
+
+</head>
+<body>
+{template $fm453style.'common/tabnav'}
+	<div class="htmleaf-container">
+		<!-- Content -->
+		
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <!-- <h3 class="page-header">Demo:</h3> -->
+        <div class="img-container">
+          <img src="{php echo tomedia($file)}">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <!-- <h3 class="page-header">Preview:</h3> -->
+        <div class="docs-preview clearfix">
+          <div class="img-preview preview-lg"></div>
+          <div class="img-preview preview-md"></div>
+          <div class="img-preview preview-sm"></div>
+          <div class="img-preview preview-xs"></div>
+        </div>
+
+        <!-- <h3 class="page-header">Data:</h3> -->
+        <div class="docs-data">
+			<form id="image-form" class="image-form" action="{php echo fm_wurl($do,$ac,modify,array())}" enctype="multipart/form-data" method="post" onsubmit="return confirm('确认立即裁剪吗？');return false;">
+				<input type="hidden" name="file" value="{$filename}">
+				<input type="hidden" id="imageData"  name="newImageData" >
+				<input type="hidden" name="token" value="{$_W['token']}">
+          <div class="input-group">
+            <label class="input-group-addon" for="dataX">X</label>
+            <input class="form-control" id="dataX" name="x" type="text" placeholder="x">
+            <span class="input-group-addon">px</span>
+          </div>
+          <div class="input-group">
+            <label class="input-group-addon" for="dataY">Y</label>
+            <input class="form-control" id="dataY" name="y" type="text" placeholder="y">
+            <span class="input-group-addon">px</span>
+          </div>
+          <div class="input-group">
+            <label class="input-group-addon" for="dataWidth">宽度</label>
+            <input class="form-control" id="dataWidth" name="width" type="text" placeholder="width">
+            <span class="input-group-addon">px</span>
+          </div>
+          <div class="input-group">
+            <label class="input-group-addon" for="dataHeight">高度</label>
+            <input class="form-control" id="dataHeight" name="height"type="text" placeholder="height">
+            <span class="input-group-addon">px</span>
+          </div>
+          <div class="input-group">
+            <label class="input-group-addon" for="dataRotate">旋转</label>
+            <input class="form-control" id="dataRotate" name="rotate" type="text" placeholder="rotate">
+            <span class="input-group-addon">度</span>
+          </div>
+			<button type="submit" class="btn btn-primary hidden">快速裁剪</button>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-9 docs-buttons">
+        <!-- <h3 class="page-header">Toolbar:</h3> -->
+        <div class="btn-group">
+          <button class="btn btn-primary" data-method="setDragMode" data-option="move" type="button" title="Move">
+            <span class="docs-tooltip" data-toggle="tooltip" title="移动">
+              <span class="fa fa-arrows"></span>
+            </span>
+          </button>
+          <button class="btn btn-primary" data-method="setDragMode" data-option="crop" type="button" title="Crop">
+            <span class="docs-tooltip" data-toggle="tooltip" title="剪切">
+              <span class="fa fa-crop"></span>
+            </span>
+          </button>
+          <button class="btn btn-primary" data-method="zoom" data-option="0.1" type="button" title="Zoom In">
+            <span class="docs-tooltip" data-toggle="tooltip" title="放大">
+              <span class="fa fa-search-plus"></span>
+            </span>
+          </button>
+          <button class="btn btn-primary" data-method="zoom" data-option="-0.1" type="button" title="Zoom Out">
+            <span class="docs-tooltip" data-toggle="tooltip" title="缩小">
+              <span class="fa fa-search-minus"></span>
+            </span>
+          </button>
+          <button class="btn btn-primary" data-method="rotate" data-option="-15" type="button" title="Rotate Left">
+            <span class="docs-tooltip" data-toggle="tooltip" title="向左旋转15°">
+              <span class="fa fa-rotate-left"></span>
+            </span>
+          </button>
+          <button class="btn btn-primary" data-method="rotate" data-option="15" type="button" title="Rotate Right">
+            <span class="docs-tooltip" data-toggle="tooltip" title="向右旋转">
+              <span class="fa fa-rotate-right"></span>
+            </span>
+          </button>
+        </div>
+
+        <div class="btn-group ">
+          <button class="btn btn-primary" data-method="disable" type="button" title="Disable">
+            <span class="docs-tooltip" data-toggle="tooltip" title="暂时锁定(禁用)">
+              <span class="fa fa-lock"></span>
+            </span>
+          </button>
+          <button class="btn btn-primary" data-method="enable" type="button" title="Enable">
+            <span class="docs-tooltip" data-toggle="tooltip" title="解除锁定(启用)">
+              <span class="fa fa-unlock"></span>
+            </span>
+          </button>
+          <button class="btn btn-primary" data-method="clear" type="button" title="Clear">
+            <span class="docs-tooltip" data-toggle="tooltip" title="移除剪切框">
+              <span class="fa fa-remove"></span>
+            </span>
+          </button>
+          <button class="btn btn-primary" data-method="reset" type="button" title="Reset">
+            <span class="docs-tooltip" data-toggle="tooltip" title="重置大小">
+              <span class="fa fa-refresh"></span>
+            </span>
+          </button>
+          {if $_W['isfounder'] || $_W['username']==$settings['mainuser'] || !$_W['isfounder']}
+          <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+            <input class="sr-only" id="inputImage" name="file" type="file" accept="image/*">
+            <span class="docs-tooltip" data-toggle="tooltip" title="上传新图">
+              <span class="fa fa-upload"></span>
+            </span>
+          </label>
+          {/if}
+          <button class="btn btn-primary" data-method="destroy" type="button" title="Destroy">
+            <span class="docs-tooltip" data-toggle="tooltip" title="恢复原图">
+              <span class="fa fa-times-circle"></span>
+            </span>
+          </button>
+        </div>
+
+        <div class="btn-group btn-group-crop ">
+          <button class="btn btn-primary" data-method="getCroppedCanvas" type="button">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;)">
+              获取画布图像
+            </span>
+          </button>
+          <button class="btn btn-primary" data-method="getCroppedCanvas" data-option="{ &quot;width&quot;: 160, &quot;height&quot;: 90 }" type="button">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;, { &quot;width&quot;: 160, &quot;height&quot;: 90 })">
+              160 &times; 90
+            </span>
+          </button>
+          <button class="btn btn-primary" data-method="getCroppedCanvas" data-option="{ &quot;width&quot;: 320, &quot;height&quot;: 180 }" type="button">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;, { &quot;width&quot;: 320, &quot;height&quot;: 180 })">
+              320 &times; 180
+            </span>
+          </button>
+        </div>
+
+        <button class="btn btn-primary hidden" data-method="getData" data-option="" data-target="#putData" type="button">
+          <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getData&quot;)">
+            保存剪切数据
+          </span>
+        </button>
+        <button class="btn btn-primary  hidden" data-method="getImageData" data-option="" data-target="#putData" type="button">
+          <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getImageData&quot;)">
+            获取图像数据
+          </span>
+        </button>
+        <button class="btn btn-primary hidden  hidden" data-method="getCanvasData" data-option="" data-target="#putData" type="button">
+          <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCanvasData&quot;)">
+            获取画布数据
+          </span>
+        </button>
+        <button class="btn btn-primary  hidden" data-method="setCanvasData" data-target="#putData" type="button">
+          <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setCanvasData&quot;, data)">
+            获取剪切盒子数据
+          </span>
+        </button>
+        <button class="btn btn-primary  hidden" data-method="getCropBoxData" data-option="" data-target="#putData" type="button">
+          <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCropBoxData&quot;)">
+            获取剪切盒子数据
+          </span>
+        </button>
+        <button class="btn btn-primary hidden" data-method="setCropBoxData" data-target="#putData" type="button">
+          <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setCropBoxData&quot;, data)">
+             设置剪切盒子数据
+          </span>
+        </button>
+        <input class="form-control hidden" id="putData" type="text" placeholder="在这里获取数据或设置数据">
+
+      </div><!-- /.docs-buttons -->
+
+      <div class="col-md-3 docs-toggles">
+        <!-- <h3 class="page-header">Toggles:</h3> -->
+        <div class="btn-group btn-group-justified" data-toggle="buttons">
+          <label class="btn btn-primary" data-method="setAspectRatio" data-option="1" title="Set Aspect Ratio">
+            <input class="sr-only" id="aspestRatio3" name="aspestRatio" value="1" type="radio">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setAspectRatio&quot;, 1 / 1)">
+              1:1
+            </span>
+          </label>
+          <label class="btn btn-primary" data-method="setAspectRatio" data-option="1.8" title="Set Aspect Ratio">
+            <input class="sr-only" id="aspestRatio4" name="aspestRatio" value="1.8" type="radio">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setAspectRatio&quot;, 9 / 5)">
+              9:5
+            </span>
+          </label>
+          <label class="btn btn-primary active" data-method="setAspectRatio" data-option="1.7777777777777777" title="Set Aspect Ratio">
+            <input class="sr-only" id="aspestRatio1" name="aspestRatio" value="1.7777777777777777" type="radio">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setAspectRatio&quot;, 16 / 9)">
+              16:9
+            </span>
+          </label>
+          <label class="btn btn-primary" data-method="setAspectRatio" data-option="1.3333333333333333" title="Set Aspect Ratio">
+            <input class="sr-only" id="aspestRatio2" name="aspestRatio" value="1.3333333333333333" type="radio">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setAspectRatio&quot;, 4 / 3)">
+              4:3
+            </span>
+          </label>
+          <label class="btn btn-primary" data-method="setAspectRatio" data-option="0.6666666666666666" title="Set Aspect Ratio">
+            <input class="sr-only" id="aspestRatio4" name="aspestRatio" value="0.6666666666666666" type="radio">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setAspectRatio&quot;, 2 / 3)">
+              2:3
+            </span>
+          </label>
+          <label class="btn btn-primary" data-method="setAspectRatio" data-option="NaN" title="Set Aspect Ratio">
+            <input class="sr-only" id="aspestRatio5" name="aspestRatio" value="NaN" type="radio">
+            <span class="docs-tooltip" data-toggle="tooltip" title="自由裁剪">
+              比例
+            </span>
+          </label>
+        </div>
+
+        <div class="dropdown dropup docs-options hidden">
+          <button class="btn btn-primary btn-block dropdown-toggle" id="toggleOptions" type="button" data-toggle="dropdown" aria-expanded="true">
+            功能设置
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="toggleOptions">
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="strict" checked>
+                strict
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="responsive" checked>
+                responsive
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="checkImageOrigin" checked>
+                checkImageOrigin
+              </label>
+            </li>
+
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="modal" checked>
+                modal
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="guides" checked>
+                guides
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="highlight" checked>
+                highlight
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="background" checked>
+                background
+              </label>
+            </li>
+
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="autoCrop" checked>
+                autoCrop
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="dragCrop" checked>
+                dragCrop
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="movable" checked>
+                movable
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="resizable" checked>
+                resizable
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="rotatable" checked>
+                rotatable
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="zoomable" checked>
+                zoomable
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="touchDragZoom" checked>
+                touchDragZoom
+              </label>
+            </li>
+            <li role="presentation">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="option" value="mouseWheelZoom" checked>
+                mouseWheelZoom
+              </label>
+            </li>
+          </ul>
+        </div><!-- /.dropdown -->
+      </div><!-- /.docs-toggles -->
+    </div>
+  </div>
+  <!-- Alert -->
+
+  <!-- Show the cropped image in modal -->
+        <div class="modal fade docs-cropped" id="getCroppedCanvasModal" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" role="dialog" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button class="close" data-dismiss="modal" type="button" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="getCroppedCanvasTitle">图片剪切结果(可保存到本地)</h4>
+              </div>
+              <div class="modal-body" id="getCroppedCanvasBody"></div>
+                <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" type="button">取消</button>
+                <button class="btn btn-info" data-dismiss="modal" type="button" onclick="saveUpImage();">确认</button>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.modal -->
+  
+<!--	<script src="./resource/js/lib/jquery-1.11.1.min.js"></script> -->
+	<script src="{$fm453resource}common/js/jquery-2.2.3.js"></script>
+	  <script src="{$fm453resource}components/bootstrap/js/bootstrap.min.js"></script>
+	  <script src="{$fm453resource}components/croper/cropper.js"></script>
+	  <script src="{$fm453resource}components/croper/js/main.js"></script>
+	  <!-- 必须放在上述引用js之后 -->
+<script type="text/javascript">
+	//初始化$image 	//在main.js中已完成
+
+	function saveUpImage() {
+
+		var result = $('.container > img').cropper('getCroppedCanvas');
+		console.log(result);
+		result = $('.container > img').cropper('getImageData');	//生成图片数据链接
+		console.log(result);
+		$('#imageData').val(result);
+
+		var canvasParent = $('#getCroppedCanvasBody');	//获取画布父级元素
+		var canvas = canvasParent.find('canvas')[0];	//转换jq对象为DOM元素
+		var imageData = canvas.toDataURL();	//转换canvas为图片数据链接
+		console.log(imageData);
+		$('#imageData').val(imageData);
+
+		//将canvas图像转换为文件
+		canvas.toBlob(function(blob) {
+			url = URL.createObjectURL(blob);
+			console.log(url);
+			//新建一个img元素
+			var newImg = document.createElement("img");
+			newImg.onload = function() {
+				// no longer need to read the blob so it's revoked
+				URL.revokeObjectURL(url);
+			};
+			newImg.src = url;
+			//document.body.appendChild(newImg);
+			//在页面中显示刚创建的img元素
+		});
+
+		//使用表单发送参数
+		form = document.getElementById('image-form');
+		form.submit();
+		//result = checkForm('image-form');
+	}
+
+	function checkForm(formid) {
+		form = document.getElementById('image-form');
+		form.x.value
+	}
+</script>
+
+<script type="text/javascript" >
+/*
+* JS对象格式
+* obj={key1:name1,key2:name2,key3:name3}
+*/
+
+//将对象打印出来，写入到调试日志
+	function FmShowObject(obj){
+		var fm_des = "";
+		for(var name in obj){
+			fm_des = name + ":" + obj[name] + ";" +"\r\n";
+			console.log(fm_des);
+		}
+	}
+</script>
+<div class="jumbotron">
+    <div class="container">
+        <h1>
+            温馨提示
+        </h1>
+        <p>
+           如果是非透明格式的图片<code>.png</code>，旋转、缩放时请注意不要让裁剪框内有空白区域，否则生成的图片会自动加上黑色背景。
+        </p>
+        <p>
+           上传新图会默认使用PNG格式，并且替换掉服务器现有的源图，请务必谨慎！
+        </p>
+        <p>
+           快速裁剪方法不适用于新图上传，故此屏蔽！
+        </p>
+        <p>
+            <a class="btn btn-primary btn-lg" href="#" role="button">如有问题，及时暂停，并咨询技术</a>
+        </p>
+    </div>
+</div>
+</div>
+</body>
+</html>

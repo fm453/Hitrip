@@ -1,0 +1,38 @@
+<div class="myoder img-rounded">
+	<div class="myoder-hd">
+		<span class="pull-left">关联信息-摘要</span>
+		<span class="pull-right">(如您发现信息有误，请及时联系我们)</span>
+	</div>
+		<div class="" id="orderinfos">
+		<span>{$tips}</span>
+		</div>
+
+	<div class="myoder-hd" style="background-color:#f69f00;color: #fff;">
+		<span class="pull-left" style="color: #fff;">发往哪里:</span>
+	</div>
+		<div id="type">
+		<input type="text" id="aimareatype" name="fruitaimareatype" value="{$aimareatype}" class="form-control"/>
+		</div>
+			
+	<div class="myoder-hd" style="background-color:#f69f00;color: #fff;">
+		<span class="pull-left" style="color: #fff;">市内配送区域:</span>
+	</div>
+		<div id="type">
+		<input type="text" id="incityarea" name="fruitincityarea" value="{$incityarea}" class="form-control"/>
+		</div>			
+
+	<div class="myoder-hd" style="background-color:#f69f00;color: #fff;">
+		<span class="pull-left" style="color: #fff;">意向配送时间:</span>
+	</div>
+		<div id="fruitstarttime">
+		{php echo tpl_form_field_date('fruitstarttime', $starttime);}
+		</div>	
+		
+	<div class="myoder-hd" style="background-color:#f69f00;color: #fff;">
+		<span class="pull-left" style="color: #fff;">配送地址:</span>
+	</div>
+		<div id="aboutsend">
+		<input type="text" id="aboutsend" name="fruitaboutsend" value="{$aboutsend}" class="form-control" />
+		</div>
+
+</div>

@@ -1,0 +1,156 @@
+{template $appstyle.'common/header_bs'}
+{template $appstyle.'appweb/'.$do.'/'.$ac.'/'.'css'}
+{template $appstyle."common/tip"}
+<link href="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<script src="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+<div class="head">
+	<span class="title">订单列表</span>
+	</div>
+
+	<div class="panel-body">
+		<form action="index.php" method="get" class="form-horizontal" role="form" id="form1">
+			<input type="hidden" name="i" value="{$_W['uniacid']}" />
+			<input type="hidden" name="c" value="entry" />
+			<input type="hidden" name="m" value="{FM_NAME}" />
+			<input type="hidden" name="do" value="appweborder" />
+			<input type="hidden" name="ac" value="list" />
+			<input type="hidden" name="op" value="{$operation}" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">系统订单编号</label>
+				<div class="col-sm-8 col-lg-9 col-xs-12">
+					<input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}" placeholder="可查询订单号">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">微信支付订单号</label>
+				<div class="col-sm-8 col-lg-9 col-xs-12">
+					<input class="form-control" name="transid" id="" type="text" value="{$_GPC['transid']}" placeholder="微信支付订单号">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">联系信息</label>
+				<div class="col-sm-8 col-lg-9 col-xs-12">
+					<input class="form-control" name="member" id="" type="text" value="{$_GPC['member']}" placeholder="可查询联系人手机号/姓名/下单会员ID">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">客人备注信息</label>
+				<div class="col-sm-8 col-lg-9 col-xs-12">
+					<input class="form-control" name="remark" id="" type="text" value="{$_GPC['remark']}" placeholder="可查询订单备注">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">客服操作备注</label>
+				<div class="col-sm-8 col-lg-9 col-xs-12">
+					<input class="form-control" name="remark_kf" id="" type="text" value="{$_GPC['remark_kf']}" placeholder="可查询客服操作时对订单的备注信息">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">支付方式</label>
+				<div class="col-sm-8 col-lg-9 col-xs-12">
+					<select name="paytype" class="form-control">
+						<option value="">不限</option>
+						{loop $paytype $key $type}
+						<option value="{$key}" {if $_GPC['paytype'] === $key} selected="selected" {/if}>{$type['name']}</option>
+						{/loop}
+					</select>
+				</div>
+			</div>
+			<div class="form-group"  id="starttime" >
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">下单晚于</label>
+				<div class="col-sm-8 col-lg-9 col-xs-12 input-group date form_datetime "  style="padding-left: 10px;padding-right:10px; " data-date="" data-date-format="yyyy-mm-dd HH:ii:ss" data-link-field="">
+				<input class="form-control"  name="timestart" type="text"  value="{$searchtime['starttime']}" size="16" readonly >
+				<span class="input-group-addon remove-starttime"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+				</div>
+			</div>
+			<div class="form-group"  id="endtime" >
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">下单早于</label>
+				<div class="col-sm-8 col-lg-9 col-xs-12 input-group date form_datetime "  style="padding-left: 10px;padding-right:10px; " data-date="" data-date-format="yyyy-mm-dd HH:ii:ss" data-link-field="">
+					<input class="form-control"  name="timeend" type="text" value="{$searchtime['endtime']}" size="16" readonly >
+					<span class="input-group-addon remove-endtime"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+				</div>
+			</div>
+			<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label"></label>
+				<div class="col-sm-4 col-lg-2">
+					<button class="btn btn-default" ><i class="glyphicon glyphicon-search"></i> 搜索</button>
+				</div>
+			</div>
+		</form>
+		<script type="text/javascript">
+		$(".remove-starttime").click(function() { //当点击该类元素时触发，用于清除日期选择
+			$('#starttime').remove();//显示第一个导航条
+		});
+		$(".remove-endtime").click(function() { //当点击该类元素时触发，用于清除日期选择
+			$('#endtime').remove();//显示第一个导航条
+		});
+    $('.form_datetime').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 0,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		minuteStep: 30,
+        showMeridian: 1
+    });
+	$('.form_date').datetimepicker({
+     language:  'zh-CN',
+     weekStart: 1,
+     todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 1,
+		minView: 0,
+		maxView: 1,
+		forceParse: 0
+    });
+</script>
+		{loop $list $item}
+		<div class="myoder img-rounded">
+			<div class="myoder-hd">
+				<span class="pull-left">订单编号：{$item['ordersn']}</span>
+				<span class="pull-right">下单时间：{php echo date('Y-m-d H:i', $item['createtime'])}</span>
+			</div>
+		</div>
+		<div class="myoder-express">
+			<span class="text-{$item['statuscss']}">
+			订单状态:{$item['status']}
+			</span><br>
+			<span>
+			订单金额：{$item['price']} 元
+			</span><br>
+			<span class=" text-{$item['statuscss']}">
+				支付方式：{$item['paytype']}
+			</span><br>
+			<address>
+			联系人：{if empty($item['username'])}未提交{else}{$item['username']}{/if}<br>
+			电话:<a href="tel:{$item['mobile']}" >{$item['mobile']}</a><br>
+			会员ID：{$item['uid']}
+			</address>
+			<span>
+			用户备注：{$item['remark']}<br>
+			客服备注：{$item['remark_kf']}<br>
+			</span>
+			<a href="{php echo fm_murl('appweborder', 'detail', 'index',array('ordersn' => $item['ordersn']))}" class="btn btn-danger pull-right btn-sm">查看详情</a><br><br>
+		</div>
+		{/loop}
+	{$pager}
+
+{template $appstyle."common/designedby"}
+{template $appstyle.'common/footer'}

@@ -1,0 +1,101 @@
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="modify-form1">
+	<input type="hidden" name="token" value="{$_W['token']}" />
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				产品模型参数设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">所属平台</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-2 control-label" style="text-align:left;">
+					{php echo uni_account_default($category['uniacid'])['name'];}
+					<span class="help-block">修改时请直接填写ID值</span>
+					</div>
+
+					{if $_W['username'] == $settings['mainuser']  or $_W['isfounder'] }
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">{if $goodstpl['uniacid']!=""}修改{/if}平台ID</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-2">
+						<input type="text" name="uniacid" class="form-control" placeholder="" {if $goodstpl['uniacid']==""}value="{$_W['uniacid']}" {else} value="{$goodstpl['uniacid']}"{/if} />
+					</div>
+					{/if}
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">排序</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-2">
+						<input type="text" name="displayorder" class="form-control" placeholder="可留空；此处仅可填写数字" value="{$goodstpl['displayorder']}" />
+						<span class="help-block">数值越大越靠前</span>
+					</div>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否必填</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-2">
+						<label class='radio-inline'>
+							<input type='radio' name='isneeded' value='1' {if $goodstpl['isneeded']==1}checked{/if} /> 是
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='isneeded' value='0' {if $goodstpl['isneeded']==0}checked{/if} /> 否
+						</label>
+					</div>
+					
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>参数名</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 ">
+						<input type="text" name="param" class="form-control" value="{$goodstpl['param']}" placeholder="例：手机号" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>数据类型</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-5 ">
+						<select name="datatype" class="form-control">
+						{loop $datatype $key $item}
+						<option value="{$key}" {if $goodstpl['datatype'] == $key} selected="selected" {/if}>{$item['name']}</option>
+						{/loop}
+					</select>
+					</div>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>产品模型</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-5 ">
+						<select name="goodstpl" class="form-control">
+						{loop $gtpltype $key $item}
+						<option value="{$key}" {if $goodstpl['goodstpl'] == $key} selected="selected" {/if}>{$item['name']}</option>
+						{/loop}
+					</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>适用范围</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-5 ">
+						<select name="isfront" class="form-control">
+						<option value="-1" {if $goodstpl['isfront'] == -1} selected="selected" {/if}>系统后台</option>
+						<option value="1" {if $goodstpl['isfront'] == 1} selected="selected" {/if}>商城前台</option>
+						</select>
+					</div>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>应用场景</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-5 ">
+						<select name="isform" class="form-control">
+						<option value="-1" {if $goodstpl['isform'] == -1} selected="selected" {/if}>信息展示</option>
+						<option value="1" {if $goodstpl['isform'] == 1} selected="selected" {/if}>数据收集</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">参数值说明</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+						<textarea name="value" class="form-control" placeholder="对该项参数进行简短说明，以便使用者明晰"  >{$goodstpl['value']}</textarea>
+					</div>
+				</div>
+				
+
+				<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+				</div>
+				
+			</div>
+		</div>
+	</form>
+</div>

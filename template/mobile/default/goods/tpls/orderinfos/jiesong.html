@@ -1,0 +1,48 @@
+<div class="myoder img-rounded">
+	<div class="myoder-hd">
+		<span class="pull-left">关联信息-摘要</span>
+		<span class="pull-right">(如您发现信息有误，请及时联系我们)</span>
+	</div>
+		<div id="orderinfos">
+		<span>{$tips}</span>
+		</div>
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">计划出发的日期与时间:</span>
+	</div>
+		<div id="date">
+		{php echo tpl_form_field_date('jiesongtime', $time, true);}
+		</div>
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">出发地:</span>
+	</div>
+		<div id="startarea">
+		<input type="text" id="startarea" name="jiesongstartarea" value="{$startarea}" class="form-control"/>
+		</div>
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">目的地:</span>
+	</div>
+		<div id="aimarea">
+		<input type="text" id="aimarea" name="jiesongaimarea" value="{$aimarea}" class="form-control"/>
+		</div>
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">航班号/动车车次：</span>
+	</div>
+		<div id="transno">
+			<input type="text" id="transno" name="jiesongtransno" value="{$transno}" class="form-control"/>
+		</div>
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">总人数（含儿童/婴儿）:</span>
+	</div>
+		<div id="peoples">
+			<input type="text" id="peoples" name="peoples" value="{$peoples}人" class="form-control"/>
+		</div>
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">行李情况:</span>
+	</div>
+		<div class="message-box">
+			<textarea class="form-control" rows="3" name="jiesongluggage" placeholder="亲，请描述一下您的行李情况，以便我们为您合理安排。">
+			{$luggage}
+			</textarea>
+		</div>
+
+</div>

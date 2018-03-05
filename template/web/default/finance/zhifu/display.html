@@ -1,0 +1,39 @@
+<div class="main">
+	<div class="panel panel-default">
+		<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th>姓名</th>
+					<th>手机</th>
+					<th>地址</th>
+					<th>时间</th>
+					<th>奖品名称</th>
+					<th>价格</th>
+					<th>消耗积分</th>
+					<th>剩余积分</th>
+					<th style="width:100px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$fans[$item['from_user']]['realname']}</td>
+					<td>{$fans[$item['from_user']]['mobile']}</td>
+					<td>{$fans[$item['from_user']]['residedist']}</td>
+					<td>{php echo date('Y-m-d H:i:s', $item['createtime'])}</td>
+					<td>{$item['title']}</td>
+					<td>{$item['price']}</td>
+					<td>{$item['credit_cost']}</td>
+					<td>{$fans[$item['from_user']]['credit1']}</td>
+					<td>
+						<a href="{php echo fm_wurl($do,$ac,'modify', array('id' => $item['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="修改"><i class="fa fa-pencil"></i></a>
+						<a href="{php echo fm_wurl($do,'ajax','delete', array('id' => $item['id'],'from_ac'=>$ac,'from_op'=>$operation,'delete'=>'credit_request'))}" onclick="return confirm('再确认一下，要删除此申请吗？此操作不可恢复！');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times" style="color:red;"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		</div>
+	</div>
+</div>

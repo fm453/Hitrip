@@ -1,0 +1,39 @@
+<div class="myoder img-rounded">
+	<div class="myoder-hd">
+		<span class="pull-left">关联信息-摘要</span>
+		<span class="pull-right">(如您发现信息有误，请及时联系我们)</span>
+	</div>
+		<div id="orderinfos">
+		<span>{$tips}</span>
+		</div>
+
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">需求类型:</span>
+	</div>
+		<div id="type">
+		<input type="text" id="type" name="needstype" value="{$type}" class="form-control"/>
+		</div>		
+
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">预计开始时间:</span>
+	</div>
+		<div id="starttime">
+		{php echo tpl_form_field_date('needsstarttime', $starttime);}
+		</div>
+
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">预计结束时间:</span>
+	</div>
+		<div id="endtime">
+		{php echo tpl_form_field_date('needsendtime', $starttime);}
+		</div>
+		
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">地点:</span>
+	</div>
+		<div id="startarea">
+		<input type="text" id="startarea" name="needstartarea" value="{$startarea}" class="form-control" />
+		<!--  0927 fm453 修正了一个小错误-->
+		</div>
+
+</div>

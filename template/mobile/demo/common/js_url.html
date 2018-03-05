@@ -1,0 +1,186 @@
+
+<script type="text/javascript" charset='utf-8'>
+//利用JS方法生成网址(不带分享参数)
+	function js_url(f_do,f_ac,f_op,f_i,f_type) {
+		var isempty = empty(f_do) + empty(f_ac) + empty(f_op) + empty(f_type);
+		if (isempty>0) {
+			return false;
+		}
+		var url ="{$_W['siteroot']}";
+		if (f_type=='web') {
+			 url = url + 'web/index.php?c=site&a=entry';
+		}else {
+			url = url + 'app/index.php?c=entry';
+			url += "&i=" + f_i;
+			url +="&fromplatid={$_W['uniacid']}"
+		}
+		url += '&m=fm453_shopping';
+		url += '&do=' + f_do;
+		url += '&ac=' + f_ac;
+		url += '&op=' + f_op;
+		return url;
+	}
+	//空值判断
+	function empty(f_val) {
+		if (f_val=='') {
+			return 1;
+		}
+		return 0;
+	}
+//当没有来源网址时，不显示返回按钮(通过类判断：btn-goback,mui-action-back)
+if(document.referrer==''){
+	$(".btn-goback").hide().addClass('hidden');
+	$(".mui-action-back").hide().addClass('hidden');
+}else{
+	$(".btn-goback").show().removeClass('hidden');
+	$(".mui-action-back").show().removeClass('hidden');
+}
+//刷新网址
+
+</script>
+
+<!-- 监听a 链接处理 -->
+<script>
+	mui('body').on( 'tap' , 'a' , function(){
+		//购买与加购物车
+		var id = this.getAttribute("id");
+		if (id=='gotoconfirm'){
+			fmToBuy();
+		}
+		if (id=='addtocart'){
+			fmToCart();
+		}
+
+		//获取url
+		var LinkUrl = this.getAttribute("href");
+			if (LinkUrl) {
+				if(LinkUrl.indexOf('http://') == 0 || LinkUrl.indexOf('https://') == 0 || LinkUrl.indexOf('./index.php?') == 0 || LinkUrl.indexOf('tel:1') == 0) {
+				top.location.href = LinkUrl;
+				//打开链接页面
+				mui.openWindow({
+					id : LinkUrl,
+					url : LinkUrl
+				});
+			}
+		}
+
+		//切换底部菜单栏
+		var changefootbar = this.getAttribute("data-changeid");
+		var nowfootbar = this.getAttribute("data-parent");
+		if (nowfootbar) {
+			if (changefootbar) {
+				$(nowfootbar).hide();
+				$(changefootbar).show();
+			}else {
+				$(nowfootbar).show();
+			}
+		}
+
+		//购买模态框监听
+		mui("#modal-buy").on("tap","a",function () {
+			//切换底部菜单栏
+			$('#footbar-2').hide();
+			$('#footbar-1').show();
+		});
+
+		//返回按钮
+		var isgoback = this.getAttribute("goback");
+		if (isgoback) {
+			history.go(-2);//经测试，有2重跳转
+		}
+
+		//刷新按钮
+		var isrefresh = this.classList.contains('btn-refresh');
+		if (isrefresh) {
+			//pulldownRefresh();
+			refreshLoad();
+		}
+
+	});
+
+</script>
+
+<!-- 购买、加购物车等专用元素 -->
+<script type="text/javascript" >
+	function fmToBuy(gid=null,gsn=null,gtype=null) {
+		var from_user ="{$_W['openid']}";
+		gid = (gid>0) ? gid : "{$goods['id']}";
+		gsn = (gsn>0) ? gsn : "{$goods['sn']}";
+		gtype = (gtype) ? gtype : 'goods';
+		var gunit = "{$goods['unit']}";
+		if (gunit=='') {
+			gunit = '份';
+		}
+		var ret = option_selected();
+		if(ret.no !=''){
+			mui.alert("亲，请选择" + ret.no + "的具体规格!", '{$shopname}', function() {
+				location.href="#chooseoptions";
+			});
+			var oids = ret.all.join("_");
+			var len = options.length;
+			var url = "{php echo fm_murl('goods','detail','checkoption',array())}" + "&id=" + gid + "&sn=" + gsn + "&oids=" + oids + "&len=" + len + "&specid=" + ret.specid;
+			$.getJSON(url, function(s){
+				if(s.hasempty==1){
+					var len = s.oidnum;
+					for(var i=0;i<len;i++) {
+						var o = s.oids[i];
+						$('.option_'+o).addClass('disabled');
+					}
+				}
+			});
+			return;
+		}
+		var stock = parseInt($('#stock').text());
+		if(stock == 0){
+			mui.alert("该类型的库存不足，暂时不能购买!", '{$shopname}', function() {
+				location.href="#chooseoptions";
+			});
+			return;
+		}
+		var total = $("#total").val();
+		var optionid = $("#optionid").val();
+		top.location.href ="{php echo fm_murl('confirm','order','index',array())}"+"&id="+gid+"&sn="+gsn+"&optionid=" +optionid + "&total=" + total;//强制整个窗口换掉
+		// location.href ="{php echo fm_murl('confirm','order','index',array())}"+"&id="+gid+"&sn="+gsn+"&optionid=" +optionid + "&total=" + total;//仅在本窗口内跳转
+	}
+
+	function fmToCart(gid=null,gsn=null,gtype=null) {
+		var from_user ="{$_W['openid']}";
+		gid = (gid>0) ? gid : "{$goods['id']}";
+		gsn = (gsn>0) ? gsn : "{$goods['sn']}";
+		gtype = (gtype) ? gtype : 'goods';
+		var gunit = "{$goods['unit']}";
+		if (gunit=='') {
+			gunit = '份';
+		}
+		if(from_user==''){
+			mui.alert("亲，加购物车需要登陆，现在将为您跳转至登陆页!", '{$shopname}', function() {
+				location.href="{php echo fm_murl('goods','detail','index',array('checklogin'=>'true'))}"+"&id="+gid+"&sn="+gsn;
+			});
+			return;
+		}
+		var ret = option_selected();
+		if(ret.no!=''){
+			mui.alert("亲，请选择" + ret.no + "的具体规格!", '{$shopname}', function() {
+				location.href="#chooseoptions";
+			});
+			return;
+		}
+		mui.toast("正在处理数据…");
+		var total = $("#total").val();
+		var stock = parseInt($('#stock').text());
+		if(stock == 0){
+			mui.toast("库存不足，无法购买…");
+			return;
+		}
+		var optionid = $("#optionid").val();
+		var url = "{php echo fm_murl('member','mycart','add',array())}"+"&id="+gid+"&sn="+gsn+"&optionid=" + optionid + "&total=" + total;
+		$.getJSON(url, function(s){
+			if(s.result==0){
+				mui.toast("只能购买 " + s.maxbuy + guint+"!");
+			}else{
+				mui.toast("已加入购物车!");
+				$('#carttotal').css({'width':'50px', 'height':'50px', 'line-height':'50px'}).html(s.total).animate({'width':'20px', 'height':'20px', 'line-height':'20px'}, 'slow');
+			}
+		});
+	}
+</script>

@@ -1,0 +1,10 @@
+					<div class="item-logo" {if $settings['guide']['page_2_bgimage']} style="background: rgba(255,255,255,0) url({php echo tomedia($settings['guide']['page_2_bgimage'])})  center center;background-size:cover;" {elseif $settings['guide']['page_2_bgcolor']} style="background-color:{$settings['guide']['page_2_bgcolor']}" {else} style="background-color: rgba(2,193,237,1);" {/if}>
+						<a {if $settings['guide']['page_2_link']} href="{$settings['guide']['page_2_link']}" {else} href="#" {/if}>
+						{if $settings['guide']['page_2_tag']}{$settings['guide']['page_2_tag']} {else}新界面{/if}
+						</a>
+						<div id="tips-2" class="animate mui-hidden">
+							<h2 class="animated bounceInDown">{if $settings['guide']['page_2_title']}{$settings['guide']['page_2_title']} {else}界面大量美化{/if}</h2>
+							<li class="animated bounceInLeft">{if $settings['guide']['page_2_p1']}{$settings['guide']['page_2_p1']} {else}以iOS原生UI为基础{/if}</li>
+							<li class="animated bounceInRight">{if $settings['guide']['page_2_p2']}{$settings['guide']['page_2_p2']} {else}补充Android特有样式{/if}</li>
+						</div>
+					</div>

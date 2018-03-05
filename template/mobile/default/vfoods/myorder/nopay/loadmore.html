@@ -1,0 +1,23 @@
+{loop $list $item}
+{php $order=$item['originaldata']}
+<div class="mui-content-padded">
+		<div style='margin-bottom:20px;'>
+			<ul data-id="{$item['id']}" class="mui-table-view huadongcaozong">
+				<li class="mui-table-view-cell" >
+					<div class="mui-slider-left mui-disabled">
+						<a href="{php echo fm_murl('order','detail','index',array('id'=>$item['id']))}" class="mui-btn mui-btn-success" date-swipe2do="link"><span  style="font-size: 14px;">详情</span></a>
+					</div>
+					<div class="mui-slider-right mui-disabled">
+						<a class="mui-btn mui-btn-red mui-icon mui-icon-close" date-swipe2do="delete" data-id="{$item['id']}"><span  style="font-size: 12px;">删除</span></a>
+					</div>
+					<div class="mui-slider-handle">
+						{template $appstyle.$do.'/'.$ac.'/'.$operation.'/orderitem'}
+						<h5 style="text-align: center;background-color: rgba(230,230,230,.3);margin-left:-15px;margin-right:-15px;">
+						{php echo date('Y年m月d日 H:i', $item['createtime'])}<br>
+						</h5>
+					</div>
+				</li>
+			</ul>
+		</div>
+</div>
+{/loop}

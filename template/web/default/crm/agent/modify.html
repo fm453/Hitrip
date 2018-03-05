@@ -1,0 +1,137 @@
+<div class="main panel panel-info">
+	<div class="panel-body">
+		<a href="{php echo fm_wurl('finance','paylog','display',array('keyword'=>$profile['uid']))}" target="_blank" class="btn btn-success" style="margin-bottom: 5px;"  data-toggle="tooltip" data-placement="top" title="查看该会员的前台支付交易情况"> 支付记录</a>&nbsp;&nbsp;
+		<a href="{php echo fm_wurl('finance','charge','member',array('uid'=>$profile['uid']))}" target="_blank" class="btn btn-danger" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="查看该会员的财务充值情况">会员充值</a>&nbsp;&nbsp;
+		<a href="{php echo url('mc/member/post', array('uid' => $uid));}" target="_blank" class="btn btn-warning" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="进入系统会员管理界面进行更多操作">更多编辑</a>&nbsp;&nbsp;
+		<a href="{php echo url('mc/card/manage', array('keyword' => $profile['mobile']));}" target="_blank" class="btn btn-success" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="查询会员开卡信息">关联会员卡</a>&nbsp;&nbsp;
+		<a href="{php echo fm_wurl('crm','member','modify',array('uid'=>$profile['uid'],'id'=>$id))}" target="_blank" class="btn btn-success" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="查看用户的系统关联信息">关联用户信息</a>&nbsp;&nbsp;
+		{if $MineAticle_addons}
+		<a href="{php echo fm_wurl('article','detail','display',array('id'=>$MineAticle_addons['id']))}" target="_blank" class="btn btn-info" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="查看会员模型文章中该会员的关联信息">关联会员文章</a>&nbsp;&nbsp;
+		{else}
+		<a href="{php echo fm_wurl('article','detail','display',array('openid'=>$profile['openid'],'a_tpl'=>'member'))}" target="_blank" class="btn btn-info" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="为该会员添加一个介绍文章">添加会员文章</a>&nbsp;&nbsp;
+		<a href="{php echo fm_wurl('article','list','display',array())}" target="_blank" class="btn btn-info" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="在文章列表中查找">查找会员文章</a>&nbsp;&nbsp;
+		{/if}
+		<a href="{php echo url('mc/notice/tpl', array('id' => $profile['fanid']));}" target="_blank" class="btn btn-success" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="通过客服接口给最近有效互动过的粉丝发送客服消息">微信联系</a>&nbsp;&nbsp;
+		<a href="{php echo fm_wurl('order','bymember','display', array('shareid' => $profile['uid']))}" class="btn btn-default" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="bottom" title="查看该代理的全部推广订单" target="_blank">推广订单</a>&nbsp;&nbsp;
+		<a href="javascript:void(0)" target="_blank" class="btn btn-primary js-clip" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="自动复制用户的openid，方便使用" data-url="{$profile['openid']}">复制OPENID</a>&nbsp;&nbsp;
+	</div>
+</div>
+<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return validate(this);">
+	<input type="hidden" name="id" value="{$user['id']}">
+	<input type="hidden" name="token" value="{$_W['token']}" />
+	<div class="panel panel-info">
+		<div class="panel-heading" style="padding-top:0;padding-bottom:0;">
+			<img src="{php echo tomedia($profile['avatar'])}" title="粉丝头像" style="width:50px;" >&nbsp;&nbsp;&nbsp;&nbsp;
+		昵称：{$profile['nickname']}(openid:<span class="js-clip" data-url="{$profile['openid']}"> {$profile['openid']})（点击复制）</span>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-3 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >真实姓名</span>
+							<input type="text"  name="realname" class="form-control"  value="{$user['realname']}" />
+							<span class="input-group-addon"><i class='fa fa-exclamation-triangle' style='color:red'></i></span>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-3 ">
+						<div class="input-group form-group">
+						<span class="input-group-addon" >手机号</span>
+							<input type="text"  name="mobile" class="form-control"  value="{$user['mobile']}" />
+							<span class="input-group-addon"><i class='fa fa-exclamation-triangle' style='color:red'></i></span>
+						</div>
+					</div>
+
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">状态</label>
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-2 ">
+						<label class="radio-inline"><input type="radio" name="status" value="1" {if $user['status']==1}checked{/if}>可用</label>
+						<label class="radio-inline"><input type="radio" name="status" value="0" {if $user['status']==0}checked{/if}>禁用</label>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-3 ">
+						<label class="radio-inline"><input type="radio" name="flag" value="1" {if $user['flag']==1}checked{/if}>代理</label>
+						<label class="radio-inline"><input type="radio" name="flag" value="0" {if $user['flag']==0}checked{/if}>非代理</label>
+					</div>
+
+				</div>
+				<div class="form-group">
+
+					<div class="col-xs-12 col-sm-12 col-md-6  col-lg-4 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >银行卡号</span>
+							<input type="text" name="bankcard" id="bankcard" class="form-control"  value="{php echo fmFunc_bankcard_space($user['bankcard'])}" />
+							<span class="input-group-addon"><i class='fa fa-exclamation-triangle' style='color:red'></i></span>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-12 col-md-6  col-lg-4 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >支付宝</span>
+							<input type="text" name="alipay" class="form-control"  value="{$user['alipay']}" />
+							<span class="input-group-addon"><i class='fa fa-exclamation-triangle' style='color:red'></i></span>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-12 col-md-6  col-lg-4 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >微信号</span>
+							<input type="text" name="wxhao" class="form-control"  value="{$user['wxhao']}" />
+							<span class="input-group-addon"><i class='fa fa-exclamation-triangle' style='color:red'></i></span>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon">个性签名</span>
+							<input type="text" name="slogan" class="form-control"  value="{$user['slogan']}"  title="展示在会员个人资料页卡中" />
+							<span class="input-group-addon" ><i class='fa fa-exclamation-triangle'></i></span>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon">搜索关键词</span>
+							<input type="text" name="keyword" class="form-control"  value="{$user['keyword']}" title="默认将用于前台会员搜索，作为匹配条件" />
+							<span class="input-group-addon" ><i class='fa fa-exclamation-triangle'></i></span>
+						</div>
+					</div>
+
+				</div>
+		</div>
+	</div>
+	<input type="button" class="btn btn-primary span3" name="submit" onclick="history.go(-1)" value="返回" />
+	<input type="submit" class="btn btn-primary span3" name="submit"  value="提交" />
+	<div class="panel panel-info">
+		<div class="panel-heading" style="">
+			会员介绍(编辑后，会自动替换掉文章模块中该会员openid对应的会员模型文章介绍内容)
+		</div>
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-11">
+				{php echo tpl_ueditor('content',$user['content']);}
+				<script type="text/javascript">
+					var editor = UE.getEditor('content', ueditoroption);
+				</script>
+			</div>
+		</div>
+	</div>
+
+	<input type="submit" class="btn btn-primary span3" name="submit"  value="提交" />
+</form>
+
+<script type="text/javascript">
+    window.onload = function(){
+        var bankcard = "{$user['bankcard']}";
+        var bankcard = bankcard.toString();
+        if(bankcard != ''){
+            var card = '';
+            for(var i=0; i<5; i++){
+                card = card + bankcard.substr(4*i,4) + ' ';//给银行卡号加空格隔断
+            }
+            window.document.getElementById('bankcard').value = card;
+        }
+    }
+
+</script>

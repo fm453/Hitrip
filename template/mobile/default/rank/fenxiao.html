@@ -1,0 +1,70 @@
+{template $appstyle.'common/header_fenxiao'}
+{template $appstyle."common/common_css"}
+{template $appstyle."common/tip"}
+	<style>
+	    #add {
+	    	font-size: 25px;
+	    }
+	    #allkehu {
+	    	font-size: 22px;
+	    }
+	    #ycjkehu {
+	    	font-size: 22px;
+	    }
+	    #xuanzhe td{
+	    	font-size: 30px;
+	    }
+	</style>
+  </head>
+  <body style="background: #e7e7e7 repeat;">
+  <div class="head">
+	<a href="javascript:history.back();" class="bn pull-left pxlogo"><i class="icon-reply"></i></a>
+	<span class="title">排行榜</span>
+	<a href="{php echo $this->createMobileUrl('list')}" class="bn pull-right"><i class="glyphicon glyphicon-home"></i></a>
+</div>
+    <div class="wrap">
+	
+         <table id="allkehu" align="center" cellpadding="0" cellspacing="0"  width="100%">
+    		<tr height="50px">
+    		    <td align="center" style="line-height:50px;font-size:20px;font-weight:bold;filter:alpha(opacity=50); background:rgba(122,227,20,0.4) none repeat scroll 0 0 !important; color: #0095f6;">名次</td>
+    		    <td align="center" style="line-height:50px;font-size:20px;font-weight:bold;filter:alpha(opacity=50); background:rgba(122,227,20, 0.4) none repeat scroll 0 0 !important; color: #0095f6;">姓名</td>    			
+    			<td align="center" style="line-height:50px;font-size:20px;font-weight:bold;filter:alpha(opacity=50); background:rgba(122,227,20, 0.4) none repeat scroll 0 0 !important; color: #0095f6;">佣金</td>
+    		</tr>
+			{php $key=1}
+    		{loop $commission  $c}
+				<tr height="60px" style="font-size:16px;line-height:60px;">
+					<td align="center" style="color: red">{if $key==1}首<img alt="皇冠" src="../addons/fm453_shopping/style/images/huangguan.png">富{else}第{$key}名{/if}</td>
+					<td align="center">{$c['realname']}</td>
+					
+					<td align="center" style="color: #ff3c00">{$c['commission']} 元</td>
+				</tr>
+				{php $key++}
+			{/loop}
+    	</table>    
+    </div>
+
+	<style>
+	.f-mag {
+		padding: 9px 9px;
+		font-size: 14px;
+	}
+	.pagination li{
+		margin-left:-3px;
+		display: inline-block;
+		padding: 0 5px;
+		border-radius: 5px;
+		width:22%;
+		text-align:center;
+	}
+	.pagination li .pager-nav{
+		color: #fff;
+	}
+	</style>
+	<div class="foot f-mag">
+		<p>  				
+			{$pager}
+		</p>
+	</div>
+{template $appstyle."common/designedby"}
+{template $appstyle."common/footmenu"}
+{template $appstyle.'common/_footer'}

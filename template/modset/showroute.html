@@ -1,0 +1,171 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+{loop $routes $do_key  $d_o}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" id="setting-form-{$do_key}"  data-posturl="{php echo fm_wurl($do,$ac,'modify',array());}" onsubmit="return false;">
+	<input type="hidden" name="i" value="{$_W['uniacid']}" />
+	<input type="hidden" name="ac" value="{$ac}" />
+	<input type="hidden" name="op" value="modify" />
+	<input type="hidden" name="nowdo" value="{$do_key}" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+		<div class="panel panel-info">
+			<div class="panel-heading" style="text-align: center;">
+			&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="selectnode" value="0" onclick="changeselect('do-{$do_key}')" />全选
+			&nbsp;&nbsp;&nbsp;
+			<input  type="radio" name="selectnode" value="1" onclick="unsetselect('do-{$do_key}')" />取消全选
+			&nbsp;&nbsp;&nbsp;
+			<input  type="radio" name="selectnode" value="-1" onclick="unchangeselect('do-{$do_key}')" />反选
+			&nbsp;&nbsp;&nbsp;
+			||&nbsp;&nbsp;&nbsp;
+			(<label class="label label-default">灰色标注</label>为已隐藏路径)
+			</div>
+
+			<div class="panel-body">
+				<div class="form-group">
+					<label for="{$do_key}" class="col-xs-12 col-sm-3 col-md-2  col-lg-1 control-label ">
+						<input class="do-{$do_key}" type="checkbox" name="data[do]" value="{$do_key}" id="{$do_key}" onclick="changeselect('{$do_key}')" /> {if $routes[$do_key]['hide']==$_W['uniacid'] || (is_array($routes[$do_key]['hide']) && in_array($_W['uniacid'],$routes[$do_key]['hide']))} <label class="label label-default">{$d_o['title']}</label>{else}{$d_o['title']}{/if}:
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-10  col-lg-11 " style="border-bottom: 1px solid #ccc;">
+						{loop $d_o['ac'] $ac_key $a_c}
+						<label for="{$do_key}_{$ac_key}" class="control-label">
+							<input class="do-{$do_key} ac-{$do_key} {$do_key}" type="checkbox" name="data[acs][]" value="{$ac_key}" id="{$do_key}-{$ac_key}" onclick="changeselect('{$do_key}-{$ac_key}')" onchange="checkselect('{$do_key}','{$ac_key}','')" /> {if $routes[$do_key]['ac'][$ac_key]['hide']==$_W['uniacid'] || (is_array($routes[$do_key]['ac'][$ac_key]['hide']) && in_array($_W['uniacid'],$routes[$do_key]['ac'][$ac_key]['hide']))} <label class="label label-default">{$a_c['title']}</label>{else}{$a_c['title']}{/if}
+						</label>
+						{/loop}
+						<label class="control-label">
+						&nbsp;&nbsp;&nbsp;
+						||&nbsp;&nbsp;&nbsp;<input  type="checkbox" onclick="unchangeselect('ac-{$do_key}')" />反选
+						&nbsp;&nbsp;&nbsp;
+						||&nbsp;&nbsp;&nbsp;</label>
+
+
+						<label for="{$do_key}_hide" class="control-label">
+							<input class="" type="radio" name="{$do_key}_hide" value="1" /> 隐藏</label>
+						<label for="{$do_key}_hide" class="control-label">
+							<input class="" type="radio" name="{$do_key}_hide" value="0" /> 显示</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-body">
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+			<div class="col-sm-10 col-xs-10" >
+				<input type="submit" name="save" id="setting-form-{$do_key}-button" value="保存" class="btn btn-primary" onclick="formcheck('setting-form-{$do_key}');" />
+			</div>
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+{/loop}
+
+<script type="text/javascript" >
+	function changeselect(classname) {
+		var f=document.getElementsByClassName(classname);
+		for(var i=0;i<f.length;i++)
+		{
+			f[i].checked=true;
+		}
+	}
+	function unsetselect(classname) {
+		$("."+classname).removeAttr("checked");
+	}
+	function unchangeselect(classname) {
+		var f=document.getElementsByClassName(classname);
+		for(var i=0;i<f.length;i++)
+		{
+			if(f[i].checked==false)
+			{
+				f[i].checked=true;
+			}else {
+				f[i].checked=false;
+			}
+		}
+	}
+	function checkselect(doname,acname,opname){
+		var ischecked=false;
+		if (opname)
+		{
+			var f_op=document.getElementById(doname +'-'+ acname +'-'+ opname);
+			var f_ac=document.getElementById(doname +'-'+ acname);
+			var f_do=document.getElementById(doname);
+			var classname = doname +'-'+acname +'-'+ opname;
+			var f=document.getElementsByClassName(classname);
+			for(var i=0;i<f.length;i++)
+			{
+				if(f[i].checked==true)
+				{
+					var ischecked=true;
+				}
+			}
+			if (ischecked)
+			{
+				f_op.checked=true;
+				f_ac.checked=true;
+				f_do.checked=true;
+			}
+		}else{
+			if (acname)
+			{
+				var f_ac=document.getElementById(doname +'-'+ acname);
+				var f_do=document.getElementById(doname);
+				var classname = doname +'-'+acname;
+				var f=document.getElementsByClassName(classname);
+				for(var i=0;i<f.length;i++)
+				{
+					if(f[i].checked==true)
+					{
+						var ischecked=true;
+					}
+				}
+				if (ischecked)
+				{
+					f_ac.checked=true;
+					f_do.checked=true;
+				}
+			}else {
+				if (doname)
+				{
+					var f_do=document.getElementById(doname);
+					var classname = doname;
+					var f=document.getElementsByClassName(classname);
+					for(var i=0;i<f.length;i++)
+					{
+						if(f[i].checked==true)
+						{
+							var ischecked=true;
+						}
+					}
+					if (ischecked)
+					{
+						f_do.checked=true;
+					}
+				}
+			}
+		}
+	}
+
+	function formcheck(formid) {
+		var form = document.getElementById(formid);
+		var formdata = Form_format(formid); //自有方法格式化表单元素，返回数组
+		var url = form.getAttribute("data-posturl");
+		var data = formdata;
+		// console.log(data);
+		$('#' + formid+'-button').val("正在保存");
+		$.post(url,data,function(res){
+		if (res.code==0) {
+			$('#' + formid+'-button').val("已保存");
+		}else{
+			$('#' + formid+'-button').val(res.msg);
+			console.log(res.msg);
+		}
+		},'json');
+		return false;
+	}
+</script>
+{template 'web/default/common/js_array'}
+{template 'web/default/common/js_form'}
+{template 'common/footer'}

@@ -1,0 +1,26 @@
+<div class="alert alert-info" style="margin-bottom:1px;font-size: 12px;">
+	<button type="button" class="close" data-dismiss="alert" style="width: 30px;height: 30px;border: 1px solid;border-radius: 15px;">×</button>
+		<h4>
+			温馨提示!
+		</h4>
+		<strong>亲!</strong>为了方便您操作，在各个不同状态订单列表页，您可以在查看订单时左右滑动，我们将不断给订单查阅添加许多快捷操作方式哦！
+</div>
+<div class="hero-unit well " style="margin-top:10px;">
+	<h1>订单状态的说明</h1>
+	<p>
+		亲，您可根据订单的状态进度分别查看不同订单。
+	</p>
+	<p>
+			<a class="btn btn-primary btn-large btn-block" href="{php echo fm_murl('order','myorder','nopay',array())}">未支付订单 »</a>
+	</p>
+	<p>
+			<a class="btn btn-warning btn-large btn-block" href="{php echo fm_murl('order','myorder','success',array())}">已支付订单 »</a>
+	</p>
+	<p>
+			<a class="btn btn-success btn-large btn-block" href="{php echo fm_murl('order','myorder','success',array())}">已完成订单 »</a>
+	</p>
+	<p>
+			<a class="btn btn-info btn-large btn-block" href="{php echo fm_murl('member','mycart','index',array())}">看看我的购物车 »</a>
+	</p>
+</div>
+

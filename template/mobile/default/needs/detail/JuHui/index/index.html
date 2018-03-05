@@ -1,0 +1,60 @@
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/css'}
+<link rel="stylesheet" type="text/css" href="{$appsrc}css/feedback.css" />
+<link rel="stylesheet" type="text/css" href="{$appsrc}/css/mui.picker.min.css" />
+<link href="{$appsrc}/css/mui.picker.css" rel="stylesheet" />
+<link href="{$appsrc}/css/mui.poppicker.css" rel="stylesheet" />
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/titlebar'}
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/navbar'}
+
+<div class="mui-content feedback" style="padding-bottom: 5px;">
+	{if $needs['is_banner']}
+	<div class="img-rounded" style="text-align:center;">
+	<img src="{$needs['banner']}" alt="{$needs['title']}">
+	</div>
+	{/if}
+	<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">{$pagename}</h5>
+	<a class="mui-btn mui-btn-success mui-btn-block" href="#modal-tips">
+	活动说明 <span class="mui-icon mui-icon-extra mui-icon-extra-notice"></span>
+	</a>
+	<form action="{php echo fm_murl($do,$ac,'post',array())}" method="post" class="form-horizontal form" id="form-feedback" enctype="multipart/form-data" onsubmit='return formcheck("form-feedback")'>
+	<input type="hidden" name="setfor" value="{$FM_member['uid']}" />
+	<input type="hidden" name="id" value="{$id}" />
+	<input type="hidden" name="sn" value="{$sn}" />
+	<input type="hidden" name="openid" value="{$_W['openid']}" />
+	<input type="hidden" name="template" value="{$needs['template']}" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+
+		{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form'}
+		<button id="submit" class="mui-btn mui-btn-success mui-btn-outlined" style="z-index:9;">提交</button>
+	</form>
+
+	<p>
+	<span class="mui-icon mui-icon-extra mui-icon-extra-xiaoshuo"></span>阅读指数: {php echo intval($needs['viewcount'])}
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span class="mui-icon mui-icon-extra mui-icon-extra-heart"></span>点赞指数:<span id="DianzanCount">{php echo intval($needs['dianzancount'])}</span>
+	</p>
+	<p  id="PrintError" class="mui-hidden">打印错误消息</p>
+	<div id="qrcode"  class="mui-hidden" style="text-align: center;">
+		<img src="{$qrcodeurl}" style="width:60%;" />
+		<a id="shortcut" style="width: 60%;margin: 15px auto;padding: 5px;" class="mui-hidden mui-btn mui-btn-block mui-btn-red">创建桌面图标</a>
+	</div>
+</div>
+{template $appstyle.$do.'/'.$ac.'/_public/changyan'}
+
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/modal/member'}
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/modal/tips'}
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/modal/zhuohao'}
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/modal/addteamer'}
+{template $appstyle.$do.'/'.$ac.'/_public/modal/pause'}
+{template $appstyle.$do.'/'.$ac.'/_public/modal/pay'}
+
+<script src="{$appsrc}/js/mui.picker.js"></script>
+<script src="{$appsrc}/js/mui.poppicker.js"></script>
+<script src="{$appsrc}/js/mui.picker.min.js"></script>
+<!-- 图片放大查看 -->
+<script src="{$appsrc}js/mui.zoom.js"></script>
+<script src="{$appsrc}js/mui.previewimage.js"></script>
+<script type="text/javascript" >
+	mui.previewImage();
+</script>
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/js'}

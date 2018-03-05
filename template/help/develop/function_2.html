@@ -1,0 +1,57 @@
+<div class="panel panel-default">
+			<div class="panel-heading">
+			<a data-toggle="collapse" data-parent="#accordion"
+          href="#function_2">
+          产品控制类函数<span class="pull-right">（点击展示）</span>
+        </a>
+			</div>
+</div>
+<div class="container-fluid panel-collapse collapse in" id="function_2">
+	<div class="row-fluid">
+		<div class="span12">
+			<ol>
+
+				<li>
+					<ul>
+						<li>设置订单产品的库存
+						<code>$this->setOrderStock();
+						</code>
+						</li>
+						<li>参数
+						<code>$id ：订单ID, $minus ：库存增加(true)或减少(false)
+						</code>
+						<pre>$this->setOrderStock($id = '', $minus = true);
+						</pre>
+						</li>
+						<li>结果值
+						<code>无返回值
+						</code>
+						</li>
+					</ul>
+				</li>
+
+<p></p>
+				<li>
+					<ul>
+						<li>获取产品关联营销模型
+						<code>$this->getGoodsMarketModel();
+						</code>
+						</li>
+						<li>参数
+						<code>$goodsid：产品ID
+						</code>
+						<pre>$this->getGoodsMarketModel($goodsid);
+						</pre>
+						</li>
+						<li>结果值
+						<code>数组   $marketmodels
+						</code>
+						</li>
+					</ul>
+				</li>
+
+
+			</ol>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,72 @@
+{template 'common/header'}
+{template $appstyle.'common/css'}
+			<style type="text/css">
+
+		</style>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a href="{php echo fm_murl('demo','help','aboutus',array('pagetpl'=>'info'))}"  id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style=" color: rgba(240, 173, 78, 0.91);"></a>
+			<h1 class="mui-title">{$shopname}</h1>
+		</header>
+
+		<div class="mui-content" style="padding-bottom: 50px;">
+			<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">	头像上传	</h5>
+			<div class="mui-input-row">
+	{php echo tpl_app_form_field_avatar('avatar', $FM_member['avatar']);}
+</div>
+
+	<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">	图片上传	</h5>
+	<div class="mui-input-cell">
+    {php echo tpl_app_form_field_image('image', $image);}
+</div>
+
+    <h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">	弹出选项	</h5>
+    <div class="mui-input-row">
+    <label>选择地区</label>
+    {php echo tpl_app_form_field_district('address', array('province' => $address['province'],'city' => $address['city'],'district' => $address['district']));}
+</div>
+<div class="mui-input-row">
+    <label>出生日期</label>
+    {php echo tpl_app_fans_form('birth', array('year' => $profile['birthyear'], 'month' => $profile['birthmonth'], 'day' => $profile['birthday']), $mcFields['birthyear']['title']);}
+</div>
+<div class="mui-input-row">
+    <label>性别</label>
+   {php echo tpl_fans_form('gender', $profile['gender']);}
+</div>
+<div class="mui-input-row">
+    <label>血型</label>
+   {php echo tpl_fans_form('bloodtype', $profile['bloodtype']);}
+</div>
+<div class="mui-input-row">
+    <label>生肖</label>
+   {php echo tpl_fans_form('zodiac',$profile['zodiac']);}
+</div>
+<div class="mui-input-row">
+    <label>星座</label>
+   {php echo tpl_fans_form('constellation',$profile['constellation']);}
+</div>
+<div class="mui-input-row">
+    <label>学历</label>
+   {php echo tpl_fans_form('education',$profile['education']);}
+</div>
+<div class="mui-input-row">
+    <label>自定义选项</label>
+    <input class="js-user-options" type="text" value="" readonly="" placeholder="请选择">
+</div>
+<script type="text/javascript">
+    $(".js-user-options").on("tap", function(){
+		var _data = {$optionsdata};	//不需要加双引号
+        var options = {data:_data};
+        var $this = $(this);
+        util.poppicker(options, function(items){
+            $this.val(items[0].value);
+        });
+    });
+</script>
+</div>
+		<!--底导航栏部分-->
+		<footer class="mui-bar mui-bar-footer" style="">
+			{template $appstyle.'entry/footerbar'}
+		</footer>
+
+{template 'common/footer'}

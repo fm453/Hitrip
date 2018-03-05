@@ -1,0 +1,23 @@
+<div class="text-center footer" style="margin:10px 0; width:100%; text-align:center; word-break:break-all;">
+	{$_W['setting']['copyright']['statcode']}
+</div>
+<script type="text/javascript">
+//防止之前加载的JS与微信分享JS冲突，重置define跟require以解决该问题
+    define = null;
+    require = null;
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+	wx.config(jssdkconfig);
+	wx.hideOptionMenu();//隐藏右上角菜单按钮，禁止分享
+	$(function(){
+		if($('.js-quickmenu')!=null && $('.js-quickmenu')!=''){
+			var h = $('.js-quickmenu').height()+'px';
+			$('body').css("padding-bottom",h);
+		}else{
+			$('body').css("padding-bottom", "0");
+		}
+	});
+</script>
+</body>
+</html>

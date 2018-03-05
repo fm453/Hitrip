@@ -1,0 +1,96 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#planSetting">
+          规划信息<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse" id="planSetting">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-planSetting" onsubmit="return formcheck('setting-form-planSetting');return false;">
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" value="" />
+				<input type="hidden" name="setfor" value="plan" />
+				<input type="hidden" name="s_sn" value="{$s_sn}" />
+				<input type="hidden" name="sn" value="{$sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">设计规划</label>
+	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>占地面积</span>
+			<input type="text" name="data[cover_area]" id="cover_area"  class="form-control" placeholder="" value="{$item['plan']['cover_area']}" />
+			<span class="input-group-addon">m<sup>2</sup></span>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>建筑面积</span>
+			<input type="text" name="data[structure_area]" id="structure_area"  class="form-control" placeholder="" value="{$item['plan']['structure_area']}" />
+			<span class="input-group-addon">m<sup>2</sup></span>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>容积率</span>
+			<input type="text" name="data[capacity_ratio]" id="capacity_ratio"  class="form-control" placeholder="" value="{$item['plan']['capacity_ratio']}" />
+			<span class="input-group-addon">%</span>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>绿化率</span>
+			<input type="text" name="data[green_ratio]" id="green_ratio"  class="form-control" placeholder="" value="{$item['plan']['green_ratio']}" />
+			<span class="input-group-addon">%</span>
+		</div>
+	</div>
+
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label sr-only">规划信息</label>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+		<div class="input-group form-group">
+			<span class="input-group-addon">户数</span>
+			<input type="text" name="data[house_num]" id="house_num"  class="form-control" placeholder="" value="{$item['plan']['house_num']}" />
+			<span class="input-group-addon">户</span>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>车位数</span>
+			<input type="text" name="data[parking_lot_num]" id="parking_lot_num"  class="form-control" placeholder="" value="{$item['plan']['parking_lot_num']}" />
+			<span class="input-group-addon">个</span>
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">楼层状况</label>
+	<div class="col-xs-12 col-sm-9 ">
+		<textarea name="data[floors]" id="floors" class="form-control">{$item['plan']['floors']}</textarea>
+		<span class="help-block">说明：请说明一下楼层的状况</span>
+	</div>
+</div>
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-planSetting" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-planSetting" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#planSetting">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>

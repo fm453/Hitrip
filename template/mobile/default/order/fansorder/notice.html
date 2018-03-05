@@ -1,0 +1,17 @@
+{if empty($dafaultAddress)}
+<div class="alert alert-info" style="margin-bottom:1px;font-size: 14px;">
+		<strong>亲!</strong> 该订单需要补充联系方式，请
+		<a href="{php echo fm_murl('member','address','new',array('returnurl'=>urlencode($_W['siteurl'])))}" class="btn btn-warning btn-large" >点击这里 »</a>
+		填写！（首次需设置，以后自动调用）
+</div>
+{else}
+<div class="alert alert-info" style="margin-bottom:1px;font-size: 14px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<div>
+		<h5>{$defaultaddress['username']}, 您好，您的预留电话是: {$defaultaddress['mobile']}</h5>
+			<input id="defaultaddress" value="{$defaultaddress['province']}-{$defaultaddress['city']}-{$defaultaddress['district']}-{$defaultaddress['address']}" class="form-control" readonly="true" />
+	</div>
+		<a href="{php echo fm_murl('member','address','index',array('returnurl'=>urlencode($_W['siteurl'])))}" class="mui-btn mui-btn-warning mui-btn-block" >更改联系方式 »</a>
+</div>
+
+{/if}

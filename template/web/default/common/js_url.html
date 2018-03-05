@@ -1,0 +1,38 @@
+
+<script type="text/javascript" charset='utf-8'>
+//利用JS方法生成网址(不带分享参数)
+	function js_url(f_do,f_ac,f_op,f_i,f_type) {
+		var isempty = empty(f_do) + empty(f_ac) + empty(f_op) + empty(f_type);
+		if (isempty>0) {
+			return false;
+		}
+		var url ="{$_W['siteroot']}";
+		if (f_type=='web') {
+			 url = url + 'web/index.php?c=site&a=entry';
+		}else {
+			url = url + 'app/index.php?c=entry';
+			url += "&i=" + f_i;
+			url +="&fromplatid={$_W['uniacid']}"
+		}
+		url += '&m=fm453_shopping';
+		url += '&do=' + f_do;
+		url += '&ac=' + f_ac;
+		url += '&op=' + f_op;
+		return url;
+	}
+	//空值判断
+	function empty(f_val) {
+		if (f_val=='') {
+			return 1;
+		}
+		return 0;
+	}
+//当没有来源网址时，不显示返回按钮(通过类判断：btn-goback,mui-action-back)
+if(document.referrer==''){
+	$(".btn-goback").hide().addClass('hidden');
+}else{
+	$(".btn-goback").show().removeClass('hidden');
+}
+//刷新网址
+
+</script>

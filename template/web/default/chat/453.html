@@ -1,0 +1,23 @@
+{template $fm453style.'common/_header'}
+{template $fm453style.'common/tabnav'}
+{if $ac == 'model}
+	{if $operation == 'new'}
+		{template $fm453style.$do.'/'.$ac.'/modify'}
+	{/if}
+	{if $operation == 'detail'}
+		{template $fm453style.$do.'/'.$ac.'/modify'}
+	{/if}
+	{if $operation == 'display'}
+		{template $fm453style.$do.'/'.$ac.'/search'}
+		{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+	{if $operation == 'data'}
+		{template $fm453style.$do.'/'.$ac.'/data'}
+	{/if}
+	{if $operation == 'reply'}
+		{template $fm453style.$do.'/'.$ac.'/reply'}
+	{/if}
+{/if}
+{template $fm453style.$do.'/key'}
+{template $fm453style.$do.'/mouse'}
+{template $fm453style.'common/_footer'}

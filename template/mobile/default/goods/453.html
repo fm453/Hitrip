@@ -1,0 +1,19 @@
+{template $appstyle.'common/header'}
+<script src="{$appsrc}js/mui.min.js"></script>
+{template $appstyle.'common/js_url'}
+{template $appstyle.'common/js_pic'}
+{template $appstyle.'common/js_array'}
+{template $appstyle.'common/js_form'}
+{template $appstyle."common/tip"}
+{if $ac == 'detail'}
+
+	{if $operation == 'index' || $operation == 'load'}
+	{php $operation = 'load';}
+	{template $appstyle.$do.'/'.$ac.'/'.$goodtpl.'/'.$operation.'/index'}
+	{/if}
+	{if $operation == 'tobuy'}
+	{template $appstyle.$do.'/'.$ac.'/'.$goodtpl.'/'.$operation.'/index'}
+	{/if}
+{/if}
+
+{template $appstyle.'common/footer'}

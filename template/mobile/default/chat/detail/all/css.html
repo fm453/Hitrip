@@ -1,0 +1,381 @@
+<style type="text/css">
+	/** 默认字体 **/
+	body{
+		font-family: Microsoft Yahei;
+	}
+
+	/*跨webview需要手动指定位置*/
+	.mui-plus header.mui-bar {
+		display: none!important;
+	}
+
+	.mui-plus .mui-bar-nav~.mui-content {
+		padding: 0!important;
+	}
+
+	.mui-plus .plus {
+		display: inline;
+	}
+
+	.plus {
+		display: none;
+	}
+
+	/** 页面及段落通用 **/
+	html,body {
+		background-color: #efeff4;
+		padding-bottom: 0px;
+	}
+	/** 段落缩进**/
+	p {
+		text-indent: 1em;
+	}
+	/** 输入框**/
+	input {
+		color: #f00;
+	}
+
+	/** 下拉提示文本框 **/
+	.mui-pull-top-pocket{
+	/**	top:48px; **/
+		color:red;
+		/** top: 4px; **/
+	}
+	.mui-bar-nav~.mui-content .mui-pull-top-pocket {
+		top:48px;
+		color:red;
+		/** top: 4px; **/
+	}
+	/** 上拉提示文本框 **/
+	.mui-pull-bottom-pocket{
+		bottom: 50px;
+	}
+/*滑动指示条*/
+	.mui-scrollbar-vertical {
+		width:0;
+	}
+
+	/** 侧导航 **/
+	.mui-off-canvas-left {
+		color: #fff;
+	}
+	.title {
+		margin: 35px 15px 10px;
+	}
+	.title+.content {
+		margin: 10px 15px 35px;
+		color: #bbb;
+		text-indent: 1em;
+		font-size: 14px;
+		line-height: 24px;
+	}
+
+
+/* ______消息记录框_________ */
+
+	#list-box{
+		width: 100%;
+		height: 100%;
+		min-height: 300px;
+		overflow: scroll;
+		border-bottom-width: 0px;
+    border-bottom-style: solid;
+    border-bottom-color: #434343;
+    margin: 0px;
+	}
+/* 聊天列表框内，对mui样式微调 */
+#list-box .mui-table-view-cell{
+	padding:5px 0;
+}
+	#list-box .mui-table-view{
+		background-color: transparent;
+	}
+
+	#list-box .mui-table-view:before{
+		height: 0;
+	}
+	#list-box .mui-table-view:after{
+		height: 0;
+	}
+#list-box .mui-table-view-cell>.mui-slider-handle{
+	background-color: transparent;
+}
+	#list-box .chat_record{
+		position: static;
+	}
+	#list-box .chat_record_l{
+		display: block;
+		min-height: 60px;
+		color: #afafaf;
+		padding-top: 5px;
+		padding-right: 10px;
+		padding-left: 10px;
+		padding-bottom: 0px;
+		position: relative;
+	}
+	#list-box .chat_record_l .mui-table-view-cell{
+	padding:5px 0;
+	min-height: 60px;
+	}
+	#list-box .chat_record_l .user {
+    height: 45px;
+    width: 45px;
+    margin-top: 0px;
+    margin-right: 5px;
+    margin-bottom: 0px;
+    margin-left: 5px;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    display: inline;
+    position: static;
+}
+#list-box .chat_record_l .user img{
+     max-width: 100%;
+     width:45px;
+     height:45px;
+     position: relative;
+    float:right;
+}
+	#list-box .chat_record_l .bg {
+    width: 10px;
+    height: 30px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: left top;
+    position: relative;
+    float:right;
+    right:0px;
+}
+	#list-box .chat_record_l .text {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #fcfcfc;
+    /*width: 240px; */
+    height: auto;
+    padding: 5px;
+    color: #666;
+    font-size: 12px;
+    /*margin-right: 65px;
+    margin-top: -40px;*/
+    position: relative;
+    float:right;
+    right:0px;
+    }
+    #list-box .chat_record_l h3 {
+    font-size: 14px;
+    padding: 2px 0 5px 0;
+    text-transform: uppercase;
+    font-weight: 100;
+    color: #333333;
+    line-height: 1.5em;
+    }
+    #list-box .chat_record_l .chat_time {
+    font-size: 12px;
+    color: #666;
+    text-align: right;
+    /*width: 100%;*/
+    display: block;
+    }
+
+	#list-box .chat_record_m{
+	display: block;
+	min-height: 20px;
+    color: #fff;
+    padding-top: 0px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 0px;
+	}
+
+	#list-box .chat_record_m .chat_record {
+        -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+    display: block;
+     text-align: center;
+    }
+    #list-box .chat_record_m p{
+    text-indent: 0;
+    }
+ #list-box .chat_record_m .mui-badge{
+    border-radius: 5px;
+    }
+    #list-box .chat_record_m .chat_record .sysnotice {
+    text-transform: uppercase;
+    font-weight: 100;
+    line-height: 1.5em;
+    text-align:center;
+    }
+
+  #list-box .chat_record_m .chat_record .sysnotice .createtime {
+  	color: #fff;
+    }
+    #list-box .chat_record_m .chat_record .sysnotice .content {
+    color: #fff;
+    padding: 5px;
+    margin:5px;
+    text-transform: uppercase;
+    font-weight: 100;
+    line-height: 1.5em;
+    }
+
+
+	#list-box .chat_record_r{
+		display: block;
+		min-height: 80px;
+    color: #afafaf;
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 0px;
+
+	}
+	#list-box .chat_record_r .mui-table-view-cell{
+	padding:5px 0;
+	min-height: 80px;
+	}
+	#list-box .chat_record_r .user {
+      float: left;
+    display: inline;
+    height: 45px;
+    width: 45px;
+    margin-top: 0px;
+    margin-right: 5px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    position: static;
+}
+#list-box .chat_record_r .user img{
+     max-width: 100%;
+     width:45px;
+     height:45px;
+     position: relative;
+    float:left;
+}
+	#list-box .chat_record_r .username {
+		display: inline;
+    height: 20px;
+    margin-top: 0px;
+    margin-right: 5px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+   position: relative;
+    float:left;
+}
+	#list-box .chat_record_r .bg {
+    width: 10px;
+    height: 30px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: left top;
+    position: absolute;
+    top: 25px;
+    left: 45px;
+	}
+	#list-box .chat_record_r .text {
+        -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #b8d45c;
+    /*width: 240px; */
+    height: auto;
+    display: block;
+    padding: 5px;
+    color: #333333;
+    position: relative;
+    float:left;
+    }
+    #list-box .chat_record_r h3 {
+    font-size: 14px;
+    padding: 2px 0 5px 0;
+    text-transform: uppercase;
+    font-weight: 100;
+    color: #333333;
+    line-height: 1.5em;
+    }
+  #list-box .chat_record_r .chat_time {
+    font-size: 12px;
+    color: #666;
+    text-align: right;
+    width: 100%;
+    display: block;
+    }
+
+form > h5{
+	 /**	border-top: 3px solid #fff; **/
+	 border-bottom: 3px solid #fff;
+	 padding-top:3px;
+	 padding-bottom:3px;
+}
+
+
+/* 面板折叠，修改默认图标为向上(e580~e583)*/
+.mui-table-view-cell.mui-collapse>.mui-navigate-right:after, .mui-table-view-cell.mui-collapse>.mui-push-right:after {
+    content: '\e580';
+}
+
+/*————————通讯录样式——————————————————*/
+			 .oa-contact-cell.mui-table .mui-table-cell {
+				padding: 11px 0;
+				vertical-align: middle;
+			}
+
+			.oa-contact-cell {
+				position: relative;
+				margin: -11px 0;
+			}
+
+			.oa-contact-avatar {
+				width: 75px;
+			}
+			.oa-contact-avatar img {
+			    width:100%;
+				border-radius: 50%;
+			}
+			.oa-contact-content {
+				width: 100%;
+			}
+			.oa-contact-name {
+				margin-right: 20px;
+			}
+			.oa-contact-name, oa-contact-position {
+				float: left;
+			}
+
+/*———————其他—————*/
+/*段落文本双行溢出省略号*/
+ .ellipsis-p-2{
+    width: auto;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+    -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+    -webkit-line-clamp: 2; /** 显示的行数 **/
+    overflow: hidden;  /** 隐藏超出的内容 **/
+    text-indent: 1px;
+    }
+
+ .ellipsis-p-1{
+    width: auto;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+    -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+    -webkit-line-clamp: 1; /** 显示的行数 **/
+    overflow: hidden;  /** 隐藏超出的内容 **/
+    text-indent: 1px;
+    }
+</style>

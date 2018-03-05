@@ -1,0 +1,94 @@
+<div id="list-box" style="position: absolute;/*background-image:url({$placeholderImg});padding-bottom:0;background-size:contain;background-attachment:scroll;background-repeat:no-repeat;background-position:center;*/">
+
+<div class="chat_record_l male" style="background-color:rgba(255,255,255,.01);">
+	<form action="" method="post" id="form{$item['id']}" onsubmit="">
+		<input type="hidden" name="id" id="id{$item['id']}" value="{$item['id']}" />
+		<input type="hidden" name="token" value="{$_W['token']}" />
+		<div style="margin-bottom:1px;">
+			<ul data-id="{$item['id']}" class="mui-table-view huadongcaozong">
+				<li class="mui-table-view-cell" >
+					<div class="mui-slider-left mui-disabled">
+						<a class="mui-btn mui-btn-red mui-icon mui-icon-close" date-swipe2do="delete" data-id="{$item['id']}"><span  style="font-size: 12px;">删除</span></a>
+					</div>
+					<div class="mui-slider-right mui-disabled">
+						<a href="#modal-memeber" class="mui-btn mui-btn-success" date-swipe2do="link"><span  style="font-size: 14px;">管理</span></a>
+					</div>
+					<div class="mui-slider-handle">
+						{template $appstyle.$do.'/'.$ac.'/'.$operation.'/orderitem-l'}
+					</div>
+
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+
+<div class="chat_record_m sys" style="background-color:transparent;">
+	<form action="" method="post" id="form{$item['id']}" onsubmit="">
+		<input type="hidden" name="id" id="id{$item['id']}" value="{$item['id']}" />
+		<input type="hidden" name="token" value="{$_W['token']}" />
+		<div style="margin-bottom:1px;">
+			<ul data-id="{$item['id']}" class="mui-table-view huadongcaozong">
+				<li class="mui-table-view-cell" >
+					<div class="mui-slider-left mui-disabled">
+						<a class="mui-btn mui-btn-red mui-icon mui-icon-close" date-swipe2do="delete" data-id="{$item['id']}"><span  style="font-size: 12px;">隐藏</span></a>
+					</div>
+					<div class="mui-slider-right mui-disabled">
+						<a href="#modal-memeber" class="mui-btn mui-btn-success" date-swipe2do="link"><span  style="font-size: 14px;">隐藏</span></a>
+					</div>
+					<div class="mui-slider-handle">
+						{template $appstyle.$do.'/'.$ac.'/'.$operation.'/sysnotice2'}
+					</div>
+
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+
+<div class="chat_record_m sys" style="background-color:transparent;">
+	<form action="" method="post" id="form{$item['id']}" onsubmit="">
+		<input type="hidden" name="id" id="id{$item['id']}" value="{$item['id']}" />
+		<input type="hidden" name="token" value="{$_W['token']}" />
+		<div style="margin-bottom:1px;">
+			<ul data-id="{$item['id']}" class="mui-table-view huadongcaozong">
+				<li class="mui-table-view-cell" >
+					<div class="mui-slider-left mui-disabled">
+						<a class="mui-btn mui-btn-red mui-icon mui-icon-close" date-swipe2do="delete" data-id="{$item['id']}"><span  style="font-size: 12px;">隐藏</span></a>
+					</div>
+					<div class="mui-slider-right mui-disabled">
+						<a href="#modal-memeber" class="mui-btn mui-btn-success" date-swipe2do="link"><span  style="font-size: 14px;">隐藏</span></a>
+					</div>
+					<div class="mui-slider-handle">
+						{template $appstyle.$do.'/'.$ac.'/'.$operation.'/sysnotice'}
+					</div>
+
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+
+<div class="chat_record_r female" style="background-color:rgba(255,255,255,.01);">
+	<form action="" method="post" id="form{$item['id']}" onsubmit="">
+		<input type="hidden" name="id" id="id{$item['id']}" value="{$item['id']}" />
+		<input type="hidden" name="token" value="{$_W['token']}" />
+		<div style="margin-bottom:1px;">
+			<ul data-id="{$item['id']}" class="mui-table-view huadongcaozong">
+				<li class="mui-table-view-cell" >
+					<div class="mui-slider-left mui-disabled">
+						<a href="{php echo fm_murl('member','detail','view',array('id'=>$item['uid']))}" class="mui-btn mui-btn-success" date-swipe2do="link"><span  style="font-size: 14px;">资料</span></a>
+					</div>
+					<div class="mui-slider-right mui-disabled">
+						<a class="mui-btn mui-btn-red mui-icon mui-icon-close" date-swipe2do="delete" data-id="{$item['id']}"><span  style="font-size: 12px;">删除</span></a>
+					</div>
+					<div class="mui-slider-handle">
+						{template $appstyle.$do.'/'.$ac.'/'.$operation.'/orderitem'}
+					</div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+
+</div>

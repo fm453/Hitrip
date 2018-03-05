@@ -1,0 +1,12 @@
+{template $appstyle.$do.'/'.$ac.'/titlebar'}
+{template $appstyle.$do.'/'.$ac.'/nav'}
+<!--下拉刷新容器-->
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="padding-top:48px;" >
+	<div class="mui-scroll" >
+		<div class="mui-content"  id="pullrefresh-table" style="top:48px;" ><!-- 该ID必须存在且不允许更改 -->
+			{template $appstyle.$do.'/'.$ac.'/'.$operation.'/page'}
+		</div>
+	</div>
+</div>
+<!-- 下拉容器结束 -->
+{template $appstyle.$do.'/'.$ac.'/'.$operation.'/js'}

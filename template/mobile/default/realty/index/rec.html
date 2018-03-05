@@ -1,0 +1,15 @@
+
+<div id="rec-houses" class="row">
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="row-fluid">
+
+{loop $list_rec $k $item}
+<?php if($k>=6){break;}?>
+	{template $appstyle.$do.'/'.$ac.'/item_rec'}
+{/loop}
+
+			</div>
+		</div>
+	</div>
+</div>

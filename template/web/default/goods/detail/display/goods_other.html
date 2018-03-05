@@ -1,0 +1,40 @@
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">产品类型</label>
+	<div class="col-sm-9 col-xs-12">
+		<label for="type" class="radio-inline"><input type="radio" name="type" value="1" id="goodstype1" {if empty($item['type']) || $item['type'] == 1}checked="true"{/if} onclick="$('#product').show()" /> 实体产品（需要配送）</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="type" class="radio-inline"><input type="radio" name="type" value="2" id="goodstype2"  {if $item['type'] == 2}checked="true"{/if}  onclick="$('#product').hide()" /> 虚拟产品（无须配送）</label>
+		<span class="help-block">说明：旅游出行类、服务类产品均请勾选虚拟产品；</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否上架</label>
+	<div class="col-sm-9 col-xs-12">
+		<label for="status" class="radio-inline"><input type="radio" name="status" value="1" id="status1" {if $item['status'] == 1}checked="true"{/if} /> 是</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="status" class="radio-inline"><input type="radio" name="status" value="0" id="status2"  {if $item['status'] == 0}checked="true"{/if} /> 否</label>
+		<span class="help-block">不上架则在前台无显示、不可购买；产品库存为0需下架时请手动在此操作一次</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">产品专员OpenID</label>
+	<div class="col-sm-9 col-xs-12">
+
+		{php echo fmFunc_tpl_getMember('goodadm',$item['goodadm'],$members,$multi=true);}
+		<span class="help-block">说明：该产品专员可用于专门接收该产品的变动情况（库存，销量，关联订单等），支持填写多个，使用半角英文逗号（，）进行分隔 <a href="{php echo fm_wurl('crm','member','display','');}" target='_blank'>去查找会员Openid</a></span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">服务专线</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="kefuphone" class="form-control" value="{$item['kefuphone']}" />
+		<span class="help-block">说明：单独指定产品详情页的服务电话</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="displayorder" class="form-control" value="{$item['displayorder']}" />
+		<span class="help-block">说明：数字越大，在商城客户端的排名越靠前</span>
+	</div>
+</div>

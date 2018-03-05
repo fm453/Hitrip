@@ -1,0 +1,66 @@
+<!-- 更新点赞数 -->
+<script type="text/javascript" >
+	var topartner = document.getElementById("_DianZan");
+	var url = "{php echo fm_murl('needs','detail','dianzan',array())}";
+	var data = {
+			'setfor': 'needs',
+			'id': '{$id}',
+			'd_o': 'DianZan'
+		};
+	topartner.addEventListener('tap', function() {
+		$.get(url,data,function(res){
+		console.log(res);
+		var errorcode = parseInt(res);
+		var hasdianzaner = ('{php intval($needs['dianzanount'])}') >0 ? true : false;
+		console.log(errorcode);
+			switch(errorcode) {
+				case 0:
+					//正常
+					mui.alert('感谢您的支持！', '{$shopname}提示', function() {
+					//
+					});
+					var temp = '';
+					temp = '<a href="#"  previewed="0">';
+					temp += '<img src=" ' + "{php echo tomedia($_FM['member']['info']['avatar'])}" + ' " style="width:34px;height:34px;margin-right:6px;border-radius: 50%;" class="img-rounded">';
+					temp +='</a>';
+					if (hasdianzaner) {
+						$("#listbox-dianzaner").prepend(temp);
+					}else{
+						$("#listbox-dianzaner").html(temp);
+					}
+
+				break;
+
+				case 1:
+					//已点赞且不允许重复
+					mui.toast('亲，这个您已经点过赞了；感谢您的支持哦!');
+				break;
+
+				case 2:
+					//点赞次数已达上限
+					mui.toast('亲，这个您的点赞次数已达上限了；感谢您的支持哦!');
+				break;
+
+				case -1:
+					//需要登陆才能继续点赞
+					var btnArray = ['哦,算了', '好,登陆支持'];
+						mui.confirm('当前操作需要登陆了才能继续操作', '{$shopname}提示', btnArray, function(e) {
+							if (e.index == 1) {
+								location.href = js_url("{$do}","{$ac}","index","{$_W['uniacid']}",'app') + "&checklogin=1&id={$id}&dianzan=1";
+							} else {
+								setTimeout(function() {
+									//
+								}, 0);
+							}
+						});
+				break;
+			}
+
+		});
+		return;
+	},'json');
+</script>
+<!-- 为详情内容添加长按复制功能监听（MUI默认禁用了） -->
+<script>
+	$('.mui-content-padded').find('*').css({"-webkit-touch-callout":"text","-webkit-user-select":"text","-khtml-user-select":"text","-moz-user-select":"text","-ms-user-select":"text","user-select":"text"});
+</script>

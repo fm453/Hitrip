@@ -1,0 +1,342 @@
+<!-- BUG fileinput只能初始化一次，批量处理动作需在一次初始化里写明；待办 -->
+<link href="{$fm453resource}components/fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<script src="{$fm453resource}components/fileinput/fileinput.min.js" type="text/javascript"> </script>
+<script src="{$fm453resource}components/fileinput/fileinput_locale_zh.js" type="text/javascript"></script>
+<script src="{$htmlsrc}453/js/city.data.js"></script>
+<script src="{$htmlsrc}453/js/city.data-3.js"></script>
+<script type="text/javascript">
+	//监听处理文件删除
+	mui('body').on('tap', '.fm-file-remove', function(e) {
+		var filename = $(this).attr('data-src');
+		var backid =$(this).attr('data-backid');
+		var imageid =$(this).attr('data-imageid');
+		var elem = $(this);
+		$.post("{php echo fm_murl('ajax','file','delete',array())}", {'filename' : filename,'filetype' : 'image'}, function(pdata) {
+				pdata = $.parseJSON(pdata);
+				if (pdata == '1') {
+					elem.parent().parent().parent().parent().parent().parent().parent().next().remove();//移除进度条
+					document.getElementById('url-'+backid).setAttribute('value','');
+					mui.toast('文件已删除，请重新设置');
+				} else {
+					mui.toast('未能成功删除'+pdata);
+				}
+			});
+	});
+	//设置图片到绑定对象(在上传组件的预览框中操作时用到)
+	mui('body').on('tap', '.file-preview-image', function(e) {
+		var id = $(this).attr('data-formEle');
+		var src = $(this).attr('src');
+		var fname = $(this).attr('data-filename');
+		$('#url-'+id).attr("value",fname);//添加属性
+    	$('#'+id).attr("value", fname);//添加属性
+    	$('#result-'+id).attr("src", src);//添加属性
+    	$("#modal-upload-"+id).toggleClass('mui-active');	//关闭模态框
+	});
+
+	//处理图片上传后函数(在上传组件加载上传成功事件后用到)
+/*
+	form = data.form,
+	files = data.files,
+	extra = data.extra,
+	reader = data.reader;
+	response = data.response,
+	__________服务器端的响应_________
+		$returns['backid']=$backid;	//上传时调用的组件id
+		$returns['inputname']=$inputname;	//上传时使用的传值输入框
+		$returns['imgurl']=$imgurl;	//服务器端生成的文件相对地址
+		$returns['imgid']=$imageid;	//服务器生成的文件id
+		$returns['imgname']=$imagename;	//服务器生成的文件名(id+后缀)
+		$returns['imgsrc']= tomedia($imgurl);	//文件地址转成网址
+*/
+	function js_upload(divId,fileData) {
+		var id = divId;
+		//var imgurl = "{php echo cache_load(['uploadedfile'].$_FM['member']['info']['uid'])}";
+		var data = fileData;
+		var response = data.response;
+		var imgurl = response['imgurl'];
+		console.log('响应的上传组件ID为'+id);
+		console.log('应用图片链接为'+imgurl);
+		$('#result-'+id).attr('src',response['imgsrc']);
+		document.getElementById('url-'+id).setAttribute('value',imgurl);
+		document.getElementById(id).setAttribute('value',imgurl);
+	}
+</script>
+<p>温馨提示:本表单内所有可选择是否公开的信息只是针对于在本平台内部；非平台注册会员仍奖一律无法查看。我们承诺对您在本平台的信息不会进行其他任何商业形式的倒卖、泄密等行为，请您放心填写！</p>
+<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">基础信息(标<span style="color:#f00;"> * </span>为必填项)</h5>
+
+<div class="mui-input-group">
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>姓名：</label>
+		<input id='name' type="text" name="name" class="mui-input-clear" placeholder="{if $_FM['member']['info']['nickname']} {$_FM['member']['info']['nickname']} {else} 请填写，以便我们与您联系 {/if}" value="{$needs_data['name']}" />
+	</div>
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>手机号：</label>
+		<input id='mobile' type="text" name="mobile" class="mui-input-clear" placeholder="{if $_FM['member']['info']['mobile']} {$_FM['member']['info']['mobile']} {else} 方便及时联系到您 {/if}" value="{$needs_data['mobile']}" />
+	</div>
+	<ul class="mui-table-view" >
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public_mobile" type="radio" value="1" {if $needs_data['is_public_mobile']==1} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">手机号可公开(仅本平台内)</span>
+		</li>
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public_mobile" type="radio" value="0" {if $needs_data['is_public_mobile']==0} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">保密(需经您许可才能获取)</span>
+		</li>
+	</ul>
+	<div class="mui-input-row">
+		<label>微信号：</label>
+		<input id='wxhao'  name="wxhao" type="text" class="mui-input-clear" placeholder="{if $_FM['member']['info']['wxhao']} {$_FM['member']['info']['wxhao']} {else} 方便及时联系到您 {/if}" value="{$needs_data['wxhao']}" />
+	</div>
+	<ul class="mui-table-view" >
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public_wxhao" type="radio" value="1" {if $needs_data['is_public_wxhao']==1} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">微信号可公开(仅本平台内)</span>
+		</li>
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public_wxhao" type="radio" value="0" {if $needs_data['is_public_wxhao']==0} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">保密(需经您许可才能获取)</span>
+		</li>
+	</ul>
+	<div class="mui-input-row">
+		<label>QQ号：</label>
+		<input id='qq'  name="qq" type="text" class="mui-input-clear" placeholder="请填写您的QQ号" value="{$needs_data['qq']}" />
+	</div>
+	<div class="mui-input-row">
+		<label>邮箱：</label>
+		<input id='email'  name="email" type="text" class="mui-input-clear" placeholder="请填写您的Email邮箱" value="{$needs_data['email']}" />
+	</div>
+</div>
+
+<div class="mui-input-row">
+	<ul class="mui-table-view mui-table-view-chevron">
+		<li class="mui-table-view-cell" /*id="showFor_avatar"*/>
+			<a href="#modal-upload-thumb">
+			<div class="mui-table mui-navigate-right">
+
+				<div class="mui-table-cell " style="">
+					<label style="width:auto;"><span style="color:#f00;">*</span>照片：</label>
+				</div>
+				<div class="mui-table-cell mui-pull-right">
+					<img class="mui-pull-right" id="result-thumb" src="{if $needs_data['thumb']}{php echo tomedia($needs_data['thumb'])}{else}{php echo tomedia($FM_member['avatar'])}{/if}" style="width:60px;heigth:60px;" />
+					<input class="form-control hidden"  id="thumb" name="thumb" type="text" value="{$needs_data['thumb']}"/ >
+				</div>
+
+			</div>
+			</a>
+		</li>
+	</ul>
+</div>
+	<ul class="mui-table-view" >
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_thumbToAvatar" type="radio" value="1" {if $needs_data['is_thumbToAvatar']==1} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">将照片设置为我的头像</span>
+		</li>
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_thumbToAvatar" type="radio" value="0" {if $needs_data['is_thumbToAvatar']==0} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">仅上传,不修改头像</span>
+		</li>
+	</ul>
+
+<ul class="mui-table-view" >
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="mui-left" name="sex" type="radio" value="1" {if $needs_data['sex']==1} checked="true" {/if}>男
+	</li>
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="" name="sex" type="radio" value="2" {if $needs_data['sex']==2} checked="true" {/if}>女
+	</li>
+</ul>
+
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form/birthday'}
+
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form/birth_where'}
+
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form/now_where'}
+
+<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">工作情况(标<span style="color:#f00;"> * </span>为必填项)</h5>
+<div class="mui-input-group">
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form/industry'}
+
+	<div class="mui-input-row">
+		<label>公司：</label>
+		<input id='company' name='company' type="text" class="mui-input-clear" placeholder="请填写公司信息" value="{$needs_data['company']}" />
+	</div>
+	<ul class="mui-table-view" >
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public_company" type="radio" value="1" {if $needs_data['is_public_company']==1} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">所在公司可公开</span>
+		</li>
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public_company" type="radio" value="0" {if $needs_data['is_public_company']==0} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">不公示工作单位</span>
+		</li>
+	</ul>
+
+</div>
+
+<h5 class="mui-content-padded">岗位或部门职位信息</h5>
+	<div class="mui-input-row ">
+		<textarea id='job' name='job' class="mui-input-clear" placeholder="请填写您工作单位的部门岗位相关信息,如不方便公开, 可勾选保密" >{$needs_data['job']}</textarea>
+	</div>
+
+<h5 class="mui-content-padded">公司经营范围</h5>
+	<div class="mui-input-row ">
+		<textarea id='business_scope' name='business_scope' class="mui-input-clear" placeholder="如果有,请填写" >{$needs_data['business_scope']}</textarea>
+	</div>
+
+<h5 class="mui-content-padded">公司/单位 地址</h5>
+	<div class="mui-input-row ">
+		<textarea id='company_address' name='company_address' class="mui-input-clear" placeholder="如果有,请填写" >{$needs_data['company_address']}</textarea>
+	</div>
+
+<h5 class="mui-content-padded">社会组织及参与事项/职务</h5>
+<div class="mui-input-row ">
+	<textarea id='organization' name='organization' class="mui-input-clear" placeholder="如商会、同乡会、协会等" >{$needs_data['organization']}</textarea>
+</div>
+
+<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">教育情况(标<span style="color:#f00;"> * </span>为必填项)</h5>
+<div class="mui-input-group">
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form/diploma'}
+	<ul class="mui-table-view" >
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_student" type="radio" value="0" {if $needs_data['is_student']==0} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">我已经毕业了</span>
+		</li>
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_student" type="radio" value="1" {if $needs_data['is_student']==1} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">还是在校学生</span>
+		</li>
+	</ul>
+</div>
+
+
+<h5 class="mui-content-padded">毕业或在读学校</h5>
+<div class="mui-input-row ">
+	<textarea id='school' name='school' class="mui-input-clear" placeholder="如果有，请填写" >{$needs_data['school']}</textarea>
+</div>
+
+<div class="mui-input-group">
+	<div class="mui-input-row">
+		<label>学院：</label>
+		<input id='college' name='college' type="text" class="mui-input-clear" placeholder="所在的学院" value="{$needs_data['college']}" />
+	</div>
+	<div class="mui-input-row">
+		<label>专业：</label>
+		<input id='major' name='major' type="text" class="mui-input-clear" placeholder="您的主修专业" value="{$needs_data['major']}" />
+	</div>
+	<div class="mui-input-row">
+		<label>辅修：</label>
+		<input id='minors' name='minors' type="text" class="mui-input-clear" placeholder="您的辅修专业" value="{$needs_data['minors']}" />
+	</div>
+</div>
+
+<h5 class="mui-content-padded">协会及职务</h5>
+<div class="mui-input-row ">
+	<textarea id='association' name='association' class="mui-input-clear" placeholder="如果有，请填写" >{$needs_data['association']}</textarea>
+</div>
+
+<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">补充资料</h5>
+
+<div class="mui-input-group">
+	<div class="mui-input-row">
+		<label>签名：</label>
+		<input id='sign' name="sign" type="text" class="mui-input-clear" placeholder="这将用作您的个性签名" value="{$needs_data['sign']}" />
+	</div>
+</div>
+
+<h5 class="mui-content-padded">自我介绍</h5>
+<div class="mui-input-row ">
+	<textarea id='content' name='content' class="mui-input-clear" placeholder="您可以在此对自己进行详细的介绍说明" >{$needs_data['content']}</textarea>
+</div>
+
+<h5 class="mui-content-padded">微信二维码(点击图片可重新设置)</h5>
+	<div id="show-qrcode_wx"  class="" style="text-align: center;padding-left:25%;padding-right:25%;">
+		<a href="#modal-upload-qrcode_wx">
+		<blockquote style="width:100%;border: 2px dashed rgb(182, 182, 182);">
+			<img id="result-qrcode_wx" {if $needs_data['qrcode_wx']} src="{php echo tomedia($needs_data['qrcode_wx']);}" {else}  src="{$qrcodeurl}" {/if} style="width:90%;" />
+		</blockquote>
+		</a>
+		<input class="form-control hidden"  id="qrcode_wx" name="qrcode_wx" type="text" value="{$needs_data['qrcode_wx']}"/ >
+	</div>
+
+<h5 class="mui-content-padded">个人荣誉</h5>
+<div class="mui-input-row ">
+	<textarea id='honor' name='honor' class="mui-input-clear" placeholder="获奖记录/赛事经历/技能评级等" >{$needs_data['honor']}</textarea>
+</div>
+
+<h5 class="mui-content-padded">兴趣爱好</h5>
+<div class="mui-input-row ">
+	<textarea id='interest' name='interest' class="mui-input-clear" placeholder="如果有，请填写" >{$needs_data['interest']}</textarea>
+</div>
+
+<h5 class="mui-content-padded mui-hidden">相册图片库</h5>
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form/grid9'}
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form/thumbs'}
+
+<h5 class="mui-content-padded">{if $needs_data['setfor']==$currentid || empty($needs_data['setfor'])}您的{/if}备注</h5>
+<div class="mui-input-row ">
+	<textarea id='remark' name='remark' class="mui-input-clear question" placeholder="补充说明,可在此处说明等" >{$needs_data['remark']}</textarea>
+</div>
+
+<div class="mui-content-padded mui-hidden">
+	<div class="mui-inline">{if $needs_data['setfor']==$currentid || empty($needs_data['setfor'])}顺便给咱打个分{else}给系统评分{/if}</div>
+		<div class="icons mui-inline" style="margin-left: 6px;">
+			{if $stars>=1}<i data-index="1" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="1" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=2}<i data-index="2" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="2" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=3}<i data-index="3" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="3" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=4}<i data-index="4" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="4" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=5}<i data-index="5" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="5" class="mui-icon mui-icon-star"></i>{/if}
+		</div>
+</div>
+<input type="hidden" id="stars" name="stars" value="{$needs_data['stars']}" />
+
+{if $needs_data['labels']}
+	<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 1px solid;border-bottom:#fff 1px solid;">标签/朋友印象</h5>
+	<p>
+		{$needs_data['labels']}
+	</p>
+{/if}
+
+{if $needs_data['reply']}
+	<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 1px solid;border-bottom:#fff 1px solid;">平台回复：</h5>
+	<p>
+		{$needs_data['reply']}
+	</p>
+{/if}
+<textarea id='reply' name='reply' class="mui-hidden">{$needs_data['reply']}</textarea>
+
+<div class="mui-input-group">
+	<div class="mui-input-row">
+		<label>推荐码：</label>
+		<input id='tuijianma' type="text" name="tuijianma" class="mui-input-clear" placeholder="如果有，请填写" value="{$needs_data['tuijianma']}" />
+	</div>
+</div>
+
+<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">隐私设置</h5>
+
+<div class="mui-input-group">
+	<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 1px solid;border-bottom:#fff 1px solid;">搜索搜索</h5>
+	<ul class="mui-table-view" >
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_search" type="radio" value="1" {if $needs_data['is_search']==1} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">允许平台会员搜索我</span>
+		</li>
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_search" type="radio" value="0" {if $needs_data['is_search']==0} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">暂不允许被搜索到</span>
+		</li>
+	</ul>
+</div>
+
+<div class="mui-input-group">
+	<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 1px solid;border-bottom:#fff 1px solid;">隐私保护开关</h5>
+	<ul class="mui-table-view" >
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public" type="radio" value="1" {if $needs_data['is_public']==1} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">已公开的资料可被查看</span>
+		</li>
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public" type="radio" value="0" {if $needs_data['is_public']==0} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">对其他会员保密</span>
+		</li>
+	</ul>
+</div>

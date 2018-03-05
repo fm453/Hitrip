@@ -1,0 +1,34 @@
+{template $fm453style.'common/_header'}
+{template $fm453style.'inner/formodule'}
+<div class="main">
+  <form action="{php echo $this->createWebUrl('installonline')}" method="post" class="form-horizontal form" id="installonline-form">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			在线引导安装
+		</div>
+		<div class="panel-body">
+			<ol>
+				<li>授权状态：<span style="color:red;">{$auth}</span>
+				</li>
+				<input name="getzip" type="submit" value="下载文件包" class="btn btn-success" />
+				<input name="unzip" type="submit" value="开始安装" class="btn btn-primary" />
+				<input name="fm453chmod" type="submit" value="修改文件权限为777" class="btn btn-info" />
+				</p>
+				</li>
+				{if $_W['isfounder']}
+				<li>您也可直接登陆您的FTP或空间将安装包解压到模块根目录
+				</li>
+				{/if}
+			</ol>	
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="hidden" name="token" value="{$_W['token']}" />
+			<input type="hidden" name="suip" value="{$_GPC['suip']}" />
+			<input type="hidden" name="sudomain" value="{$_GPC['sudomai']}" />
+		</div>
+	</div>
+	    {$tips}
+  </form>
+  </div>
+
+{template $fm453style.'common/_footer'}

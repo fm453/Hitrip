@@ -1,0 +1,8 @@
+{if $isNeedDispatch}
+	<h5 class="">发货方式</h5>
+		<select id='dispatch' name="dispatch" class="form-control">
+		{loop $dispatch $d}
+			<option value="{$d['id']}" price="{$d['price']}" class="form-control">{$d['dispatchname']} (运费：{$d['price']}元)</option>
+		{/loop}
+		</select>
+{/if}

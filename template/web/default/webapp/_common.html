@@ -1,0 +1,24 @@
+<script type="text/javascript">	
+	window.sysinfo = {
+{if !empty($_W['uniacid'])}
+		'uniacid': '{$_W['uniacid']}',
+{/if}
+{if !empty($_W['acid'])}
+		'acid': '{$_W['acid']}',
+{/if}
+{if !empty($_W['openid'])}
+		'openid': '{$_W['openid']}',
+{/if}
+{if !empty($_W['uid'])}
+		'uid': '{$_W['uid']}',
+{/if}
+		'siteroot': '{$_W['siteroot']}',
+		'siteurl': '{$_W['siteurl']}',
+		'attachurl': '{$_W['attachurl']}',
+{if defined('MODULE_URL')}
+		'MODULE_URL': '{MODULE_URL}',
+{/if}
+		'cookie' : {'pre': '{$_W['config']['cookie']['pre']}'}
+	};
+	</script>
+</head>

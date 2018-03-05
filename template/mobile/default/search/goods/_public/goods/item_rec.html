@@ -1,0 +1,40 @@
+<div class="mui-card" style="margin-bottom: 5px;">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media">
+						<a href="{php echo fm_murl('goods', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}" class="mui-navigate-right">
+							<img class="mui-media-object mui-pull-left" src="{$goodsdetails[$goods['id']]['thumb']}">
+							<div class="mui-media-body">
+								{if $goodslabels[$goods['id']]}
+								<button type="button" class="mui-btn" {if $goodslabels[$goods['id']][1]['value']} {php echo ' style="background-color:'.$goodslabels[$goods['id']][1]['value'].';color:#fff;padding:0;" '} {else} style="background-color:#0095f6;color:#fff;padding:0;" {/if} >
+									{$goodslabels[$goods['id']][1]['title']}
+								</button>
+								{/if}
+								{$goodsdetails[$goods['id']]['title']}
+								<p class="">
+									<i class="mui-icon-extra mui-icon-extra-trend"></i>已售
+										<span class="" style="color: rgb(240, 173, 78);">{$goodsdetails[$goods['id']]['sales']} </span>
+										{$goodsdetails[$goods['id']]['unit']}
+											{if $goodsdetails[$goods['id']]['originalprice']>0}原价
+											<span class="" style="color: rgb(240, 173, 78);">
+											<del>{$goodsdetails[$goods['id']]['originalprice']}</del>
+											</span>元
+											<span class="" style="color: rgb(240, 173, 78);">
+											{php echo round($goodsdetails[$goods['id']]['marketprice'] / $goodsdetails[$goods['id']]['originalprice']*10,1) }
+											</span>折
+											{else}
+											{if $goodsdetails[$goods['id']]['cankaoprice']}
+											&nbsp;
+											<span class="" style="color: rgb(240, 173, 78);">
+											{$goodsdetails[$goods['id']]['marketprice']}
+											</span>元起
+										{/if}
+									{/if}
+								</p>
+								<p class="mui-ellipsis">
+									{$goodsdetails[$goods['id']]['description']}
+								</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>

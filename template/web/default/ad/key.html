@@ -1,0 +1,45 @@
+<!-- 按钮触发模态框F1 -->
+<button class="btn btn-warning" data-toggle="modal" data-target="#keyModalf1" style="display: none;">帮助(F1)</button>
+<!-- 模态框（F1） -->
+<div class="modal fade" id="keyModalf1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+					<h4 class="modal-title" id="myModalLabel">
+						商城系统帮助(F1)<small class="pull-right" style="padding-right: 15px;">按Esc退出键可快速关闭</small>
+					</h4>
+			</div>
+			<div class="modal-body">
+				{template $fm453style.$_GPC['do'].'/f1'}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script type="text/javascript" >
+$(document).ready(function () {
+if(navigator.appName == 'Microsoft Internet Explorer'){
+		jQuery('#fm453-navigator-notice').html('<code>Client Infos:' + navigator.userAgent + '建议您使用谷歌或火狐浏览器，不推荐IE</code>');
+	}
+	$(this).keydown(function (e) {
+		//e.preventDefault();//阻止全部功能按键的默认行为
+		switch (e.which) {
+			case 116://F5，刷新
+				return confirm('请确认是否已经保存本页面内容？点击“是(确认)")刚继续刷新！');
+				break;
+			case 112://F1，帮助
+				e.preventDefault();
+				$('#keyModalf1').modal({
+					keyboard: true,
+					backdrop: false,
+				});
+				break;
+		}
+	});
+});
+</script>

@@ -1,0 +1,70 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+<div class="main">
+		{if $_W['isfounder'] || $_FM['isSuper']}
+	<form action="{php echo $this->createWebUrl('modset')}" method="post" class="form-horizontal form" id="setting-form">
+	<input type="hidden" name="ac" value="getcode" />
+	<input type="hidden" name="op" value="modify" />
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				{$shopname}<span style="color:red;font-weight: bolder;">授权配置</span>——本设置项仅有站长可见
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-1 control-label"> 授权地址</label>
+					<div class="col-sm-3 col-xs-12">
+						<input readonly="true" type="text" name="suip" class="form-control" value="{$suip}" />
+					</div>
+					<div class="col-sm-3 col-xs-12">
+						<input readonly="true" type="text" name="sudomain" class="form-control" value="{$sudomain}" />
+					</div>
+					<div class="col-sm-3 col-xs-12">
+						<span readonly="true" type="text" name="" class="form-control" value="" >V{$shopversion}</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-1 control-label"> </label>
+					<div class="col-sm-9 col-xs-12">
+						<ol class="help-block">
+						<li>请复制此IP与域名提交给客服QQ（1280880631）获取授权码；</li>
+						<li>更改绑定授权地址，需要付费<span style="color:red;">150</span>元/次；付费可添加微信393213759联系</li>
+						<li>如果增加授权IP需加收部分版本费用，具体请咨询客服</li>
+						<li>本站使用了<a href="https://api.hiluker.com" target="_blank">数据接口服务(https://api.hiluker.com)</a>，首次安装的站点请自行前往注册；</li>
+						<li>该接口主要用于批量格式化存取数据，减少不必要的后端数据库字段扩充等各种改动的繁琐、方便同一属主的不同站点之间进行数据共用。</li>
+						<li>允许为站点内某公众号/小程序商户<span style="color:red;">独立设置</span>接口授权信息</li>
+						<li>请妥善管理好您的授权信息，以免被不法分子等其他别有用心的人盗用</li>
+						<li>我们严禁私下倒卖、复制本系统，违者必究；我们将视情节进行罚款、停服等处罚</li>
+						<li class="hidden">本模块的授权需要FTP组件支持，请确保您的服务器环境支持FTP组件。</li>
+						</ol>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 col-xs-12">
+						<input type="text" name="suapi"  {$isread} class="form-control" value="{$settings['shouquan']['suapi']}" placeholder="授权API" />
+					</div>
+
+					<div class="col-sm-3 col-xs-12">
+						<input type="text" name="susecret"  {$isread} class="form-control" value="{$settings['shouquan']['susecret']}" placeholder="授权密钥" />
+					</div>
+
+					<div class="col-sm-3 col-xs-12">
+						<input type="text" name="sufm453code"  {$isread} class="form-control" value="{$settings['shouquan']['sufm453code']}" placeholder="授权码" />
+					</div>
+					{if $settings['shouquan']['sufm453code']}
+					<input type="submit"  name="rebindme" value="解除绑定"  onclick="return confirm('您正在为当前使用的{FM_NAME_CN}解除官方授权，请再次确认是否继续进行');"class="btn btn-danger" />
+					<a class="btn btn-warning" href="{php echo $this->createWebUrl('modset',array('ac'=>'getcode','m'=>FM_NAME,'op' => 'delete'))}">清空授权</a>
+					{else}
+					<input type="submit" name="bindme" value="确认授权" class="btn btn-success " />
+					{/if}
+					<a class="btn btn-info" href="https://vcms.hiluker.com/app/index.php?i=1&c=entry&m=fm453_shopping&do=api&ac=shouquan&op=tome&ip={$suip}&domain={$sudomain}&code={FM_NAME}" target="_blank">联系开发者</a>
+				</div>
+
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			 <input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+    {/if}
+</div>
+{template 'common/footer'}

@@ -1,0 +1,204 @@
+{template $appstyle.$do.'/old_'.$ac.'/header}
+{template $appstyle.$do.'/old_'.$ac.'/css}
+{template $appstyle.$do.'/old_'.$ac.'/tip}
+<div class="head">
+	<a href="javascript:history.back();" class="bn pull-left pxlogo"><i class="icon-reply"></i></a>
+	<span class="title">联系方式</span>
+	<a href="{php echo fm_murl('member','mycart','index',array())}" class="bn pull-right"><i class="glyphicon glyphicon-shopping-cart"></i><span class="buy-num img-circle"> {$carttotal} </span></a>
+</div>
+<form class="form-horizontal" method="post" role="form">
+	<input type="hidden" name="goodstype" value="{$goodstype}" />
+	<div class="order-main">
+		<div id="myaddress">
+		{loop $addresses $row}
+			<div id='address_{$row['id']}' class="{if $row['isdefault']==1}shopcart-main1{else}shopcart-main{/if} img-rounded address_item" style="margin:0;padding:10px;margin-bottom:10px;cursor:pointer;" onclick="editAddress({$row['id']},{php echo $row['isdefault']==1?'1':'0'})">
+				<span>{$row['province']} {$row['city']} {$row['district']} {$row['address']} <br/> {$row['username']} - {$row['mobile']}<a href="javascript:;" onclick="editAddress({$row['id']},{php echo $row['isdefault']==1?'1':'0'})">(点击可编辑)</a></span><br/>
+				<span>
+					<a href="javascript:;" onclick="saveDefaultAddress(event,{$row['id']})">设为默认</a>
+					<a href="javascript:;" onclick="removeAddress(event,{$row['id']})"><i class="glyphicon glyphicon-remove" style="color:red;"></i> 删除</a>
+				</span>
+			</div>
+		{/loop}
+		</div>
+		<div><button type="button" class="btn btn-danger" onclick="addAddress()"><i class="glyphicon glyphicon-plus"></i> 添加|修改<span style="color:red">(保存失败时请先返回订单)</span></button></div>
+		<div class="add-address img-rounded" id="addAddressPanel"  {if !empty($addresses)} style="display:none;"{/if}>
+			<div class="add-address-hd">请仔细填写联系方式：</div>
+			<div class="add-address-main">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span style="color:red">*</span>联系人：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="username" value="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span style="color:red">*</span>联系电话：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="mobile" value="">
+					</div>
+				</div>
+			<div class="form-group">
+					<label class="col-sm-3 control-label">地区(选填)：</label>
+					<div class="col-sm-9">
+						<select id="sel-provance" onChange="selectCity();" class="pull-left form-control" style="width:30%; margin-right:5%;">
+							<option value="" selected="true">省/直辖市</option>
+						</select>
+						<select id="sel-city" onChange="selectcounty()" class="pull-left form-control" style="width:30%; margin-right:5%;">
+							<option value="" selected="true">请选择</option>
+						</select>
+						<select id="sel-area" class="pull-left form-control" style="width:30%;">
+							<option value="" selected="true">请选择</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">详细地址（选填）：</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="address" placeholder="未填写" value="">
+					</div>
+				</div>				
+				<input type="hidden" id="addressid" value="" />
+				<div class="form-group">
+					<div class="col-sm-12">
+						<button type="button" class="btn btn-danger" onclick="saveAddress()">保存</button>
+						<button type="button" class="btn btn-default" onclick="addAddress();$('#addAddressPanel').hide();$('#addressid').val('');">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<script type="text/javascript" src="../app/resource/components/area/cascade.js"></script>
+
+<script type="text/javascript">
+	var from='{$_GPC['from']}';
+	var returnurl = document.referrer;
+	cascdeInit('','','');
+
+	function saveAddress() {
+	var username = $('#username').val();
+	var mobile = $('#mobile').val();
+	var province = $('#sel-provance').val();
+	var city = $('#sel-city').val();
+	var area = $('#sel-area').val();
+	var address = $('#address').val();
+	if (!username) {
+		alert('请输入您的真实姓名！');
+		return false;
+	}
+	if (!mobile) {
+		alert('请输入您的手机号码！');
+		return false;
+	}
+
+	tip("请稍候，正在处理数据...");
+	$.post("{php echo fm_murl('member','address','post',array())}", {
+		'username' : username,
+		'mobile' : mobile,
+		'province' : province,
+		'city' : city,
+		'area' : area,
+		'address' : address,
+		'id' : $('#addressid').val()
+	}, function(s) {
+			tip_close();
+		if (s.message != 0) {
+			if (from == 'confirm') {
+				if (returnurl != '') {
+						window.location.href = returnurl;
+						return;
+					}
+				window.location.href = "{php echo fm_murl('confirm','index','index',array())}";
+			}
+			$("input [name='address']").attr('checked', false);
+			var html='<div class="shopcart-main1 img-rounded" style="margin:0;padding:10px;margin-bottom:10px;cursor:pointer" onclick="editAddress(' + s.message +')">';
+			var html1='<span>'+province+' '+city+' '+area+' '+''+address+' '+' <br/> ' +username+', '+mobile+'</span>' +
+				'<span style="float:right">' + '&nbsp;&nbsp;<a href="javascript:;" onclick="saveDefaultAddress('+ s.message +')">设置为默认联系方式</a></span>';
+			var html2= '</div>';
+
+			if ($('#address_'+s.message).get(0)) {
+				$('#address_'+s.message).html(html1);
+			} else {
+				$(".address_item").removeClass("shopcart-main1").addClass("shopcart-main");
+				$('#myaddress').append($(html + html1 + html2));
+				}
+
+			$('#username').val('');
+			$('#mobile').val('');
+			$('#address').val('');
+			cascdeInit('','','');
+			}
+			$('#addAddressPanel').hide();
+		}, 'json');
+	}
+
+	function addAddress() {
+		$('#addAddressPanel').show();
+		$('#username').val('');
+		$('#mobile').val('');
+		$('#address').val('');
+		cascdeInit('','','');
+		$('#addressid').val('');
+	}
+
+	function saveDefaultAddress(e,id) {
+		tip("正在处理数据...");
+		$.post("{php echo fm_murl('member','address','default', array())}", {
+			'id' : id,
+		}, function(s) {
+			$(".address_item").removeClass("shopcart-main1").addClass("shopcart-main");
+			$("#address_"+id).addClass("shopcart-main1");
+			tip_close();
+		}, 'json');
+		e.stopPropagation() ;
+	}
+
+	function removeAddress(e,id){
+		if(confirm('确认要删除此联系方式吗?')){
+			 tip("正在处理数据...");
+			$.post("{php echo fm_murl('member','address', 'remove',array())}",
+				{ 'id' : id,},
+				function(s) {
+					$("#address_"+id).remove();
+					if(s.maxid!='0'){
+						$(".address_item").removeClass("shopcart-main1").addClass("shopcart-main");
+						$("#address_"+s.maxid).addClass("shopcart-main1");
+					}
+					tip_close();
+				},
+				'json');
+			e.stopPropagation() ;
+			}
+	}
+
+	var isdef = 0;
+	function editAddress(id) {
+		if (false && from == 'confirm'){
+			tip("正在处理数据...");
+			$.post("{php echo fm_murl('member','address', 'default', array())}", {'id' : id}, function(s) {
+				tip_close();
+				if (returnurl != '') {
+					window.location.href = returnurl;
+					return;
+				}
+				window.location.href = "{php echo fm_murl('confirm','index','index',array())}";
+			});
+			return;
+		}
+
+		tip("请稍候，正在处理数据...");
+		$.get("{php echo fm_murl('member', 'address', 'detail', array())}", {'id' : id}, function(s){
+			tip_close();
+			if (s.message) {
+				$('#addAddressPanel').show();
+				$('#username').val(s.message.username);
+				$('#mobile').val(s.message.mobile);
+				$('#address').val(s.message.address);
+				cascdeInit(s.message.province,s.message.city,s.message.district);
+				$('#addressid').val(s.message.id);
+			}
+		}, 'json');
+	}
+</script>
+{template $appstyle.$do.'/old_'.$ac.'/designedby'}
+{template $appstyle.$do.'/old_'.$ac.'/footer'}

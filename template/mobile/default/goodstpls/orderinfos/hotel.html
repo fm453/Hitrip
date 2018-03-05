@@ -1,0 +1,38 @@
+<div class="myoder img-rounded">
+	<div class="myoder-hd">
+		<span class="pull-left">关联信息-摘要</span>
+		<span class="pull-right">(如您发现信息有误，请及时联系我们)</span>
+	</div>
+		<div id="orderinfos">
+		<span>{$tips}</span>
+		</div>
+		
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">入住日期:</span>
+	</div>
+		<div id="indate">
+		{php echo tpl_form_field_date('jiesongtime', $indate);}
+		</div>
+
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">离店日期:</span>
+	</div>
+		<div id="outdate">
+		{php echo tpl_form_field_date('jiesongtime', $outdate);}
+		</div>
+
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">人住成人:</span>
+	</div>
+		<div id="adults">
+		<input type="text" id="adults" name="hoteladults" value="{$adults}" class="form-control"/>
+		</div>		
+
+	<div class="myoder-hd" style="background-color: #0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">人住儿童:</span>
+	</div>
+		<div id="kids">
+		<input type="text" id="kids" name="hotelkids" value="{$kids}" class="form-control"/>
+		</div>		
+
+</div>

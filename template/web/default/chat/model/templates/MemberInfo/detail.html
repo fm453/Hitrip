@@ -1,0 +1,26 @@
+{loop $FM_DETAILCOLS[$needs['template']] $key $title}
+<div class="form-group forcopy">
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+		 <label class='control-label'>
+		 	已核对
+			 <input type='checkbox' name='nd[$key][status]' value='1' {if $needs_data[$key]['status']==1}checked{/if} /> 
+		 </label>
+	</div>
+	<div class="col-xs-12 col-sm-9 col-md-3 col-lg-2 ">
+		<label class='control-label'>
+		 	{$FM_COLS[$template][$key]}：
+		 </label>
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-7 col-lg-9">
+		<input type="text" name="nd[$key][value]" class="form-control" value="{$needs_data[$key]['value']}" />
+	</div>
+	
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<label class='control-label'>
+		 	管理回复：
+		 </label>
+		<textarea name="nd[$key][reply]" class="form-control"> {$needs_data[$key]['reply']}</textarea>
+	</div>
+</div>
+<hr>	
+{/loop}

@@ -1,0 +1,11 @@
+{if $operation=='index'}
+	{template $appstyle.$do.'/_public/style'}
+	{template $appstyle.$do.'/_public/top'}
+	{template $appstyle.$do.'/'.$ac.'/banner'}
+	{template $appstyle.$do.'/'.$ac.'/page'}
+	{template $appstyle.$do.'/'.$ac.'/bottom'}
+	{template $appstyle.$do.'/'.$ac.'/modals'}
+{/if}
+{if $operation=='ajax'}
+	{template $appstyle.$do.'/'.$ac.'/ajax'}
+{/if}

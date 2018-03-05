@@ -1,0 +1,32 @@
+<!--<script type="text/javascript" src="{$fm453resource}common/js/jquery.gcjs.js"></script>
+<script type="text/javascript" src="{$fm453resource}common/js/jquery.form.js"></script>-->
+<style type="text/css">
+.red {float:left;color:red}
+.white{float:left;color:#fff}
+
+.tooltipbox-test {
+	position:absolute; left:0;top:0; height:20px;
+	font-weight: bold;
+	background:#0095f6;
+	text-align:center;
+	color:#fff;
+	padding:2px 5px 1px 5px;
+	border-radius:3px;
+	z-index:1000;
+}
+
+</style>
+<!--如果被强制要求设定二级分类，则删除此处下面一段判断-->
+<!--<script language='javascript'>
+function fetchChildCategory(cid) {
+	var html = '<option value="0">请选择二级分类</option>';
+	if (!category || !category[cid]) {
+		$('#cate_2').html(html);
+		return false;
+	}
+	for (i in category[cid]) {
+		html += '<option value="'+category[cid][i][0]+'">'+category[cid][i][1]+'</option>';
+	}
+	$('#cate_2').html(html);
+}
+</script>-->

@@ -1,0 +1,97 @@
+<style>
+	.goodstpl .mui-table-view.mui-grid-view .mui-table-view-cell{
+		margin-right:0;
+		padding: 10px 0 0 0px;
+	}
+	.goodstpl .active{
+		border:1px  #0095f6 dotted;
+		box-shadow: 2px 2px 2px 2px #0095f6;
+	}
+	.goodstpl .sel {
+		width: 50px;
+		height: 50px;
+		display: inline-block;
+		text-align: center;
+		border-radius: 10px;
+		font-size: 14px;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+	}
+</style>
+<!-- 产品模型 -->
+<div class="goodstpl" style="">
+	<ul class="mui-table-view mui-grid-view mui-grid-8" style="text-align: center;padding:0 0 10px 0;">
+		<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" style="" data-goodstpl="hotel">
+			<span>
+				<span class="sel " style="background-image: url({$fm453resource}images/default/hotel.png);background-size:cover; " >
+				</span>
+			<div class="mui-media-body">酒店民宿</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3  {if $goodstpl=='tickets'} active {/if} " style="" data-goodstpl="tickets">
+			<span>
+				<span class="sel " style="background-image: url({$fm453resource}images/default/jingqu.png);background-size:cover; " >
+				</span>
+			<div class="mui-media-body">景区门票</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3  {if $goodstpl=='fruit'} active {/if} " style="" data-goodstpl="fruit">
+			<span>
+				<span class="sel " style="background-image: url({$fm453resource}images/default/fruit.png);background-size:cover; " >
+				</span>
+			<div class="mui-media-body">水果特产</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3  {if $goodstpl=='onedaytrip'} active {/if} " style="" data-goodstpl="onedaytrip">
+			<span>
+				<span class="sel " style="background-image: url({$fm453resource}images/default/onedaytrip.png);background-size:cover; " >
+				</span>
+			<div class="mui-media-body">一日游</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3  {if $goodstpl=='package'} active {/if} " style="" data-goodstpl="package">
+			<span>
+				<span class="sel " style="background-image: url({$fm453resource}images/default/package.png);background-size:cover; ">
+				</span>
+			<div class="mui-media-body">优惠套餐</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3  {if $goodstpl=='car'} active {/if} " style="" data-goodstpl="car">
+			<span>
+				<span class="sel " style="background-image: url({$fm453resource}images/default/car.png);background-size:cover; " >
+				</span>
+			<div class="mui-media-body">租车</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3  {if $goodstpl=='seafood'} active {/if} " style="" data-goodstpl="seafood">
+			<span>
+				<span class="sel " style="background-image: url({$fm453resource}images/default/seafood.png);background-size:cover; " >
+				</span>
+			<div class="mui-media-body">海鲜</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" style="" data-goodstpl="jiesong">
+			<span>
+				<span class="sel " style="background-image: url({$fm453resource}images/default/jiesong.png);background-size:cover; " >
+				</span>
+			<div class="mui-media-body">接送服务</div>
+			</span>
+		</li>
+	</ul>
+</div>
+<script type="text/javascript" >
+	//监听产品模型选择
+	mui('.goodstpl').on( 'tap' , 'li' , function(){
+		var goodstpl_clicked=this.getAttribute("data-goodstpl");
+		$('.goodstpl,li').removeClass("active");
+		this.classList.toggle('active');
+		var LinkUrl = js_url('search','goods','index',"{$_W['uniacid']}",'app') + "&goodstpl=" + goodstpl_clicked;
+			//打开链接页面
+			mui.openWindow({
+				id : ' ',
+				url : LinkUrl
+			});
+	});
+</script>

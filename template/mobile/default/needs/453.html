@@ -1,0 +1,26 @@
+{if $_GPC['needguide']}
+{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/guide'}
+{else}
+{template $appstyle.'common/header'}
+<script src="{$appsrc}js/mui.min.js"></script>
+{if $ac == 'detail'}
+	{if $operation == 'index'}
+	{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/index'}
+	{/if}
+	{if $operation == 'invite'}
+	{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/index'}
+	{/if}
+	{if $operation == 'join'}
+	{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/'.$operation.'/index'}
+	{/if}
+{/if}
+{if $ac == 'list'}
+	{template $appstyle.$do.'/'.$ac.'/mainpage'}
+{/if}
+{template $appstyle.'common/js_url'}
+{template $appstyle.'common/js_pic'}
+{template $appstyle.'common/js_array'}
+{template $appstyle.'common/js_form'}
+{template $appstyle.'common/js_function'}
+{template $appstyle.'common/footer'}
+{/if}

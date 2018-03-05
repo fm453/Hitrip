@@ -1,0 +1,40 @@
+{if $operation !='ajax'}
+{template $appstyle.$do.'/_public/header'}
+<style type="text/css">
+body {
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-size: cover;
+	overflow-x: hidden;
+}
+</style>
+<body style="background-image: url({$htmlsrc}/{$do}/_statics/img/body-bg.jpg);" ng-app="">
+<style type="text/css">
+.diviframe {
+	max-width:1360px;
+	min-width:960px;
+	float: inherit;
+	width: auto;
+	position: relative;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-origin:border-box;
+	background-color: #FFFFFF;
+	margin:0 auto;
+}
+</style>
+<div class="diviframe" style="">
+	{template $appstyle.$do.'/'.$ac.'/entry'}
+</div>
+{template $appstyle.'common/js_url'}
+{template $appstyle.'common/js_pic'}
+{template $appstyle.'common/js_array'}
+{template $appstyle.'common/js_form'}
+{template $appstyle.$do.'/_public/footer'}
+{else}
+	{template $appstyle.$do.'/'.$ac.'/entry'}
+	{template $appstyle.'common/js_array'}
+	{template $appstyle.'common/js_form'}
+{/if}

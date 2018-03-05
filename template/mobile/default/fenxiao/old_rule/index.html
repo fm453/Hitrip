@@ -1,0 +1,54 @@
+{php $bootstrap_type = 3;}
+{template $appstyle.$do.'/old_'.$ac.'/header}
+{template $appstyle.$do.'/old_'.$ac.'/css}
+{template $appstyle.$do.'/old_'.$ac.'/tip}
+<!-- 分销使用的CSS文件-->
+<link rel='stylesheet' type='text/css' href='{$fm453resource}common/css/foundation.css' />
+<link rel='stylesheet' type='text/css' href='{$fm453resource}common/css/common_v4.0.css' />
+  <style>
+.foot{width:100%;min-width:300px;margin-top:10px;margin-bottom:30px;padding:10px 0;color:#555;text-align:center;}
+.foot a{color:#555;margin:0 3px;}
+   </style>
+
+<body class="body-gray">
+   <section class="main animated fadeInDown">
+	<div class="main-box">
+		<div class="rule-detail border-box">
+			{$rule}
+		</div>
+	</div>
+</section>
+<nav class="nav fn-clear">
+	<a style=" width: 100%;filter:alpha(opacity=50); background:rgba(255, 255, 255, 0.2) none repeat scroll 0 0 !important;color:#fff;" href="{php echo $this->mturl('fansindex')}"><i class="icon-adult"></i> 分销人中心</a>
+</nav>
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+<script type="text/javascript">
+	     var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : '{$_W['attachurl']}{$cfg['brands']['logo']}',
+            "link" : '{php echo $_W['siteroot'].$this->createMobileUrl('list',array('id'=>$id))}',
+            "desc" : "{$signPackage['description']}",
+            "title" : '{$cfg['brands']['shopname']}'
+        };
+        wx.config({
+    debug: false,
+    appId: '{$signPackage['appId']}',
+    timestamp:' {$signPackage['timestamp']}', 
+    nonceStr: '{$signPackage['nonceStr']}', 
+    signature: '{$signPackage['signature']}',
+     jsApiList: [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem'
+      ]
+});
+        </script>
+<script src="{$fm453resource}common/wxapi.js"></script>
+</body>
+</html>

@@ -1,0 +1,1056 @@
+<script type="text/javascript" charset="utf-8">
+/*
+@remark 修改时请严格遵照我的顺序——BY fm453
+*/
+
+/**——————第一步,初始化框架————**/
+/*
+@pullRefresh				上拉下拉刷新事件，为方便管理，单独写在一起
+@swipeBack			侧滑功能
+@gestureConfig		手势配置
+*/
+var pullRefreshContainer = 'pullrefresh';	//定义刷新窗口(元素id)
+var isDebug = "{php echo $_FM['settings']['onoff']['debug']}";	//是否开启调试
+var isConsole = "{php echo $_FM['settings']['onoffs']['console']}";		//是否记录调试日志
+
+	mui.init(
+		{
+			swipeBack: false, //启用右滑关闭功能
+			gestureConfig:
+			{
+				tap: true, //默认为true,单击屏幕
+				doubletap: true, //默认为false，双击屏幕
+				longtap: false, //默认为false，长按屏幕
+				hold:false,//默认为false，按住屏幕
+				release:false,//默认为false，离开屏幕
+				swipe: true, //默认为true，滑动（swipeleft  , swiperight,   swipeup,   swipedown )
+				drag: true, //默认为true，拖动  ( dragstart,  drag,   dragend )
+			},
+			//监听Android手机的back、menu按键
+			keyEventBind:
+			{
+				backbutton: false,  //Boolean(默认true)关闭back按键监听
+				menubutton: false   //Boolean(默认true)关闭menu按键监听
+			},
+			pullRefresh:
+			{
+				container: '#'+pullRefreshContainer,
+				down:
+				{
+					auto: false, //自动下拉刷新一次
+					contentover : "{$shopname}提示：立即释放 刷新一下",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+					contentdown : "下拉查看更多消息",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+					contentrefresh : "{$shopname}正在加载...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+					callback: pulldownRefresh
+				},
+				up:
+				{
+					height:50,//可选.默认50.触发上拉加载拖动距离
+					contentrefresh: '{$shopname}正在加载...',
+					contentnomore:'没有更多内容了哦',//可选，请求完毕若没有更多数据时显示的提醒内容；
+					callback: pullupRefresh
+				}
+			},
+/**
+			subpages:[{
+      url:'',//子页面HTML地址，支持本地地址和网络地址
+      id:'',//子页面标志
+      styles:{
+        top:subpage-top-position,//子页面顶部位置
+        bottom:subpage-bottom-position,//子页面底部位置
+        width:subpage-width,//子页面宽度，默认为100%
+        height:subpage-height,//子页面高度，默认为100%
+      },
+      extras:{}//额外扩展参数
+    }]
+**/
+			preloadPages:[
+			//预加载
+			],
+			beforeback: function() {
+				//窗口关闭前处理其他业务
+				//写在这里也可以，不过我单独列出来写在后面的JS里了
+			},
+			//设置状态栏颜色
+			statusBarBackground: '#0095f6', //设置状态栏颜色,仅iOS可用
+			preloadLimit:5, //预加载窗口数量限制(一旦超出,先进先出)默认不限制
+		}
+	);
+
+/**——————第二步,先处理部分本机展示内容或功能————**/
+/*
+@处理ios平台原生侧滑关闭页面功能
+*/
+	if(mui.os.plus && mui.os.ios) {
+		mui.plusReady(function() { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故直接屏蔽popGesture功能
+			plus.webview.currentWebview().setStyle({
+				'popGesture': 'none'
+			});
+		});
+	}
+
+/*
+@不是安卓时，隐藏安卓元素
+*/
+	if(!mui.os.android) {
+		var spans = document.querySelectorAll('.android-only');
+		for(var i = 0, len = spans.length; i < len; i++) {
+			spans[i].style.display = "none";
+		}
+	}
+
+
+/*
+@临时禁用或启用上拉刷新功能,未起作用，屏蔽先
+*/
+/*
+var isPullUpRefresh	=	true;	//定义标记是否启用上拉刷新
+var isPullDownRefresh	=	true;	//定义标记是否启用下拉刷新
+//pullRefreshContainer为在mui.init方法中配置的pullRefresh节点中的container参数；
+if(!isPullUpRefresh){
+	mui('#'+pullRefreshContainer).pullRefresh().disablePullupToRefresh();	//禁用
+}else{
+	mui('#'+pullRefreshContainer).pullRefresh().enablePullupToRefresh();	//启用
+}
+
+if(!isPullDownRefresh){
+	mui('#'+pullRefreshContainer).pullRefresh().disablePullDownToRefresh();	//禁用
+}else{
+	mui('#'+pullRefreshContainer).pullRefresh().enablePullDownToRefresh();	//启用
+}
+*/
+
+/**——————第三步,定义或配置框架的细节————**/
+
+	//侧滑容器父节点
+	var offCanvasWrapper = mui('#offCanvasWrapper');
+	//主界面容器
+	var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+	//菜单容器
+	var offCanvasSide = document.getElementById("offCanvasSide");
+	//移动效果是否为整体移动
+	var moveTogether = true;
+	//侧滑容器的class列表，增加mui-slide-in即可实现菜单移动、主界面不动的效果（已添加，可自行去除）
+	//主界面和侧滑菜单界面均支持区域滚动；
+	mui('#offCanvasSideScroll').scroll();
+	mui('#offCanvasContentScroll').scroll();
+	//进一步定义主页面内支持区域滚动的层类
+	mui('.mui-scroll-wrapper').scroll();
+
+/*————————监听各种事件——————————*/
+/*
+@启动时事件
+*/
+	mui.ready(function () {
+		//页面高宽等样式调整
+		newResize();
+
+		//执行一次下拉,加载初始数据
+		//注意，此处若不有效处理结束下拉动作，会导致加载提示层一直显示在加载数据
+		if (mui.os.plus) {
+			mui.plusReady(function() {
+				setTimeout(function() {
+					mui('#'+pullRefreshContainer).pullRefresh().pulldownLoading();
+				}, 1000);
+			});
+		}else{
+			mui.ready(function() {
+				mui('#'+pullRefreshContainer).pullRefresh().pulldownLoading();
+			});
+		}
+
+	//所有启动事件执行完毕
+});
+
+//自动加载新数据
+	getNewData();
+
+/*
+@header监听双击事件
+*/
+	document.querySelector('header').addEventListener('doubletap', function() {
+		mui('#'+pullRefreshContainer).pullRefresh().scrollTo(0,0,100);	//回到顶部,当页面元素在持续增加(加载新聊天记录)时，会无法执行
+	});
+
+/*
+@页面关闭动作监听
+*/
+
+//备份mui.back，mui.back已将窗口关闭逻辑封装的比较完善（预加载及父子窗口），因此最好复用mui.back
+var isBeforeClose = "{$settings['onoffs']['confirmClose']}";	//是否触发关闭前确认事件
+var old_back = mui.back;
+
+if(isBeforeClose){
+	mui.back = function() {
+			var btn = ["嗯!确定","不,我点错了"];
+		mui.confirm('确认要关闭页面了吗？','微提示',btn,function(e){
+			if(e.index==0){
+				//执行mui封装好的窗口关闭逻辑；
+				old_back();
+			}
+		});
+	}
+}
+
+/*
+@监听页面窗口大小变化
+*/
+	$(window).resize(function() {
+		var newPageWidth = $(window).width();
+		//窗口缩小到320px宽后,不再监听
+		if (newPageWidth>=320) {
+			newResize();
+		}
+ 	});
+
+/**——————第X步,自定义的JS函数————**/
+
+/**
+ * 下拉刷新具体业务实现
+ */
+	function pulldownRefresh() {
+		setTimeout(function() {
+			myAjaxGet('down');	//表示下拉方式获取数据
+			 //refreshLoad("pullrefresh-table");
+			mui('#'+pullRefreshContainer).pullRefresh().endPulldownToRefresh(); //结束刷新动作,否则下拉刷新提示一直在显示
+		}, 1000);
+	}
+	//页面刷新加载处理
+	function refreshLoad(container) {
+		$('#pagename').html('正在更新');
+		var url = "{$_W['siteurl']}";
+		var data = {};
+		if (container=='') {
+			container = 'pullrefresh';
+		}
+		$.get(url,data,function(res){
+			if (res) {
+				$('#' + container).html(res);//替换内容
+				setTimeout(function(){
+					$('#pagename').html('内容更新完毕');
+					setTimeout(function(){
+						$('#pagename').html('{$pagename}');
+				},500);
+				},1500);
+			}
+		});
+	}
+
+/**
+ * 上拉加载具体业务实现
+*/
+	var pullUpCount = 0;	//上拉执行次数
+	var maxpages = "{$maxpages}";	//当前情况下的最大页数
+	var subpindex = "{$subpindex}";
+	function pullupRefresh() {
+		subpindex++;
+		pullUpCount ++;	//累计一次上拉次数
+		setTimeout(function() {
+			//loadMore("pullrefresh-table");
+			myAjaxGet('up');	//表示上滑方式获取数据
+			mui('#pullrefresh').pullRefresh().endPullupToRefresh((pullUpCount>maxpages)); //参数为true(累计刷新页数达到最大分页数)代表没有更多数据了
+		}, 1500);
+	}
+	//页面上拉加载处理
+	function loadMore(container) {
+		$('#pagename').html('正在加载');
+		var url = "{php echo fm_murl($do,$ac,$operation,array())}";
+		var data = {
+			subpindex:subpindex,
+			subpsize:3,
+		};
+		if (container=='') {
+			container = 'pullrefresh-table';
+		}
+		$.get(url,data,function(res){
+			if (res) {
+				$('#' + container).append(res);//替换内容
+				setTimeout(function(){
+					$('#pagename').html('内容已加载完毕');
+					setTimeout(function(){
+						$('#pagename').html('{$pagename}');
+					},500);
+				},1500);
+			}else {
+				$('#pagename').html('{$pagename}');
+			}
+		},"html");
+	}
+/*
+@newResize		自动适配屏幕,修改元素高宽
+*/
+function newResize() {
+	var pageHeight = document.body.scrollHeight;	//window.screen.height	//取页面可视区域高度
+	var pageWidth = document.body.scrollWidth;	//取页面可视区域宽度
+	var headerHeight =  header.offsetHeight;	//取头部header高度,MUI默认48
+	var navHeight =  document.getElementById('nav-bottom').offsetHeight;		//取导航栏高度	，MUI默认48
+	var chatboxHeight = document.getElementById('chatbox').offsetHeight;		//取聊天盒高度
+
+	var pageWidthMax = 768;	//设定页面最大可视宽
+	var pageWidthMin = 320;	//设定页面最小可视宽
+	var pageHeightMin = 568;	//设定页面最小高度
+	var offCanvasSideWidth = 300;	//设定侧滑导航的最大宽度
+	var pullrefreshHeightMin = 568;		//设定下拉刷新框的最小高度(同页高)
+	var pullrefreshPaddingTop = 0;		//设定下拉刷新框的上部内进高度
+	var pullrefreshPaddingBottom = 172;		//设定下拉刷新框的底部内进高度(底导航+聊天盒子高度)
+	var pullrefreshTabelHeightMin = 396;	//设定下拉刷新数据列表的最小高度(页面高-底部高-聊天盒子高)
+	var pullrefreshTabelPaddingTop = 44;		//设定下拉刷新数据列表的上部内进高度(同header高)
+	var pullrefreshTabelPaddingBottom = 0;		//设定下拉刷新数据列表的底部内进高度
+	var listboxHeightMin = 352;	//设定聊天内容列表盒子的最小高度
+	var chatboxHeightMin = 128;	//设定聊天盒子的最小高度
+	var topPocketOffsetHeight = 6; 	//设定距顶高度偏移
+	var chatboxBottom  = navHeight +  topPocketOffsetHeight;	//设定聊天盒子与底部距离
+
+	var pageWidthPadding = 0;	//初始化页面左右padding值
+	var pullrefreshTabelHeight =  pageHeight -chatboxHeight - navHeight - topPocketOffsetHeight;	//初始化下拉刷新数据列表高度
+	var listHeight = pageHeight - headerHeight - chatboxHeight - navHeight  - topPocketOffsetHeight;	//初始化消息内容列表框高度
+			pullrefreshPaddingBottom = navHeight + chatboxHeight;
+			pullrefreshTabelPaddingTop = headerHeight;
+
+	//在微信浏览器中的处理
+	if(mui.os.wechat){
+			listHeight = pageHeight - chatboxHeight - navHeight  - topPocketOffsetHeight;
+			$('#headerbar').attr('style','display:none');	//隐藏标题栏
+			$('#pullrefresh').css({"padding-top":"0px"});	//隐藏后调整下拉刷新框样式
+			$('.mui-pull-top-pocket').css({"top": topPocketOffsetHeight + "px"});//调整下拉提示区的距顶高度
+		}
+
+		$('#offCanvasSide').next().attr({"height": pageHeight +"px"}).css({"height": pageHeight +"px"});	//调整侧导航高度
+		$('#pullrefresh').attr({"height": pageHeight +"px"}).css({"height": pageHeight +"px","padding-bottom": pullrefreshPaddingBottom +"px"});	//调整下拉刷新框高度与样式
+		$('#pullrefresh-table').attr({"height": pullrefreshTabelHeight +"px"}).css({"height": pullrefreshTabelHeight +"px","padding-top": pullrefreshTabelPaddingTop +"px"});
+
+		if (pageWidth>pageWidthMax) {
+			pageWidthPadding = (pageWidth - pageWidthMax) / 2;
+			pageWidth = pageWidthMax;
+		}
+		$('#pullrefresh').css({"width": pageWidth +"px"});	//调整下拉刷新框宽度
+		$('#chatbox').css({"width": pageWidth +"px"});	//调整消息列表框宽度
+		$('#list-box').css({"height": listHeight +"px"});	//调整聊天盒子框宽度
+		$('#innerBody').css({"padding-left": pageWidthPadding +"px","padding-right": pageWidthPadding +"px"});	//调整整页宽度
+
+		mui.scrollTo(pullrefreshTabelHeight,1000);	//1秒内滚动到下拉刷新框底部
+	//以上，页面高宽等样式调整完毕
+}
+
+/*
+@navbar按钮点击监听
+*/
+	var navbar_click_i=0;
+	var toggle_button_html=['点击收起工具栏','再次点击,展开工具栏'];
+	var defaultHtml = toggle_button_html[0];
+
+	$('nav').on('tap', '#defaultTab', function(event) {
+		var pageHeight = document.body.scrollHeight;	//取页面可视区域高度
+		var navHeight =  document.getElementById('nav-bottom').offsetHeight;		//取导航栏高度	，MUI默认48
+		var chatboxHeigh = 128;	//设定聊天盒子的最小高度
+		var topPocketOffsetHeight = 6; 	//设定距顶高度偏移
+		navbar_click_i++;
+		if (navbar_click_i==1) {
+			chatboxHeight = 0;
+			$('#chatbox').css({"display":"none"});
+			$('#toggle_button').html(toggle_button_html[navbar_click_i]);
+			mui.toast('聊天输入窗口已隐藏,再次点击按钮可显示');
+		}else{
+			$('#chatbox').css({"display":""});
+			navbar_click_i=0;
+			$('#toggle_button').html(toggle_button_html[navbar_click_i]);
+		}
+		var listHeight = pageHeight - navHeight  - chatboxHeigh - topPocketOffsetHeight;
+		$('#list-box').css({"height": listHeight +"px"});	//调整下拉刷新框高度
+		//newResize();
+	});
+
+/*
+	消息发送按钮监听
+*/
+	document.querySelector('#send_submit').addEventListener('tap', function() {
+		formCheck('sendbox');
+	});
+
+
+/*
+@左右滑动触屏操作处理函数
+*/
+(function($) {
+//方案1
+	//拖拽后显示操作图标，右滑出操作菜单，打开链接，所以暂不监控；
+			$('.huadongcaozong').on('tap', '.mui-btn', function(event) {
+					var elem = this;
+					var id = this.getAttribute('data-id');
+					var LinkUrl = this.getAttribute('data-url');
+					var dotype = this.getAttribute('date-swipe2do');
+					var li = elem.parentNode.parentNode;
+					if (dotype=='delete') {
+						var btnArray = ['不,点错了', '嗯,删除吧'];
+						mui.confirm('确认删除该条记录？', '{$shopname}提示', btnArray, function(e) {
+							if (e.index == 1) {
+								setTimeout(function () {
+									var res = changeOrderStatus(id,'delete');
+									if (res>0) {
+										mui.toast('记录已成功删除');
+										li.parentNode.removeChild(li);
+									}else {
+										mui.toast('网络有点不给力呢，删除失败了');
+									}
+									$.swipeoutClose(li);
+								},100);
+							} else {
+								setTimeout(function() {
+									$.swipeoutClose(li);
+								}, 0);
+							}
+						});
+					} else if (dotype=='recovery') {
+						var btnArray = ['还是不了', '我要恢复'];
+						mui.confirm('确认要恢复该记录？', '{$shopname}请您确认', btnArray, function(e) {
+							if (e.index == 0) {
+								setTimeout(function() {
+									$.swipeoutClose(li);
+								}, 0);
+							} else {
+								setTimeout(function () {
+									var res = changeOrderStatus(id,'recovery');
+									if (res>0) {
+										mui.toast('记录已恢复成功');
+										elem.parentNode.removeChild(elem);
+									}else if (res==0) {
+										mui.alert('抱歉，暂不支持已删记录直接恢复');
+									}else {
+										mui.toast('网络有点不给力，订单删除失败');
+									}
+									$.swipeoutClose(li);
+								},100);
+							}
+						});
+					} else if (dotype=='link') {
+						mui.openWindow({
+							id : '',
+							url : LinkUrl
+						});
+					}
+				});
+//方案2
+				var btnArray = ['点错了', '嗯,删除吧'];
+				//向左拖拽后显示操作图标，右滑确认后自动执行删除操作(不太友好，暂不使用)
+				$('.huadong-caozong').on('slideleft', '.mui-table-view-cell', function(event) {
+					var elem = this;
+					mui.confirm('确认要删除该记录？', '{$shopname}请您确认', btnArray, function(e) {
+						if (e.index == 0) {
+							setTimeout(function() {
+								$.swipeoutClose(elem);
+							}, 0);
+						} else {
+								var  id = elem.parentNode.getAttribute('data-id');
+								//取得规格所属类型的id(存放在父节点，方便取用)
+								var res = changeOrderStatus(id,'delete');
+								 var str = res;
+								setTimeout(function () {
+									if (str==undefined) {
+										mui.toast('操作遇到未知错误！');
+										elem.parentNode.removeChild(elem);
+									}else if (str>0) {
+										mui.toast('删除成功！');
+										elem.parentNode.removeChild(elem);
+									}else{
+										elem.parentNode.removeChild(elem);
+										mui.toast('网络有点不给力，删除失败');
+									}
+								},100);
+							$.swipeoutClose(elem);
+						}
+					});
+				});
+
+			})(mui);
+
+/*
+@修改数据记录表订单的状态
+*/
+
+	function changeOrderStatus(id,dowhat){
+		return 1;//暂直接返回为成功
+		//添加async:false.修改为同步请求,同步请求会要限制用户当前只能执行该请求
+		//等ajax给返回对象赋值完毕后，才执行下面的js部分。而异步的话，还没有来得及赋值，就已经return了。
+		var toBack = 0;
+		if (id>0) {
+			var posturl = js_url('{$do}','{$ac}','ajax','{$_W[\'uniacid\']}','app');
+			var postdata = {id:id,todo:dowhat};
+			$.ajax(
+				{
+					type: "POST",
+					url: posturl,
+					data: postdata,
+					async: false,	//异步请求
+					success: function (res) {
+						toBack = res;
+					},
+					dataType: "json"
+				}
+			);
+			//$.post(posturl,postdata,function (res) {
+				//return res;
+			//},"json");
+		}
+		return toBack;
+	}
+
+/*
+@数据加载事件
+*/
+	function getNewData() {
+		var Obj = document.getElementById('numMsgNew');
+		Obj = null;
+		var s = 1;
+		var dotimes =-1;
+		var dosth = 'getNewData';
+		var smin = 0;
+		var smax = 0;
+		var slen = 3000;
+		countDown(s,Obj,dotimes,dosth,smin,smax,slen);
+	}
+
+/*
+倒计时函数,据此衍变为循环自动请求数据；使用前需前置一个参数（一个dotime内的累计计数次数,使用cookie来实现）
+@Obj 计数时显示数字结果的对象，无则不显示
+@s 初始计数值
+@dotimes	执行次数,-1为循环；以0为隔断，为0时停止并返回
+@dosth  要执行的任务
+@smin  计数最小值，循环时回调到该数值，该值默认比s最少小1
+@smax  计数最大值，执行++到该数值时结束，该值默认最小=s
+@slen	计时步长，单位为毫秒,默认1000毫秒(1s)
+示例：dotimes设置>0时，countDown(3,Obj,5,dosth,-1,7,9000)，表示将循环执行5次任务,第一次从3数到7（数5下）,后面4次从-1数到7（数8下）,每次计数间隔为9秒。整套动作共计数37次，完成需要37×9秒
+*/
+	var iCountDown = 0;
+	function countDown(s,Obj,dotimes,dosth,smin,smax,slen) {
+		s = isNaN(s) ? 0 : s;		//使s必为整数值
+		s = (s<0) ? 0 : s;		//使s必为正整数
+		s++;
+		slen = isNaN(slen) ? 1000 : slen;		//使slen必为整数值
+		slen = (slen<0) ? 1000 : slen;		//使slen必为正整数
+		var result = '';
+		//记录返回的数据结果(默认不返回数据,返回-1时表示停止)
+		switch(dosth) {
+			case 'getNewData':
+			var s_cookie = js_getCookie('getNewData_s');
+			if (s_cookie==null) {
+				 js_setCookie('getNewData_s',s-1,1*24*60*60*1000);
+				 s_cookie = s-1;
+			}
+			var r_cookie = js_getCookie('getNewData_round');		//总共执行几轮
+			if (r_cookie==null) {
+				 js_setCookie('getNewData_round',dotimes,1*24*60*60*1000);
+				 r_cookie = dotimes;
+			}
+
+			if (dotimes==-1) {
+				//一直执行
+				setTimeout(function() {
+					result = myAjaxGet('up');
+					if (result ==-1) {
+						return false;		//不再继续执行任务
+					}else{
+						 countDown(s,Obj,dotimes,dosth,smin,smax,slen);
+					}
+				},slen);	//按计时步长延迟刷新
+				if (Obj) {
+					var i = $(Obj).html();
+					Obj.innerHTML = i + s;
+				}
+			}else if (dotimes>=1){
+				//按次数执行
+				smin = isNaN(smin) ? 0 : smin;		//使smin必为整数值
+				smin = (smin>=s_cookie) ? (s_cookie-1) : smin; //至少比原始s小1
+				smax = isNaN(smax) ? 0 : smax;		//使smax必为整数值
+				smax = (smax<s_cookie) ? (s_cookie) : smax; //至少等于原始s
+				//没有数到当前一轮的最大数时不进入到下一轮(s++到达当前轮的最大数时,s是当前轮数×轮差+1，因为函数启动时s就+1了)
+				//dotimes 相当于当前处在倒数第多少轮
+				var isNextRound = (((smax-smin)*(r_cookie +1 - dotimes)+1)== s) ? true : false;
+				dotimes = (!isNextRound) ? dotimes : (dotimes -1);	//需要进下一轮时，减一次执行次数
+				setTimeout(function() {
+					result = myAjaxGet('up');
+					if (result ==-1) {
+						return false;		//不再继续执行任务
+					}else{
+						 countDown(s,Obj,dotimes,dosth,smin,smax,slen);
+					}
+				},slen);	//按计时步长延迟刷新
+				if (Obj) {
+					var i = $(Obj).html();
+					Obj.innerHTML = i + s;
+				}
+			}else if (dotimes==0){
+				//已经执行完了
+				return false;
+			}
+
+			break;
+
+			case 'otherActions':
+			//其他函数动作
+			//donothing
+			break;
+
+			case 1:
+			//执行次数为1次,
+			//donothing
+			break;
+
+			default:
+			if (isConsole==1) {
+				console.log('计时脚本未指定要执行的任务!');
+			}
+			break;
+		}
+	}
+
+/*
+get ajax数据
+@oldOrNew	新数据还是历史数据
+*/
+	function myAjaxGet(oldOrNew) {
+		var result = true;
+		var isGetNew = 1;
+		var latestRecTime = js_getCookie('latestRecTime');	//最近一次下拉数据的时间记录点
+		if (!latestRecTime) {
+			latestRecTime ="{$nowTime}";
+			js_setCookie('latestRecTime',latestRecTime,0);
+		}
+
+		switch(oldOrNew) {
+			case 'up':
+			//上拉的,要求新数据
+
+			break;
+			case 'down':
+			//下拉的,要求历史数据
+			isGetNew = 0;
+			if (isConsole==1) {
+					console.log('下拉刷新数据');
+				}
+			break;
+		}
+		var postdata = {
+				nowOrderSn : '{$sn}',
+				latestRecTime : latestRecTime,
+				callNew : isGetNew,
+			}
+
+		mui.ajax("{php echo fm_murl($do,$ac,'get',array())}",{
+			data:postdata,
+			dataType:'json',//服务器返回json格式数据
+			type:'get',//HTTP请求类型
+			timeout:5000,//超时时间设置为5秒；
+			success:function(res){
+				if (isConsole==1) {
+					console.log(res);
+					console.log(postdata);
+				}
+				result = res.result;
+				//服务器返回响应，根据响应结果，分析是否传输成功；
+				switch (res.result) {
+					case 1:
+					//有数据
+					var msg = res.messages;
+					isGetNew = res.callNew;
+					formatMsg(msg,isGetNew);
+					result = true;
+					break;
+					case 0:
+					//无任务数据响应
+					//do nothing
+					result = true;
+					break;
+					case -1:
+					//服务器将用户名列入黑名单,确认后关闭页面
+					var btnArray = ['确定'];
+					var content = res.error.content;
+					var title = res.error.title;
+					var errocode = res.error.code;
+						mui.confirm(content, title, btnArray, function(e) {
+							isBeforeClose = false;
+							new_back(isBeforeClose);
+							result = false;
+					});
+
+					break;
+					default:
+					mui.toast('网络有点不给力，没有获取到数据');
+					result = true;
+				}
+				if (!result) {
+					return -1;
+				}else{
+					return result;
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				//异常处理；
+				console.log(type);
+			}
+		});
+	}
+
+/*
+格式化消息数据
+@msg	消息数据
+@callNew	是否是请求新数据
+minRecTime 记录中最小的时间戳
+maxRecTime 记录中最大的时间戳
+*/
+	function formatMsg(msg,callNew) {
+		var currentMid = "{$currentid}";	//当前登陆会员
+		var latestRecTime = Number(js_getCookie('latestRecTime'));	//最近一次下拉数据的时间记录点
+		//if (!latestRecTime) {
+			//latestRecTime ="{$nowTime}";
+			//js_setCookie('latestRecTime',latestRecTime,0);
+		//}
+		latestRecTime ="{$nowTime}";
+		js_setCookie('latestRecTime',latestRecTime,0);
+
+		var minRecTime = js_getCookie('minRecTime');
+		if (!minRecTime) {
+			minRecTime ="{$nowTime}";
+		}
+		var maxRecTime = js_getCookie('maxRecTime');
+		if (!maxRecTime) {
+			maxRecTime ="{$nowTime}";
+		}
+		for (var i = 0; i < msg.length; i++) {
+			var nowData = msg[i];
+			latestRecTime = Math.min(latestRecTime,nowData.createtime);
+			js_setCookie('latestRecTime',latestRecTime,0);
+			minRecTime = Math.min(minRecTime,nowData.createtime);
+			js_setCookie('minRecTime',minRecTime,0);
+			maxRecTime = Math.max(maxRecTime,nowData.createtime);
+			js_setCookie('maxRecTime',maxRecTime,0);
+
+			var nowMsgCreatetime = nowData.createtime;
+			if (minRecTime<=nowMsgCreatetime) {
+				//return;
+			}
+
+			var nowToken = "{$_W['token']}";
+			var bgSrc = "";
+			var htm = "";
+			var nowMsgType = nowData.type; //消息类型（-1,系统消息；-2表情；-3快捷表态；-4 红包；0,默认，文本消息；1图片；3音频； 4视频；）
+			var nowMsgSender = nowData.mid;	//消息来源会员, -1为公众号本身
+			var gender =  (nowData.gender=='2') ? "female" : "male";
+			switch (nowMsgType) {
+				case 0:	//文本消息
+				if(nowMsgSender == currentMid){
+					//是用户自己发出的消息
+					var bgSrc = "{php echo $textbg_l}";
+					htm += '<div class="chat_record_l ' + gender +'" style="background-color:rgba(255,255,255,.01);">';
+						htm += '<form action="" method="post" id="form'+ nowData.id +'" onsubmit="">';
+							htm += '<input type="hidden" name="id" id="id' + nowData.id + '" value="' + nowData.id + '" />';
+							htm += '<input type="hidden" name="token" value="' + nowData.token + '" />';
+							htm += '<div style="margin-bottom:1px;">';
+								htm += '<ul data-id="' + nowData.id + '" class="mui-table-view huadongcaozong">';
+									htm += '<li class="mui-table-view-cell" >';
+										htm += '<div class="mui-slider-left mui-disabled">';
+											htm += '<a class="mui-btn mui-btn-red mui-icon mui-icon-close" date-swipe2do="delete" data-id="' + nowData.id + '"><span  style="font-size: 12px;">删除</span></a>';
+										htm += '</div>';
+										htm += '<div class="mui-slider-right mui-disabled">';
+											htm += '<a href="#modal-memeber" class="mui-btn mui-btn-success" date-swipe2do="link"><span  style="font-size: 14px;">管理</span></a>';
+										htm += '</div>';
+
+					var htm_0 = htm;
+
+										htm = '';
+									htm += '</li>';
+								htm += '</ul>';
+							htm += '</div>';
+						htm += '</form>';
+					htm += '</div>';
+
+					var htm_2 = htm;
+
+					htm = '';
+					htm += '<div class="mui-slider-handle">';
+						htm += '<span class="chat_record">';
+							htm += '<table cellpadding="0" cellspacing="0" border="0" style="float:right;">';
+								htm += '<tr  class="myoder-hd">';
+									htm += '<td>';
+										htm += '<span class="text"><h3>'+ nowData.content +'</h3><span class="chat_time" style="display:none;">'+ nowData.createtime +'</span></span>';
+									htm += '</td>';
+									htm += '<td style="width:10px;">';
+										htm += '<span class="bg" style="background-image: url('+ bgSrc +');">&nbsp;</span>';
+									htm += '</td>';
+									htm += '<td style="width:45px;">';
+										htm += '<span class="user" previewed="0">';
+											htm += '<a href="#modal-member" previewed="0">';
+												htm += '<img src="' + nowData.avatar + '" style="max-width:100%;" previewed="0">';
+											htm += '</a>';
+											htm += '<span style="display:none;">我</span>';
+										htm += '</span>';
+									htm += '</td>';
+								htm += '</tr>';
+							htm += '</table>';
+						htm += '</span>';
+					htm += '</div>';
+					var htm_1 = htm;
+
+					htm = htm_0 + htm_1 + htm_2;
+
+					if(callNew==0){
+						$("#list-box").prepend(htm);
+						mui.scrollTo(0,1000);	//1秒内滚动到页面顶部
+					}else if(callNew==1){
+						$("#list-box").append(htm);
+						goToBottom(1000);	//1秒内滚动到页面底部
+					}
+				}else if(nowMsgSender== -1){
+					//公众号消息
+					htm = '<div class="chat_record_m sys" style="background-color:transparent;"> <form action="" method="post" id="form'+ nowData.id +'" onsubmit=""> <input type="hidden" name="id" id="id'+ nowData.id +'" value="'+ nowData.id +'" /> <input type="hidden" name="token" value="'+ nowToken +'" /> <div style="margin-bottom:1px;"> <ul data-id="'+ nowData.id +'" class="mui-table-view huadongcaozong"> <li class="mui-table-view-cell" > <div class="mui-slider-left mui-disabled"> <a class="mui-btn mui-btn-red mui-icon mui-icon-close" date-swipe2do="delete" data-id="'+ nowData.id +'"><span  style="font-size: 12px;">隐藏</span></a> </div> <div class="mui-slider-right mui-disabled"> <a href="#modal-memeber" class="mui-btn mui-btn-success" date-swipe2do="delete"  data-id="'+ nowData.id +'"><span  style="font-size: 14px;">隐藏</span></a> </div> <div class="mui-slider-handle"> <span class="chat_record">		<span class="sysnotice" style=""> <p> <span class="createtime mui-badge" style="">'+ nowData.time2string +'</span> </p> <p> <span class="content ellipsis-p-2 mui-badge" style="">'+ nowData.content +'</span> </p></span></span> </div></li> </ul> </div> </form> </div>';
+					if(callNew==0){
+						$("#list-box").prepend(htm);
+						mui.scrollTo(0,1000);	//1秒内滚动到页面顶部
+					}else if(callNew==1){
+						$("#list-box").append(htm);
+						goToBottom(1000);	//1秒内滚动到页面底部
+					}
+				}else{
+					//其他用户发出的消息
+					var userLink = js_url('member','detail','view','{$_W["uniacid"]}','app') + "&id=" + nowData.mid;
+					var bgSrc = "{php echo $textbg_r}";
+					htm += '<div class="chat_record_r ' + gender +'" style="background-color:rgba(255,255,255,.01);">';
+						htm += '<form action="" method="post" id="form'+ nowData.id +'" onsubmit="">';
+							htm += '<input type="hidden" name="id" id="id' + nowData.id + '" value="' + nowData.id + '" />';
+							htm += '<input type="hidden" name="token" value="' + nowData.token + '" />';
+							htm += '<div style="margin-bottom:1px;">';
+								htm += '<ul data-id="' + nowData.id + '" class="mui-table-view huadongcaozong">';
+									htm += '<li class="mui-table-view-cell" >';
+										htm += '<div class="mui-slider-left mui-disabled">';
+											htm += '<a href="'+ userLink +'" class="mui-btn mui-btn-success" date-swipe2do="link"><span  style="font-size: 14px;">资料</span></a>';
+										htm += '</div>';
+										htm += '<div class="mui-slider-right mui-disabled">';
+											htm += '<a class="mui-btn mui-btn-red mui-icon mui-icon-close" date-swipe2do="delete" data-id="'+ nowData.id +'"><span  style="font-size: 12px;">删除</span></a>';
+										htm += '</div>';
+
+					var htm_0 = htm;
+
+										htm = '';
+									htm += '</li>';
+								htm += '</ul>';
+							htm += '</div>';
+						htm += '</form>';
+					htm += '</div>';
+
+					var htm_2 = htm;
+
+					htm = '';
+					htm += '<div class="mui-slider-handle">';
+						htm += '<span class="chat_record">';
+							htm += '<table cellpadding="0" cellspacing="0" border="0" style="float:left;">';
+								htm += '<tr  class="myoder-hd">';
+									htm += '<td style="width:45px;">';
+										htm += '<span class="user" previewed="0">';
+											htm += '<img src="' + nowData.avatar + '" style="max-width:100%;" previewed="0">';
+										htm += '</span>';
+									htm += '</td>';
+									htm += '<td >';
+									htm += '</td>';
+										htm += '<span class="bg" style="background-image: url('+ bgSrc +');">&nbsp;</span>';
+									htm += '<td >';
+										htm +='<span class="username" style="max-width:200px;">'+ nowData.username +'</span>';
+										htm += '<br>';
+										htm += '<span class="text"><h3>'+ nowData.content +'</h3><span class="chat_time" style="display:none;">'+ nowData.createtime +'</span></span>';
+									htm += '</td>';
+								htm += '</tr>';
+							htm += '</table>';
+						htm += '</span>';
+					htm += '</div>';
+					var htm_1 = htm;
+
+					htm = htm_0 + htm_1 + htm_2;
+
+					if(callNew==0){
+						$("#list-box").prepend(htm);
+						mui.scrollTo(0,1000);	//1秒内滚动到页面顶部
+					}else if(callNew==1){
+						$("#list-box").append(htm);
+						goToBottom(1000);	//1秒内滚动到页面底部
+					}
+				}
+				break;
+
+				case -1://系统消息
+
+				break;
+			}
+		}
+	}
+
+/*
+ajax 发送消息
+@data  要发送的数据, JS数组对象
+*/
+	function sendMsg(data){
+		//等ajax给返回对象赋值完毕后，才执行下面的js部分。而异步的话，还没有来得及赋值，就已经return了。
+		var result = 0;
+		var posturl = js_url('{$do}','{$ac}','send','{$_W[\'uniacid\']}','app') + "&sn=" + "{$sn}";
+		posturl = "{php echo fm_murl($do,$ac,send,array('sn'=>$sn))}";
+		var postdata = data;
+		$.ajax(
+			{
+				type: "POST",
+				url: posturl,
+				data: postdata,
+				async: false,	//异步请求,false为同步（异步无法执行）
+				success: function (res) {
+					result = res;
+					if (isConsole==1) {
+						console.log(res);
+					}
+					//服务器返回响应，根据响应结果，分析是否传输成功；
+				switch (res.result) {
+					case 1:
+					//有数据
+					var msg = res.messages[0];
+					createMsg(msg);
+					result = true;
+					break;
+					case 0:
+					//无任务数据响应
+					//do nothing
+					result = true;
+					return false;
+					break;
+					case -1:
+					//消息被服务器拒绝
+					var btnArray = ['确定'];
+					var content = res.error.content;
+					var title = res.error.title;
+					var errocode = res.error.code;
+						mui.confirm(content, title, btnArray, function(e) {
+							result = false;
+					});
+					return false;
+
+					break;
+					default:
+					mui.toast('网络有点不给力哦，消息没发成功!');
+					result = true;
+					return false;
+				}
+				if (!result) {
+					return -1;
+				}
+					return result;
+				},
+				dataType: "json"
+			}
+		);
+		return result;
+}
+
+/*
+检查发送消息表单
+*/
+function formCheck(formid){
+	var data = Form_format(formid);
+	js_setCookie('lastMsg',data.content,7*24*60*60*1000);//默认缓存消息内容1个星期
+	sendMsg(data);
+	return false;
+}
+
+/*
+发送消息成功后创建新DOM元素
+*/
+	function createMsg(nowData) {
+		var bgSrc = "{php echo $textbg_l}";
+		var htm = '';
+		var nowToken = "{$_W['token']}";
+		var gender =  ("{$_FM['member']['info']['gender']}"==2) ? "female" : "male";
+					htm += '<div class="chat_record_l ' + gender +'" style="background-color:rgba(255,255,255,.01);">';
+						htm += '<form action="" method="post" id="form'+ nowData.id +'" onsubmit="">';
+							htm += '<input type="hidden" name="id" id="id' + nowData.id + '" value="' + nowData.id + '" />';
+							htm += '<input type="hidden" name="token" value="' + nowData.token + '" />';
+							htm += '<div style="margin-bottom:1px;">';
+								htm += '<ul data-id="' + nowData.id + '" class="mui-table-view huadongcaozong">';
+									htm += '<li class="mui-table-view-cell" >';
+										htm += '<div class="mui-slider-left mui-disabled">';
+											htm += '<a class="mui-btn mui-btn-red mui-icon mui-icon-close" date-swipe2do="delete" data-id="' + nowData.id + '"><span  style="font-size: 12px;">删除</span></a>';
+										htm += '</div>';
+										htm += '<div class="mui-slider-right mui-disabled">';
+											htm += '<a href="#modal-memeber" class="mui-btn mui-btn-success" date-swipe2do="link"><span  style="font-size: 14px;">管理</span></a>';
+										htm += '</div>';
+
+					var htm_0 = htm;
+
+										htm = '';
+									htm += '</li>';
+								htm += '</ul>';
+							htm += '</div>';
+						htm += '</form>';
+					htm += '</div>';
+
+					var htm_2 = htm;
+
+					htm = '';
+					htm += '<div class="mui-slider-handle">';
+						htm += '<span class="chat_record">';
+							htm += '<table cellpadding="0" cellspacing="0" border="0" style="float:right;">';
+								htm += '<tr  class="myoder-hd">';
+									htm += '<td>';
+										htm += '<span class="text"><h3>'+ nowData.content +'</h3><span class="chat_time" style="display:none;">'+ nowData.createtime +'</span></span>';
+									htm += '</td>';
+									htm += '<td style="width:10px;">';
+										htm += '<span class="bg" style="background-image: url('+ bgSrc +');">&nbsp;</span>';
+									htm += '</td>';
+									htm += '<td style="width:45px;">';
+										htm += '<span class="user" previewed="0">';
+											htm += '<a href="#modal-member" previewed="0">';
+												htm += '<img src="' + nowData.avatar + '" style="max-width:100%;" previewed="0">';
+											htm += '</a>';
+											htm += '<span style="display:none;">我</span>';
+										htm += '</span>';
+									htm += '</td>';
+								htm += '</tr>';
+							htm += '</table>';
+						htm += '</span>';
+					htm += '</div>';
+					var htm_1 = htm;
+
+					htm = htm_0 + htm_1 + htm_2;
+		$("#list-box").append(htm);
+		goToBottom(1000);	//1秒内滚动到页面底部
+	}
+
+
+/*
+滚动到页面底部
+*/
+	function goToBottom(timeout){
+		var pageHeight = document.body.scrollHeight;	//window.screen.height	//取页面可视区域高度
+		var navHeight =  document.getElementById('nav-bottom').offsetHeight;		//取导航栏高度	，MUI默认48
+		var chatboxHeight = document.getElementById('chatbox').offsetHeight;		//取聊天盒高度
+		var topPocketOffsetHeight = 6; 	//设定距顶高度偏移
+		var pullrefreshTabelHeight =  pageHeight -chatboxHeight - navHeight - topPocketOffsetHeight;	//初始化下拉刷新数据列表高度
+		mui.scrollTo(pullrefreshTabelHeight,timeout);	//1秒内滚动到下拉刷新框底部
+	}
+
+/*———————需要在最后再判断是否执行的动作—————————*/
+
+/*
+@重构页面关闭方法
+*/
+	function new_back(isBeforeClose){
+		if (isBeforeClose) {
+			var btn = ["嗯!确定","不,我点错了"];
+			mui.confirm('确认要关闭页面了吗？','微提示',btn,function(e){
+				if(e.index==0){
+					//执行mui封装好的窗口关闭逻辑；
+					old_back();
+				}
+			});
+		}else{
+			old_back();
+		}
+	}
+
+
+/*—————临时动作———————*/
+
+
+</script>

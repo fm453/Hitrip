@@ -1,0 +1,61 @@
+<div class="text-center footer" style="display:none;">
+	{$_W['setting']['copyright']['statcode']}
+</div>
+<script type="text/javascript">
+//防止之前加载的JS与微信分享JS冲突，重置define跟require以解决该问题
+    define = null;
+    require = null;
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+	wx.config(jssdkconfig);
+	var $_share = {php echo json_encode($_share);};
+	if(typeof sharedata == 'undefined'){
+		sharedata = $_share;
+	} else {
+		sharedata['title'] = sharedata['title'] || $_share['title'];
+		sharedata['desc'] = sharedata['desc'] || $_share['desc'];
+		sharedata['link'] = sharedata['link'] || $_share['link'];
+		sharedata['imgUrl'] = sharedata['imgUrl'] || $_share['imgUrl'];
+	}
+	function tomedia(src) {
+		if(typeof src != 'string')
+			return '';
+		if(src.indexOf('http://') == 0 || src.indexOf('https://') == 0) {
+			return src;
+		} else if(src.indexOf('../addons') == 0 || src.indexOf('../attachment') == 0) {
+			src=src.substr(3);
+			return window.sysinfo.siteroot + src;
+		} else if(src.indexOf('./resource') == 0) {
+			src=src.substr(2);
+			return window.sysinfo.siteroot + 'app/' + src;
+		} else if(src.indexOf('images/') == 0) {
+			return window.sysinfo.attachurl+ src;
+		}
+	}
+	
+	if(sharedata.imgUrl == ''){
+		var _share_img = $('body img:eq(0)').attr("src");
+		if(_share_img == ""){
+			sharedata['imgUrl'] = window.sysinfo.attachurl + 'images/global/wechat_share.png';
+		} else {
+			sharedata['imgUrl'] = tomedia(_share_img);
+		}
+	}
+	
+	if(sharedata.desc == ''){
+		var _share_content = _removeHTMLTag($('body').html());
+		if(typeof _share_content == 'string'){
+			sharedata.desc = _share_content.replace($_share['title'], '')
+		}
+	}
+	
+	wx.ready(function () {
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
+</script>
+</body>
+</html>

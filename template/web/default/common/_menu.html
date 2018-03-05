@@ -1,0 +1,87 @@
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="{php echo fm_wurl('index','index','index',array());}"><i class="icon-desktop"></i>   主工作台</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				{loop $menulinks $key $menulink}
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="{$links['icon']}"></i>   {$menulink['title']} <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						{loop $menulink['subcat'] $l_key $menu_item}
+						{if $menu_item}
+							<li {if $menu_item['disabled']} class="disabled" {/if} ><a href="{if $menu_item['url']}{$menu_item['url']}{/if}"><i class="{if $menu_item['icon']}{$menu_item['icon']}{/if}"></i>  {$menu_item['title']}</a></li>
+						{else}
+							<li role="separator" class="divider"></li>
+						{/if}
+						{/loop}
+					</ul>
+				</li>
+				{/loop}
+
+				<li class="dropdown topbar-notice">
+					<a type="button" data-toggle="dropdown">
+						<i class="fa fa-bell"></i>
+						<span class="badge" id="notice-total">0</span>
+					</a>
+					<div class="dropdown-menu" aria-labelledby="dLabel">
+						<div class="topbar-notice-panel">
+							<div class="topbar-notice-arrow"></div>
+							<div class="topbar-notice-head">
+								<span>系统公告</span>
+								<a href="{php echo url('article/notice-show/list');}" class="pull-right">更多公告>></a>
+							</div>
+							<div class="topbar-notice-body">
+								<ul id="notice-container"></ul>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon-link"></i>  系统功能 <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="./?refresh"><i class="fa fa-reply-all"></i>  返回系统</a></li>
+
+						{php global $top_nav;}
+						{loop $top_nav $nav}
+						{if !empty($_W['isfounder']) || empty($_W['setting']['permurls']['sections']) || in_array($nav['name'], $_W['setting']['permurls']['sections'])}
+						<li {if FRAME == $nav['name']} class="active"{/if}>
+								<a href="{php echo url('home/welcome/' . $nav['name']);}"><i class="{$nav['append_title']}"></i>  {$nav['title']}</a>
+						</li>
+						{/if}
+						{/loop}
+						<li class="divider"></li>
+						<li><a href="{php echo url('user/profile/profile');}" target="_blank"><i class="fa fa-weixin fa-fw"></i>   我的账号</a></li>
+						{if $_W['isfounder']}
+						<li class="divider"></li>
+						<li><a href="{php echo url('system/welcome');}" target="_blank"><i class="fa fa-sitemap fa-fw"></i>   系统选项</a></li>
+						<li><a href="{php echo url('system/welcome');}" target="_blank"><i class="fa fa-cloud-download fa-fw"></i>   自动更新</a></li>
+						<li><a href="{php echo url('system/updatecache');}" target="_blank"><i class="fa fa-refresh fa-fw"></i>   更新缓存</a></li>
+						<li class="divider"></li>
+						{/if}
+						{if $_W['isAdminer']}
+						<li><a href="{php echo url('utility/emulator/');}" target="_blank"><i class="fa fa-weixin fa-fw"></i>   模拟测试</a></li>
+						{/if}
+						<li><a href="{php echo url('user/logout');}"><i class="fa fa-sign-out fa-fw"></i>   退出系统</a></li>
+
+					</ul>
+				</li>
+
+				<li class=""><a href='javascript:history.go(-1)' class="pull-right" ><i class="icon-reply"></i>  返回</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>

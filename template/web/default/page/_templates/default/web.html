@@ -1,0 +1,9 @@
+{loop $vars $k $v}
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">{$v['title']}</label>
+	<div class="col-xs-12 col-sm-9  ">
+		{$html[$k]}
+	</div>
+	<span class="help-block">说明：{$v['description']}</span>
+</div>
+{/loop}

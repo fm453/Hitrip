@@ -1,0 +1,12 @@
+<!-- SLIDER START -->
+	{template $appstyle.$do.'/'.$ac.'/_public/ppt'}
+<!-- SLIDER END -->
+<!-- 数据列表 -->
+<!---产品推荐栏目,首页推荐清单-->
+<div class="mui-content" id="pullrefresh-table"><!-- 该ID必须存在且不允许更改 -->
+	{loop $special_goodss $goodsid $goods}
+		{template $appstyle.$do.'/'.$ac.'/_public/goods/item_rec'}
+	{/loop}
+	</div>
+
+</div>

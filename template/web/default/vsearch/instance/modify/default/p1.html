@@ -1,0 +1,77 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#defaultSeos">
+         规则设置<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse in" id="defaultSeos">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-defaultSeos"  onsubmit="return formcheck('setting-form-defaultSeos');return false;" data-noajax = '0'>
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" value="">
+				<input type="hidden" name="setfor" value="" />
+				<input type="hidden" name="sn" value="{$f_sn}" />
+				<input type="hidden" name="s_sn" value="{$s_sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">无匹配回复</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+		<textarea type="text" name="data[reply][none][tips]" class="form-control" placeholder="">{$item['reply']['none']['tips']}</textarea>
+		<span class="help-block" title="['reply']['none']['tips']">说明：未查询到相关内容时的回复内容。</span>
+		<span class="help-block" title="['reply']['none']['tips']">默认：“抱歉，未查询到相关的资料，您可尝试一下其他关键词。”</span>
+		<span class="help-block sr-only">['reply']['none']['tips']</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">启动规则</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+		<input type="text" name="data[reply][welcome][key]" class="form-control" value="{$item['reply']['welcome']['key']}" placeholder="用户输入什么关键词的情况下，可以使用该查询实例" />
+		<span class="help-block" title="['reply']['welcome']['key']">说明：输入该关键词，用户才可使用该类型的查询功能。</span>
+		<span class="help-block sr-only">['reply']['welcome']['key']</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+		<textarea type="text" name="data[reply][welcome][tips]" class="form-control" placeholder="">{$item['reply']['welcome']['tips']}</textarea>
+		<span class="help-block" title="['reply']['welcome']['tips']">说明：用户进入该查询后，系统的回复内容。（由于程序的设定，各实例的具体查询逻辑事先已固定；如不熟悉的，可咨询网站管理员或开发人员）</span>
+		<span class="help-block" title="['reply']['welcome']['tips']">示例：“请输入您想要查询的产品关键词。提示：您可使用产品名称中的词语作为条件（如，××酒店，芒果 等），进行模糊查询匹配；我们默认最多取符合条件的前9个作为结果，回复给您。”</span>
+		<span class="help-block sr-only">['reply']['welcome']['tips']</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">超时时间</label>
+	<div class="col-xs-12 col-sm-9 col-md-2 col-lg-2 ">
+		<div class="input-group">
+ 			<input type="text" name="data[timelimit]" class="form-control" value="{$item['timelimit']}" />
+ 			<span class="input-group-addon" style="color:red;">秒</span>
+ 		</div>
+	</div>
+	<span class="help-block">说明：用户在多长时间内无操作时，系统为其退出查询状态。</span>
+</div>
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-defaultSeos" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-defaultSeos" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#defaultSeos">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>
+

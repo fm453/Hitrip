@@ -1,0 +1,207 @@
+<script type="text/javascript" charset="utf-8">
+	mui.init(
+		{
+			swipeBack: true, //启用右滑关闭功能
+			gestureConfig: {
+				doubletap: true //启用双击监听
+			}
+		}
+	);
+
+	//定义支持区域滚动的层类
+	mui('.mui-scroll-wrapper').scroll();
+	//侧滑容器父节点
+	var offCanvasWrapper = mui('#offCanvasWrapper');
+	//主界面容器
+	var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+	//菜单容器
+	var offCanvasSide = document.getElementById("offCanvasSide");
+	//不是安卓时，隐藏安卓元素
+	if(!mui.os.android) {
+		var spans = document.querySelectorAll('.android-only');
+		for(var i = 0, len = spans.length; i < len; i++) {
+			spans[i].style.display = "none";
+		}
+	}
+	//移动效果是否为整体移动
+	var moveTogether = false;
+	//侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+	var classList = offCanvasWrapper[0].classList;
+
+	//主界面和侧滑菜单界面均支持区域滚动；
+	mui('#offCanvasSideScroll').scroll();
+	mui('#offCanvasContentScroll').scroll();
+	//实现ios平台原生侧滑关闭页面；
+	if(mui.os.plus && mui.os.ios) {
+		mui.plusReady(function() { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故该demo直接屏蔽popGesture功能
+			plus.webview.currentWebview().setStyle({
+				'popGesture': 'none'
+			});
+		});
+	}
+
+	//幻灯片自动轮播
+	var slider = mui("#slider");
+	slider.slider({
+		interval: 5000
+	});
+
+//监听header的双击事件,简便起见，双击结果是直接强制刷新
+	document.querySelector('header').addEventListener('doubletap', function() {
+		var url = location.href;
+		location.replace(url);
+	});
+</script>
+<!-- 上拉下拉事件 -->
+<script>
+	mui.init({
+		pullRefresh: {
+			container: '#pullrefresh',
+			down: {
+				callback: pulldownRefresh
+			},
+			up: {
+				contentrefresh: '正在加载...',
+				callback: pullupRefresh
+			}
+		}
+	});
+	/**
+	 * 下拉刷新具体业务实现
+	 */
+	function pulldownRefresh() {
+				setTimeout(function() {
+					var table = document.getElementById('pullrefresh-table');
+					var cells = document.body.querySelectorAll('.pullrefresh-cell');
+					for (var i = cells.length, len = i + 1; i < len; i++) {
+						var li = document.createElement('div');
+						li.className = 'pullrefresh-cell';
+						li.innerHTML = '<a href="#">' +
+						 '<div class="mui-card">' +
+						 '<div class="mui-card-content" >' +
+						 '<img src="{$appsrc}images/yuantiao.jpg" alt="" width="100%"/>' +
+						 '</div>' +
+						 '<div class="mui-card-content-inner" style="padding:2px 10px 2px 10px;">' +
+						 '<button type="button" class="mui-btn" style="background-color:#0095f6;color:#fff;padding:0;">' +
+						 '下拉刷新' +
+						 '</button>' +
+						 '&nbsp; '+
+						 '<div class="mui-btn mui-btn-primary" style="padding:0;">' +
+						 '蓝色' +
+						 '</div>' +
+						 '&nbsp; '+
+						 '<span class="mui-btn mui-btn-success" style="padding:0;">' +
+						 '绿色' +
+						 '</span>' +
+						 '&nbsp; '+
+						 '<button type="button" class="mui-btn mui-btn-warning" style="padding:0;">' +
+						 '黄色' +
+						 '</button>' +
+						 '&nbsp; '+
+						 '<button type="button" class="mui-btn mui-btn-danger" style="padding:0;">' +
+						 '红色' +
+						 '</button>' +
+						 '&nbsp; '+
+						 '<button type="button" class="mui-btn mui-btn-royal" style="padding:0;">' +
+						 '紫色' +
+						 '</button>' +
+						 '<p style="color: #333;">这里显示产品描述，让客户对产品内容有个粗略的概念...</p>' +
+						 '<span>' +
+						 '<i class="mui-icon-extra mui-icon-extra-trend"></i>' +
+						 '&nbsp; 已售&nbsp; <span class="mui-badge mui-badge-warning mui-badge-inverted">'+(i+1)+'</span>份' +
+						 '&nbsp; 原价&nbsp; <span class="mui-badge mui-badge-warning mui-badge-inverted"><del>888</del></span>元' +
+						 '&nbsp; &nbsp; <span class="mui-badge mui-badge-warning mui-badge-inverted">0.87</span>折' +
+						 '</span>' +
+						 '</div>' +
+						 '<div class="mui-card-footer">' +
+						 '<a class="mui-card-link">' +
+						 '&nbsp; <span class="mui-badge mui-badge-warning mui-badge-inverted">1824.3</span>元 起&nbsp;' +
+						 '</a>' +
+						 '<a class="mui-card-link" href="#modal-buy">' +
+						 '<span class="mui-badge mui-badge-warning" style="font-weight:bolder;font-size: large;">+</span>' +
+						 '</a>' +
+						 '</div>' +
+						 '</div>' +
+						 '</a>' ;
+						//下拉刷新，新纪录插到最前面；
+						table.insertBefore(li, table.firstChild);
+					}
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var table = document.getElementById('pullrefresh-table');
+					var cells = document.body.querySelectorAll('.pullrefresh-cell');
+					for (var i = cells.length, len = i + 2; i < len; i++) {
+						var li = document.createElement('div');
+						li.className = 'pullrefresh-cell';
+						li.innerHTML = '<a href="#">' +
+						 '<div class="mui-card">' +
+						 '<div class="mui-card-content" >' +
+						 '<img src="{$appsrc}images/yuantiao.jpg" alt="" width="100%"/>' +
+						 '</div>' +
+						 '<div class="mui-card-content-inner" style="padding:2px 10px 2px 10px;">' +
+						 '<button type="button" class="mui-btn" style="background-color:#0095f6;color:#fff;padding:0;">' +
+						 '上拉加载' +
+						 '</button>' +
+						 '&nbsp; '+
+						 '<div class="mui-btn mui-btn-primary" style="padding:0;">' +
+						 '蓝色' +
+						 '</div>' +
+						 '&nbsp; '+
+						 '<span class="mui-btn mui-btn-success" style="padding:0;">' +
+						 '绿色' +
+						 '</span>' +
+						 '&nbsp; '+
+						 '<button type="button" class="mui-btn mui-btn-warning" style="padding:0;">' +
+						 '黄色' +
+						 '</button>' +
+						 '&nbsp; '+
+						 '<button type="button" class="mui-btn mui-btn-danger" style="padding:0;">' +
+						 '红色' +
+						 '</button>' +
+						 '&nbsp; '+
+						 '<button type="button" class="mui-btn mui-btn-royal" style="padding:0;">' +
+						 '紫色' +
+						 '</button>' +
+						 '<p style="color: #333;">这里显示产品描述，让客户对产品内容有个粗略的概念...</p>' +
+						 '<span>' +
+						 '<i class="mui-icon-extra mui-icon-extra-trend"></i>' +
+						 '&nbsp; 已售&nbsp; <span class="mui-badge mui-badge-warning mui-badge-inverted">'+(i+1)+'</span>份' +
+						 '&nbsp; 原价&nbsp; <span class="mui-badge mui-badge-warning mui-badge-inverted"><del>888</del></span>元' +
+						 '&nbsp; &nbsp; <span class="mui-badge mui-badge-warning mui-badge-inverted">0.87</span>折' +
+						 '</span>' +
+						 '</div>' +
+						 '<div class="mui-card-footer">' +
+						 '<a class="mui-card-link">' +
+						 '&nbsp; <span class="mui-badge mui-badge-warning mui-badge-inverted">1824.3</span>元 起&nbsp;' +
+						 '</a>' +
+						 '<a class="mui-card-link" href="#modal-buy">' +
+						 '<span class="mui-badge mui-badge-warning" style="font-weight:bolder;font-size: large;">+</span>' +
+						 '</a>' +
+						 '</div>' +
+						 '</div>' +
+						 '</a>' ;
+						table.appendChild(li);
+					}
+				}, 1500);
+			}
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+</script>

@@ -1,0 +1,59 @@
+	<div id="for-thumbs" class="mui-hidden">
+		<input id="file-thumbs" name="file-thumbs" type="file" class="file file-upload"  multiple data-id="thumbs" data-preview-file-type="text"   accept="image/*"  />
+		<input class="form-control hidden"  id="thumbs" name="thumbs" type="text" value="{$needs_data['thumbs']}"/ >
+		<input  class="form-control hidden" id="url-thumbs" name="url-thumbs" type="text" value="{$needs_data['thumbs']}"/ >
+		<span id='#errorBlock-thumbs'> </span>
+	</div>
+	<script>
+		//处理上传动作
+		var id = 'thumbs';
+		var inputname = "file-"+id;
+		var imageid = "file-preview-"+id;
+		var uploadurl="{php echo fm_murl('ajax','file','upload',array())}"+"&inputname="+inputname+"&backid="+id;
+		var previewSrc = "{php echo tomedia($needs_data['thumbs'])}";
+		var previewHtml ="<img src='"+previewSrc+"' class='file-preview-image' alt='' title='' id='"+imageid+"'/>";
+		previewHtml += '<div class="file-thumbnail-footer">';
+		previewHtml += '<div class="file-caption-name" title="" style="width: 170px;"></div>';
+		previewHtml += '<div class="file-actions">';
+		previewHtml += '<div class="file-footer-buttons">';
+		previewHtml += '<button type="button" class="fm-file-remove btn btn-xs btn-default" data-src="'+"{$needs_data['thumb']}"+' data-imageid="'+ imageid +'" data-backid="'+ id +'" title="Remove file"><i class="glyphicon glyphicon-trash text-danger"></i></button>';
+		previewHtml += '</div>';
+		previewHtml += '<div class="file-upload-indicator" tabindex="-1" title="uploaded success"><i class="glyphicon glyphicon-ok-sign text-info"></i>已上传</div>';
+		previewHtml += '<div class="clearfix"></div>';
+		previewHtml += '</div>';
+		previewHtml += '</div>';
+		var initialPreview = ("{$needs_data['thumbs']}") ? [previewHtml] : [];
+		$("#file-"+id).fileinput({
+			showPreview : true,
+			showUpload: false,
+			showRemove: false,
+			showCaption: false,
+			browseClass: "btn btn-primary btn-block",
+			browseLabel: "选择图片",
+			dropZoneTitle:"单张图片最大不超过2M;" + "<br>" +"您最多可上传9张图片" + "<br>" +"请确保图片清晰,美观",
+			allowedFileExtensions : ['jpg', 'png','gif','jpeg'],
+			maxFileSize: 1000000,
+			maxFileNum: 1,
+			maxFileCount: 1,
+			uploadUrl : uploadurl,
+			overwriteInitial: true,
+			previewFileType:"any",
+			uploadAsync: true,//异步加载
+			initialPreview: initialPreview,//预置的图片
+			'elErrorContainer': '#errorBlock-'+id
+		});
+		//自动上传，选择文件后自动上传
+		$("#file-"+id).on('fileselect', function(event, files) {
+			$(this).fileinput("upload");
+		});
+		//上传完成后
+		$("#file-"+id).on('fileuploaded', function(event, data, previewId, index) {
+			var form = data.form, files = data.files, extra = data.extra,
+			response = data.response, reader = data.reader;
+			console.log('文件上传成功，图片地址为'+response['imgurl']);
+			var tempid=$(this).attr('data-id');
+			alert(tempid);
+			js_upload(tempid,data);
+		});
+
+	</script>

@@ -1,0 +1,10 @@
+					<div class="item-logo" {if $settings['guide']['page_'.$settings['guide']['guide_page_num'].'_bgimage']} style="background: rgba(255,255,255,0) url({php echo tomedia($settings['guide']['page_'.$settings['guide']['guide_page_num'].'_bgimage'])})  center center;background-size:cover;" {elseif $settings['guide']['page_'.$settings['guide']['guide_page_num'].'_bgcolor']} style="background-color:{php echo $settings['guide']['page_'.$settings['guide']['guide_page_num'].'_bgcolor']}" {else} style="background-color: rgba(252,210,8,1);" {/if}>
+						<a href="#">
+						{if $settings['guide']['page_'.$settings['guide']['guide_page_num'].'_tag']}{php echo $settings['guide']['page_'.$settings['guide']['guide_page_num'].'_tag']} {else}更丰富{/if}
+						</a>
+						<div class="animate">
+							<button id='close' class="mui-btn mui-btn-warning mui-btn-outlined">
+							{if $settings['guide']['page_'.$settings['guide']['guide_page_num'].'_title']}{php echo $settings['guide']['page_'.$settings['guide']['guide_page_num'].'_title']} {else}立即体验{/if}
+							</button>
+						</div>
+					</div>

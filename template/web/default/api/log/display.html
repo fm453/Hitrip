@@ -1,0 +1,71 @@
+<div class="main fm453_newmouse">
+	<div class="category">
+		<form action="" method="post" onsubmit="return formcheck(this)">
+			<div class="panel  panel-warning">
+				<div class="panel-heading"></div>
+				<div class="panel-body">
+					<table class="table table-hover  table-responsive" >
+						<thead>
+							<tr style="">
+								<th style="width:45px;">id</th>
+								<th class="" style="width:50px;">platid</th>
+								<th class="" style="width:50px;">uniacid</th>
+								<th style="width:50px;">uid</th>
+								<th style="width:50px;">fanid</th>
+								<th style="width:150px;">openid</th>
+								<th style="width:150px;">tablename</th>
+								<th style="width:120px;">do</th>
+								<th style="width:150px;">sn</th>
+								<th style="width:300px;white-space: normal;">details</th>
+								<th style="width:120px;">createtime</th>
+							</tr>
+						</thead>
+						<tbody>
+						{loop $alllogs $log_key $row}
+						<tr>
+							<td>
+							{$row['id']}
+							</td>
+							<td>
+								{$row['platid']}
+							</td>
+							<td>
+								{$row['uniacid']}
+							</td>
+							<td>
+								{$row['uid']}
+							</td>
+							<td>
+								{$row['fanid']}
+							</td>
+							<td>
+								{$row['openid']}
+							</td>
+							<td>
+								{$row['tablename']}
+							</td>
+							<td>
+								{$row['do']}
+							</td>
+							<td>
+								{$row['sn']}
+							</td>
+							<td>
+							<a class="btn btn-info" href="{php echo $this->createWebUrl('report',array('ac'=>'log','op'=>'detail','id'=> $row['id']))}" target="_blank" >查看</a>
+							</td>
+							<td>
+								{$row['createtime']}
+							</td>
+						</tr>
+						{/loop}
+						</tbody>
+					</table>
+				</div>
+				<div class="panel-heading"></div>
+			</div>
+		</form>
+	</div>
+	<div style="text-align: center;">
+		{$pager}
+	</div>
+</div>

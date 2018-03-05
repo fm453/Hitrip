@@ -1,0 +1,49 @@
+{template $appstyle."common/header"}
+<div class="container" style="margin-left:-15px;width:400px;">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<h3 class="text-center">
+				当前共<span style="color:red;">{$total}</span>款产品
+			</h3>
+			<div style="text-align:center">
+			<if !empty($pager)>{$pager}</if>
+			</div>
+			<ol style="margin-left:-5px;width:400px;">
+				{loop $ds $item}
+				<li style="width:380px;">
+					<table class="table table-condensed table-hover table-bordered" style="width:380px;">
+					<thead style="width:380px;">产品标题：{$item['title']}<a class="btn btn-default" href="{$_W['siteroot']}app/{php echo $this->createMobileUrl('detail', array('id' => $item['id']))}" target="_blank" title="点击前往" target="_blank">去购买</a></thead>
+					<tbody>
+					<tr class="success" style="width:380px;">
+						<td style="width:380px;font-size:12px;"><p>产品链接：</p><span style="font-size:12px;">{$_W['siteroot']}app/{php echo $this->createMobileUrl('detail', array('id' => $item['id']))}</span></td>
+					</tr>
+					<tr>
+						<td style="width:380px;font-size:12px;"><p>产品简述：</p><p><?php echo cutstr($item['description'],50, '...') ?></p></td>
+					</tr>
+					<tr class="info">
+						<td style="width:380px;font-size:12px;"><p>信息摘要：</p><p>已售{$item['sales']}件;  库存：{php echo round($item['total']-$item['sales'],2)}  售价：{$item['marketprice']}元；  浏览量：{$item['viewcount']}次;</p></td>
+					</tr>
+					<tr class="warning">
+						<td><p>产品缩略图：<a  class="btn btn-default" href="{$_W['siteroot']}app/{php echo $this->createMobileUrl('detail', array('id' => $item['id']))}" target="_blank" title="点击前往" target="_blank">看详情</a></p><p><img src="{php echo tomedia($item['thumb']);}"  width="100px"></p></td>
+					</tr>
+					</tbody>
+					</table>
+					<textarea type="text" name="messageData" id="messageData({$item['id']})" class="textarea hidden" style="height:150; width:100%; overflow-y: auto;" >{"head":{"random":"{$item['id']}"}, "body":[{"type":7, "content":[{"title":"{$item['title']}", "digest":"<?php echo cutstr($item['description'],50, '...') ?>", "cover":"{php echo tomedia($item['thumb']);}", "url":"{$_W['siteroot']}app/{php echo $this->createMobileUrl('detail', array('id' => $item['id']))}"}]}]}</textarea>
+					<input class="hidden" type="submit" onClick="putmsg({$item['id']})" value="输出到会话窗口"/>
+				</li>
+				{/loop}
+				{if count($ds)<=0}
+				<li>
+					未找到产品
+				</li>
+				{/if}
+			</ol>
+			<div style="text-align:center">
+			{$pager}
+			</div>
+		</div>
+	</div>
+	
+{template $appstyle."common/designedby"}
+{template $appstyle."common/footmenu"}
+{template $appstyle.'common/_footer'}

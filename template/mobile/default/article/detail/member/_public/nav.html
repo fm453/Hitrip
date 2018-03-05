@@ -1,0 +1,100 @@
+{if !$DisableNav}
+<nav class="mui-bar mui-bar-tab">
+	{if !$_Is_fromShare}
+	<a class="mui-tab-item" href="{php echo fm_murl('index','index','index',array())}">
+		<span class="mui-icon mui-icon-home">
+
+		</span>
+		<span class="mui-tab-label">主页</span>
+	</a>
+	{/if}
+	{if $authorphone}
+	<a class="mui-tab-item" href="tel:{$authorphone}">
+		<span class="mui-icon mui-icon-phone"></span>
+		<span class="mui-tab-label">联系Ta</span>
+	</a>
+	{elseif $kefuphone}
+	<a class="mui-tab-item" href="tel:{$kefuphone}">
+		<span class="mui-icon mui-icon-phone"></span>
+		<span class="mui-tab-label">找客服</span>
+	</a>
+	{/if}
+
+	<a class="mui-tab-item mui-action-back" >
+		<span class="mui-action-back mui-icon mui-icon-undo">
+
+		</span>
+		<span class="mui-tab-label">返回</span>
+	</a>
+	{if !$hideDianzan}
+	<a class="mui-tab-item" id="_DianZan">
+		<span class="mui-link mui-icon mui-icon-extra mui-icon-extra-like">
+		</span>
+		<span class="mui-tab-label">点赞</span>
+	</a>
+	{/if}
+	{if !$disableDashang}
+	<a class="mui-tab-item" href="#modal-buy">
+		<span class="mui-link mui-icon mui-icon-extra mui-icon-extra-gift">
+		</span>
+		<span class="mui-tab-label">打赏</span>
+	</a>
+	{/if}
+	{if !$_Is_fromShare}
+	<a class="mui-tab-item" href="#bottomPopover">
+		<span class="mui-icon mui-icon-list">
+		</span>
+		<span class="mui-tab-label">更多</span>
+	</a>
+	{/if}
+</nav>
+{if !$_Is_fromShare}
+<!--右下角弹出菜单-->
+<div id="bottomPopover" class="mui-popover mui-popover-bottom">
+	<div class="mui-popover-arrow"></div>
+	<div class="mui-scroll-wrapper">
+		<div class="mui-scroll">
+			<ul class="mui-table-view">
+				{if $myArticle_id}
+				<li class="mui-table-view-cell"><a href="{$myArticle_url}">我的资料</a>
+				</li>
+				{if $memberReg}
+				<li class="mui-table-view-cell"><a href="{$memberReg}">我要修改</a>
+				</li>
+				{/if}
+				{else}
+				{if $memberReg}
+				<li class="mui-table-view-cell"><a href="{$memberReg}">我要加入</a>
+				</li>
+				{/if}
+				{/if}
+				<li class="mui-table-view-cell"><a href="#modal-member">我是会员</a>
+				</li>
+				<li class="mui-table-view-cell" style="background-color: #ccc;text-align: center;">联系方式
+				</li>
+
+				<li class="mui-table-view-cell">
+				    {if $authorphone}
+				    <a href="tel:{$authorphone}">TA的电话:{$authorphone}</a>
+				    {else}TA的电话:未公开{/if}
+				</li>
+				{if $vcard_link}
+				<li class="mui-table-view-cell" style="display: none;">
+				    <a href="{$vcard_link}">TA的名片</a>
+				</li>
+				{/if}
+
+				{if $kefuphone}
+				<li class="mui-table-view-cell"><a href="tel:{$kefuphone}">客服电话:{$kefuphone}</a>
+				</li>
+				{/if}
+				<li class="mui-table-view-cell"><a href="{php echo fm_murl('search','article','index',array('a_tpl'=>'member'));}"><i class="mui-icon mui-icon-search"></i>查找其他人</a>
+				</li>
+				<li class="mui-table-view-cell" style="background-color: #ccc;text-align: center;"><a href="#bottomPopover"><i class="mui-icon mui-icon-close"></i>关闭菜单</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+{/if}
+{/if}

@@ -1,0 +1,62 @@
+<?php
+	$asideNavs = array();
+	if($do=='search'){
+		switch($ac){
+			case 'article':
+				$asideNavs[] = array('title'=>'会员中心','link'=>fm_murl('member','index','index',array()));
+				$asideNavs[] = array('title'=>'栏目查看','link'=>fm_murl('article','list','index',array()));
+				$asideNavs[] = array('title'=>'官方微站','link'=>fm_murl('site','index','index',array()));
+				$asideNavs[] = array('title'=>'品牌客服','link'=>fm_murl('help','aboutus','index',array()));
+				break;
+			case 'goods':
+				$asideNavs[] = array('title'=>'会员中心','link'=>fm_murl('member','index','index',array()));
+				$asideNavs[] = array('title'=>'订单中心','link'=>fm_murl('order','index','index',array()));
+				$asideNavs[] = array('title'=>'商城首页','link'=>fm_murl('index','simple','index',array()));
+				$asideNavs[] = array('title'=>'品牌客服','link'=>fm_murl('help','aboutus','index',array()));
+				break;
+			case 'member':
+				$asideNavs[] = array('title'=>'我的介绍','link'=>fm_murl('article','detail','mine',array()));
+				$asideNavs[] = array('title'=>'会员中心','link'=>fm_murl('member','index','index',array()));
+				$asideNavs[] = array('title'=>'平台首页','link'=>fm_murl('index','index','index',array('showguide'=>false)));
+				$asideNavs[] = array('title'=>'品牌客服','link'=>fm_murl('help','aboutus','index',array()));
+				break;
+		}
+	}elseif($do=='site'){
+		$asideNavs[] = array('title'=>'会员中心','link'=>fm_murl('member','index','index',array()));
+		$asideNavs[] = array('title'=>'栏目查看','link'=>fm_murl('article','list','index',array()));
+		$asideNavs[] = array('title'=>'官方微站','link'=>fm_murl('site','index','index',array()));
+		$asideNavs[] = array('title'=>'品牌客服','link'=>fm_murl('help','aboutus','index',array()));
+	}else{
+		$asideNavs[] = array('title'=>'会员中心','link'=>fm_murl('member','index','index',array()));
+		$asideNavs[] = array('title'=>'平台首页','link'=>fm_murl('index','index','index',array('showguide'=>false)));
+		$asideNavs[] = array('title'=>'品牌客服','link'=>fm_murl('help','aboutus','index',array()));
+	}
+?>
+
+
+<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+	<div class="mui-scroll">
+		<div class="title" style="text-align:center;">{$_W['account']['name']}</div>
+		<div class="content">
+			温馨提示：您可通过左右滑动页面来打开或关闭侧边栏;双击网页标题栏或下拉，可刷新当前前面；在页面底部上拉可加载更多内容。
+			<span class="android-only">；您当前使用的是安卓手机，您还可以通过手机的返回键、home或者menu键快速切换页面。
+			</span>
+			<p style="margin: 10px 15px;">
+				<a href="#offCanvasSide" class="mui-btn mui-btn-danger mui-btn-block" style="padding: 5px 20px;">关闭侧边栏</a>
+			</p>
+
+		</div>
+		{if $asideNavs}
+		<div class="title" style="margin-bottom: 25px;">快捷方式</div>
+		<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted">
+			{loop $asideNavs $item}
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" href="{$item['link']}">
+					{$item['title']}
+				</a>
+			</li>
+			{/loop}
+		</ul>
+		{/if}
+	</div>
+</div>

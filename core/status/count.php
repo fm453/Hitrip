@@ -1,0 +1,18 @@
+<?php
+//运算状态
+$status['code']=array(
+	'name'=>'不限',
+	'value'=>'all',
+	'des'=>'',
+);
+$status['code0']=array(
+	'name'=>'增加',
+	'value'=>'0',
+	'des'=>'',
+);
+$status['code1']=array(
+	'name'=>'减少',
+	'value'=>'1',
+	'des'=>'',
+);
+?>

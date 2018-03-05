@@ -1,0 +1,17 @@
+<!-- 容器内搜索结果数据，添加搜索时替换-->
+	<!-- PPT SLIDER START -->
+	{if $settings['shoptype'] !='simple'}
+<div class="alert alert-warning alert-dismissible fade in" role="alert" style="margin-bottom:0;padding:0;margin-top: 0px;">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	{template $appstyle.$do.'/'.$ac.'/_public/ppt'}
+</div>
+{/if}
+	<!-- PPT SLIDER END -->
+
+	<!-- SEARCH START -->
+	{template $appstyle.$do.'/'.$ac.'/_public/search'}
+	<!-- SEARCH END -->
+
+	<!---搜索结果-->
+	<!---默认搜索结果(第一页)-->
+	{template $appstyle.$do.'/'.$ac.'/addsearch/page'}

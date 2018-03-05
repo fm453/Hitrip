@@ -1,0 +1,42 @@
+			<div class="mod-wrap">
+        <div class="clear mod-estate-dynamic">
+            <div class="dynamic-wrap clearfix inline-flex" style="">
+              <div class="dynamic-wrap-left pull-left" style="">
+                {loop $HouseData['params']['shortnews'] $shortnews}
+              <div class="dynamic-wrap-block clearfix"  style="">
+                <div class="dynamic-block-detail pull-left">
+                  <div class="dongtai-title">
+                  <label class="label label-success" style="margin-right:10px;">{$shortnewsTypes[$shortnews['type']]}</label>
+                  <strong>{$shortnews['title']}</strong>
+                    <span class="dynamic-detail-time pull-right">{$shortnews['addtime']}</span>
+                  </div>
+                  <p class="dynamic-detail-info-full" >{$shortnews['content']}</p>
+                </div>
+              </div>
+
+              <div class="dt-part-line" style=""></div>
+             {/loop}  
+            </div>
+
+            <div class="dynamic-wrap-right pull-left" style="">
+              <div class="dynamic-rt clearfix">
+                <span class="loupan-matter pull-left" style="">
+                楼盘纪事
+                </span>
+              </div>
+              <div class="dynamic-right-item clearfix" style="">
+                <ul class="pull-left">
+                	{loop $HouseData['params']['events'] $events}
+                  <li style="">
+                    <span class="time-info" style="">{$events['addtime']}</span>
+                    <span class="date-info" style="">{$events['title']}</span>
+                  </li>
+                  {/loop}
+
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>

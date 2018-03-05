@@ -1,0 +1,19 @@
+<!-- 容器内固定数据，刷新替换-->
+	<!-- PPT SLIDER START -->
+	{template $appstyle.'index/'.$ac.'/_public/ppt'}
+	<!-- PPT SLIDER END -->
+
+	<!-- 数据列表 -->
+	<!---产品推荐栏目-->
+	<!---默认首页推荐产品(第一页)-->
+	{if $rec_goodss}
+	<div class="mui-content">
+		<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;display:none;">{$shopname} 倾情推荐</h5>
+
+		{loop $rec_goodss $goodsid $goods}
+			{template $appstyle.'index/'.$ac.'/_public/goods/item_rec'}
+		{/loop}
+
+	</div>
+	{/if}
+

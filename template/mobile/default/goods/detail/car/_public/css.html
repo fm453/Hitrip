@@ -1,0 +1,227 @@
+<style type="text/css">
+.goodsnum{
+	width: 60px;
+	border-radius: 3px;
+	border-color: #cccccc;
+	padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+
+}
+/*顶部标题*/
+.titlebar{
+    width:100%;
+    height:40px;
+    line-height: 35px;
+    text-align: center;
+    padding-top:5px;
+    /*background-color:#fcf253;/*rgba(0,0,0,0.1);*/
+    color:#fff;
+    font-weight: bolder;
+    position: fixed;
+    top:0;
+    z-index:9900;
+}
+.titlebar .title{
+    width:100%;
+    max-width:900px;
+    text-align: center;
+    z-index:9900;
+}
+.titlebar .top-lf-btn{
+ width: 30px;
+ height:30px;
+ background-color:rgba(0,0,0,0.2);
+ color: #fff;
+ border-radius:50%;
+ z-index:9901;
+}
+.titlebar .top-rt-btn{
+ width: 30px;
+ height:30px;
+ background-color:rgba(0,0,0,0.1);
+ color: #fff;
+ border-radius:50%;
+ position:relative;
+ z-index:9902;
+}
+.titlebar .top-rt-btn i{
+ z-index:9903;
+}
+.titlebar .top-rt-btn .buy-num{
+ width: 15px;
+ height:15px;
+ background-color:#fcf253;
+ color: #f00;
+ font-weight: lighter;
+ font-size:10px;
+ border:1px solid #fff;
+ position:absolute;
+ top:1px;
+ right:1px;
+ z-index:9904;
+}
+/*产品详情*/
+.detail{
+ padding-bottom: 50px;
+ /*text-align: center;*/
+ width: 100%;
+ max-width: 900px;
+ box-shadow: 5px 5px 2px #888888, /*右下阴影*/
+  -5px 5px 2px #888888;
+
+}
+.detail-div{
+ box-shadow: 0 1px 2px rgba(221,221,221,0.5); /*底边阴影*/
+ text-align: left;
+ margin-top:3px;
+}
+.detail .detail-div .detail-group .goodtitle{
+ text-align: center;
+ line-height:18px;
+ font-weight:bold;
+}
+.detail .detail-div .detail-group .goodprice{
+ text-align: left;
+ line-height:15px;
+}
+.detail .detail-div .detail-group .params{
+ line-height:25px;
+ font-weight:bold;
+}
+.detail .detail-div .detail-group .params .params-left{
+ color: #a94442;
+}
+.detail .detail-div .detail-group .params .params-right{
+ color: #f00;
+}
+.detail .detail-div .detail-group .content{
+ margin: 3px;
+ text-align: left;
+}
+.box-shadow-colorful{
+    box-shadow:-5px 0 5px red, /*左边阴影*/
+    5px 0 5px yellow, /*右边阴影*/
+    0 -5px 5px blue, /*顶部阴影*/
+    0 5px 5px green; /*底边阴影*/
+}
+/*商品规格*/
+.displayoptions{
+ background-color: #fff;
+ width:96%;
+ /*max-width:900px;*/
+ position: fixed;
+ bottom:55px;
+ left: 2%;
+ border-radius: 5px;
+}
+.options{
+    width:100%;
+    /*max-width:900px;*/
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+    z-index:9990;
+}
+.options .title{
+    width: 100%;
+    text-align: left;
+    height: 35px;
+    line-height: 20px;
+    color: #fff;
+    font-weight: bolder;
+    background-color: #ff9001;
+    border-radius: 5px 5px 0 0;
+    padding:1px 0 5px 0;
+    z-index:9990;
+}
+.options .stocks{
+    color: #aaa;
+    font-weight: bolder;
+    padding-top: 10px;
+    box-shadow: 0 1px 0px #ff9001;
+    /*position: relative;
+    top: 0;
+    left:0;*/
+    z-index:9990;
+}
+.options .specs{
+    text-align: left;
+    width: 100%;
+    color: #000;
+    font-weight: bolder;
+    /*position: relative;*/
+    z-index:9990;
+}
+.spec{
+    float: left;
+    width: 25%;
+    color: #000;
+    font-weight: bolder;
+    /*position: relative;*/
+    z-index:9990;
+}
+.spec .spec-title{
+ display:block;
+ height:20px;
+ line-height:20px;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ padding-left: 5px;
+ margin: 0;
+}
+.spec-ls{
+ width: 75%;
+ line-height: 35px;
+ float: left;
+ padding:0;
+    color: #000;
+    z-index:9990;
+}
+.spec-ls-title{
+    text-align: center;
+    width: auto;
+    min-height: 35px;
+    color: #000;
+    float: left;
+    z-index:9990;
+}
+.spec-ls-title2{
+    text-align: center;
+    width: auto;
+    min-height: 35px;
+    color: #000;
+    rgba(238, 238, 238, 0.51);
+    float: left;
+    z-index:9990;
+}
+/*底部按钮*/
+.footbar{
+    width:100%;
+    max-width: 900px;
+    height:45px;
+    line-height: 20px;
+    text-align: center;
+    background-color:#f5f5f5;
+    font-weight: bolder;
+    font-size:15px;
+    margin-bottom: 3px;
+    position: fixed;
+    bottom:0;
+    z-index:9900;
+}
+.footbar h4{
+    padding-top:2px;
+    padding-bottom: 3px;
+    margin:1px;
+}
+.footbar .fbtable{
+    width:100%;
+    max-width: 900px;
+    border:1px solid #fff;
+    margin-top: 2px;
+}
+.mui-slider-group{
+	margin-right:-1px;
+}
+</style>

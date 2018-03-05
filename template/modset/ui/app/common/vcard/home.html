@@ -1,0 +1,51 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion"
+          href="#app-common-vcard">
+          内容模型底部通用名片区块<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse" id="app-common-vcard">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-appCommonVcard" onsubmit="return formcheck('setting-form-appCommonVcard')">
+				<input type="hidden" name="ac" value="ui" />
+				<input type="hidden" name="op" value="modify" />
+				<input type="hidden" name="setfor" value="common" />
+				<input type="hidden" name="opp" value="vcard" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 control-label">名片区显示</label>
+						<input type="hidden" name="section_vcard_status" id="section_vcard_status" value="" />
+						<div class="col-sm-9 col-md-6">
+							<label for="section_vcard_click" >
+								<input type="radio" name="section_vcard_click"  value="1" {if $settings['common']['section_vcard_status']==1}checked="true"{/if} onclick="changeVal($(this),'section_vcard_status')" /> 开启
+							</label>
+							<label for="section_vcard" >
+								<input type="radio" name="section_vcard_click" value="2" {if $settings['common']['section_vcard_status']==2}checked="true"{/if} onclick="changeVal($(this),'section_vcard_status')"  /> 关闭
+							</label>
+							<label for="section_vcard" >
+								<input type="radio" name="section_vcard_click"  value="0" {if $settings['common']['section_vcard_status']==0}checked="true"{/if} onclick="changeVal($(this),'section_vcard_status')"  /> 默认
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 control-label">名片区内容设置</label>
+						<div class="col-sm-9 col-md-6">
+							{php echo tpl_ueditor('section_vcard_content', $settings['common']['section_vcard_content']);}
+						</div>
+						<div class="col-sm-12 col-md-4 col-xs-12 help-block">
+							底部名片区默认是显示在文章内容的页面底部（公众号头像+二维码），主要是为了配合标识统一、引导阅读者扫描
+						</div>
+					</div>
+
+				<input type="submit" name="save_setting-form-appCommonVcard" value="保存" class="btn btn-primary btn-block setting-form-appCommonVcard" style="" />
+				<a class="btn btn-default btn-block" data-toggle="collapse" data-parent="#accordion" href="#app-common-vcard">点击收缩该栏目</a>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>

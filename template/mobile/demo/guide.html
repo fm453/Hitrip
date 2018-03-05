@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>{$pagename}</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <meta name="format-detection" content="address=no,  email=no"><!-- 禁止苹果设备自动为号码、邮箱、地址添加链接支持 -->
+<meta name="x5-page-mode" content="app"/><!-- UC强制全屏 -->
+<meta name="full-screen" content="yes"><!-- QQ强制全屏 -->
+ <meta name="renderer" content="webkit"> <!--使用高速模式渲染页面，360浏览器支持 -->
+ <meta name="apple-mobile-web-app-capable" content="yes" />
+ <meta name="apple-touch-fullscreen" content="yes"/>
+ <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+ <meta name="author" content="luker" />
+ <meta name="generator" content="Bluefish 2.2.6" />
+ <meta name="date" content="2016-10-13T08:51:00+0800" />
+ <meta name="version" content="{FM_VERSION}" />
+ <meta name="keywords" content="{if empty($_W['page']['keywords'])}{if IMS_FAMILY != 'x'}VCMS,微信,微信公众平台,vcms.hiluker.com{/if}{else}{$_W['page']['keywords']}{/if}" />
+ <meta name="description" content="{if empty($_W['page']['description'])}{if IMS_FAMILY != 'x'}分时度假管理引擎，简称微旅行商城，是嗨路客电子商务团队结合海南酒店旅游从业经验，针对旅行社线上转型、酒店服务营销之所需而定制的微信公众平台管理系统，是业内最完善移动网站及移动互联网技术解决方案之一。{/if}{else}{$_W['page']['description']}{/if}" />
+ <meta http-equiv="X-UA-Compatible" content="IE=Edge"><!-- 兼容IE -->
+ <link rel="apple-touch-icon-precomposed" size="144x144" href="{$fm453resource}images/favicon.png">
+ <link rel="shortcut icon" href="{$fm453resource}images/favicon.png">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+ <script type="text/javascript" src="{$fm453resource}common/js/jquery-2.2.3.js"></script>
+		<link rel="stylesheet" href="{$appsrc}/css/mui.min.css">
+		<style>
+			#close {
+				position: absolute;
+				width: 160px;
+				left: 50%;
+				margin-left: -80px;
+				bottom: 15%;
+				padding: 10px;
+				color: #fff;
+				border-color: #fff;
+			}
+			.item-logo {
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+			.item-logo a {
+				width: 200px;
+				height: 200px;
+				display: block;
+				border: 1px solid #FFFFFF;
+				border-color: rgba(255, 255, 255, 0.5);
+				text-align: center;
+				line-height: 200px;
+				border-radius: 50%;
+				font-size: 40px;
+				color: #fff;
+				position: absolute;
+				top: 15%;
+				left: 50%;
+				margin-left: -100px;
+			}
+			.animate {
+				position: absolute;
+				left: 0;
+				bottom: 15%;
+				width: 100%;
+				color: #fff;
+				display: -moz-box;
+			}
+			.animate h2 {
+				text-align: center;
+				margin-bottom: 20px;
+			}
+			.animate li {
+				width: 50%;
+				height: 30px;
+				line-height: 30px;
+				list-style: none;
+				font-size: 16px;
+				text-align: right;
+			}
+			.animate li:nth-child(3) {
+				text-align: left;
+				float: right;
+			}
+			.animated {
+				-webkit-animation-duration: 1s;
+				-webkit-animation-play-state: paused;
+				-webkit-animation-fill-mode: both;
+			}
+			.guide-show .bounceInDown {
+				-webkit-animation-name: bounceInDown;
+				-webkit-animation-play-state: running;
+				-webkit-animation-delay: 1s;
+				display: block;
+			}
+			.guide-show .bounceInLeft {
+				-webkit-animation-name: bounceInLeft;
+				display: block;
+				-webkit-animation-play-state: running;
+			}
+			.guide-show .bounceInRight {
+				-webkit-animation-name: bounceInRight;
+				display: block;
+				-webkit-animation-play-state: running;
+				-webkit-animation-delay: 0.5s;
+			}
+			@-webkit-keyframes bounceInDown {
+				0%, 60%, 75%, 90%, 100% {
+					-webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+					animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+				}
+				0% {
+					opacity: 0;
+					-webkit-transform: translate3d(0, -3000px, 0);
+					transform: translate3d(0, -3000px, 0);
+				}
+				60% {
+					opacity: 1;
+					-webkit-transform: translate3d(0, 25px, 0);
+					transform: translate3d(0, 25px, 0);
+				}
+				75% {
+					-webkit-transform: translate3d(0, -5px, 0);
+					transform: translate3d(0, -5px, 0);
+				}
+				90% {
+					-webkit-transform: translate3d(0, 3px, 0);
+					transform: translate3d(0, 3px, 0);
+				}
+				100% {
+					-webkit-transform: none;
+					transform: none;
+				}
+			}
+			@-webkit-keyframes bounceInLeft {
+				0%, 60%, 75%, 90%, 100% {
+					-webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+					animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+				}
+				0% {
+					opacity: 0;
+					-webkit-transform: translate3d(-3000px, 0, 0);
+					transform: translate3d(-3000px, 0, 0);
+				}
+				60% {
+					opacity: 1;
+					-webkit-transform: translate3d(25px, 0, 0);
+					transform: translate3d(25px, 0, 0);
+				}
+				75% {
+					-webkit-transform: translate3d(-10px, 0, 0);
+					transform: translate3d(-10px, 0, 0);
+				}
+				90% {
+					-webkit-transform: translate3d(5px, 0, 0);
+					transform: translate3d(5px, 0, 0);
+				}
+				100% {
+					-webkit-transform: none;
+					transform: none;
+				}
+			}
+			@-webkit-keyframes bounceInRight {
+				0%, 60%, 75%, 90%, 100% {
+					-webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+					animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+				}
+				0% {
+					opacity: 0;
+					-webkit-transform: translate3d(3000px, 0, 0);
+					transform: translate3d(3000px, 0, 0);
+				}
+				60% {
+					opacity: 1;
+					-webkit-transform: translate3d(-25px, 0, 0);
+					transform: translate3d(-25px, 0, 0);
+				}
+				75% {
+					-webkit-transform: translate3d(10px, 0, 0);
+					transform: translate3d(10px, 0, 0);
+				}
+				90% {
+					-webkit-transform: translate3d(-5px, 0, 0);
+					transform: translate3d(-5px, 0, 0);
+				}
+				100% {
+					-webkit-transform: none;
+					transform: none;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="slider" class="mui-slider mui-fullscreen" style="background-color: black;">
+			<div class="mui-slider-group">
+				<!-- 第一张 -->
+				<div class="mui-slider-item">
+					<div class="item-logo" style="background-color: rgba(0,149,216,1);">
+						<a href="#">
+						Hi ！
+						</a>
+						<div class="animate guide-show">
+							<h2 class="animated bounceInDown">全新改版</h2>
+							<li class="animated bounceInLeft">更高效的处理响应</li>
+							<li class="animated bounceInRight">更流畅的操作体验</li>
+						</div>
+					</div>
+				</div>
+				<!-- 第二张 -->
+				<div class="mui-slider-item">
+					<div class="item-logo" style="background-color: #02C1ED;">
+						<a href="#" style="/**background: rgba(255,255,255,0) url({$appsrc}/images/logo.png) center center;**/">
+						新界面
+						</a>
+						<div id="tips-2" class="animate mui-hidden">
+							<h2 class="animated bounceInDown">界面大量美化</h2>
+							<li class="animated bounceInLeft">以iOS原生UI为基础</li>
+							<li class="animated bounceInRight">补充Android特有样式</li>
+						</div>
+					</div>
+				</div>
+				<!-- 第三张 -->
+				<div class="mui-slider-item">
+					<div class="item-logo" style="background-color: #67C962;">
+						<a href="#">
+						易操作
+						</a>
+						<div id="tips-3" class="animate mui-hidden">
+							<h2 class="animated bounceInDown">流畅体验</h2>
+							<li class="animated bounceInLeft">下拉刷新、转场动画</li>
+							<li class="animated bounceInRight">整个世界都流畅了</li>
+						</div>
+					</div>
+				</div>
+				<!-- 第四张 -->
+				<div class="mui-slider-item">
+					<div class="item-logo" style="background-color: #FCD208;">
+						<a href="#">
+						更便捷
+						</a>
+						<div class="animate">
+							<button id='close' class="mui-btn mui-btn-warning mui-btn-outlined mui-action-back">立即体验</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+		<script src="{$appsrc}/js/mui.min.js"></script>
+		<script>
+			mui.back = function() {};
+			mui.plusReady(function() {
+				if(mui.os.ios){
+					plus.navigator.setFullscreen(true);
+				}
+				plus.navigator.closeSplashscreen();
+			});
+			//立即体验按钮点击事件
+			document.getElementById("close").addEventListener('tap', function(event) {
+				if(mui.plus){
+					//如果在基座中运行
+					plus.storage.setItem("lauchFlag", "true");
+					plus.navigator.setFullscreen(false);
+					plus.webview.currentWebview().close();
+					}
+					else {
+						//top.window.location = "{php echo fm_murl('index','index','index',array())}";
+						top.window.location = "{php echo fm_murl('demo','index','index',array())}";
+					}
+			}, false);
+			//图片切换时，触发动画
+			document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+			 	//注意slideNumber是从0开始的；
+			 	var index = event.detail.slideNumber+1;
+			 	if(index==2||index==3){
+			 		var item = document.getElementById("tips-"+index);
+			 		if(item.classList.contains("mui-hidden")){
+			 			item.classList.remove("mui-hidden");
+			 			item.classList.add("guide-show");
+			 		}
+			 	}
+			});
+
+		</script>
+<div class="text-center footer" style="display:none;">
+	{$_W['setting']['copyright']['statcode']}
+</div>
+<script type="text/javascript">
+   if(navigator.appName == 'Microsoft Internet Explorer'){
+    if(navigator.userAgent.indexOf("MSIE 5.0")>0 || navigator.userAgent.indexOf("MSIE 6.0")>0 || navigator.userAgent.indexOf("MSIE 7.0")>0) {
+     alert('您使用的 IE 浏览器版本过低, 推荐使用 Chrome 浏览器或 IE8 及以上版本浏览器.');
+      }
+     }
+
+   $(function () {
+  var nua = navigator.userAgent
+  var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1)
+  if (isAndroid) {
+    $('select.form-control').removeClass('form-control').css('width', '100%')
+  }
+}) /** 修复android 4.1浏览器对选项框边框样式的不兼容问题 **/
+     {php define('HEADER', true);}
+
+	window.sysinfo = {
+{if !empty($_W['uniacid'])}
+		'uniacid': '{$_W['uniacid']}',
+{/if}
+{if !empty($_W['acid'])}
+		'acid': '{$_W['acid']}',
+{/if}
+{if !empty($_W['openid'])}
+		'openid': '{$_W['openid']}',
+{/if}
+{if !empty($_W['uid'])}
+		'uid': '{$_W['uid']}',
+{/if}
+		'siteroot': '{$_W['siteroot']}',
+		'siteurl': '{$_W['siteurl']}',
+		'attachurl': '{$_W['attachurl']}',
+{if defined('MODULE_URL')}
+		'MODULE_URL': '{MODULE_URL}',
+{/if}
+		'cookie' : {'pre': '{$_W['config']['cookie']['pre']}'}
+	};
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+	// 是否启用调试
+	jssdkconfig.debug = false;
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'hideMenuItems',
+		'showMenuItems',
+		'hideAllNonBaseMenuItem',
+		'showAllNonBaseMenuItem',
+		'translateVoice',
+		'startRecord',
+		'stopRecord',
+		'onRecordEnd',
+		'playVoice',
+		'pauseVoice',
+		'stopVoice',
+		'uploadVoice',
+		'downloadVoice',
+		'chooseImage',
+		'previewImage',
+		'uploadImage',
+		'downloadImage',
+		'getNetworkType',
+		'openLocation',
+		'getLocation',
+		'hideOptionMenu',
+		'showOptionMenu',
+		'closeWindow',
+		'scanQRCode',
+		'chooseWXPay',
+		'openProductSpecificView',
+		'addCard',
+		'chooseCard',
+		'openCard'
+	];
+	</script>
+<script type="text/javascript">
+//防止之前加载的JS与微信分享JS冲突，重置define跟require以解决该问题
+    define = null;
+    require = null;
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+	wx.config(jssdkconfig);
+	var $_share = {php echo json_encode($_share);};
+	if(typeof sharedata == 'undefined'){
+		sharedata = $_share;
+	} else {
+		sharedata['title'] = sharedata['title'] || $_share['title'];
+		sharedata['desc'] = sharedata['desc'] || $_share['desc'];
+		sharedata['link'] = sharedata['link'] || $_share['link'];
+		sharedata['imgUrl'] = sharedata['imgUrl'] || $_share['imgUrl'];
+	}
+	function tomedia(src) {
+		if(typeof src != 'string')
+			return '';
+		if(src.indexOf('http://') == 0 || src.indexOf('https://') == 0) {
+			return src;
+		} else if(src.indexOf('../addons') == 0 || src.indexOf('../attachment') == 0) {
+			src=src.substr(3);
+			return window.sysinfo.siteroot + src;
+		} else if(src.indexOf('./resource') == 0) {
+			src=src.substr(2);
+			return window.sysinfo.siteroot + 'app/' + src;
+		} else if(src.indexOf('images/') == 0) {
+			return window.sysinfo.attachurl+ src;
+		}
+	}
+	
+	if(sharedata.imgUrl == ''){
+		var _share_img = $('body img:eq(0)').attr("src");
+		if(_share_img == ""){
+			sharedata['imgUrl'] = window.sysinfo.attachurl + 'images/global/wechat_share.png';
+		} else {
+			sharedata['imgUrl'] = tomedia(_share_img);
+		}
+	}
+	
+	if(sharedata.desc == ''){
+		var _share_content = _removeHTMLTag($('body').html());
+		if(typeof _share_content == 'string'){
+			sharedata.desc = _share_content.replace($_share['title'], '')
+		}
+	}
+	
+	wx.ready(function () {
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
+</script>
+</body>
+</html>

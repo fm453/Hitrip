@@ -1,0 +1,41 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+<div class="main">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+{template 'help/tab_forhelp'}
+			</div>
+			<div class="panel-body">
+				<ul class="nav nav-tabs" id="myTab_status">
+					{if $operation=="display"}
+					<li class="active"><a href="#status_display" data-toggle="tab">状态说明</a></li>
+					{/if}
+					{if $operation=="modify"}
+					<li><a href="#status_display" data-toggle="tab">状态说明</a></li>
+					<li class="active"><a href="#status_manage" data-toggle="tab">状态管理</a></li>
+					{/if}
+					<li><a href="#status_add" data-toggle="tab">添加新状态</a></li>
+				</ul>
+				<div class="tab-content">
+					{if $operation=="display"}
+					<div class="tab-pane fade in active " id="status_display">{template 'help/status/display'}</div>
+					{/if}
+					 {if $operation=="modify"}
+					 <div class="tab-pane fade " id="status_display">{template 'help/status/display'}</div>
+					<div class="tab-pane fade in active" id="status_manage">{template 'help/status/manage'}</div>
+					 {/if}
+					 <div class="tab-pane fade " id="status_add">{template 'help/status/add'}</div>
+				</div>
+			</div>
+		</div>
+</div>
+<script type="text/javascript" >
+	$(function () {
+		window.optionchanged = false;
+		$('#myTab_status a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content,使用该功能前提是a链接中加上data-toggle="tab"
+		})
+	});
+</script>
+{template 'common/footer'}

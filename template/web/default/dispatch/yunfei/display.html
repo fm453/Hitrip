@@ -1,0 +1,41 @@
+<div class="main panel panel-default">
+	<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:50px;">ID</th>
+					<th style="width:80px;">显示顺序</th>
+					<th style="width:80px;">状态</th>
+					<th style="width:120px;">配送方式</th>
+					<th style="width:120px;">配送类型</th>
+					<th style="width:120px;">首重价格</th>
+					<th style="width:120px;">续重价格</th>
+					<th style="width:100px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['id']}</td>
+					<td>{$item['displayorder']}</td>
+					<td>{if $item['isavailable']==1}启用{else}未使用{/if}</td>
+					<td>{$item['dispatchname']}</td>
+					<td>{if $item['dispatchtype']==0}先付款后发货
+					{elseif $item['dispatchtype']==1}货到付款
+					{else}
+					实物自提
+					{/if}</td>
+					<td>{$item['firstprice']}</td>
+					<td>{$item['secondprice']}</td>
+					<td style="text-align:left;">
+						<a href="{php echo fm_wurl($do,$ac,'modify', array('id' => $item['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="修改"><i class="fa fa-pencil"></i></a>
+						<a href="{php echo fm_wurl($do,$ac,'copy', array('id' => $item['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="复制内容并保存为一个新的配送方式"><i class="fa fa-copy"></i></a>
+						<a href="{php echo fm_wurl($do,'ajax','delete', array('id' => $item['id'],'from_ac'=>$ac,'from_op'=>$operation,'delete'=>'yunfei'))}" onclick="return confirm('再确认一下，要删除此配送方式吗？此操作不可恢复！');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times" style="color:red;"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>

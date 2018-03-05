@@ -1,0 +1,20 @@
+<div class="span4">
+        <div class="thumbnail" style="background-image: url();">
+        <a class="" href="{php echo fm_murl('realty','detail','index',array('sn'=>$item['sn']))}" target="_blank">
+        		<div class="background-image"  style="background-image: url({$item['params']['rec_thumb']});height:200px;"></div>
+            <img  alt="300x200" src="{$item['params']['rec_thumb']}" style="display: none;" />
+            <div class="caption" contenteditable="false">
+                <h6 style="">
+                    <span class="title">{$item['title']}</span>
+                    &nbsp;
+                    <span class="price">{$item['params']['prices']['start']}~{$item['params']['prices']['end']} 元/m<sup>2</sup></span>
+                </h6>
+                <p style="">
+                    <span class="address"><i class="fa fa-map-marker"></i>&nbsp;{$item['params']['address']}</span>
+                    /
+                    <span class="area"> {$item['params']['coverage']['start']}~{$item['params']['coverage']['end']} m<sup>2</sup></span>
+                </p>
+            </div>
+            </a>
+        </div>
+    </div>

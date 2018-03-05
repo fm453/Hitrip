@@ -1,0 +1,33 @@
+<?php
+//支付方式
+$status['code']=array(
+	'name'=>'全部',
+	'value'=>'all',
+	'css'=>'primary',
+	'des'=>''
+);
+$status['code0']=array(
+	'name'=>'未支付',
+	'value'=>'0',
+	'css'=>'default',
+	'des'=>''
+);
+$status['code1']=array(
+	'name'=>'余额支付',
+	'value'=>'1',
+	'css'=>'danger',
+	'des'=>''
+);
+$status['code2']=array(
+	'name'=>'在线支付',
+	'value'=>'2',
+	'css'=>'info',
+	'des'=>''
+);
+$status['code3']=array(
+	'name'=>'货到付款',
+	'value'=>'3',
+	'css'=>'success',
+	'des'=>''
+);
+?>

@@ -1,0 +1,25 @@
+{template $appstyle.$do.'/'.$ac.'/'.$goodtpl.'/_public/css'}
+{template $appstyle.$do.'/'.$ac.'/'.$goodtpl.'/_public/titlebar'}
+<!--下拉刷新容器-->
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="" >
+	<div class="mui-scroll" >
+		<div class="mui-content"  id="pullrefresh-table"><!-- 该ID必须存在且不允许更改 -->
+			{template $appstyle.$do.'/'.$ac.'/'.$goodtpl.'/'.$operation.'/page'}
+		</div>
+	</div>
+</div>
+<!-- 下拉容器结束 -->
+
+<!-- 模态框 -->
+{template $appstyle.$do.'/'.$ac.'/'.$goodtpl."/_public/modal/buy"}
+<!---底部菜单栏-->
+{template $appstyle.$do.'/'.$ac.'/'.$goodtpl.'/_public/footbar'}
+{template $appstyle.$do.'/'.$ac.'/'.$goodtpl.'/_public/footjs'}
+
+{template $appstyle.$do.'/'.$ac.'/'.$goodtpl."/load/js"}
+<!-- 图片放大查看 -->
+<script src="{$appsrc}js/mui.zoom.js"></script>
+<script src="{$appsrc}js/mui.previewimage.js"></script>
+<script type="text/javascript" >
+	mui.previewImage();
+</script>

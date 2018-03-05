@@ -1,0 +1,130 @@
+<script type="text/javascript" charset="utf-8">
+	mui.init(
+		{
+			swipeBack: false, //启用右滑关闭功能
+			gestureConfig: {
+				tap: true, //默认为true,单击屏幕
+				doubletap: true, //默认为false，双击屏幕
+				longtap: false, //默认为false，长按屏幕
+				hold:false,//默认为false，按住屏幕
+				release:false,//默认为false，离开屏幕
+				swipe: true, //默认为true，滑动（swipeleft  , swiperight,   swipeup,   swipedown )
+				drag: true, //默认为true，拖动  ( dragstart,  drag,   dragend )
+			},
+		}
+	);
+	//定义支持区域滚动的层类
+	mui('.mui-scroll-wrapper').scroll();
+
+	//实现ios平台原生侧滑关闭页面；
+	if(mui.os.plus && mui.os.ios) {
+		mui.plusReady(function() { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故直接屏蔽popGesture功能
+			plus.webview.currentWebview().setStyle({
+				'popGesture': 'none'
+			});
+		});
+	}
+</script>
+
+<!-- 模态框 modal -->
+
+<!-- 监听标题-->
+<script type="text/javascript" >
+//监听header的双击事件
+	document.querySelector('header').addEventListener('doubletap', function() {
+		$('#pagename').html('正在刷新…');
+		refreshLoad("pullrefresh-table");
+	});
+
+</script>
+<!-- 上拉下拉事件 -->
+<script type="text/javascript" >
+	mui.init({
+		pullRefresh: {
+			container: '#pullrefresh',
+			down: {
+				auto: false, //自动下拉刷新一次
+				contentover : "{$shopname}提示：立即释放 刷新一下",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+				contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+				contentrefresh : "{$shopname}正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+				callback: pulldownRefresh
+			},
+			up: {
+				contentrefresh: '{$shopname}正在加载...',
+				callback: pullupRefresh
+			}
+		}
+	});
+
+	/**
+	 * 下拉刷新具体业务实现
+	 */
+	function pulldownRefresh() {
+		setTimeout(function() {
+			 refreshLoad("pullrefresh-table");
+			mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+		}, 1500);
+	}
+	//页面刷新加载处理
+	function refreshLoad(container) {
+		$('#pagename').html('正在更新');
+		var url = "{$_W['siteurl']}";
+		var data = {};
+		if (container=='') {
+			container = 'pullrefresh';
+		}
+		$.get(url,data,function(res){
+			if (res) {
+				$('#'.container).html(res);//替换内容
+				setTimeout(function(){
+					$('#pagename').html('内容更新完毕');
+					setTimeout(function(){
+						$('#pagename').html('{$pagename}');
+				},500);
+				},1500);
+			}
+		});
+	}
+
+	var count = 0;	//起始计数
+	var maxpages = "{$maxpages}";	//当前情况下的最大页数
+	var pindex = 1;
+	/**
+	 * 上拉加载具体业务实现
+	 */
+	function pullupRefresh() {
+		setTimeout(function() {
+			mui('#pullrefresh').pullRefresh().endPullupToRefresh((count>maxpages)); //参数为true(累计刷新页数达到最大分页数)代表没有更多数据了
+			count ++;	//累计一次上拉次数
+			loadMore("pullrefresh-table");
+		}, 100);
+	}
+		//页面上拉加载处理
+	function loadMore(container) {
+	    pindex++;
+		$('#pagename').html('正在加载');
+		var url = js_url("{$do}","{$ac}","loadmore","{$_W['uniacid']}","app");
+		var data = {
+		    pcate : "{$pcate}",
+		    ccate : "{$ccate}",
+		    isrecomemnd : "{$isrecommend}",
+		    a_tpl : "{$a_tpl}",
+			page : pindex,
+			psize:3,
+		};
+		if (container=='' || container=='undefined') {
+			container = 'pullrefresh-table';
+		}
+		$.get(url,data,function(res){
+			if (res) {
+				$('#' + container).append(res);//追加内容
+				setTimeout(function(){
+					$('#pagename').html('内容已加载完毕');
+					setTimeout(function(){
+						$('#pagename').html('{$pagename}');
+			    	},500);
+				},100);
+			}
+		});
+	}
+</script>

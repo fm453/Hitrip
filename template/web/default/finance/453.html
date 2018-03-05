@@ -1,0 +1,54 @@
+{template $fm453style.'common/_header'}
+{template $fm453style.'common/tabnav'}
+{if $ac == 'credit'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/'.$ac.'/search'}
+	{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+{/if}
+{if $ac == 'charge'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/'.$ac.'/search'}
+	{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+	{if $operation == 'member'}
+	{template $fm453style.$do.'/'.$ac.'/member'}
+	{/if}
+	{if $operation == 'detail'}
+	{template $fm453style.$do.'/'.$ac.'/detail'}
+	{/if}
+{/if}
+{if $ac == 'commission'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/'.$ac.'/search'}
+	{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+	{if $operation == 'member'}
+	{template $fm453style.$do.'/'.$ac.'/member'}
+	{/if}
+	{if $operation == 'detail'}
+	{template $fm453style.$do.'/'.$ac.'/detail'}
+	{/if}
+{/if}
+{if $ac == 'zhifu'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/'.$ac.'/search'}
+	{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+	{if $operation == 'detail'}
+	{template $fm453style.$do.'/'.$ac.'/detail'}
+	{/if}
+{/if}
+{if $ac == 'paylog'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/'.$ac.'/search'}
+	{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+	{if $operation == 'detail'}
+	{template $fm453style.$do.'/'.$ac.'/detail'}
+	{/if}
+{/if}
+
+{template $fm453style.$do.'/key'}
+{template $fm453style.$do.'/mouse'}
+{template $fm453style.'common/_footer'}

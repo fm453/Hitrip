@@ -1,0 +1,113 @@
+{template $appstyle.'common/header'}
+{template $appstyle.$do.'/'.$ac.'/'.$goodstpl.'/'.$operation.'/css'}
+{template $appstyle.'common/tip'}
+<link href="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<script src="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="{$fm453resource}components/datetimepicker/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<header id="header" class="mui-bar mui-bar-transparent" style="">
+	{template $appstyle.$do.'/'.$ac.'/'.$goodstpl.'/'.$operation.'/titlebar'}
+</header>
+
+<form class="form-horizontal" method="post" role="form" onsubmit='return formcheck()'>
+	<input type="hidden" name="goodstype" value="{$goodstype}" />
+	<input type="hidden" name="address" value="{$defaultaddress['id']}" />
+	<div class="order-main ">
+		<h5>联系方式:</h5>
+		<div id="myaddress">
+			{if !empty($defaultaddress)}
+			<div id="address_{$defaultaddress['id']}" class="img-rounded" style="margin:0;padding:10px;margin-bottom:10px;cursor:pointer;background-color: #fff;" onclick="changeAddress()">
+				<span>{$defaultaddress['username']}, {$defaultaddress['mobile']}</span>
+				<span style="float:right;"> &nbsp;&nbsp;
+					<a href="{php echo fm_murl('member','address','index',array('from'=>'confirm','returnurl'=>urlencode($returnurl)))}">
+					管理联系方式
+					</a>
+				</span>
+				{if !empty($defaultaddress['address'])}
+			<h5>默认联系地址:</h5>
+			<input id="defaultaddress" value="{$defaultaddress['province']}-{$defaultaddress['city']}-{$defaultaddress['district']}-{$defaultaddress['address']}" class="form-control" readonly="true" />
+			{/if}
+			</div>
+			{else}
+			<div>
+				<button type="button" class="btn btn-danger" onclick='location.href="{php echo fm_murl('member','address','index',array('from'=>'confirm','returnurl'=>urlencode($returnurl)))}"'><i class="glyphicon glyphicon-plus"></i> 添加/修改(首次需设置，以后自动调用)</button>
+			</div>
+			{/if}
+		</div>
+		{template $appstyle.'goods/tpls/confirm/'.$goodstpl}
+
+		{template $appstyle.$do.'/'.$ac.'/'.$goodstpl.'/'.$operation.'/goodsinfo'}
+		<div class="order-detail">
+			<div class="order-detail-hd">
+				<span class="pull-right" style="color:#E74C3C;">
+					[合计：<span id='totalprice'>{$totalprice}元</span>]
+				</span>
+				{if $totalprice<$freeDispatchPrice}
+				<span class="pull-right" id="add_dispatch_price" style="">温馨提示：您的订单金额不足{$settings['free_dispatch']}元，我们需加收{$settings['free_dispatch_price']}元配送费用</span>
+				{/if}
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+		<h5>备注</h5>
+		<div class="message-box">
+			<textarea class="form-control" rows="3" name="remark" placeholder="亲，请将您的预订人姓名、电话或其他相关信息填写在此处，以便客服与您联系和进一步确认。"></textarea>
+		</div>
+		<button type="submit" name="submit" value="yes" class="btn btn-warning order-submit btn-lg" style="margin-bottom:20px;">提交订单</button>
+		<input type="hidden" name="token" value="{$_W['token']}" />
+	</div>
+</form>
+
+<script language='javascript'>
+	function changeAddress(){
+		location.href = "{php echo fm_murl('member', 'address','index', array('from'=>'confirm','returnurl'=>urlencode($returnurl)))}";
+	}
+//不需要强制填写收货联系地址时，可将上面的的链接改为引用mobordercantact
+	function formcheck(){
+		var isneedaddress="{$isNeedAddress}";
+		if (isneedaddress==true) {
+			var hasaddress =document.getElementById("defaultaddress").value;
+			if($("#defaultaddress").length <=0 ){
+				alert("亲，请先补充您的联系方式！");
+				return false;
+			}
+		}
+		return true;
+	}
+
+	$('.form_datetime').datetimepicker({
+		language:  'zh-CN',
+		weekStart: 0,	//一周从哪一天开始。0（星期日）到6（星期六）
+		startDate: "{php echo date('Y-m-d H:i',TIMESTAMP+83499)}",	//开始时间
+		todayBtn:  true,
+		autoclose: true,
+		todayHighlight: true,
+		startView: 2,
+		forceParse: 0,
+		minuteStep: 30,
+		showMeridian: 1,
+	});
+
+	$("#dispatch").change(canculate);
+
+	function canculate(){
+		var prices = parseFloat("{$totalprice}");	//产品总价
+		var freedispatchprice = parseFloat("{$freeDispatchPrice}");		//可免邮的最低总价
+		var isneeddispatch = "{$isNeedDispatch}";	//是否需要配送
+		var free_dispatch_price = parseFloat("{$dispatchPrice}");		//不足免邮最低总价时需要补充的邮费
+		if(prices < freedispatchprice){	/*订单金额不足免邮额时，加收预设运费*/
+			prices = prices + free_dispatch_price;
+			$("#add_dispatch_price").show();
+		}
+		var dispatchprice = parseFloat($("#dispatch").find("option:selected").attr("price"));
+		if (dispatchprice > 0){
+			prices = prices + dispatchprice;
+			$("#totalprice").html(prices + dispatchprice + " 元 (含运费"+dispatchprice + ")");
+		} else {
+			$("#totalprice").html(prices + " 元");
+		}
+	}
+	$(function(){
+		canculate();
+	});
+</script>
+{template $appstyle.'common/designedby'}
+{template $appstyle.'common/footer'}

@@ -1,0 +1,15 @@
+					<div class="item-logo" {if $settings['needs']['guide_page_'.$i.'_bgimage']} style="background: rgba(255,255,255,0) url({php echo tomedia($settings['needs']['guide_page_'.$i.'_bgimage'])})  center center;background-size:cover;" {elseif $settings['needs']['guide_page_'.$i.'_bgcolor']} style="background-color:{$settings['needs']['guide_page_'.$i.'_bgcolor']}" {else} style="background-color: rgba(239,64,64,1);" {/if}>
+						<a {if $settings['needs']['guide_page_'.$i.'_link']} href="{$settings['needs']['guide_page_'.$i.'_link']}" {else} href="#" {/if}>
+						{if $settings['needs']['guide_page_'.$i.'_tag']}{$settings['needs']['guide_page_'.$i.'_tag']} {else}Hi ！{/if}
+						</a>
+						<div class="animate guide-show">
+							<h2 class="animated bounceInDown">{php echo $settings['needs']['guide_page_'.$i.'_title']}</h2>
+							<li class="animated bounceInLeft">{php echo $settings['needs']['guide_page_'.$i.'_p1']}</li>
+							<li class="animated bounceInRight">{php echo $settings['needs']['guide_page_'.$i.'_p2']}</li>
+						</div>
+					</div>
+					<div class="mui-content mui-scroll-wrapper" style="background-color:transparent;backround-color: rgba(239,64,64,1);">
+						<div class="mui-scroll">
+							{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/content'}
+						</div>
+					</div>

@@ -1,0 +1,7 @@
+<div id="hot-houses" class="row" style="">
+
+{loop $list_hot $k $item}
+<?php if($k>=4){unset($list[$k]);}?>
+	{template $appstyle.$do.'/'.$ac.'/item_hot'}
+{/loop}
+</div>

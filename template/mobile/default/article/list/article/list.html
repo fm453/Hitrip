@@ -1,0 +1,12 @@
+{if !$list}
+	{template $appstyle.$do.'/'.$ac.'/article/notice'}
+{else}
+<div class="mui-card" style="">
+	<ul class="mui-table-view">
+		{loop $list $i $row}
+		{template $appstyle.$do.'/'.$ac.'/article/item'}
+		{/loop}
+	</ul>
+</div>
+
+{/if}

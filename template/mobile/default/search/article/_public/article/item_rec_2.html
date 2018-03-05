@@ -1,0 +1,29 @@
+<div class="mui-card">
+	<div class="mui-card-content">
+		<a href="{php echo fm_murl('article', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}">
+			<img src="{php echo tomedia($goodsdetails[$goods['id']]['thumb'])}" alt="" width="100%"  />
+		</a>
+	</div>
+	<div class="mui-card-content-inner" style="padding:2px 10px 2px 10px;">
+		<a href="{php echo fm_murl('article', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}">
+		<span>{$goodsdetails[$goods['id']]['title']}</span>
+		<p style="color: #333;">{$goodsdetails[$goods['id']]['description']}</p>
+		</a>
+	</div>
+	<div class="mui-card-footer">
+		<a class="btn btn-block" style="float:left;" href="{php echo fm_murl('article', 'detail','index', array('id'=>$goods['id'],'sn'=>$goods['sn']))}" >
+			<span class="mui-pull-left">
+			&nbsp; 阅读<span class="mui-badge mui-badge-warning mui-badge-inverted">
+			{$goodsdetails[$goods['id']]['viewcount']}
+			</span>&nbsp;
+			</span>
+
+			点赞<span class="mui-badge mui-badge-warning mui-badge-inverted">
+			{$goodsdetails[$goods['id']]['uv']}
+			</span>&nbsp;
+			<span class="mui-pull-right">
+				<span class="mui-badge mui-badge-warning" style="font-weight:bolder;font-size: large;">+</span>
+			</span>
+		</a>
+	</div>
+</div>

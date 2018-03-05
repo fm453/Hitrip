@@ -1,0 +1,157 @@
+<link href="{$fm453resource}components/fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<script src="{$fm453resource}components/fileinput/fileinput.min.js" type="text/javascript"> </script>
+<script src="{$fm453resource}components/fileinput/fileinput_locale_zh.js" type="text/javascript"></script>
+<script type="text/javascript">
+	//监听处理文件删除
+	mui('body').on('tap', '.fm-file-remove', function(e) {
+		var filename = $(this).attr('data-src');
+		var backid =$(this).attr('data-backid');
+		var imageid =$(this).attr('data-imageid');
+		var elem = $(this);
+		$.post("{php echo fm_murl('ajax','file','delete',array())}", {'filename' : filename,'filetype' : 'image'}, function(pdata) {
+				pdata = $.parseJSON(pdata);
+				if (pdata == '1') {
+					elem.parent().parent().parent().parent().parent().parent().parent().next().remove();//移除进度条
+					document.getElementById('url-'+backid).setAttribute('value','');
+					mui.toast('文件已删除，请重新设置');
+				} else {
+					mui.toast('未能成功删除'+pdata);
+				}
+			});
+	});
+	//设置图片到绑定对象(在上传组件的预览框中操作时用到)
+	mui('body').on('tap', '.file-preview-image', function(e) {
+		var id = $(this).attr('data-formEle');
+		var src = $(this).attr('src');
+		var fname = $(this).attr('data-filename');
+		$('#url-'+id).attr("value",fname);//添加属性
+    	$('#'+id).attr("value", fname);//添加属性
+    	$('#result-'+id).attr("src", src);//添加属性
+    	$("#modal-upload-"+id).toggleClass('mui-active');	//关闭模态框
+	});
+
+	//处理图片上传后函数(在上传组件加载上传成功事件后用到)
+/*
+	form = data.form,
+	files = data.files,
+	extra = data.extra,
+	reader = data.reader;
+	response = data.response,
+	__________服务器端的响应_________
+		$returns['backid']=$backid;	//上传时调用的组件id
+		$returns['inputname']=$inputname;	//上传时使用的传值输入框
+		$returns['imgurl']=$imgurl;	//服务器端生成的文件相对地址
+		$returns['imgid']=$imageid;	//服务器生成的文件id
+		$returns['imgname']=$imagename;	//服务器生成的文件名(id+后缀)
+		$returns['imgsrc']= tomedia($imgurl);	//文件地址转成网址
+*/
+	function js_upload(divId,fileData) {
+		var id = divId;
+		//var imgurl = "{php echo cache_load(['uploadedfile'].$_FM['member']['info']['uid'])}";
+		var data = fileData;
+		var response = data.response;
+		var imgurl = response['imgurl'];
+		console.log('响应的上传组件ID为'+id);
+		console.log('应用图片链接为'+imgurl);
+		$('#result-'+id).attr('src',response['imgsrc']);
+		document.getElementById('url-'+id).setAttribute('value',imgurl);
+		document.getElementById(id).setAttribute('value',imgurl);
+	}
+</script>
+
+<div class="mui-input-group">
+
+    <div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>姓名：</label>
+		<input id='name' type="text" name="name" class="mui-input-clear" placeholder="以身份证为准" value="{$needs_data['name']}" />
+    </div>
+
+    <div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>手机号：</label>
+		<input id='mobile' type="text" name="mobile" class="mui-input-clear" placeholder="{if $_FM['member']['info']['mobile']} {$_FM['member']['info']['mobile']} {else} 方便及时联系到您 {/if}" value="{$needs_data['mobile']}" />
+	</div>
+
+	<div class="mui-input-row">
+		<label style="font-size: 0.8em;"><span style="color:#f00;"> * </span>准考证号：</label>
+		<input id='TicketNumber'  name="TicketNumber" type="text" class="mui-input-clear" placeholder="凭此领取免费治疗名额" value="{$needs_data['TicketNumber']}" />
+	</div>
+
+</div>
+
+<ul class="mui-table-view" >
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="mui-left" name="sex" type="radio" value="1" {if $needs_data['sex']==1} checked="true" {/if} >男
+	</li>
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="" name="sex" type="radio" value="2" {if $needs_data['sex']==2} checked="true" {/if} >女
+	</li>
+</ul>
+
+<p><span style="color:#f00;"> * </span>皮肤是否薄或敏感？</p>
+<ul class="mui-table-view" >
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="mui-left" name="isSick" type="radio" value="1" {if $needs_data['isSick']==1} checked="true" {/if} >是
+	</li>
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="" name="isSick" type="radio" value="2" {if $needs_data['isSick']==2} checked="true" {/if} >否
+	</li>
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="" name="isSick" type="radio" value="0" {if intval($needs_data['isSick'])==0 } checked="true" {/if} >不确定
+	</li>
+</ul>
+
+<p><span style="color:#f00;"> * </span>您是从何得知报名渠道的？</p>
+<ul class="mui-table-view" >
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="mui-left" name="howToKnow" type="radio" value="1" {if $needs_data['howToKnow']==1} checked="true" {/if} >公交站牌
+	</li>
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="" name="howToKnow" type="radio" value="2" {if $needs_data['howToKnow']==2} checked="true" {/if} >电梯
+	</li>
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="" name="howToKnow" type="radio" value="3" {if $needs_data['howToKnow']==3} checked="true" {/if} >亲友分享
+	</li>
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="" name="howToKnow" type="radio" value="4" {if $needs_data['howToKnow']==4} checked="true" {/if} >朋友圈
+	</li>
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="" name="howToKnow" type="radio" value="0" {if intval($needs_data['howToKnow'])==0 } checked="true" {/if} >其他
+	</li>
+</ul>
+
+<h5 class="mui-content-padded"><span style="color:#f00;"> * </span>上传皮肤近照图片(正脸照）（点击可上传)</h5>
+	<div id="show-thumb"  class="" style="text-align: center;padding-left:25%;padding-right:25%;">
+		<a href="#modal-upload-thumb" >
+		<blockquote style="width:100%;border: 2px dashed rgb(182, 182, 182);" {if $_GPC['do']=='needs'} previewed=0 {/if} >
+			<img id="result-thumb" {if $needs_data['thumb']} src="{php echo tomedia($needs_data['thumb']);}" {else}  src="{$qrcodeurl}" {/if} style="width:90%;" previewed=0 />
+		</blockquote>
+		</a>
+		<input class="form-control hidden"  id="thumb" name="thumb" type="text" value="{$needs_data['thumb']}"/ >
+	</div>
+
+<h5 class="mui-content-padded"><span style="color:#f00;"> * </span>上传皮肤近照图片(左脸照）（点击可上传)</h5>
+	<div id="show-thumbLeft"  class="" style="text-align: center;padding-left:25%;padding-right:25%;">
+		<a href="#modal-upload-thumbLeft" >
+		<blockquote style="width:100%;border: 2px dashed rgb(182, 182, 182);" {if $_GPC['do']=='needs'} previewed=0 {/if}>
+			<img id="result-thumbLeft" {if $needs_data['thumbLeft']} src="{php echo tomedia($needs_data['thumbLeft']);}" {else}  src="{$qrcodeurl}" {/if} style="width:90%;" previewed=0 />
+		</blockquote>
+		</a>
+		<input class="form-control hidden"  id="thumbLeft" name="thumbLeft" type="text" value="{$needs_data['thumbLeft']}"/ >
+	</div>
+
+<h5 class="mui-content-padded"><span style="color:#f00;"> * </span>上传皮肤近照图片(右脸照）（点击可上传)</h5>
+	<div id="show-thumbRight"  class="" style="text-align: center;padding-left:25%;padding-right:25%;">
+		<a href="#modal-upload-thumbRight" >
+		<blockquote style="width:100%;border: 2px dashed rgb(182, 182, 182);" {if $_GPC['do']=='needs'} previewed=0 {/if} >
+			<img id="result-thumbRight" {if $needs_data['thumbRight']} src="{php echo tomedia($needs_data['thumbRight']);}" {else}  src="{$qrcodeurl}" {/if} style="width:90%;" previewed=0 />
+		</blockquote>
+		</a>
+		<input class="form-control hidden"  id="thumbRight" name="thumbRight" type="text" value="{$needs_data['thumbRight']}"/ >
+	</div>
+	
+{if $needs_data['reply']}
+	<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 1px solid;border-bottom:#fff 1px solid;">平台回复：</h5>
+	<p>
+		{$needs_data['reply']}
+	</p>
+{/if}

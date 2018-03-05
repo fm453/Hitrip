@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>关注提示</title>
+	<meta name="format-detection" content="telephone=no, address=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+	<meta name="apple-touch-fullscreen" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<link rel="shortcut icon" href="../attachment/images/global/wechat.jpg" />
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+	<script type="text/javascript" src="../app/resource/js/app/util.js"></script>
+	<script src="../app/resource/js/require.js"></script>
+	<script type="text/javascript" src="../app/resource/js/lib/jquery-1.11.1.min.js?v=20160906"></script>
+	<script type="text/javascript" src="../app/resource/js/lib/mui.min.js?v=20160906"></script>
+	<script type="text/javascript" src="../app/resource/js/app/common.js?v=20160906"></script>
+	<link href="../app/resource/css/bootstrap.min.css?v=20160906" rel="stylesheet">
+	<link href="../app/resource/css/common.min.css?v=20160906" rel="stylesheet">
+</head>
+<body>
+<div class="container container-fill">
+	<div class="mui-content fadeInUpBig animated mui-backdrop" style="background-color: rgb(239, 239, 244); bottom: 20px;">
+		<div class="mui-content-padded">
+			<div class="mui-message">
+				<div class="mui-message-icon"><span class="mui-msg-success"></span></div>
+				<h4 class="title" style="line-height:18px;text-indent:1em;text-align:left;">
+					{$_FM['member']['info']['nickname']}  您好，本内容要求关注{$_W['uniaccount']['name']}之后才能继续浏览，点击确定将跳转至关注页面。
+				</h4>
+				<p class="mui-desc">
+				</p>
+				<div class="mui-button-area">
+					<a href="{$follow_url}" class="mui-btn mui-btn-success mui-btn-block">确定</a>
+					<a class="mui-action-back mui-btn mui-btn-info mui-btn-block mui-btn-outlined">返回</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<style>
+		h5{color:#555;}
+	</style>
+	
+		<script type="text/javascript">
+		wx.hideOptionMenu();//隐藏右上角菜单按钮，禁止分享
+	</script>
+</body>
+</html>

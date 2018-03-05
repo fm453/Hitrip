@@ -1,0 +1,46 @@
+<script type="text/javascript" >
+//(标签标识必须大写)
+	var allIMGs = document.getElementsByTagName('IMG');
+	for (var len = allIMGs.length, i = 0; i < len; i++) {
+		var ThisIMG= allIMGs[i];
+		//添加onerror检测img是否存在
+		ThisIMG.setAttribute('onerror','RepairMyImg(this)');
+		//给图片加上放大浏览的功能
+		if(ThisIMG.getAttribute("previewed") !=0){
+			ThisIMG.setAttribute('data-preview-src','');
+			ThisIMG.setAttribute('data-preview-group','1');
+		}
+		//修复图片尺寸及链接
+		ThisIMG.style.maxWidth = '100%';
+		ThisIMG.setAttribute('width','');
+		var TempSrc = ThisIMG.getAttribute("src");
+		if(TempSrc.indexOf('/./attachment/') == 0) {
+			var siteroot = "{$_W['siteroot']}";
+			var newsrc = siteroot ;
+			newsrc = TempSrc.replace('/./attachment/','attachment/');
+			newsrc = siteroot + newsrc;
+			ThisIMG.setAttribute('src',newsrc);
+		}
+	}
+	//图片onerror时处理
+	function RepairMyImg(obj){
+		//obj.src = '{php echo MODULE_URL."resource/images/loader.gif"}'; //使用加载动态图替换
+		obj.style.display = 'none';
+	}
+</script>
+<!-- 延迟加载 -->
+<script src="{$appsrc}js/mui.lazyload.js"></script>
+<script src="{$appsrc}js/mui.lazyload.img.js"></script>
+<script>
+	(function($) {
+			$(document).imageLazyload({
+				placeholder: '{php echo MODULE_URL."resource/images/loader.gif"}'
+			});
+		})(mui);
+</script>
+<!-- 图片放大查看 -->
+<script src="{$appsrc}js/mui.zoom.js"></script>
+<script src="{$appsrc}js/mui.previewimage.js"></script>
+<script>
+	mui.previewImage();
+</script>

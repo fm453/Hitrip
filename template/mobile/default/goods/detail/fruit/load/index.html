@@ -1,0 +1,23 @@
+{template $appstyle.$do.'/'.$ac.'/'.$goodstpl.'/_public/css'}
+<header id="header" class="mui-bar mui-bar-transparent">
+{template $appstyle.$do.'/'.$ac.'/'.$goodstpl.'/_public/titlebar'}
+</header>
+<div class="mui-content" style="background-color: rgba(255,255,255,1);" >
+{template $appstyle.$do.'/'.$ac.'/'.$goodstpl.'/'.$operation.'/page'}
+</div>
+
+<!---底部菜单栏-->
+{template $appstyle.$do.'/'.$ac.'/'.$goodstpl.'/_public/footbar'}
+{template $appstyle.$do.'/'.$ac.'/'.$goodstpl.'/_public/footjs'}
+
+<!-- 模态框 -->
+{template $appstyle.$do.'/'.$ac.'/'.$goodstpl."/_public/modal/buy"}
+{template $appstyle.$do.'/'.$ac.'/'.$goodstpl."/_public/modal/content"}
+
+{template $appstyle.$do.'/'.$ac.'/'.$goodstpl."/load/js"}
+<!-- 图片放大查看 -->
+<script src="{$appsrc}js/mui.zoom.js"></script>
+<script src="{$appsrc}js/mui.previewimage.js"></script>
+<script type="text/javascript" >
+	mui.previewImage();
+</script>

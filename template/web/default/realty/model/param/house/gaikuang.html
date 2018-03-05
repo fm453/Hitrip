@@ -1,0 +1,88 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#defaultGaikuang">
+          楼盘概况默认参数<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse in" id="defaultGaikuang">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-defaultGaikuang" onsubmit="return formcheck('setting-form-defaultGaikuang');return false;">
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" value="" />
+				<input type="hidden" name="setfor" value="default" />
+				<input type="hidden" name="sn" value="{$s_sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">售楼处接待时间</label>
+	<div class="col-xs-12 col-sm-9 col-md-5 col-lg-5">
+		<input type="text" name="data[default][worktime][start]" class="form-control" value="{$item['default']['worktime']['start']}" placeholder="请填写接待开始的时间，如 08:30" />
+		<span class="help-block" title="['default']['worktime']['start']">说明：开始时间，示例: 08:30</span>
+		<span class="help-block sr-only">['default']['worktime']['start']</span>
+	</div>
+	<div class="col-xs-12 col-sm-9 col-md-5 col-lg-5">
+		<input type="text" name="data[default][worktime][end]" class="form-control" value="{$item['default']['worktime']['end']}" placeholder="请填写接待结束的时间，如 17:30" />
+		<span class="help-block" title="['default']['worktime']['end']">说明：结束时间，示例: 17:30</span>
+		<span class="help-block sr-only">['default']['worktime']['end']</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">开发商</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+		<input type="text" name="data[default][developer][name]" class="form-control" value="{$item['default']['developer']['name']}" placeholder="请填写开发商名称，如 XXX房地产开发有限公司" />
+		<span class="help-block" title="['default']['developer']['name']">说明：默认的开发商名称</span>
+		<span class="help-block sr-only">['default']['developer']['name']</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">物业</label>
+	<div class="col-xs-12 col-sm-9 col-md-5 col-lg-5">
+		<input type="text" name="data[default][property][mangerName]" class="form-control" value="{$item['default']['property']['mangerName']}" placeholder="物业管理公司名称" />
+		<span class="help-block" title="['default']['property']['mangerName']">说明：物业管理公司名称</span>
+		<span class="help-block sr-only">['default']['property']['mangerName']</span>
+	</div>
+	<div class="col-xs-12 col-sm-9 col-md-5 col-lg-5">
+		<input type="text" name="data[default][property][type]" class="form-control" value="{$item['default']['property']['type']}" placeholder="物业类型" />
+		<span class="help-block" title="['default']['property']['type']">说明：物业类型</span>
+		<span class="help-block sr-only">['default']['property']['type']</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">产权年限</label>
+	<div class="col-xs-12 col-sm-9 col-md-5 col-lg-5">
+		<input yearsLeft="text" name="data[default][propertyRight][yearsTotal]" class="form-control" value="{$item['default']['propertyRight']['yearsTotal']}" placeholder="产权年限" />
+		<span class="help-block" title="['default']['propertyRight']['yearsTotal']">说明：产权年限</span>
+		<span class="help-block sr-only">['default']['propertyRight']['yearsTotal']</span>
+	</div>
+	<div class="col-xs-12 col-sm-9 col-md-5 col-lg-5 hidden">
+		<input yearsLeft="text" name="data[default][propertyRight][yearsLeft]" class="form-control" value="{$item['default']['propertyRight']['yearsLeft']}" placeholder="实际剩余产权年限" />
+		<span class="help-block" title="['default']['propertyRight']['yearsLeft']">说明：实际剩余产权年限</span>
+		<span class="help-block sr-only">['default']['propertyRight']['yearsLeft']</span>
+	</div>
+</div>
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-defaultGaikuang" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-defaultGaikuang" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#defaultGaikuang">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>
+

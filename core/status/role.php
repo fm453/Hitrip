@@ -1,0 +1,23 @@
+<?php
+//角色类型
+$status['code']=array(
+	'name'=>'主管理',
+	'value'=>'mainuser',
+	'des'=>'',
+);
+$status['code0']=array(
+	'name'=>'产品专员',
+	'value'=>'chanpinzhuanyuan',
+	'des'=>'',
+);
+$status['code1']=array(
+	'name'=>'库管',
+	'value'=>'stocker',
+	'des'=>'',
+);
+$status['code2']=array(
+	'name'=>'合作商户',
+	'value'=>'partner',
+	'des'=>'',
+);
+?>

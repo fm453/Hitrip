@@ -1,0 +1,121 @@
+<div class="main panel panel-primary">
+	<div class="panel-body table-responsive">
+		<a href="{php echo fm_wurl('finance','paylog','display',array('keyword'=>$profile['uid']))}" target="_blank" class="btn btn-success" style="margin-bottom: 5px;"  data-toggle="tooltip" data-placement="top" title="查看该用户的前台支付交易情况"> 支付记录</a>&nbsp;&nbsp;
+		<a href="{php echo fm_wurl('finance','charge','member',array('uid'=>$profile['uid']))}" target="_blank" class="btn btn-danger" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="查看该用户的财务充值情况">用户充值</a>&nbsp;&nbsp;
+		<a href="{php echo url('mc/member/base_information', array('uid' => $uid));}" target="_blank" class="btn btn-warning" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="进入系统会员管理界面进行更多操作">更多编辑</a>&nbsp;&nbsp;
+		<a href="{php echo url('mc/card/manage', array('keyword' => $profile['mobile']));}" target="_blank" class="btn btn-success" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="查询用户开卡信息">关联会员卡</a>&nbsp;&nbsp;
+		<a href="{php echo fm_wurl('crm','agent','modify',array('uid'=>$profile['uid'],'id'=>$mid))}" target="_blank" class="btn btn-success" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="查看用户的商城会员身份">关联会员信息</a>&nbsp;&nbsp;
+		{if $MineAticle_addons}
+		<a href="{php echo fm_wurl('article','detail','display',array('id'=>$MineAticle_addons['id']))}" target="_blank" class="btn btn-info" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="查看会员模型文章中该用户的关联信息">关联会员文章</a>&nbsp;&nbsp;
+		{else}
+		<a href="{php echo fm_wurl('article','detail','display',array('openid'=>$profile['openid'],'a_tpl'=>'member'))}" target="_blank" class="btn btn-info" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="为该用户添加一个介绍文章">添加会员文章</a>&nbsp;&nbsp;
+		<a href="{php echo fm_wurl('article','list','display',array())}" target="_blank" class="btn btn-info" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="在文章列表中查找">查找会员介绍文章</a>&nbsp;&nbsp;
+		{/if}
+		<a href="{php echo url('mc/notice/tpl', array('id' => $profile['fanid']));}" target="_blank" class="btn btn-success" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="通过客服接口给最近有效互动过的粉丝发送客服消息">微信联系</a>&nbsp;&nbsp;
+		<a href="{php echo fm_wurl('order','bymember','display', array('shareid' => $profile['uid']))}" class="btn btn-default" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="bottom" title="查看该代理的全部推广订单" target="_blank">推广订单</a>&nbsp;&nbsp;
+		<a href="javascript:void(0)" target="_blank" class="btn btn-primary js-clip" style="margin-bottom: 5px;" data-toggle="tooltip" data-placement="top" title="自动复制用户的openid，方便使用" data-url="{$profile['openid']}">复制OPENID</a>&nbsp;&nbsp;
+
+		<div class="panel panel-info">
+			<div class="panel-heading" style="padding-top:0;padding-bottom:0;">
+			<img src="{$profile['avatar']}" title="粉丝头像" style="width:50px;" >&nbsp;&nbsp;&nbsp;&nbsp;
+			昵称：{$profile['nickname']}(openid: {$profile['openid']})
+			</div>
+			<div class="panel-body">
+				<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return validate(this);">
+				<input type="hidden" name="uid" value="{$uid}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-3 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon"><i class='fa fa-exclamation-triangle' style='color:red'></i></span>
+							<input type="text" name="realname" class="form-control"  value="{$profile['realname']}" />
+							<span class="input-group-addon" >真实姓名</span>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-3 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon"><i class='fa fa-exclamation-triangle' style='color:red'></i></span>
+							<input type="text" name="mobile" class="form-control"  value="{$profile['mobile']}" />
+							<span class="input-group-addon" >手机号</span>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-4 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon"><i class='fa fa-exclamation-triangle'></i></span>
+							<input type="text" name="email" class="form-control"  value="{$profile['email']}" />
+							<span class="input-group-addon">邮箱</span>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-2 ">
+						<div class="input-group form-group">
+							<select name="gender" id="forgender" class="form-control input-medium">
+								<option value="{$profile['gender']}">{$genders[$profile['gender']]}</option>
+								{php unset($genders[$profile['gender']])}
+								{loop $genders $key $gender}
+									<option value="{$key}" data-name="{$gender}">{$gender}</option>
+								{/loop}
+							</select>
+							<span class="input-group-addon">性别</span>
+						</div>
+					</div>
+					{if $_W['isfounder'] || $_W['username']==$settings['mainuser']}
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-6 ">
+						<div class="input-group form-group">
+							<select name="groupid" id="forgroupid" class="form-control input-medium">
+								<option value="{$profile['groupid']}">{$mc_groups[$profile['groupid']]['title']}(要求:积分+余额>{$mc_groups[$profile['groupid']]['credit']})</option>
+								{php unset($mc_groups[$profile['groupid']])}
+								{loop $mc_groups $key $group}
+									<option value="{$key}" data-name="{$mc_groups[$key]['title']}">{$mc_groups[$key]['title']}(要求:积分+余额>{$mc_groups[$key]['credit']})</option>
+								{/loop}
+							</select>
+							<span class="input-group-addon">用户分组</span>
+						</div>
+					</div>
+					{/if}
+
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-4 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon"><i class='fa fa-exclamation-triangle'></i></span>
+							<input type="text" name="alipay" class="form-control"  value="{$profile['alipay']}" />
+							<span class="input-group-addon">支付宝</span>
+						</div>
+					</div>
+
+					</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label" style="padding:0;">关注公众号</label>
+					<div class="col-xs-12 col-sm-9  col-md-4 col-lg-5">
+						{if $profile['follow'] ==1 && empty($profile['unfollowtime'])}
+						<span class="label label-success">是</span>
+						关注时间：{$profile['followtime']}
+						{else}
+							{if !empty($profile['unfollowtime'])}
+								<span class="label label-danger">已取消</span>
+								时间：{$profile['unfollowtime']}
+							{else}
+								<span class="label label-warning">否</span>
+							{/if}
+						{/if}
+					</div>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label" style="padding:0;">积分余额</label>
+					<div class="col-xs-12 col-sm-9  col-md-4 col-lg-5">
+						<span class="label label-info">积分</span>{$profile['credit1']}
+						<span class="label label-danger">余额</span>{$profile['credit2']}
+						（合计：{$profile['credit_total']}）
+					</div>
+
+				</div>
+
+				<div class="form-group col-sm-12">
+					<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" onclick='return formcheck()' />
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

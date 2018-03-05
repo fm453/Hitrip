@@ -1,0 +1,70 @@
+<div id="modal-member" class="mui-modal mui-scroll-wrapper" style="background-color: rgba(245,245,245,1);">
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-close mui-pull-right" href="#modal-member"></a>
+		<h1 class="mui-title" id="modal-member-title">我的信息</h1>
+	</header>
+
+	<div class="mui-content scroll feedback" style="">
+
+	<p class="title"></p>
+				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+				<li class="mui-table-view-cell">
+					<div class="mui-slider-cell">
+						<div class="oa-contact-cell mui-table">
+							<div class="oa-contact-avatar mui-table-cell">
+								<img src="{php echo tomedia($FM_member['avatar'])}" />
+							</div>
+							<div class="oa-contact-content mui-table-cell">
+								<div class="mui-clearfix">
+									<h4 class="oa-contact-name" style="text-indent:1em;">{$_FM['member']['info']['realname']}</h4>
+									<span class="oa-contact-position mui-h6 mui-hidden">{$_FM['member']['info']['uid']}</span>
+								</div>
+								<p class="oa-contact-email mui-h6">
+									{$_FM['member']['info']['mobile']}
+								</p>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				{if $memberReg}
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="{$memberReg}">
+						会员资料自助修改
+					</a>
+				</li>
+				{/if}
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="{php echo fm_murl('help','advise','index',array())}">
+						意见反馈
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="{php echo fm_murl('index','index','index',array('showguide'=>true))}">
+						欢迎页
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 25px;">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="{php echo fm_murl('help','aboutus','index',array())}">
+						关于{$shopname}
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 25px;">
+				<li class="mui-table-view-cell">
+					<a style="text-align: center;color: #FF3B30;" href="./index.php?i=1&c=mc&a=home&do=login_out">
+						退出登录
+					</a>
+				</li>
+			</ul>
+	</div>
+
+	<footer style="position:relative;top:10px;width:100%;text-align:center;">
+		<a  class="mui-btn mui-btn-danger mui-btn-block mui-btn-outlined" id="_FM-INFO-PAYRESULT" style="padding:10px 0;" href="#modal-member">
+			返回
+		</a>
+	</footer>
+</div>

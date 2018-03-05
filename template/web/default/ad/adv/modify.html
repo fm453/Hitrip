@@ -1,0 +1,65 @@
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit='return formcheck()'>
+		<input type="hidden" name="id" value="{$adv['id']}" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				首页幻灯片设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="displayorder" class="form-control" placeholder="可留空；此处仅可填写数字" value="{$adv['displayorder']}" />
+						<span class="help-block">说明：数值越大，位置越靠前</span>
+					</div>					
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>幻灯片标题</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id='advname' name="advname" class="form-control" value="{$adv['advname']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">幻灯片图片</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('thumb', $adv['thumb'])}
+						<span class="help-block">说明：幻灯片图片长宽尺寸：900px:500px</span>
+					</div>
+				</div>
+				 <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">幻灯片链接</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="link" class="form-control"  placeholder="如http://vcms.hiluker.com" value="{$adv['link']}" />
+						<span class="help-block">说明：可以链接到其他页面；站外链接必须添加http或https等类型的开头</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否显示</label>
+					<div class="col-sm-9 col-xs-12">
+						<label class='radio-inline'>
+							<input type='radio' name='enabled' value='1' {if $adv['enabled']==1}checked{/if} /> 是
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='enabled' value='0' {if $adv['enabled']==0}checked{/if} /> 否
+						</label>
+						<span class="help-block">说明：此处设置的是否显示仅对商城首页的幻灯轮播生效。</span>
+					</div>
+				</div>
+			</div>
+		</div>
+<div class="form-group col-sm-12">
+	<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+	</div>
+	</form>
+</div>
+
+<script language='javascript'>
+	function formcheck() {
+		if ($("#adname").isEmpty()) {
+			Tip.focus("adname", "请填写广告名称!");
+			return false;
+		}
+		return true;
+	}
+</script>

@@ -1,0 +1,47 @@
+<script type="text/javascript">
+/*
+* 根据ws长连接返回的数据，进行定向格式化并处理
+* @dtype	数据类型
+* @dtype	数据类型
+* @dtype	数据类型
+* @dtype	数据类型
+*/
+
+
+function Fm_data_format(o){
+	var nowtime = Fm_getNowFormatDate();
+	var log = nowtime + '接收到新数据:';
+	for(var name in o){
+		log += name + ":" + o[name] + ";";
+	}
+	console.log(log);
+
+	//消息数+1
+	var i = $('#notice-total').html();
+	i = parseInt(i) + 1;
+	$('#notice-total').html(i);
+	var type = o.type || '';
+	var data = o.msg;
+	switch(type){
+		//	alert 示例-弹出对话框
+		case 'alert':
+			var msg = data;
+			alert(msg);
+		break;
+
+		// 当mvc框架调用GatewayClient发消息时,将数据写入缓存中，剩余逻辑由客户端自行处理
+		default :
+			Fm_data_toast();
+		break;
+	}
+}
+
+function Fm_data_toast() {
+	//指示框提示
+	$('#fm453-indicator').children('span').html('接收到新数据，可通过开发者工具查看源数据');
+	$('#fm453-indicator').removeClass('hidden');
+	setTimeout(function () {
+		$('#fm453-indicator').addClass('hidden');
+	},3000)
+}
+</script>

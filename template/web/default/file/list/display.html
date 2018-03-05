@@ -1,0 +1,55 @@
+<div class="main">
+	<div style="text-align: center;">
+		{$pager}
+	</div>
+	<div class="panel panel-info fm453_newmouse">
+	<div class="panel-heading"></div>
+	<div class="panel-body table-responsive">
+			<div class="row">
+			{loop $nowList $item}
+				<div class="col-sm-3 col-md-2">
+					<div class="thumbnail" style="background:url({php echo tomedia($item['link'])});background-repeat: no-repeat;background-size:contain;">
+						<div style="height: 90px;width:50px;"></div>
+						<div class="caption" contenteditable="false" style="background-color:rgba(0,0,0,.8);color:#fff;">
+							<h5 style="margin-top:3px;margin-bottom:3px;height: 25px;line-height:25px;overflow: hidden;white-space: nowrap;text-overflow:ellipsis;">
+								{$item['title']}
+							</h5>
+							<p>
+								<a href="{php echo tomedia($item['link'])}" class="btn btn-default btn-sm" target="_blank" data-toggle="tooltip" data-placement="top" title="打开前台页面预览"><i class="fa fa-link"></i>&nbsp;&nbsp;</a>&nbsp;&nbsp;
+								<a href="{php echo fm_wurl($do,'image','display', array('file'=>$item['link']))}"class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" target="_blank" title="在线管理图片"><i class="fa fa-gears"></i> 编辑管理</a>&nbsp;&nbsp;
+							</p>
+						</div>
+					</div>
+				</div>
+				{/loop}
+			</div>
+	</div>
+	<div style="text-align: center;">
+		{$pager}
+	</div>
+	<div class="panel-heading"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	var category = {php echo json_encode($children)};
+	function setProperty(obj,id,label1,label2,type){
+		$(obj).html($(obj).html() + "...");
+		$.post("{php echo fm_wurl($do,'ajax','update',array('from_ac'=>$ac,'from_op'=>$operation))}"
+			,{id:id,type:type, data: obj.getAttribute("data")}
+			,function(d){
+				$(obj).html($(obj).html().replace("...",""));
+				if(type=='status'){
+				 $(obj).html( d.data=='1'?'上架':'下架');
+				}
+				$(obj).attr("data",d.data);
+				if(d.result==1){
+					$(obj).toggleClass(label1);
+					$(obj).toggleClass(label2);
+				}
+			}
+			,"json"
+		);
+	}
+
+</script>
+    

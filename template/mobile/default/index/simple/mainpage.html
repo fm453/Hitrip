@@ -1,0 +1,30 @@
+<header></header>
+<div class="mui-content">
+</div>
+<script type="text/javascript" charset="utf-8">
+	mui.init(
+		{
+			gestureConfig:{
+				doubletap:true
+			},
+			subpages:[{
+				url:"{php echo fm_murl($so,$ac,'load',array('rpage'=>1))}",//子页面（加载首页第一页）
+				id: "{$do}-{$ac}-'load'-subpage",//内容页面标志
+				styles:{
+					top: "0px",//内容页面顶部位置,需根据实际页面布局计算，若使用标准mui导航，顶部默认为48px；
+					bottom: '0px',
+					//其它参数定义
+					}
+				}]
+		}
+	);
+
+//监听header的双击事件
+	var contentWebview = null;
+	document.querySelector('header').addEventListener('doubletap', function() {
+		if(contentWebview==null){
+			contentWebview = plus.webview.currentWebview().children()[0];
+		}
+		contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+	});
+</script>

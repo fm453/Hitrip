@@ -1,0 +1,948 @@
+<style>
+body{
+
+}
+/*——全局公用——*/
+.container-fluid, .row-fluid {
+	width:100%;
+	padding:0;
+	margin: 0;
+}
+.row-fluid {
+	height: auto;
+	line-height:15px;
+}
+.column {
+	padding-left:0;
+	padding-right:0;
+}
+.nav>li>a:hover, .nav>li>a:focus{
+	background-color: rgba(0,0,0,0);
+}
+.nav-list .divider {
+	margin: 0;
+	border-bottom: 1px #ffffff;
+}
+.navbar .nav{
+    height:40px;
+}
+.navbar .nav .dropdown-menu{
+    overflow: visible;
+}
+.navbar .nav li.dropdown.open>.dropdown-toggle, .navbar .nav li.dropdown.active>.dropdown-toggle, .navbar .nav li.dropdown.open.active>.dropdown-toggle {
+	background-color: rgba(255, 255, 255, 0);
+}
+.navbar .nav>li>.dropdown-menu:before {
+	left:45%;
+}
+.navbar .nav>li>.dropdown-menu:after {
+	left:45%;
+}
+.dropdown-menu{
+	top: 165%;
+	left: -45%;
+	text-align: center;
+	background-color: rgba(245, 245, 245, 0.8);
+}
+.dropdown-menu  .divider-2nd {
+	margin: 5px 1px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.carousel-indicators{
+	text-align: center;
+	color: #eee;
+	top: 75%;
+	left: 50%;
+}
+.carousel-caption {
+	background-color:rgba(255, 20, 0, 0.8);
+}
+.thumbnails{
+	line-height:200px;
+	margin: 0;
+	padding: 0;
+}
+.thumbnail{
+	border:0;
+}
+
+/*——顶部导航区域——*/
+#top {
+	z-index: 9000;
+	position: fixed;
+	top:0;
+	left:0;
+}
+#top .tel-icon{
+	width:25px;
+	height:25px;
+}
+#top .phone{
+	/*font-family: yahei;*/
+	color:#2da7e0;
+	font-size: 1.5em;
+	/* font-weight: bold; */
+}
+#top .navbar-link {
+	color:#111;
+	font-weight:550;
+	text-shadow: 0 0px 0 #333;
+	-webkit-font-smoothing: subpixel-antialiased;
+}
+#top .navbar-active {
+	color: rgb(0, 149, 246);
+	text-shadow: 0 1px 0 #5bc0de;
+}
+
+/*顶部迷你搜索*/
+#minisearch {
+    display:inline-flex;
+    display: -webkit-inline-flex;   /*针对苹果浏览器做的补充*/
+    display: -ms-inline-flexbox;
+    position: relative;
+    top: -15px;
+    left:10px;
+    height:40px;
+}
+#minisearch>button{
+		border-radius: 0;
+    border: 2px solid rgb(73, 175, 205);
+    line-height: 30px;
+    height: 42px;
+}
+#miniSearch-keywords{
+    width: 250px;
+    border-radius: 0;
+    border: 2px solid rgb(73, 175, 205);
+    background-color: rgba(0, 0, 0, 0);
+    height: 30px;
+    line-height: 30px;
+}
+
+
+/*——首页——*/
+/*幻灯区域*/
+#ppt-index {
+	z-index: 0;
+	position: relative;
+	top:-100px;
+}
+#ppt-index .carousel{
+	margin-top:100px;
+	margin-bottom: 0;
+}
+#ppt-index .carousel-control {
+	background-color: rgb(0, 136, 204);
+	margin-top: 100px;
+}
+#ppt-index .carousel-indicators{
+	text-align: center;
+	color: #eee;
+	top: 95%;
+	left: 50%;
+}
+#ppt-index .item{
+/*height:520px;*/
+}
+
+/*页面主区域*/
+#page-index {
+	z-index: 0;
+	margin-top: -100px;
+	position: relative;
+	background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-origin: border-box;
+    background-size: contain;
+    text-align: center;
+}
+
+/*热点楼盘*/
+#page-1{
+	/*padding-top: 20px;
+	padding-bottom: 20px; */
+    background-size: cover;
+}
+#page-1 .margin-top-50{
+    margin-top: -50px ;
+    -webkit-margin-before: 30px;
+	
+}
+#hot-houses  {
+	margin: 15px auto;
+
+}
+#hot-houses .thumbnail {
+	min-width: 200px;
+	max-width:250px;
+	min-height:200px;
+	max-height:250px;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+#hot-houses .thumbnail .forhover{
+	color: rgba(255,255,255,0);
+	visibility: hidden;
+}
+
+#hot-houses .thumbnail .forhover>img{
+	padding-top:55px;
+}
+#hot-houses .thumbnail >a:hover{
+	text-decoration:none;
+	visibility: visible;
+}
+
+#hot-houses .thumbnail .caption{
+	color: rgba(255,255,255,1);
+	background-color: rgba(34,34,34,.3);
+	min-height: 110px;
+	margin-top: -80px;
+	padding-top: 80px;
+}
+#hot-houses .thumbnail .caption>h5{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+#hot-houses .thumbnail .caption>p{
+
+}
+
+/*推荐楼盘*/
+#page-2{
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+#rec-houses  {
+	margin: 15px auto;
+}
+#rec-houses .row-fluid .span4{
+	margin-left: 0;
+}
+#rec-houses .thumbnail {
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+#rec-houses .thumbnail .background-image{
+	background-size: cover;
+}
+#rec-houses .thumbnail >img{
+	padding-top:55px;
+}
+
+#rec-houses .thumbnail .caption{
+	border:1px solid #eee;
+	padding:3px 5px;
+}
+#rec-houses .thumbnail .caption>h6{
+	text-align: left;
+	margin:5px auto;
+	padding:8px 5px;
+	border-bottom:1px dashed #eee;
+}
+#rec-houses .thumbnail .caption>p{
+	text-align: left;
+	margin:0;
+	padding:0 5px;
+	font-size:12px;
+	line-height: 15px;
+	color: #777;
+}
+
+/*——单页面——*/
+/*主体部分*/
+#page-single {
+	z-index: 0;
+	top:100px;
+	height: 100%;
+	min-height: 520px;
+	position: relative;
+	bottom:0;
+	background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-origin: border-box;
+    background-size: cover;
+}
+
+#page-single .content{
+	width:100%;
+	height:100%;
+	background-color: #fff;
+}
+
+/*——搜索页——*/
+/*搜索页顶端区域*/
+#top-banner{
+	position: relative;
+	z-index: 0;
+	top:100px;
+	background-color:#ccc;
+}
+
+/*搜索页幻灯*/
+#ppt-search {
+	z-index: 0;
+	top:0px;
+}
+#ppt-search .carousel{
+	margin-bottom: 0;
+}
+#ppt-search .carousel-control {
+	background-color: rgb(0, 136, 204);
+}
+#ppt-search .carousel-indicators{
+	text-align: center;
+	color: #eee;
+	top: 95%;
+	left: 50%;
+}
+
+/*右侧区域简报*/
+#top-banner .jumbotron{
+	margin:0 10px;
+}
+#top-banner .jumbotron>p{
+	margin:1em auto;
+}
+
+/*搜索页主区域*/
+#page-search{
+	position: relative;
+	top: 120px;
+	padding-top: 30px;
+	margin-bottom: 150px;
+}
+
+/*搜索框*/
+ .panel{
+	border-radius:0;
+}
+
+#forsearch {
+	background-color: #eee;
+}
+
+#search-form .search-lt{
+	width: 100px;
+	float: left;
+	text-align: center;
+	font-size: 1em;
+	font-weight: bolder;
+}
+#search-form .search-lt.area-label{
+	margin-top: 1.5em;
+}
+
+#search-form .search-rt{
+	margin-left: 100px;
+	text-align: left;
+}
+
+#search-form .search-rt>label{
+	padding-top:5px;
+	line-height: 1.5em;
+	display:inline-flex;
+	display: -webkit-inline-flex;   /*针对苹果浏览器做的补充*/
+    display: -ms-inline-flexbox;
+}
+#search-form .search-rt>label>section{
+	margin-right:1em;
+	width:90px;
+}
+#search-form .search-rt>label>button{
+	margin-right: 1em;
+}
+#search-form .search-rt .no-margin{
+	margin:0;
+}
+#search-form .search-rt .subcate{
+	width: 100%;
+}
+
+#search-form .search-rt >label >a{
+	color:#333;
+	margin-right: 1em;
+}
+#search-form .search-rt >hr{
+	margin:10px auto;
+	border-bottom:1px dotted rgb(195, 195, 195);
+}
+#search-form .form-group >hr{
+	margin:10px auto;
+	border-bottom:1px solid rgb(195, 195, 195);
+}
+
+#search-form .search-keywords{
+	text-align: center;
+}
+#search-form .search-keywords >input{
+	border-radius: 0;
+	border:2px solid rgb(73, 175, 205);
+	background-color: rgba(0, 0, 0, 0);
+	min-width: 500px;
+	max-width: 500px;
+	height: 30px;
+	line-height: 30px;
+}
+#search-form .search-keywords .search-button{
+	border:2px solid rgb(73, 175, 205);
+	margin-left: -5px;
+	line-height: 30px;
+}
+#search-form .search-keywords .btn-success.search-button{
+	border:2px solid rgb(83, 166, 83);
+	margin-left: 5px;
+}
+/*搜索推荐下拉列表*/
+#search-form .search-rec{
+	text-align: center;
+	width: 100%;
+	max-height: 200px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	border:#ccc sollid 1px;
+	box-shadow: 1px 1px 5px #5bc0de;
+	margin-top: 60px;
+}
+#search-form .search-rec .table{
+	min-width: 500px;
+}
+
+/*搜索结果-楼盘列表*/
+#list-houses  {
+	margin: 15px auto;
+}
+#list-houses .thumbnail {
+	border:0;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+#list-houses  .thumbnail a{
+	color: #333;
+}
+#list .thumbnail >img{
+	padding-top:55px;
+}
+
+#list-houses .thumbnail .caption{
+	padding:3px 5px;
+}
+
+#list-houses .s-l-lt{
+	width: 300px;
+	height:200px;
+	line-height: 200px;
+	float: left;
+	text-align: left;
+}
+#list-houses .s-l-lt .thumbnail {
+	width: 300px;
+	height:200px;
+}
+#list-houses .s-l-rt{
+	margin-left:320px;
+}
+#list-houses .s-l-rt h4{
+	margin-top: 50%;
+}
+#list-houses .s-l-rt h4>.price{
+	font-weight: bolder;
+	font-size: 1.2em;
+	color:#f00;
+	margin-right:5px;
+}
+
+/*——楼盘详情页——*/
+/*幻灯区域*/
+#ppt-detail {
+	z-index: 0;
+	position: relative;
+	top:0px;
+}
+#ppt-detail .carousel{
+	margin-top: 100px;
+	margin-bottom: 0;
+}
+#ppt-detail .carousel-control {
+	display:none;
+	background-color: rgb(0, 136, 204);
+	margin-top: 100px;
+}
+#ppt-detail .carousel-indicators{
+	display:none;
+	text-align: center;
+	color: #eee;
+	top: 95%;
+	left: 50%;
+}
+#ppt-detail .item{
+	height:320px;
+}
+
+/*面包屑导航条*/
+.breadcrumb{
+	position: relative;
+	top: -20px;
+	margin: 0;
+	padding: 0px 15px;
+	background: rgba(255, 255, 255, 0);
+}
+.breadcrumb>li{
+	padding-left:0;
+	padding-right:0;
+	background: rgba(0, 0, 0, .5);
+}
+.breadcrumb>li>p{
+	border-right: 1px solid rgb(13, 192, 244);
+	padding-left: 10px;
+	padding-right: 10px;
+	margin:0;
+	color:#fff;
+	text-shadow: 0 0 0 #ffffff;
+}
+.breadcrumb>li:last-child>p{
+	border-right: 0;
+}
+
+
+#page-detail {
+	background-color: #fff;
+}
+
+//页卡(设置未能生效)
+#page-detail .tab-content.overflow-hidden{
+	overflow: hidden;
+}
+
+/*页卡导航*/
+#tabbar{
+	width: 100%;
+	height:50px;
+	z-index: 900;
+}
+#tabbar >li{
+	margin: 5px;
+}
+.nav-tabs >li.active{
+	background-color: rgb(13, 192, 244);
+	border-radius: 5%;
+}
+.nav-tabs >li.active>p>a{
+	color:#fff;
+}
+.nav-tabs>li>p{
+	width:100px;
+	height:30px;
+	line-height:35px;
+	text-align:center;
+	vertical-align:middle;
+}
+.nav-tabs>li>p.btn-default{
+	background-color:rgba(255,255,255,0.01);
+}
+.nav-tabs>li>p>a{
+	font-size:1.1em;
+	font-weight:bolder;
+	text-decoration: none;
+}
+.tab-content.tabpanel{
+	overflow-x: hidden;
+	width: 780px;
+	min-height: 700px;
+}
+
+/*右侧楼盘概况挂件*/
+#abouthouse{
+	position:relative;
+	top:-50px;
+	padding:5px;
+	background-color:#fff;
+	z-index:1000;
+}
+#abouthouse h1{
+    font-size:2em;
+	margin:-5px -5px 5px -5px;
+	padding:5px;
+	background-color:rgb(34, 34, 34);
+	/*border-bottom:1px solid rgba(34, 34, 34,1);*/
+	color:rgb(249, 179, 11);
+
+}
+#abouthouse h3{
+	margin:5px;
+	padding:5px;
+	text-align:center;
+}
+#abouthouse p{
+	margin-bottom:20px;
+}
+#abouthouse .rt-label{
+	font-size: 1em;
+	font-weight: bolder;
+}
+#abouthouse .tel{
+	height:40px;
+	line-height:30px;
+    margin-bottom: 10px;
+}
+.hr-line{
+	margin:0 0 10px 0;
+	border-bottom:0;
+}
+/*报名表单*/
+#baoming-form {
+	
+}
+#baoming-form label.control-label{
+	width:50px;
+	padding-top:0;
+	height:30px;
+	line-height: 30px;
+}
+#baoming-form input{
+	height:30px;
+	line-height: 30px;
+}
+#baoming-from h4.form-title{
+	color:#49afcd;
+	text-align: left;
+	padding-left: 10px;
+}
+
+/*户型列表*/
+#list-rooms  {
+	margin: 15px auto;
+	overflow-x: hidden;
+}
+#list-rooms .thumbnail {
+	border:0;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+#list-rooms  .thumbnail a{
+	color: #333;
+}
+#list-rooms >img{
+	max-height:150px;
+}
+#list-rooms .thumbnail >img{
+	padding-top:55px;
+}
+
+#list-rooms .thumbnail .caption{
+	padding:3px 5px;
+}
+
+#list-rooms .s-l-lt{
+	width: 200px;
+	height:200px;
+	line-height: 200px;
+	float: left;
+	text-align: left;
+}
+#list-rooms .s-l-lt .thumbnail {
+	width: 200px;
+	height:200px;
+}
+#list-rooms .s-l-rt{
+	margin-left:260px;
+}
+#list-rooms .s-l-rt h4{
+
+}
+#list-rooms .s-l-rt h4>.price{
+	font-weight: bolder;
+	font-size: 1.2em;
+	color:#f00;
+	margin-right:5px;
+}
+
+/*各相册列表*/
+/*幻灯区域*/
+.album-item {
+	z-index: 0;
+	position: relative;
+	top:10px;
+	max-height:420px;
+	overflow-y: hidden;
+}
+.album-item .carousel{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.album-item .carousel-control {
+	background-color: rgb(0, 136, 204);
+	margin-top: 0px;
+}
+.album-item .carousel-indicators{
+	text-align: center;
+	color: #eee;
+	top: 95%;
+	left: 50%;
+}
+.album-item .item{
+	max-height:420px;
+	overflow-y: hidden;
+}
+
+/*楼盘详情参数*/
+#page-detail #detail-house .no-border>td{
+	border-top:0;
+}
+#page-detail #detail-house .inline-flex{
+	display:inline-flex;
+	display: -webkit-inline-flex;   /*针对苹果浏览器做的补充*/
+	display: -ms-inline-flexbox;
+}
+#page-detail #detail-house p.inline-flex{
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+#page-detail #detail-house .lt-label{
+	font-size: 1em;
+	font-weight: bolder;
+	background-color: transparent;
+	border:0;
+	color: #333;
+	width: 80px;
+	float: right;
+}
+#page-detail #detail-house p.inline-flex .lt-val.newwidth{
+	width:200px;
+	margin-right: 10px;
+}
+#page-detail #detail-house .lt-val{
+	font-size: 1em;
+	color: #555;
+}
+#page-detail .table .firstRow{
+	display: none;
+}
+#page-detail table .params-title{
+	color:#333;
+	width:80px;
+	vertical-align: middle;
+}
+#page-detail table .params-var span{
+	width: 100px;
+	color: #555;
+}
+
+/*周边信息*/
+#page-detail .tab-pane .album-item{
+	margin-bottom: 2em;
+}
+
+#page-detail .tab-pane>blockquote{
+	margin-bottom: 2em;
+}
+#page-detail .tab-pane>blockquote>h1{
+	border-bottom: 1px solid #eee;
+}
+
+/*楼盘动态*/
+.mod-wrap{
+	width: 770px;
+	overflow-x: hidden;
+}
+.mod-estate-dynamic{
+	position: relative;
+}
+
+.mod-estate-dynamic .dynamic-wrap-left {
+	display: block;
+	width: 520px;
+	padding: 10px 0 10px 10px;
+	margin-right: 10px;
+}
+.dynamic-wrap-left .dynamic-wrap-block{
+	padding-top: 15px;
+}
+.dynamic-wrap-left .dynamic-wrap-block:first-child{
+	padding-top: 0;
+}
+.dynamic-wrap-left .dynamic-wrap-block .dynamic-block-detail{
+	width: 100%;
+}
+.dynamic-wrap-left .dynamic-wrap-block .dynamic-detail-time{
+	color:#999;
+	font-size: 0.8em;
+}
+.dynamic-wrap-left .dynamic-wrap-block .dynamic-detail-info-full{
+	text-indent: 2em;
+	line-height: 1.5em;
+}
+.mod-estate-dynamic .dt-part-line{
+	width: 100%;
+	height: 1px;
+	background-color: rgb(238, 238, 238);
+	margin-top: 19px;
+}
+
+.mod-estate-dynamic .dynamic-wrap-right{
+	display: block;
+	width: 200px;
+	padding: 10px 10px 40px 10px;
+	background-color: rgb(250, 250, 250);
+}
+.dynamic-wrap-right .loupan-matter{
+	font-weight: bold;
+	font-size: 12px;
+}
+.dynamic-wrap-right .dynamic-right-item{
+	margin-left: 15px;
+	font-size: 12px;
+	border-left: 1px solid rgb(234, 234, 234);
+}
+
+.dynamic-wrap-right .dynamic-right-item >ul>li{
+	position: relative;
+	margin-bottom: 15px;
+}
+.dynamic-wrap-right .dynamic-right-item >ul>li:before{
+	content: '\0020';
+    display: block;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: rgb(241, 80, 68);
+    position: absolute;
+    top: 20px;
+    left: -30px;
+}
+.dynamic-wrap-right .dynamic-right-item .time-info{
+	display: block;
+	font-size: 14px;
+	position: relative;
+}
+.dynamic-wrap-right .dynamic-right-item .date-info{
+	display: block;
+	color: rgb(153, 153, 153);
+	margin: 0 15px;
+	width: 160px;
+	position: relative;
+}
+.dynamic-wrap-right .dynamic-right-item >ul>li:first-child{
+	padding-top: 15px;
+}
+
+/*滑动到顶部*/
+.gotop{
+	position: absolute;
+	width: 120px;
+	height:30px;
+	line-height: 30px;
+	border:1px solid;
+}
+.gotop-down{
+	left:10px;
+	margin-right:50px;
+}
+.gotop-up{
+	right:10px;
+}
+
+/*——底部区域——*/
+/*友情链接Banner*/
+#bottom-banner{
+	z-index: 0;
+	position: relative;
+	margin-top:-20px;
+}
+/*底部导航*/
+#footerbar {
+	position: relative;
+	background-color:#ccc;
+}
+.copyright{
+	color:#eee;
+	font-size: 9px;
+	text-align: center;
+	padding-right: 5%;
+	font-weight: lighter;
+	margin-top: 15px;
+}
+#footerbar .footbar-link {
+	color:#111;
+	/*font-weight:bold;*/
+	text-shadow: 0 0px 0 #333;
+}
+
+/*——分页条——*/
+.pagination > li {
+    display: inline;
+}
+.pagination > li > a, .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    text-decoration: none;
+    color: rgb(0, 149, 246);
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(221, 221, 221);
+    margin-left: -1px;
+}
+.pagination > li:first-child > a, .pagination > li:first-child > span {
+    margin-left: 0;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    z-index: 2;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 149, 246);
+    border-color: rgb(0, 149, 246);
+    cursor: default;
+}
+.pagination > li > a, .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    text-decoration: none;
+    color: rgb(0, 149, 246);
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(221, 221, 221);
+    margin-left: -1px;
+}
+
+.pager-center{
+	text-align: center;
+	padding-left: 50%;
+}
+.pager-center .pagination{
+	margin-left: -25%;
+}
+/*——模态框——*/
+.modal{
+	display: none;
+	z-index: 999999999;
+}
+.modal.fade.in {
+	top: 10%;
+	width: 90%;
+	margin-left: -45%;
+}
+.modal .modal-title{
+	text-align: center;
+	margin: 5px 0 3px 0;
+	color:#f00;
+	font-weight: bold;
+}
+.modal .modal-body{
+	height:500px;
+}
+.modal .modal-footer{
+	text-align: center;
+}
+.modal>h4{
+	margin: 5px 0 3px 0;
+	color:#f00;
+	font-weight: bold;
+}
+</style>

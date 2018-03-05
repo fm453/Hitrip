@@ -1,0 +1,17 @@
+<div class="tab-pane" id="panel-marketing">
+	<div class="tab-name" style="border-bottom:1px #ccc dotted;margin-bottom:5px;">
+		<span class="btn btn-warning btn-block">优惠推荐</span>
+	</div>
+
+	<div class="content" style="text-align: left;">
+		<div class="" style="padding-top:10px;padding-bottom:10px;">
+
+				{if !$buylinks}
+				{template $appstyle.$do.'/'.$ac.'/'.$goodtpl."/_public/notice"}
+				{else}
+				{template $appstyle.$do.'/'.$ac.'/'.$goodtpl."/_public/buylinks"}
+				{/if}
+
+		</div>
+	</div>
+</div>

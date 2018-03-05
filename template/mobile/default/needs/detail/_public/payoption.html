@@ -1,0 +1,227 @@
+<div class="mui-content">
+	<form action="" method="post" id="_FM-QuickPay-Form" onsubmit="return checkquickpay()">
+		<input type="hidden" name="params" id="params" value="" />
+		<input type="hidden" name="encrypt_code" id="encrypt_code" value="" />
+		<input type="hidden" name="card_id" id="card_id" value="{php echo base64_encode(0);}" />
+		<input type="hidden" name="coupon_id" id="coupon_id" value="" />
+		<input type="hidden" name="openid" id="openid" value="{$_W['openid']}" />
+	</form>
+	
+	<div style="text-align: center;vertical-align: middle;width: 100%;height:300px;" class="{if $needs['price']}mui-hidden{/if}">
+	<ul class="mui-table-view mui-grid-view mui-grid-9" style="background-color:rgba(245,245,245,1);margin-top:0;width:300px;height:300px;border:0;display: inline;">
+	{loop $pricetype $type $typename}
+	{loop $defaultprice[$type] $price}
+	<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4" style="width:80px;height:80px;border-radius:50%;padding-top: 20px;margin:10px;">
+		<div class="mui-btn mui-btn-danger payparams" data-credittype="{$type}" data-goodstype="needs" data-id="{$id}" data-sn="{$sn}" data-fee="{$price}" data-returnurl="{$returnurl}" data-goodstitle="表单快捷支付" style="font-size: 16px;line-height: 30px;width: 100%;height: 100%;right: 0;">
+			<span class=" " style="font-weight: bold;">{$price}
+			</span>
+			<div class=""><i class="{$typename['icon']}"></i>{$typename['title']}</div>
+		</div>
+	</li>
+	{/loop}
+	<hr style="margin:0;padding:0;color:rgba(255,255,255,.01);">
+	{/loop}
+	</ul>
+	</div>
+	
+	<div style="position:relative;width:100%;top:20px;text-align:center;" class="{if $needs['price']}mui-hidden{/if}">
+		<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined" id="_FM-BUY-MODAL-RAND">
+				自定义金额
+		</button>
+	</div>
+	
+	<div class="{if !$needs['price']}mui-hidden{/if} for-mui-progressbar-infinite mui-progressbar mui-progressbar-infinite">
+	<span></span>
+    </div>
+    <script>
+        mui(".for-mui-progressbar-infinite").progressbar().show();
+    </script>
+    
+    <div class="mui-card {if !$needs['price']}mui-hidden{/if}">
+	<!--页眉，放置标题-->
+	<div class="mui-card-header">{$needs['title']}</div>
+	<!--内容区-->
+	<div class="mui-card-content mui-content-padded">
+	    <p>
+	        <span style="font-weight:bold;">报名费用</span>：
+	        <span style="color:red;">{$needs['price']}</span>元;
+	        <br>
+	        <span style="font-weight:bold;">支付方式</span>：
+	        <span>微信支付</span>
+	    </p>
+	</div>
+	<!--页脚，放置补充信息或支持的操作-->
+	<div class="mui-card-footer"><small>微信支付,安全保障</small></div>
+    </div>
+	<div style="position:relative;width:100%;top:20px;text-align:center;" class="{if !$needs['price']}mui-hidden{/if}">
+		<button type="button" class="mui-btn mui-btn-success mui-btn-block" style="height:60px;" id="_FM-BUY-MODAL-STATIC">
+				立即付款
+		</button>
+	</div>
+	
+</div>
+
+<script type="text/javascript" >
+	var mypayinfo = $("#_FM-BUY-MODAL-RAND");//JQ对象
+	var PayForm = document.getElementById("_FM-QuickPay-Form");	//DOM节点
+	var _getpaytypes = {
+			'jifen':"{$pricetype['jifen']['title']}",
+			'yue':"{$pricetype['yue']['title']}",
+			'kaquan':"{$pricetype['kaquan']['title']}",
+		}; //支付类型(Obj对象)
+	var getpaytypes = {};
+	for (x in _getpaytypes) {
+		if(_getpaytypes[x] !=''){
+			getpaytypes[x] = _getpaytypes[x];
+		}
+	}
+	var testmsg = ''; 	//测试页面提示
+	//随机取值
+	document.getElementById("_FM-BUY-MODAL-RAND").addEventListener('tap', function(e) {
+		e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+		var btnArray = ['取消'];
+		var paytypes = new Array(getpaytypes.length);
+		var i=0;
+		for (x in getpaytypes) {
+			btnArray[i+1] = getpaytypes[x];
+			paytypes[i] = x;
+			i++;
+		}
+		var fee = "{php echo rand(1,99)}";
+		var placeholder = "请输入一个数字";
+		var mydata = '';
+		var myfee = '';
+		mui.prompt('默认为随机金额：'+ fee , placeholder, '自定义金额', btnArray, function(e) {
+			myfee = (!isNaN(Number(e.value))) ? Number(e.value) :0 ;//强制转换为整数或小数
+			if (myfee < 1){
+			    //支付1元以下均会报错
+				myfee = fee;
+				testmsg = "您输入了一个无效的数字，我们已经自动随机更正为" + myfee;
+			}
+			if (e.index >0) {
+				var pay_key = e.index - 1;
+				mydata = {
+					goodstype: "{$goodstype}",
+					goodstitle: "{$goodstitle}",
+					id: '{$id}',
+					sn: '{$sn}',
+					fee: myfee,
+					total:1,
+					returnurl: "{$_W['siteurl']}",
+					paytype : paytypes[pay_key]
+				}
+				testmsg = '您输入的随机金额为：' + myfee + "(" + getpaytypes[paytypes[pay_key]] + ")";
+				$("#_FM-INFO-PAYRESULT").html(testmsg);
+				mypayinfo.html('您将支付'+myfee+ "(" + getpaytypes[paytypes[pay_key]] + ")");
+				QuickPay(myfee,mydata);
+			} else if(e.index == 0) {
+				mypayinfo.html("自定义金额");
+				testmsg = "您取消了";
+				$("#_FM-INFO-PAYRESULT").html(testmsg);
+			}
+		});
+	});
+	
+	document.getElementById("_FM-BUY-MODAL-STATIC").addEventListener('tap', function() {
+		var mydata = {};
+		var myfee = "{$needs['price']}";
+		mydata = {
+			goodstype: "{$goodstype}",
+			goodstitle: "{$goodstitle}",
+			id: '{$id}',
+			sn: '{$sn}',
+			fee:  myfee,
+            total:1,
+			returnurl: "{$_W['siteurl']}",
+			paytype : 'wechat'
+		}
+		testmsg = '您将微信支付：' + myfee + "元";
+		$("#_FM-INFO-PAYRESULT").html(testmsg);
+		QuickPay(myfee,mydata);
+	});
+
+	mui('#modal-buy').on('tap','div.payparams', function() {
+		var id = this.getAttribute('data-id');
+		var sn = this.getAttribute('data-sn');
+		var fee = this.getAttribute('data-fee');
+		var paytype = this.getAttribute('data-credittype');
+		var goodstype = this.getAttribute('data-goodstype');
+		var goodstitle = this.getAttribute('data-goodstitle');
+		var returnurl = this.getAttribute('data-returnurl');
+		var mydata = {
+			goodstype: goodstype,
+			goodstitle: goodstitle,
+			id: id,
+			sn: sn,
+			fee: fee,
+			total:1,
+			returnurl: returnurl,
+			paytype: paytype
+		}
+		testmsg = returnurl;
+		mypayinfo.html('您将支付'+ fee + "(" + getpaytypes[paytype] + ")");
+		$("#_FM-INFO-PAYRESULT").html(testmsg);
+		QuickPay(fee,mydata);
+	});
+
+	function QuickPay(fee,postdata) {
+		$("#_FM-INFO-PAYRESULT").html("正在生成支付数据…");
+		var posturl = "{php echo fm_murl('confirm','quickpay','getparams',array())}";
+		var nowpaytype = '';
+		var nowparams = '';
+		var checkresult = '';
+//返回status代码：2余额支付，1系统支付, 0报错
+		$.post(posturl,postdata, function(res) {
+			if(res.status == 1){
+				checkresult = res.result;
+				nowpaytype = checkresult.paytype;
+				if(nowpaytype=='credit'){
+					//系统原生支付界面跳转
+					nowparams = checkresult.params;
+					newurl =  "{php echo fm_murl('confirm','quickpay','index',array())}" + "&params=" + nowparams;
+					$("#_FM-INFO-PAYRESULT").html(newurl);
+					window.location.href = newurl;
+					return;
+				}
+				//微信JS弹窗支付
+				nowparams = checkresult.params;
+				$("#params").val(nowparams);
+				checkquickpay(nowpaytype);
+			} else if (res.status == 2){
+				checkresult = res.result;
+				if(checkresult==0){
+					//积分支付成功
+					$("#_FM-INFO-PAYRESULT").html("已完成积分扣减");
+					//关闭模态框
+					$("#modal-buy").toggleClass('mui-active');
+					mui.alert("亲，感谢您的热心支持!", '{$shopname}', function() {
+
+					});
+					return;
+				} else if(checkresult==-1){
+					//积分支付失败
+					$("#_FM-INFO-PAYRESULT").html("积分不足！");
+					mui.alert("亲，您的余额不足以支付本次打赏!", '{$shopname}', function() {
+						$("#modal-buy").toggleClass('mui-active');
+					});
+					return;
+				}
+			}else{
+				testmsg = res.msg;
+				$("#_FM-INFO-PAYRESULT").html(testmsg);
+			}
+		},'JSON');
+		return;
+	}
+
+	function checkquickpay(paytype) {
+		$("#_FM-INFO-PAYRESULT").html("校验接口…");
+		if (PayForm.params.value == '') {
+			return false;
+		}
+		var payurl = "{$_W['siteroot']}/../app/index.php?i={$_W['uniacid']}&c=mc&a=cash&openid={$_W['openid']}&do=" + paytype;
+		PayForm.setAttribute('action',payurl);
+		PayForm.submit();
+		return;
+	}
+</script>

@@ -1,0 +1,34 @@
+<div id="modal-buy" class="mui-modal mui-scroll-wrapper" style="background-color: rgba(245,245,245,1);">
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-close mui-pull-right" href="#modal-buy"></a>
+		<h1 class="mui-title" id="modal-buy-title">在线处理回复</h1>
+	</header>
+
+	<div class="mui-content " style="">
+	<form action="{php echo fm_murl('appweb'.$do,$ac,'post',array())}" method="post" class="form-horizontal form" id="form-reply" enctype="multipart/form-data" onsubmit='return formCheckReply("form-reply")'>
+	<input type="hidden" name="setfor" value="{$needs['setfor']}" />
+	<input type="hidden" name="id" value="{$id}" />
+	<input type="hidden" name="sn" value="{$sn}" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+		<div class="mui-content-padded">
+			<p>回复文字</p>
+			<div class="mui-input-row ">
+				<textarea id='reply' name='reply' class="mui-input-clear question">{$needs_data['reply']}</textarea>
+				<p>客户：<img src="{$booker['avatar']}" alt="" style="width:30px;height:30px;border-radius:5px;"> {$booker['nickname']} ({$needs_data['name']})</p>
+				{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/reply'}
+				<p>提交时间：{php echo date('Y-m-d H:i:s D 周w',$sn)}</p>
+			</div>
+		</div>
+
+		<button id="submit" class="mui-btn mui-btn-primary mui-btn-outlined" style="left:50%;margin-left:-60px;width: 120px;height:40px;border-radius:5%;">提交</button>
+	</form>
+
+
+	</div>
+
+	<footer style="position:relative;width:100%;top:50px;text-align:center;display:none;">
+		<div  class="mui-btn-danger mui-btn-outlined" id="_FM-INFO-PAYRESULT" style="padding:10px 0;">
+				通知结果
+		</div>
+	</footer>
+</div>

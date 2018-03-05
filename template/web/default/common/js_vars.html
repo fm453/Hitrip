@@ -1,0 +1,16 @@
+<script type="text/javascript">
+/*
+*	定义一些变量，页首引用，可保证页面后续全部可使用
+*/
+
+/*
+@FM_DEBUG 	是否开启调试模式
+*/
+	var FM_DEBUG = false;
+	{if defined('FM_APP_DEBUG')}
+		FM_DEBUG = "{FM_APP_DEBUG}";
+	{/if}
+	if (FM_DEBUG) {
+		console.log('APP调试模式已开启');
+	}
+</script>

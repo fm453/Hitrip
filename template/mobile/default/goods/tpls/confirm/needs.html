@@ -1,0 +1,20 @@
+<h5>需求类型</h5>	
+		<select id='type' name='needstype' class="form-control">
+		<option value="餐饮类" >餐饮类</option>
+		<option value="外卖类" >外卖类</option>
+		<option value="租车类">租车类</option>
+		<option value="其他" >其他</option>
+		</select>
+<h5>期望开始时间:</h5>
+		<div id="starttime">
+		<input type="text" name="needsstarttime" value="{php echo date('Y年m月d日',TIMESTAMP+84399)}" placeholder="请选择日期" class="form_datetime">
+		</div>
+<h5>期望结束时间:</h5>
+		<div id="endtime">
+		<input type="text" name="needsendtime" value="{php echo date('Y年m月d日',TIMESTAMP+84399)}" placeholder="请选择日期" class="form_datetime">
+		</div>
+		
+<h5>需求服务地点（如果有，请填写）</h5>	
+		<div id="startarea">
+		<input type="text" id="startarea" name='needsstartarea' value="" class="form-control" />
+		</div>

@@ -1,0 +1,36 @@
+<div class="cssBox">
+        <div class="borderRadius">
+            <div class="lfRaidus">
+                <div class="ctRaidus"></div>
+            </div>
+            <div class="rtRaidus">
+                <div class="ctRaidus"></div>
+                <div class="hfPoint"></div>
+                <div class="rtPoint"></div>
+            </div>
+        </div>
+        <div class="imageRadius">
+            <img src="{$fm453resource}images/{$template}/1.png" width="100%" alt="">
+        </div>
+        <div class="waveRaidus">
+            <img src="{$fm453resource}images/{$template}/1.png" width="100%" alt="">
+        </div>
+        <div class="pointRadius">
+        	{if $FM_member['avatar']}
+            <img src="{php echo tomedia($FM_member['avatar']);}" width="100%" alt="" style="border-radius: 50%;">
+            {else}
+            <img src="{$fm453resource}images/{$template}/2.png" width="100%" alt="" style="    border-radius: 50%;">
+            {/if}
+        </div>
+</div>
+<p class="" style="font-size: 20px;
+    font-weight: bolder;
+    color: #f5d3c2;
+    text-align: center;
+    vertical-align: middle;
+    min-height: 30px;">
+嗨，{$FM_member['nickname']} ，您的主页正在生成！
+</p>
+<span>
+        	<button type="" class="mui-btn mui-btn-warning mui-btn-block mui-btn-outlined">左滑一下，进入主页</button>
+</span>

@@ -1,0 +1,82 @@
+<div class="myoder img-rounded">
+	<div class="myoder-hd">
+		<span class="pull-left">订单编号：{$order['ordersn']}</span>
+		<span class="pull-right">{php echo date('Y-m-d H:i', $order['createtime'])}</span>
+	</div>
+	{loop $allgoods $g}
+	<div style="width:100%;height:60px;margin: 2px 0 3px 0;" onclick="javascript:window.location.href='{php echo fm_murl('goods','detail', 'index',array('id' => $g['id']))}'">
+			<div class="img">
+				<img class="pull-left" src="{php echo tomedia($g['thumb']);}"  style="width: 90px;height: 50px;margin-top: 5px;"  >
+			</div>
+			<div class="name">
+			<p>
+				<span class="price pull-left" style="padding-left: 10px;">{$g['price']} 元{if $g['unit']} / {$g['unit']}{/if}-</span>
+				<span class="num pull-right" style="padding-right: 10px;">-数量：{$g['buytotal']}{if $g['unit']} {$g['unit']}{/if}</span>
+			</p>
+			<br>
+		    <h6 style="padding-left: 10px;text-overflow:ellipsis;"><a href="{php echo fm_murl('goods','detail','index', array('id' => $g['id']))}">{$g['title']}</a></h6>
+			</div>
+		</div>
+
+	{/loop}
+	<div class="myoder-express">
+		<span class="express-company">订单状态:
+			{if $originaldata['status'] == -1}
+			<span class="text-muted">{$order['status']}</span>
+			{elseif $originaldata['status'] == 0}
+			<span class="text-danger">{$order['status']}</span>
+			{elseif $originaldata['status'] == 1}
+			<span class="text-warning">{$order['status']}</span>
+			{elseif $originaldata['status'] == 2}
+			<span class="text-warning">{$order['status']}</span>
+			{else}
+			<span class="text-success">{$order['status']}</span>
+			{/if}
+		</span>
+	</div>
+	{if !empty($order['dispatch'])}
+	<div class="myoder-express" style='margin-top:10px;'>
+		<span class="express-company">发货方式</span>
+		<span class="express-num">{$dispatch['dispatchname']}</span>
+	</div>
+	{/if}
+	{if !empty($order['remark'])}
+	<div class="myoder-express" style='margin-top:10px;'>
+		<span class="express-company">订单备注&nbsp;&nbsp;:&nbsp;&nbsp;{$order['remark']}</span>
+	</div>
+	{/if}
+	{if ($originaldata['status'] == '2' || $originaldata['status']==3) && !empty($order['expresssn'])}
+	<div class="myoder-express">
+		<span class="express-company">快递: {$order['expresscom']}</span>
+		<span class="express-num">
+			单号: {$order['expresssn']}
+		</span>
+	</div>
+	{/if}
+	<div class="myoder-total">
+		<span>共计：<span class="false">
+			{if $order['dispatchprice']<=0}
+				{$order['price']} 元
+			{else}
+				{$order['price']} 元 (含运费 {$order['dispatchprice']} 元)
+			{/if}
+			</span>
+		</span>
+
+		{if $originaldata['status'] == '2' && !empty($order['expresssn'])}
+			<a href="http://m.kuaidi100.com/index_all.html?type={$order['express']}&postid={$order['expresssn']}#input" class="btn btn-success pull-right btn-sm" >查看快递</a>
+		{/if}
+		{if $originaldata['paytype'] != 3 && $originaldata['status'] == 0}
+			<a href="{php echo fm_murl('confirm','pay','index', array('id' => $order['id']))}" class="btn btn-danger pull-right btn-sm">立即支付</a>
+		{else}
+			{if $originaldata['status'] == 3}
+			<button class="btn btn-success pull-right btn-sm">已完成</button>
+			{elseif $originaldata['status'] == 2}
+			<a href="{php echo fm_murl('order','detail','index', array('id' => $order['id'],'todo'=>'complete'))}" class="btn btn-warning pull-right btn-sm" style="margin-right: 10px;" onclick="return confirm('点击确认收货前，请确认您的产品已经收到。确定收货吗？'); ">确认收货</a>
+			{else}
+			<button class="btn btn-danger pull-right btn-sm">等待发货</button>
+			{/if}
+		{/if}
+
+	</div>
+</div>

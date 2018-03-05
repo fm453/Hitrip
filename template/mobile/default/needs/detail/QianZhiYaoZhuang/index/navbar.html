@@ -1,0 +1,35 @@
+<footer class="">
+			<nav class="mui-bar mui-bar-tab">
+				<a class="mui-tab-item" href="tel:{$kefuphone}">
+				<span class="mui-tab-label mui-icon mui-icon-phone">
+				</span>
+				<span class="mui-tab-label">咨询</span>
+			</a>
+
+			<a class="mui-tab-item mui-hidden" href="{$location}">
+				<span class="mui-icon mui-icon-map">
+				</span>
+				<span class="mui-tab-label">位置</span>
+			</a>
+
+			{if $available}
+			<a class="mui-tab-item" id="js_submit">
+				<span class="mui-icon mui-icon-compose">
+				</span>
+				<span class="mui-tab-label">提交预约</span>
+			</a>
+			{else}
+			<a class="mui-tab-item" >
+				<span class="mui-icon mui-icon-compose">
+				</span>
+				<span class="mui-tab-label">活动暂停</span>
+			</a>
+			{/if}
+
+			<a class="mui-tab-item  mui-hidden" id="js_about">
+				<span class="mui-icon mui-icon-search">
+				</span>
+				<span class="mui-tab-label">关于</span>
+			</a>
+			</nav>
+</footer>

@@ -1,0 +1,120 @@
+<div class="main">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			打印区域<button type="button" class="btn btn-primary btn-sm" style="float: right;" onclick="printdiv('divForPrint');" name="finish" value="yes"><i class="fa fa-print"></i>打印</button>
+		</div>
+		<div class="panel-body">
+			<div class="container"  id="divForPrint" style="border:1px solid rgb(221, 221, 221);">
+				<div class="row clearfix">
+					<div class="col-md-1 column"></div>
+					<div class="col-md-10 column">
+						<h3 class="text-info text-center" style="min-height: 100px;margin-top: 0;margin-bottom: 3px;text-align: center;">{$_W['account']['name']}出库单<i class="icon-spinner icon-spin sr-only"></i>
+							<br>(订单号：{$item['ordersn']}<span class="label label-{$item['statuscss']}">{$item['status']}</span>)
+							<div style="position:absolute;float:right;right:15px;top:0px;">
+								<img src="{$qrcodeurl['mp']}" width="100" style="width: 100px;height:100px;"/>
+							</div>
+							<div style="position:absolute;float:right;left:15px;top:0px;">
+								<img src="{$qrcodeurl['order']}" width="100" style="width: 100px;height:100px;"/>
+							</div>
+						</h3>
+						<table class="table table-bordered table-hover" style="line-height: 15px;font-size: 13px;border:1px solid rgb(221, 221, 221);"  contenteditable="true" rowspan="1">
+							<caption style="height: 20px;margin-bottom: 5px;">
+								<p class="pull-left" style="margin:0;padding: 0;">
+									联系人：{if !empty($item['username'])}{$item['username']}{else}{$item['buyer']['nickname']}{/if}
+									(电话：{if !empty($item['mobile'])}{$item['mobile']}{else}{$item['buyer']['mobile']}{/if})
+									地址：{if !empty($item['address'])}{$item['address']}{else}{$item['buyer']['address'])}{/if}
+								</p>
+								<p class="pull-right" style="margin:0;padding: 0;">
+									下单时间：{php echo date('Y-m-d H:i', $item['createtime'])}
+								</p>
+							</caption>
+							<thead style="padding-top: 5px;">
+								<tr style="height:25px;padding:0;">
+									<th style="font-weight: bolder;text-align: center;padding:0;width:80px;border:1px solid rgb(221, 221, 221);">产品</th>
+									<th style="font-weight: bolder;text-align: center;padding:0;width:300px;border:1px solid rgb(221, 221, 221);">名称</th>
+									<th style="font-weight: bolder;text-align: center;padding:0;width:300px;border:1px solid rgb(221, 221, 221);">规格</th>
+									<th style="font-weight: bolder;text-align: center;padding:0;width:80px;border:1px solid rgb(221, 221, 221);">单价</th>
+									<th style="font-weight: bolder;text-align: center;padding:0;width:80px;border:1px solid rgb(221, 221, 221);">数量</th>
+									<th style="font-weight: bolder;text-align: center;padding:0;width:80px;border:1px solid rgb(221, 221, 221);">小计</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop $item['allgoods'] $goods}
+								<tr style="padding:0;">
+									<td style="font-weight: bolder;text-align: center;padding:0;border:1px solid rgb(221, 221, 221);">{$goods['basic']['goodsid']}</td>
+									<td style="white-space: normal; word-wrap:normal; padding:0;border:1px solid rgb(221, 221, 221);">
+									{$goods['detail']['title']}
+									{if $goods['label_span_title']}
+										<span class="label" style="text-align: left; background:#aaa; " >
+														{$goods['label_span_title']}
+										</span>
+									{/if}
+									</td>
+									<td style="padding:0;border:1px solid rgb(221, 221, 221);">
+									<div>{loop $goods['specs'] $goodsspecs}</div>
+									<div><span>{$goodsspecs['title']}:</span>{$goodsspecs['item'][title]}</div>
+									<div>{/loop}</div>
+									</td>
+									<td style="padding:0;border:1px solid rgb(221, 221, 221);">{$goods['basic']['price']}元</td>
+									<td style="padding:0;border:1px solid rgb(221, 221, 221);">{$goods['basic']['total']}{if $goods['detail']['unit']} {$goods['detail']['unit']}{/if}</td>
+									<td style="padding:0;border:1px solid rgb(221, 221, 221);">{$goods['basic']['totalprice']}元</td>
+								</tr>
+								{/loop}
+								<tr class="success" style="padding:0;">
+									<td style="font-weight: bolder;text-align: center;padding:0;border:1px solid rgb(221, 221, 221);">关联信息</td>
+									<td  style="white-space: normal;padding:0;border:1px solid rgb(221, 221, 221);" colspan="5" rowspan="1"> {$item['tips']}</td>
+								</tr>
+								<tr class="error" style="padding:0;">
+									<td style="font-weight: bolder;text-align: center;padding:0;height: 25px;border:1px solid rgb(221, 221, 221);">合计</td>
+									<td style="white-space: normal;padding:0;border:1px solid rgb(221, 221, 221);" colspan="5" rowspan="1">{$item['price']} 元 （商品: {$item['goodsprice']} 元；运费: {$item['dispatchprice']} 元; 优惠: {php echo $item['price']-$item['goodsprice']-$item['dispatchprice'] }元)</td>
+
+								</tr>
+								<tr class="warning" style="padding:0;">
+									<td style="font-weight: bolder;text-align: center;padding:0;border:1px solid rgb(221, 221, 221);">客户备注</td>
+									<td  style="white-space: normal;" colspan="5" rowspan="1"> {$item['remark']}</td>
+								</tr>
+								<tr class="info noprint" style="padding:0;" >
+									<td style="font-weight: bolder;text-align: center;padding:0;border:1px solid rgb(221, 221, 221);">客服备注</td>
+									<td  style="white-space: normal;border:1px solid rgb(221, 221, 221);" colspan="5" rowspan="1"> {$item['remark_kf']}</td>
+								</tr>
+								<tr style="padding:0;height: 25px;">
+									<td style="font-weight: bolder;text-align: center;padding:0;border:1px solid rgb(221, 221, 221);" >送件员：</td>
+									<td colspan="5" rowspan="1" style="padding:0;border:1px solid rgb(221, 221, 221);"><span style="font-weight: bolder;text-align: center;float: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									客户签名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									<span style="font-weight: bolder;text-align: center;float: right;">日期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-1 column"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">打印帮助</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">说明</label>
+			<div class="col-sm-9 col-xs-12">
+				<p class="form-control-static">直接点击“打印”按钮，即可自动调用浏览器的打印功能；您可以在此浏览器的打印页中进行更详细的设置，以便您后期的使用; </p><p>客服备注栏打印时会直接被隐藏</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script language="javascript">
+function printdiv(printpage){
+    var headstr='<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../addons/{FM_NAME}/resource/components/bootstrap/css/bootstrap.min.css"><link rel="stylesheet" href="../addons/{FM_NAME}/resource/components/font-awesome/css/font-awesome-new.css"><link rel="stylesheet" href="../addons/{FM_NAME}/resource/components/font-awesome/css/font-awesome-old.min.css"></head><body>';
+    var stylestr = '<style>.noprint{display: none;}</style>';
+    var footstr="</body></html>";
+    var newstr=document.all.item(printpage).innerHTML;
+    var oldstr=document.body.innerHTML;
+    document.body.innerHTML=headstr+stylestr+newstr+footstr;
+    window.print();
+    document.body.innerHTML=oldstr;
+    return false;
+}
+</script>

@@ -1,0 +1,39 @@
+<div class="spec_item_item" style="float:left;margin:0 5px 10px 0;">
+	<input type="hidden" class="form-control spec_item_show" name="spec_item[show][{$spec['id']}][]" VALUE="{$specitem['show']}" />
+	<input type="hidden" class="form-control spec_item_id" name="spec_item[id][{$spec['id']}][]" VALUE="{$specitem['id']}" />
+	<div class="input-group"  style="margin:10px 0;">
+		<span class="input-group-addon">
+			<label class="checkbox-inline" style="margin-top:-20px;">
+				<input type="checkbox" {if $specitem['show']==1}checked{/if} value="1" onclick='showItem(this)'>
+			</label>
+		</span>
+		<input type="text" class="form-control spec_item_title error" name="spec_item[title][{$spec['id']}][]" VALUE="{$specitem['title']}" />
+		<span class="input-group-addon">
+			<a href="javascript:;" onclick="removeSpecItem(this)" title='删除'><i class="fa fa-times"></i></a>
+	  		<a href="javascript:;" class="fa fa-arrows" title="拖动调整显示顺序" ></a>
+		</span>
+	</div>
+	<div class="input-group" style="margin:10px 0;">
+	<span class="input-group-addon">
+			<label class="checkbox-inline" style="margin-top:-20px;">
+				<input type="checkbox" {if $specitem['istime']==1}checked{/if} value="1"  name="spec_item[istime][{$spec['id']}][]" onclick='showItem(this)'>
+			</label>
+			启用时效控制
+		</span>
+		<span class="input-group-addon">
+			开始时间:{php echo tpl_form_field_date("spec_item[startdate][".$spec['id']."][]", !empty($specitem['startdate']) ? date('Y-m-d H:i',$specitem['startdate']) : date('Y-m-d H:i'),true)}
+		</span>
+		<span class="input-group-addon">
+		结束时间:{php echo tpl_form_field_date("spec_item[enddate][".$spec['id']."][]", !empty($specitem['enddate']) ? date('Y-m-d H:i',$specitem['enddate']) : date('Y-m-d H:i'),true)}
+		</span>
+	</div>
+	<div >
+		<span class="help-block"><span style="color:red">如果您需要对此规格启用有效时间的限制，请勾选启用时效控制。</span>(如果商品设置了售卖限时，则规格有效期时段必须在售卖时间内);请确保结束时间要晚于开始时间，否则将出现不可预知的错误;</span>
+	</div>
+	<div>
+		{php echo tpl_form_field_image("spec_item[thumb][".$spec['id']."][]",$specitem['thumb'])}
+		<span class="help-block">图片尺寸规格建议：100px×100px</span>
+	</div>	
+</div>
+
+

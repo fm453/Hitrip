@@ -1,0 +1,129 @@
+<!-- 会员搜索模态框及附加JS S -->
+		<script language='javascript'>
+			function search_members() {
+				if( $.trim($('#seletor-search-member-kwd').val())==''){
+					alert('请输入搜索关键词');
+					return;
+				}
+				$("#seletor-search-member-kwd").html("正在搜索....");
+				$.get("{php echo fm_wurl('crm','member','query',array());}", {
+					keyword: $.trim($('#seletor-search-member-kwd').val()),
+					target: $.trim($('#seletor-search-member-target').val()),
+				}, function(dat){
+					$('#modal-selector-member-list').html(dat);
+				});
+			}
+
+			function selector_remove(obj,targetid){
+				$(obj).parent().hide();
+				var _i = $(obj).parent().find("input").val();
+				$(obj).parent().find("input").val("");
+				var _j = $('#'+targetid).val();
+				var _t = _j.replace(_i,"");
+				$('#'+targetid).val(_t);
+			}
+		</script>
+		<div id="modal-selector-member"  class="modal fade" tabindex="-1">
+			<div class="modal-dialog" style="width: 920px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>选择会员</h3>
+					</div>
+					<div class="modal-body" >
+						<div class="row">
+							<div class="input-group">
+								<input type="text" class="form-control" name="keyword" value="" id="seletor-search-member-kwd" placeholder="请输入粉丝昵称/姓名/手机号" />
+								<input type="hidden" class="form-control" name="target" value="" id="seletor-search-member-target" placeholder="这个用于指定对应表单相应输入框名，具体可查看tpl函数" />
+								<span class="input-group-btn"><button type="button" class="btn btn-default" onclick="search_members();">搜索</button></span>
+							</div>
+						</div>
+						<div id="modal-selector-member-list" style="padding-top:5px;"></div>
+					</div>
+					<div class="modal-footer"><a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+				</div>
+			</div>
+		</div>
+		<!-- 会员搜索模态框及附加JS E -->
+
+{if $settings['onoffs']['webkf'] !=2}
+	{if isset($settings['webkf_meiqia'])}
+<script type='text/javascript'>
+    (function(m, ei, q, i, a, j, s) {
+        m[i] = m[i] || function() {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        j = ei.createElement(q),
+            s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = 'http://static.meiqia.com/dist/meiqia.js';
+        s.parentNode.insertBefore(j, s);
+    })(window, document, 'script', '_MEIQIA');
+    _MEIQIA('entId', "{$settings['webkf_meiqia']}");
+</script>
+	{else}
+<script type='text/javascript'>
+    (function(m, ei, q, i, a, j, s) {
+        m[i] = m[i] || function() {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        j = ei.createElement(q),
+            s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = 'http://static.meiqia.com/dist/meiqia.js';
+        s.parentNode.insertBefore(j, s);
+    })(window, document, 'script', '_MEIQIA');
+    _MEIQIA('entId', 46840);
+</script>
+	{/if}
+{/if}
+<div style="text-align: center;background-color: rgba(0,0,0,.2);padding-bottom: 5px;" id="fm453-navigator-notice"></div>
+<script>
+		function subscribe(){
+			$.post("{url 'utility/subscribe'}", function(){
+				setTimeout(subscribe, 5000);
+			});
+		}
+		function sync() {
+			$.post("{url 'utility/sync'}", function(){
+				setTimeout(sync, 60000);
+			});
+		}
+		$(function(){
+			subscribe();
+			sync();
+		});
+		{if $_W['uid']}
+			function checknotice() {
+				$.post("{php echo url('utility/notice')}", {}, function(data){
+					var data = $.parseJSON(data);
+					$('#notice-container').html(data.notices);
+					$('#notice-total').html(data.total);
+					if(data.total > 0) {
+						$('#notice-total').css('background', '#ff9900');
+					} else {
+						$('#notice-total').css('background', '');
+					}
+					setTimeout(checknotice, 60000);
+				});
+			}
+			checknotice();
+		{/if}
+
+		{if defined('IN_MODULE')}
+		$.getJSON("{url 'utility/checkupgrade/module' array('m' => IN_MODULE)}", function(result) {
+			if (result.message.errno == -10) {
+				$('body').prepend('<div id="upgrade-tips-module" class="upgrade-tips"><a href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODAwMzEzOV8xNzEwOTZfNDAwMDgyODUwMl8yXw" target="_blank">' + result.message.message + '</a></div>');
+				if ($('#upgrade-tips').size()) {
+					$('#upgrade-tips-module').css('top', '25px');
+				}
+			}
+		});
+		{/if}
+		{php echo site_profile_perfect_tips();}
+	</script>
+
+{template 'web/default/common/js_websocket'}
+
+{template $fm453style.'common/footer-base'}

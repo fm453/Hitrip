@@ -1,0 +1,58 @@
+{if $adboxes[1]}
+<div class="mui-content">
+	<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">
+		{$adboxes[1]['description']}
+	</h5>
+	<div class="mui-slider">
+		<div class="mui-slider-group mui-slider-loop">
+		<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一个图文表格) -->
+		<div class="mui-slider-item mui-slider-item-duplicate">
+			<ul class="mui-table-view mui-grid-view">
+				{loop $adboxes[1]['default'] $ad}
+				<li class="mui-table-view-cell mui-media mui-col-xs-6">
+					<a href="{$ad['link']}" onload="UpdateView('ad',{$ad['id']})" onclick="UpdateClick('ad',{$ad['id']})">
+						<img class="mui-media-object" src="{$ad['thumb']}" style="" onerror="RepairMyImg(this)" >
+						<div class="mui-media-body">{$ad['adname']}</div>
+					</a>
+				</li>
+				{/loop}
+			</ul>
+		</div>
+		{loop $adboxes[1]['fornode'] $adbox}
+		<div class="mui-slider-item">
+			<ul class="mui-table-view mui-grid-view">
+				{loop $adbox $ad}
+				<li class="mui-table-view-cell mui-media mui-col-xs-6">
+					<a href="{$ad['link']}" onload="UpdateView('ad',{$ad['id']})" onclick="UpdateClick('ad',{$ad['id']})">
+						<img class="mui-media-object" src="{$ad['thumb']}" style="" onerror="RepairMyImg(this)" >
+						<div class="mui-media-body">{$ad['adname']}</div>
+					</a>
+				</li>
+				{/loop}
+			</ul>
+		</div>
+		{/loop}
+
+		<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一个图文表格) -->
+		<div class="mui-slider-item mui-slider-item-duplicate">
+			<ul class="mui-table-view mui-grid-view">
+				{loop $adboxes[1]['default'] $ad}
+				<li class="mui-table-view-cell mui-media mui-col-xs-6">
+					<a href="{$ad['link']}" onload="UpdateView('ad',{$ad['id']})" onclick="UpdateClick('ad',{$ad['id']})">
+						<img class="mui-media-object" src="{$ad['thumb']}" style="" onerror="RepairMyImg(this)" >
+						<div class="mui-media-body">{$ad['adname']}</div>
+					</a>
+				</li>
+				{/loop}
+			</ul>
+		</div>
+
+		</div>
+		<div class="mui-slider-indicator" style="position: static;background-color: #fff;">
+			<div class="mui-number">
+				<span>1</span> / {$node_count}
+			</div>
+		</div>
+	</div>
+</div>
+{/if}

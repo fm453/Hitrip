@@ -1,0 +1,45 @@
+
+ <h1 style="text-align:center;">
+{$albumTitle[$k]}({php echo count($itemAlbum)})
+</h1>
+
+<div id="album-item-{$k}" class="container-fluid album-item" style="">
+	<div class="row-fluid">
+		<div class="span12" >
+			<div class="carousel slide" id="carousel-container-album-item-{$k}" >
+				<ol class="carousel-indicators" style="">
+					{php $slideNum = 0;}
+					{loop $itemAlbum $row}
+					<li data-slide-to="{$slideNum}" {if $slideNum == '0'} class="active"{/if} data-target="#album-item-{$k}">
+					</li>
+					{php $slideNum++;}
+					{/loop}
+				</ol>
+
+				<div class="carousel-inner" style="">
+					{php $i = 0;}
+					{loop $itemAlbum $row}
+					<div class="item {if $i == 0} active {/if}"  style="">
+						<div  style="text-align: center;">
+							<a>
+								<img alt="" src="{$row}" title="{$row}" style="width:100%;vertical-align:middle;"/>
+							</a>
+						</div>
+						<div class="carousel-caption hidden">
+							<h4>
+
+							</h4>
+							<p>
+
+							</p>
+						</div>
+					</div>
+					{php $i++;}
+					{/loop}
+				</div>
+			</div>
+			<a data-slide="prev" href="#carousel-container-album-item-{$k}" class="left carousel-control">‹</a>
+			<a data-slide="next" href="#carousel-container-album-item-{$k}" class="right carousel-control">›</a>
+		</div>
+	</div>
+</div>

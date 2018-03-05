@@ -1,0 +1,64 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#shortnews-nodes">
+          短新闻<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse" id="shortnews-nodes">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-shortnews-nodes"  onsubmit="return formcheck('setting-form-shortnews-nodes');return false;" data-noajax = '1'>
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" value="">
+				<input type="hidden" name="setfor" value="" />
+				<input type="hidden" name="s_sn" value="{$s_sn}" />
+				<input type="hidden" name="sn" value="{$f_sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+	<table class="table table-hover">
+		<thead>
+		<tr>
+			<th style='width:50px;'></th>
+			<th  data-toggle="tooltip" data-placement="top" title="对短新闻进行排序">排序</th>
+			<th>新闻类型</th>
+			<th>新闻标题</th>
+			<th>新闻内容</th>
+			<th>时间调整</th>
+			<th>状态</th>
+		</tr>
+		</thead>
+		<tbody id="shortnews-nodes-items" class="sortable">
+			{loop $item['shortnews'] $k $v}
+				{template $fm453style.$do.'/'.'addon'.'/'.'node'.'/shortnews'}
+			{/loop}
+		</tbody>
+		<tbody>
+			<tr>
+				<td colspan="6">
+					<a class="btn btn-default" href="javascript:;" id='add-shortnews-nodes' onclick="addHtml('#shortnews-nodes-items','node','shortnews')" style="margin-top:10px;"  title="添加新闻">添加新闻 <i class='fa fa-plus'></i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-shortnews-nodes" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-shortnews-nodes" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#shortnews-nodes">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>
+

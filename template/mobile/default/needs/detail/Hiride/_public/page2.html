@@ -1,0 +1,23 @@
+<link rel="stylesheet" type="text/css" href="{$appsrc}css/feedback.css" />
+<div id="tabbar-with-chat" class="mui-control-content feedback">
+<div class="mui-scroll-wrapper" style="height:700px;">
+	<div class="mui-scroll" >
+<form action="{php echo fm_murl($do,$ac,'post',array())}" method="post" class="form-horizontal form" id="form-feedback" enctype="multipart/form-data" onsubmit='return formcheck()'>
+	<input type="hidden" name="setfor" value="{$FM_member['uid']}" />
+	<input type="hidden" name="id" value="{$id}" />
+	<input type="hidden" name="sn" value="{$sn}" />
+	<input type="hidden" name="openid" value="{$_W['openid']}" />
+	<input type="hidden" name="template" value="{$needs['template']}" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+
+		{template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form'}
+		<button id="submit" class="mui-btn mui-btn-primary mui-btn-outlined" style="display: none;position:fixed;bottom:0;left:50%;margin-left:-30px;width: 60px;height:60px;border-radius:50%;">预约</button>
+	</form>
+	<p  id="PrintError" class="mui-hidden">打印错误消息</p>
+	<div id="qrcode"  class="mui-hidden" style="text-align: center;">
+		<img src="{$qrcodeurl}" style="width:60%;" />
+		<a id="shortcut" style="width: 60%;margin: 15px auto;padding: 5px;" class="mui-hidden mui-btn mui-btn-block mui-btn-red">创建桌面图标</a>
+	</div>
+</div>
+</div>
+</div>

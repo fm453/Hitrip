@@ -1,0 +1,58 @@
+{template $appstyle.'special/year/'.'head'}
+{template $appstyle.'special/year/'.'css'}
+	<body>
+		<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-scalable">
+			<!--侧滑菜单部分-->
+			{template $appstyle.'special/year/'.'aside'}
+			<!--主界面部分-->
+			<div  class="mui-inner-wrap mui-scroll-wrapper">
+				{template $appstyle.'special/year/'.'headerbar'}
+				<!-- 左右滑动页面主体部分 -->
+				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+					<!--下拉刷新容器-->
+					<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!-- 容器内固定数据，只刷新，不追加-->
+						<!-- SLIDER START -->
+							{template $appstyle.'special/year/'.'ppt'}
+						<!-- SLIDER END -->
+
+						<!-- SEARCH START -->
+						{template $appstyle.'special/year/'.'search'}
+						<!-- SEARCH END -->
+
+						<!-- 数据列表 -->
+						<!---产品推荐栏目,首页推荐清单-->
+						<div class="mui-content" id="pullrefresh-table"><!-- 该ID必须存在且不允许更改 -->
+						{template $appstyle.'special/year/'.'goods/item_rec'}
+						</div>
+
+						<!---其他部分，视情况而定-->
+						<div class="mui-content mui-hidden">
+							<div class="mui-content-padded" style="margin: 5px;text-align: center;">
+								<button id='alertBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined" style="display: block;width: 120px;margin: 10px auto;">警告消息框</button>
+								<button id='confirmBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined"  style="display: block;width: 120px;margin: 10px auto;">确认消息框</button>
+								<button id='promptBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined"  style="display: block;width: 120px;margin: 10px auto;">输入对话框</button>
+								<button id='toastBtn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined"  style="display: block;width: 120px;margin: 10px auto;">自动消失提示框</button>
+								<button id="offCanvasShow" type="button" class="mui-btn mui-btn-primary mui-btn-outlined" style="display: block;width: 120px;margin: 10px auto;">显示侧滑菜单</button>
+								<div id="info">
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<!-- 下拉容器结束 -->
+				<!-- 模态框 -->
+						{template $appstyle.'special/year/'.'modal/buy'}
+
+				<!-- off-canvas backdrop -->
+				<div class="mui-off-canvas-backdrop"></div>
+			</div>
+		</div>
+	</div>
+		<script src="{$appsrc}js/mui.min.js"></script>
+		{template $appstyle.'special/year/'.'js'}
+	</body>
+</html>

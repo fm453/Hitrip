@@ -1,0 +1,23 @@
+<table class="table">
+    <thead>
+        <tr class="firstRow">
+            <th>
+                编号
+            </th>
+            <th>
+                楼盘
+            </th>
+            <th>
+                位置
+            </th>
+            <th>
+                说明(该功能暂不使用,时机未到,上线后会先隐藏掉)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+		{loop $rec_list $key $item}
+			{template $appstyle.$do.'/'.$ac.'/item_rec'}
+		{/loop}
+	</tbody>
+</table>

@@ -1,0 +1,188 @@
+{if $state=='shop'}
+<div class="mui-content" style="background-color: rgb(239, 239, 244); bottom: 20px;">
+	<div class="mui-card">
+		<ul class="mui-table-view mui-table-view-chevron">
+			<li class="mui-table-view-cell mui-collapse mui-active"><a class="mui-navigate-right" href="#">联系信息</a>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">下单联系人：{$order['name']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="tel:{$order['phone']}">联系手机：{$order['contact']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">收货地址：{$order['addr']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">会员ID：{$order['uid']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">会员手机：{$order['phone']}</a>
+					</li>
+				</ul>
+			</li>
+
+			<li class="mui-table-view-cell mui-collapse"><a class="mui-navigate-right" href="#">订单详情</a>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">订单编号：{$order['order_no']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" stype="color:red;" href="#">订单状态：{$order['step']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">订单产品：{$order['mgname']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">产品规格：{$order['color']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">产品单价：{$order['price']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">购买数量：{$order['num']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">订单总价：{$order['total']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" stype="color:red;" href="#">实付金额：{$order['pay']}</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div class="mui-button-area">
+		<a href="{$links['hiride']}" class="mui-btn mui-btn-warning mui-btn-block">联系嗨骑</a>
+		<a href="{$links['fm453']}" class="mui-btn mui-btn-warning mui-btn-block">系统报错</a>
+	</div>
+</div>
+{/if}
+
+{if $state=='bike'}
+<div class="mui-content" style="background-color: rgb(239, 239, 244); bottom: 20px;">
+	<div class="mui-card">
+		<ul class="mui-table-view mui-table-view-chevron">
+			<li class="mui-table-view-cell mui-collapse mui-active"><a class="mui-navigate-right" href="#">基础信息</a>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">下单联系人：{$order['realname']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="tel:{$order['phone']}">联系手机：{$order['phone']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">身份证号：{$order['id_no']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">订单编号：{$order['order_no']}</a>
+					</li>
+				</ul>
+			</li>
+			<li class="mui-table-view-cell mui-collapse">
+
+				<div id="M_Toggle" class="mui-switch {if $order['insurance']==1} mui-active {/if}" style="right:20%;">
+					<div class="mui-switch-handle"></div>
+				</div>
+
+				<a class="mui-navigate-right" href="#">保险信息</a>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">(1){$order['realname1']}:{$order['id_no1']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">(2){$order['realname2']}:{$order['id_no2']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">(3){$order['realname3']}:{$order['id_no3']}</a>
+					</li>
+				</ul>
+			</li>
+			<li class="mui-table-view-cell mui-collapse"><a class="mui-navigate-right" href="#">订单详情</a>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">订单编号：{$order['order_no']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">开始时间：{$order['time_from']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">结束时间：{$order['time_to']}</a>
+					</li>
+				</ul>
+			</li>
+			<li class="mui-table-view-cell mui-collapse"><a class="mui-navigate-right" href="#">其他资料</a>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">蓝牙地址：{$order['macaddr']}</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div class="mui-button-area">
+		<a href="{$links['it']}" class="mui-btn mui-btn-warning mui-btn-block">车辆报障</a>
+		<a href="{$links['hiride']}" class="mui-btn mui-btn-warning mui-btn-block">联系嗨骑</a>
+		<a href="{$links['fm453']}" class="mui-btn mui-btn-warning mui-btn-block">系统报错</a>
+	</div>
+</div>
+{/if}
+
+{if $state=='tour'}
+{if $state=='tour'}
+<div class="mui-content" style="background-color: rgb(239, 239, 244); bottom: 20px;">
+	<div class="mui-card">
+		<ul class="mui-table-view mui-table-view-chevron">
+
+			<li class="mui-table-view-cell mui-collapse mui-active"><a class="mui-navigate-right" href="#">骑游详情</a>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">订单编号：{$order['order_no']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">活动标题：{$order['tname']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">活动日期：{$order['tdate']}</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">活动时长：{$order['tdays']}天{$order['tnights']}晚</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">参加成人：{$order['adultnum']}位</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">参加儿童：{$order['childnum']}位</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">所需房间：{$order['roomnum']}间</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">订单总价：{$order['total']}元</a>
+					</li>
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" stype="color:red;" href="#">实付金额：{$order['pay']}元</a>
+					</li>
+				</ul>
+			</li>
+
+			<li class="mui-table-view-cell mui-collapse">
+
+				<a class="mui-navigate-right" href="#">同行人员</a>
+				<ul class="mui-table-view mui-table-view-chevron">
+					{loop $order['teamers'] $i $item}
+					<li class="mui-table-view-cell" style="padding-right:30px;">
+						<textarea class="mui-navigate-right" style="margin-bottom:0;">({php echo $i+1;})【{$item['label']}】{$item['name']}:{$item['idcard']}</textarea>
+					</li>
+					{/loop}
+				</ul>
+			</li>
+
+			<li class="mui-table-view-cell mui-collapse">
+				<div id="M_Toggle" class="mui-switch {if $order['insuind']} mui-active {/if}" style="right:20%;">
+					<div class="mui-switch-handle"></div>
+				</div>
+
+				<a class="mui-navigate-right" href="#">保险信息</a>
+				<ul class="mui-table-view mui-table-view-chevron">
+					{loop $order['insulist'] $i $item}
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">({php echo $i+1;}){$item['title']}:{$item['fee']}元</a>
+					</li>
+					{/loop}
+				</ul>
+			</li>
+
+			<li class="mui-table-view-cell mui-collapse">
+				<div id="N_Toggle" class="mui-switch {if $order['extraind']} mui-active {/if}" style="right:20%;">
+					<div class="mui-switch-handle"></div>
+				</div>
+
+				<a class="mui-navigate-right" href="#">附加消费</a>
+				<ul class="mui-table-view mui-table-view-chevron">
+					{loop $order['extralist'] $i $item}
+					<li class="mui-table-view-cell"><a class="mui-navigate-right" href="#">({php echo $i+1;}){$item['title']}:{$item['fee']}元x{$item['num']}</a>
+					</li>
+					{/loop}
+				</ul>
+			</li>
+
+		</ul>
+	</div>
+	<div class="mui-button-area">
+		<a href="{$links['hiride']}" class="mui-btn mui-btn-warning mui-btn-block">联系嗨骑</a>
+		<a href="{$links['fm453']}" class="mui-btn mui-btn-warning mui-btn-block">系统报错</a>
+	</div>
+</div>
+{/if}
+{/if}
+
+<script type="text/javascript">
+mui.init();
+</script>

@@ -1,0 +1,37 @@
+<div class="main">
+	<div class="panel panel-info">	
+			<div class="panel-heading">
+				总数：<span style="color:red;">{$total}</span>(余额变动：增加{$data['credit2']['add']} ；扣除{$data['credit2']['del']} ；结余{$data['credit2']['end']} || 积分变动：增加{$data['credit1']['add']} ；扣除{$data['credit1']['del']} ；结余{$data['credit1']['end']})
+				<a href="" class="pull-right" style="color:red;"><i class="fa fa-spinner"></i>刷新</a>
+			</div>
+			<div class=" panel-body table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th style="width:100px">账户类型</th>
+					<th style="width:100px">操作员</th>
+					<th style="width:100px">金额/数量</th>
+					<th style="width:200px">执行时间</th>
+					<th>备注</th>
+					<th style="float: right;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+					<tr>
+						<td>{$item['credittype']}</td>
+						<td>{$item['operator']}</td>
+						<td>{$item['num']}</td>
+						<td>{php echo date('Y-m-d H:i:s', $item['createtime'])}</td>	
+						<td style="white-space:normal">{$item['remark']}</td>
+						<td style="float: right;">
+							<a href="{php echo  fm_wurl($do,$ac,'detail', array('id' => $item['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="查看详情资料"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+						</td>
+					</tr>
+				{/loop}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+		</div>
+</div>

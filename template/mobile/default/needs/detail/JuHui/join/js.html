@@ -1,0 +1,262 @@
+<script type="text/javascript" charset="utf-8">
+	mui.init();
+	mui('.mui-scroll-wrapper').scroll();
+
+	//监听header的双击事件,简便起见，双击结果是直接强制刷新
+	document.querySelector('header').addEventListener('doubletap', function() {
+		var url = location.href;
+		location.replace(url);
+	});
+
+//监听nav栏的按钮点击事件
+mui('body').on('tap','#js_submit',function () {
+		formcheck();
+	});
+
+	//应用评分
+	mui('.icons').on('tap','i',function(){
+		var index = parseInt(this.getAttribute("data-index"));
+		var parent = this.parentNode;
+		var children = parent.children;
+		if(this.classList.contains("mui-icon-star")){
+			for(var i=0;i<index;i++){
+				children[i].classList.remove('mui-icon-star');
+				children[i].classList.add('mui-icon-star-filled');
+			}
+		}else{
+			for (var i = index; i < 5; i++) {
+				children[i].classList.add('mui-icon-star')
+				children[i].classList.remove('mui-icon-star-filled')
+			}
+		}
+		starIndex = index;
+		document.getElementById('stars').setAttribute('value',starIndex);
+	});
+</script>
+
+<script language='javascript'>
+	function formcheck() {
+		var form = document.getElementById('form-feedback');
+		//form.*.value , *表示元素的name属性值,(与name标签相同的id不能出现在另一个元素上)
+		if (form.name.value=='') {
+			mui.alert('请告知我们您的姓名/称谓!', '{$shopname}');
+			form.name.focus();
+			return false;
+		}else if (form.mobile.value=='') {
+			mui.alert('请告知我们您的手机号码!', '{$shopname}');
+			form.mobile.focus();
+			return false;
+		}else if (form.idcard.value=='') {
+			mui.alert('请填写(队长的)身份证号!', '{$shopname}');
+			form.idcard.focus();
+			return false;
+		}else if (form.idcard.value !='') {
+
+		}
+
+		var f_data = Form_format('form-feedback');
+		getResult('needs','detail','post',f_data);
+		return false;
+	}
+
+	function getResult(f_do,f_ac,f_op,f_data) {
+		$('#pagename').html('正在通知...');
+		var url = js_url(f_do,f_ac,f_op,"{$_W['uniacid']}",'app');
+		var data = f_data;
+		$.post(url,data,function(result){
+			if(result >0 || empty(result)){
+				$('#pagename').html('已经通知！');
+				var submit_obj = document.getElementById('submit');
+				submit_obj.setAttribute('disabled','');
+				$("#submit").css({"background-color":"#ccc", "border":"1px #ccc"});
+				countDown(60,submit_obj);
+				$("#submit").removeAttr('disabled');
+				setTimeout(function () {
+					$("#submit").css({"background-color":"", "border":""});
+				},60000);
+			}else{
+				$('#pagename').html('通知发送失败！');
+				$("#qrcode").removeClass('mui-hidden');
+				$('#PrintError').html('您好,系统通知失败。如果可以，请您将此页截屏通过公众号发送给我们，以帮助我们找到问题并改进，感谢您的支持;  我们将根据反馈情况为您提供相应的答谢！' + result).removeClass('mui-hidden');
+			}
+		});
+	}
+
+	function countDown(s,Obj) {
+		s--;
+		if (s == 0) {
+			Obj.innerHTML = '提交';
+		} else {
+			Obj.innerHTML = s + '秒';
+			setTimeout(function() {
+				countDown(s,Obj)
+			}, 1000);
+		}
+	}
+</script>
+
+<script type="text/javascript">
+    mui('body').on('shown', '.mui-popover', function(e) {
+	   //console.log('shown', e.detail.id);//detail为当前popover元素
+	});
+	mui('body').on('hidden', '.mui-popover', function(e) {
+		//console.log('hidden', e.detail.id);//detail为当前popover元素
+	});
+</script>
+
+<!-- 为需要复制的元素添加长按复制功能监听（MUI默认禁用了） -->
+<script>
+	//$('.copy-able').find('*').css("-webkit-touch-callout","text");
+	//$('.copy-able').find('*').css("-webkit-user-select","text");
+    $('.copy-able').find('*').css({"-webkit-touch-callout":"text","-webkit-user-select":"text","-khtml-user-select":"text","-moz-user-select":"text","-ms-user-select":"text","user-select":"text"});
+</script>
+
+<!-- 页面框架调整 -->
+<script type="text/javascript" >
+/*
+@newResize		自动适配屏幕,修改元素高宽
+*/
+function newResize() {
+	//window.screen.height	//取页面可视区域高度
+	var pageHeight = document.body.scrollHeight;
+	//取页面可视区域宽度
+	var pageWidth = document.body.scrollWidth;
+	//取头部header高度,MUI默认48
+	var headerHeight =  header.offsetHeight;
+	//取导航栏高度	，MUI默认48
+	var navHeight =  document.getElementById('nav-bottom').offsetHeight;
+
+	//设定页面最大可视宽
+	var pageWidthMax = 768;
+	//设定页面最小可视宽
+	var pageWidthMin = 320;
+	//设定页面最小高度
+	var pageHeightMin = 568;
+	//设定侧滑导航的最大宽度
+	var offCanvasSideWidth = 300;
+	//设定下拉刷新框的最小高度(同页高)
+	var pullrefreshHeightMin = 568;
+	//设定下拉刷新框的上部内进高度
+	var pullrefreshPaddingTop = 0;
+	//设定下拉刷新框的底部内进高度(底导航+聊天盒子高度)
+	var pullrefreshPaddingBottom = 172;
+	//设定下拉刷新数据列表的最小高度(页面高-底部高-聊天盒子高)
+	var pullrefreshTabelHeightMin = 396;
+	//设定下拉刷新数据列表的上部内进高度(同header高)
+	var pullrefreshTabelPaddingTop = 44;
+	//设定下拉刷新数据列表的底部内进高度
+	var pullrefreshTabelPaddingBottom = 0;
+	//设定距顶高度偏移
+	var topPocketOffsetHeight = 6;
+
+	//初始化页面左右padding值
+	var pageWidthPadding = 0;
+	//初始化下拉刷新数据列表高度
+	var pullrefreshTabelHeight =  pageHeight -chatboxHeight - navHeight - topPocketOffsetHeight;
+
+	pullrefreshPaddingBottom = navHeight + chatboxHeight;
+	pullrefreshTabelPaddingTop = headerHeight;
+
+	//在微信浏览器中的处理
+	if(mui.os.wechat){
+		listHeight = pageHeight - chatboxHeight - navHeight  - topPocketOffsetHeight;
+		$('#headerbar').attr('style','display:none');	//隐藏标题栏
+		$('#pullrefresh').css({"padding-top":"0px"});	//隐藏后调整下拉刷新框样式
+		$('.mui-pull-top-pocket').css({"top": topPocketOffsetHeight + "px"});//调整下拉提示区的距顶高度
+	}
+
+		$('#pullrefresh').attr({"height": pageHeight +"px"}).css({"height": pageHeight +"px","padding-bottom": pullrefreshPaddingBottom +"px"});	//调整下拉刷新框高度与样式
+		$('#pullrefresh-table').attr({"height": pullrefreshTabelHeight +"px"}).css({"height": pullrefreshTabelHeight +"px","padding-top": pullrefreshTabelPaddingTop +"px"});
+
+		if (pageWidth>pageWidthMax) {
+			pageWidthPadding = (pageWidth - pageWidthMax) / 2;
+			pageWidth = pageWidthMax;
+		}
+		$('#pullrefresh').css({"width": pageWidth +"px"});	//调整下拉刷新框宽度
+		$('#chatbox').css({"width": pageWidth +"px"});	//调整消息列表框宽度
+		$('#list-box').css({"height": listHeight +"px"});	//调整聊天盒子框宽度
+		$('#innerBody').css({"padding-left": pageWidthPadding +"px","padding-right": pageWidthPadding +"px"});	//调整整页宽度
+
+		mui.scrollTo(pullrefreshTabelHeight,1000);	//1秒内滚动到下拉刷新框底部
+	//以上，页面高宽等样式调整完毕
+}
+
+    //模态框打开的时候，调整模态框布局
+	$(".mui-modal").focus(function() {
+	   alert('重置窗口');
+		//newResize();
+	});
+</script>
+
+<script>
+    mui('.mui-modal .mui-scroll-wrapper').scroll({
+	    scrollY: true, //是否竖向滚动
+        scrollX: false, //是否横向滚动
+        startX: 0, //初始化时滚动至x
+        startY: 0, //初始化时滚动至y
+        indicators: true, //是否显示滚动条
+        deceleration: 0.0005, //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006; 数字越小越灵敏
+        bounce: true //是否启用回弹
+});
+</script>
+
+<!-- 更新点赞数 -->
+<script type="text/javascript" >
+	var dianzanBtn = document.getElementById("_DianZan");
+	var url = "{php echo fm_murl('needs','detail','dianzan',array())}";
+	var data = {
+			'setfor': 'needs',
+			'id': '{$id}',
+			'd_o': 'DianZan'
+		};
+	dianzanBtn.addEventListener('tap', function() {
+		$.get(url,data,function(res){
+		console.log(res);
+		var errorcode = parseInt(res);
+		var hasdianzaner = ("{php intval($needs['dianzanount'])}") >0 ? true : false;
+		console.log(errorcode);
+			switch(errorcode) {
+				case 0:
+					//正常
+					mui.alert('感谢您的支持！', '{$shopname}提示', function() {
+					//
+					});
+					var temp = '';
+					temp = parseInt("{$needs['dianzancount']}") + 1;
+					$("#DianzanCount").html(temp);
+
+				break;
+
+				case 1:
+					//已点赞且不允许重复
+					mui.toast('亲，这个您已经点过赞了；感谢您的支持哦!');
+				break;
+
+				case 2:
+					//点赞次数已达上限
+					mui.toast('亲，这个您的点赞次数已达上限了；感谢您的支持哦!');
+				break;
+
+				case -1:
+					//需要登陆才能继续点赞
+					var btnArray = ['哦,算了', '好,登陆支持'];
+						mui.confirm('当前操作需要登陆了才能继续操作', '{$shopname}提示', btnArray, function(e) {
+							if (e.index == 1) {
+								location.href = js_url("{$do}","{$ac}","index","{$_W['uniacid']}",'app') + "&checklogin=1&id={$id}&dianzan=1";
+							} else {
+								setTimeout(function() {
+									//
+								}, 0);
+							}
+						});
+				break;
+			}
+
+		});
+		return;
+	},'json');
+</script>
+<!-- 为详情内容添加长按复制功能监听（MUI默认禁用了） -->
+<script>
+	$('.mui-content-padded').find('*').css({"-webkit-touch-callout":"text","-webkit-user-select":"text","-khtml-user-select":"text","-moz-user-select":"text","-ms-user-select":"text","user-select":"text"});
+</script>

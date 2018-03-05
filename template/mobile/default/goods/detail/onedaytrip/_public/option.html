@@ -1,0 +1,123 @@
+<!--本页所有类名除row\btn\btn-*等bootstrap自带的之外，其他一律不得增、改、册、换顺序等，否则会导致计算错误 By Fm453-->
+<style type="text/css">
+.current{
+ box-shadow:-2px 0 2px yellow, /*左边阴影*/
+    2px 0 2px yellow, /*右边阴影*/
+    0 -2px 2px gray, /*顶部阴影*/
+    0 2px 2px gray; /*底边阴影*/
+}
+.disabled{
+	background-color: #555;
+}
+</style>
+<div class="container displayoptions" style="padding: 0;text-align: center;width: 100%;left: 0;z-index: 999;" id="options">
+<!--头部-->
+<div class="row options" style="margin: 0;text-align: center;">
+		<div class="col-md-12 title">
+			<div  class="spec-option-title" id="for-spec-option-title" style="">
+				{if $goods['hasoption']==1}请点击选择产品数量与规格{else}请输入您要选购的数量{/if}
+			</div>
+			<img src="{$goods['thumb']}" alt="产品（规格）缩略图" class="spec-option-thumb" id="for-spec-option-thumb" style="">
+			<!--下单进度动态条-->
+			<div class="progress progress-striped active" style="padding: 0;margin: 0;">
+				<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+					<span class="sr-only">下单第1步</span>
+				</div>
+				<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"
+      style="width: 100%;">
+					<span class="sr-only">未完成步骤</span>
+				</div>
+			</div>
+		</div>
+</div>
+
+<!--数量与库存-->
+<div class="row options" style="margin: 0;text-align: left;">
+	<div class="stocks">
+		<div class="col-md-12" style="">
+		 购买数量:
+				<div class="mui-numbox">
+					<button class="mui-btn mui-btn-numbox-minus" type="button" onclick="reduceNum()">-</button>
+					<input class="mui-input-numbox" type="number" value="0" id="total">
+					<button class="mui-btn mui-btn-numbox-plus" type="button" onclick="addNum()">+</button>
+				</div>
+		</div>
+		<div class="col-md-12" style="line-height: 25px; margin-bottom:10px;">
+			{if $stock!=-1}<!--库存不是设置为不限时-->
+			<span id="stockcontainer" style="">
+			( 剩余 <span id='stock'>
+			{if $goods['totalcnf'] == 2}
+				无限 <!--产品设置了不减库存时-->
+			{else}
+				{$stock}
+			{/if}</span>
+						{$goods['unit']})
+			</span>
+			{else}<!--当库存为无限时-->
+			<span id="stockcontainer" style="float:left;margin-left:5px;">
+				<span id='stock'></span>
+			</span>
+			{/if}
+			价格：￥<span id="marketprice-option" class="text-danger" style="font-size:18px; font-weight:bold;">{$marketprice}</span>元/{$goods['unit']}
+		</div>
+	</div>
+</div>
+
+<!--规格,下面代码中，specid值代表规格类编号，对应数据表spec; oid值代表规格项编号，惟一，对应数据表spec_item-->
+
+<div class="options-mui-scroll-wrapper" style="height:150px;border-left:5px dotted rgb(240, 173, 78);">
+    <div class="row options mui-scroll" style="margin: 0;text-align: center;overflow-y:scroll;background-color:#fff;">
+	{if $goods['hasoption']==1}
+	<div class="specs" id="option_group">
+		{loop $specs $key=>$spec}
+		<input type="hidden" name="optionid[]" class="optionid optionid_{$spec['id']}" value="{if $key==0}{$spec['items'][0]['id']}{/if}" title="{$spec['title']}"  specid="{$spec['id']}" >
+		<!--规格标题-->
+		<div class="spec">
+			<div class="row spec-title">
+				<span style="">
+					{if $spec['title']}{$spec['title']}{else}规格{/if}<span>:</span>
+				</span>
+				<span class="option options_{$spec['id']}" style=""  specid="{$spec['id']}"></span><!--用于记录被选的具体规格项-->
+			</div>
+		</div>
+		<!--具体规格项-->
+		<div class="spec-ls">
+			{loop $spec['items'] $skey=>$o}
+			<!--如果无缩略图-->
+				{if empty($o['thumb'])}
+				<div class="spec-ls-title options_{$spec['id']}_span options_{$o['id']}_opt btn {if $key==0 && $skey==0} current {/if}"  oid="{$o['id']}" specid="{$spec['id']}"  id="spec_{$o['id']}" style="padding:0;margin:0;"><!--这一层为规格类型定位层，点击响应事件应放在它的内层-->
+					<span class="option-for-click btn option_{$o['id']} {$empty_oids[$o['id']]}" oid="{$o['id']}"  specid="{$spec['id']}" sel="false" style="word-spacing: normal;border-color: #ccc;max-width:200px;overflow:scroll;">
+					<h5 style="max-width:200px;overflow:scroll;">{$o['title']}</h5>
+					</span>
+				</div>
+			<!--如果有缩略图-->
+				{else}
+				<div class="spec-ls-title2 options_{$spec['id']}_span options_{$o['id']}_opt btn  {if $key==0  && $skey==0} current {/if}"  oid="{$o['id']}" specid="{$spec['id']}"  id="spec_{$o['id']}" style="padding:0;margin:0;"><!--这一层为规格类型定位层，点击响应事件应放在它的内层-->
+					<span class="option-for-click  btn optionimg option_{$o['id']}" oid="{$o['id']}" specid="{$spec['id']}" sel='false' style="border-color: #ccc;max-width:200px;overflow:scroll;">
+						<img class="hidden" src="{php echo tomedia($o['thumb']);}" id="spec_{$o['id']}_img" width="55" height="55"  alt="{$o['title']}" previewed="0" />
+						<h5 style="margin-top:5px;">{$o['title']}</h5>
+					</span>
+				</div>
+				{/if}
+			{/loop}
+		</div>
+		{/loop}
+	</div>
+    {/if}
+    </div>
+</div>	
+
+
+
+</div>
+<script>
+    mui('.options-mui-scroll-wrapper').scroll({
+	    scrollY: true, //是否竖向滚动
+        scrollX: false, //是否横向滚动
+        startX: 0, //初始化时滚动至x
+        startY: 0, //初始化时滚动至y
+        indicators: true, //是否显示滚动条
+        deceleration: 0.0005, //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006; 数字越小越灵敏
+        bounce: true //是否启用回弹
+});
+</script>

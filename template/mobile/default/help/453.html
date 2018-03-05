@@ -1,0 +1,20 @@
+{template $appstyle.'common/header_mui'}
+<script src="{$appsrc}js/mui.min.js"></script>
+{if $ac == 'aboutus'}
+	{template $appstyle.$do.'/'.$ac.'/'.'index'}
+{/if}
+{if $ac == 'tip'}
+	{template $appstyle.$do.'/'.$ac.'/'.'index'}
+{/if}
+{if $ac == 'advise'}
+	{if $operation == 'index'}
+	{template $appstyle.$do.'/'.$ac.'/'.$operation.'/index'}
+	{/if}
+{/if}
+
+{template $appstyle.'common/js_url'}
+{template $appstyle.'common/js_pic'}
+{template $appstyle.'common/js_array'}
+{template $appstyle.'common/js_form'}
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+{template $appstyle.'common/footer'}

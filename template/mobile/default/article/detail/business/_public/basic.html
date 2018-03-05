@@ -1,0 +1,17 @@
+<div class="mui-content" style="background-color: rgba(255,255,255,1);">
+	<div class="mui-content-padded" style="margin-top: 4px;">
+		<div class="page-bizinfo">
+			<div class="header">
+				<p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; font-size: 15.5556px; padding: 0px; max-width: 100%; min-height: 1.5em; line-height: 2em; word-wrap: break-word; word-break: normal; border-radius: 5px; color: rgb(255, 255, 255); font-family: 微软雅黑; text-shadow: rgb(30, 34, 30) 0px 1px 1px; text-align: center; background-color: rgb(89, 150, 235);">
+    {$article['title']}
+</p>
+
+				<p class="activity-info mui-hidden">
+					<span id="post-date" class="activity-meta">{php echo date("Y-m-d", $article['createtime']);}</span>
+					{if !empty($article['author'])}<span id="author-info" class="activity-meta">{$article['author']}</span>{/if}
+					<a href="{$subscribeurl}"  id="account-info" class="activity-meta">{$_W['account']['name']}</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

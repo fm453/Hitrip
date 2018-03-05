@@ -1,0 +1,33 @@
+<!-- 先使用系统的原生方法获取 -->
+{data func="site_article" cid=$cid return="true" assign="result" limit='2'}
+<h5 style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">
+	文章动态
+	</h5>
+{loop $result['list']  $art_num $row}
+
+{php $row['extra'] =  iunserializer($row['type'])}
+
+	<div class="mui-content">
+			<div class="mui-card">
+				<div class="mui-card-header mui-card-media">
+					<img src="{$fm453resource}images/default/background-logo.png" />
+					<div class="mui-media-body">
+						{$row['title']}
+						<p>{$row['author']} {if $row['createtime']} 发表于 {php echo date('Y年 m月 d日 H:i',$row['createtime'])} {/if}</p>
+					</div>
+				</div>
+				<div class="mui-card-content" >
+					<img src="{php echo tomedia($row['thumb'])}" alt="" width="100%" onerror="RepairMyImg(this)" />
+				</div>
+				<div class="mui-card-content-inner">
+						<p style="color: #333;">{$row['description']}</p>
+					</div>
+				<div class="mui-card-footer">
+					<a class="mui-card-link"><i class="mui-icon-extra mui-icon-extra-heart"></i>  <span class="mui-badge mui-badge-warning mui-badge-inverted">{$row['click']}</span></a>
+					<a class="mui-card-link"><i class="mui-icon mui-icon-eye"></i>  <span class="mui-badge mui-badge-warning mui-badge-inverted">{$row['click']}</span></a>
+
+					<a class="mui-card-link" href="{php echo fm_murl('article','detail','index',array('id'=>'','sn'=>$row['id']))}"><i class="mui-icon mui-icon-more"></i>详情</a>
+				</div>
+			</div>
+		</div>
+{/loop}

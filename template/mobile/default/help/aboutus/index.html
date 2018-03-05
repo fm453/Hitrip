@@ -1,0 +1,123 @@
+<style>
+	p {
+		text-indent: 22px;
+		padding: 5px 8px;
+	}
+
+	html,body,.mui-content {
+				background-color: #fff;
+	}
+
+	h4 {
+				margin-left: 5px;
+	}
+
+	.mui-plus header.mui-bar {
+				display: none;
+	}
+
+	.mui-plus .mui-bar-nav~.mui-content {
+				padding: 0;
+	}
+
+	.qrcode {
+				/*position: absolute;*/
+				top: 50px;
+				/*left: 50%;*/
+				width: 100%;
+				/*-webkit-transform: translate(-50%, 0);
+				transform: translate(-50%, 0);*/
+				text-align: center;
+	}
+
+	.qrcode img {
+				margin: 0 auto;
+	}
+
+</style>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">关于我们</h1>
+</header>
+<div class="mui-content">
+	<div class="mui-content-padded">
+		<div class="qrcode">
+					<img id="qrcode" src="{$qrcodeurl}" style="width:60%;" />
+					<a id="shortcut" style="width: 60%;margin: 15px auto;padding: 5px;" class="mui-hidden mui-btn mui-btn-block mui-btn-red">创建桌面图标</a>
+		</div>
+		<h5 style="margin-top:10px;text-align:center;">{$shopname}</h5>
+		<p>{$settings['brands']['share_des']}</p>
+		{if $settings['brands']['phone']}
+		<p style="text-indent: 2px;"><i class="mui-icon mui-icon-phone"></i>热线：<a href="tel:{$settings['brands']['phone']}">{$settings['brands']['phone']}</a>
+		</p>
+		{/if}
+				{if $settings['brands']['address']}
+				<p style="text-indent: 2px;"><i class="mui-icon mui-icon-location"></i>地址：{$settings['brands']['address']}
+				</p>
+				{/if}
+				<div class="mui-card">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-collapse">
+							<a class="mui-navigate-right" href="#">更多详情</a>
+							<div class="mui-collapse-content">
+								{$settings['brands']['description']}
+							</div>
+							<a class="mui-navigate-right" href="#">收起详情</a>
+						</li>
+					</ul>
+				</div>
+
+				<p style="text-align: center;color: #ccc;text-indent: 0;">当前版本：<span id="version">{FM_VERSION}</span></p>
+			</div>
+		</div>
+
+<script type="text/javascript" charset="utf-8">
+			mui.init({
+				gestureConfig: {
+					longtap: true
+				},
+				swipeBack: true //启用右滑关闭功能
+			});
+			//处理点击事件，需要打开原生浏览器
+			mui('body').on('tap', 'a', function(e) {
+				var href = this.getAttribute('href');
+				if (href) {
+					if (window.plus) {
+						plus.runtime.openURL(href);
+					} else {
+						location.href = href;
+					}
+				}
+			});
+
+			var qrcodeEl = document.getElementById("qrcode");
+			qrcodeEl.addEventListener('longtap', function() {
+				plus.nativeUI.actionSheet({
+					cancel: '取消',
+					buttons: [{
+						title: '保存到相册'
+					}]
+				}, function(e) {
+					var index = e.index;
+					if (e.index === 1) {
+						plus.gallery.save(qrcodeEl.src, function() {
+							mui.toast('保存成功');
+						}, function() {
+							mui.toast('保存失败，请重试！');
+						});
+					}
+				});
+			});
+			if (mui.os.android&&mui.os.stream) { //创建快捷方式
+				var shortcutElem = document.getElementById("shortcut");
+				shortcutElem.classList.remove('mui-hidden');
+				shortcutElem.addEventListener('tap', function() {
+					plus.navigator.createShortcut({
+						name: "{$shopname}",
+						icon: "{$appsrc}/images/logo.jpg"
+					});
+				});
+			}
+
+
+</script>

@@ -1,0 +1,60 @@
+	<div id="for-thumb" class="mui-hidden">
+		<input class="file file-upload"  id="file-thumb" name="file-thumb" type="file" data-id="thumb" data-preview-file-type="text" /*accept="image/*"*/ />
+		<div class="mui-input-row mui-checkbox">
+			<label style="color:#777;font-weight:400;">同时设置为我的头像</label>
+			<input id="is_thumbToAvatar" name="is_thumbToAvatar" value="1" type="checkbox" {if $needs_data['is_thumbToAvatar']==1} checked="true" {/if} / >
+		</div>
+		<input class="form-control hidden"  id="thumb" name="thumb" type="text" value="{$needs_data['thumb']}"/ >
+		<input  class="form-control hidden" id="url-thumb" name="url-thumb" type="text" value="{$needs_data['thumb']}"/ >
+		<span id='#errorBlock-thumb'> </span>
+	</div>
+	<script>
+		//激活显示头像上传组件
+		mui('body').on('tap','#showFor_avatar',function () {
+			$('#for-thumb').toggleClass('mui-hidden');
+		});
+		var id = "thumb";
+		var inputname = "file-"+id;
+		var imageid = "file-preview-"+id;
+		var uploadurl="{php echo fm_murl('ajax','file','upload',array())}"+"&inputname="+inputname+"&backid="+id;
+		var previewSrc = "{php echo tomedia($needs_data['thumb'])}";
+		var previewHtml ="<img src='"+previewSrc+"' class='file-preview-image' alt='' title='' id='"+imageid+"'/>";
+		previewHtml += '<div class="file-thumbnail-footer">';
+		previewHtml += '<div class="file-caption-name" title="" style="width: 170px;"></div>';
+		previewHtml += '<div class="file-actions">';
+		previewHtml += '<div class="file-footer-buttons">';
+		previewHtml += '<button type="button" class="fm-file-remove btn btn-xs btn-default" data-src="'+"{$needs_data['thumb']}"+' data-imageid="'+ imageid +'" data-backid="'+ id +'" title="Remove file"><i class="glyphicon glyphicon-trash text-danger"></i></button>';
+		previewHtml += '</div>';
+		previewHtml += '<div class="file-upload-indicator" tabindex="-1" title="uploaded success"><i class="glyphicon glyphicon-ok-sign text-info"></i>已上传</div>';
+		previewHtml += '<div class="clearfix"></div>';
+		previewHtml += '</div>';
+		previewHtml += '</div>';
+		var initialPreview = ("{$needs_data['thumb']}") ? [previewHtml] : [];
+		$("#file-"+id).fileinput({
+			showPreview : true,
+			showUpload: false,
+			showRemove: false,
+			showCaption: false,
+			browseClass: "btn btn-primary btn-block",
+			browseLabel: "更换新照片",
+			dropZoneTitle:"图片须为您本人近照;" + "<br>" +"请确保图片清晰,美观",
+			allowedFileExtensions : ['jpg', 'png','gif','jpeg'],
+			maxFileSize: 2000000,
+			maxFileNum: 1,
+			maxFileCount: 1,
+			uploadUrl : uploadurl,
+			overwriteInitial: true,
+			previewFileType:"any",
+			uploadAsync: false,//异步加载
+			initialPreview: initialPreview,//预置的图片
+			'elErrorContainer': '#errorBlock-'+id
+		}).on('fileselect', function(event, filesNum) {
+				//自动上传，选择文件后自动上传
+				$(this).fileinput("upload");
+		}).on('fileuploaded', function(event, data, previewId, index) {
+			//上传完成后
+			var form = data.form, files = data.files, extra = data.extra,
+			response = data.response, reader = data.reader;
+			console.log('文件上传成功，图片地址为'+response['imgurl']);
+		});
+	</script>

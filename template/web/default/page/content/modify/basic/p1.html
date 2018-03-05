@@ -1,0 +1,123 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#basicSetting">
+          基础信息<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse in" id="basicSetting">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-basicSetting"  {if $sn>0} onsubmit="return formcheck('setting-form-basicSetting');return false;" data-noajax = '0'{/if}>
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" {if $sn==0} value="noajax" {else} value="" {/if} />
+				<input type="hidden" name="setfor" value="" />
+				<input type="hidden" name="s_sn" value="{$s_sn}" />
+				<input type="hidden" name="f_sn" value="{$f_sn}" />
+				<input type="hidden" name="sn" value="{$sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style='color:red'>*</span>SEO标题</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+		<input type="text" name="data[seo][title]" id="title" class="form-control" value="{$item['seo']['title']}" />
+		<span class="help-block">说明：请填写页面标题</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">SEO关键词</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+		<input name="data[seo][keywords]" id="keywords" class="form-control"  value="{$item['seo']['keywords']}" />
+		<span class="help-block">说明：用于SEO优化的页面关键词</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">SEO描述</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+		<textarea name="data[seo][description]" id="description" class="form-control">{$item['seo']['description']}</textarea>
+		<span class="help-block">说明：用于SEO优化的页面描述</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">详情</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+		{php echo fmFunc_tpl_ueditor('content',$item['content'],'web','html',array('height'=>200,'width'=>900));}
+		<span class="help-block">说明：内容页的详细内容；本编辑器仅是一些基础的编辑排版，更专业的优化可使用专业的第三方编辑器</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否启用</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[status]' value='1' {if $item['status'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[status]' value='0' {if $item['status'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否删除</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[deleted]' value='1' {if $item['deleted'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[deleted]' value='0' {if $item['deleted'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">首页推荐</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[rec]' value='1' {if $item['rec'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[rec]' value='0' {if $item['rec'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否热门</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[hot]' value='1' {if $item['hot'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[hot]' value='0' {if $item['hot'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否开放</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[open]' value='1' {if $item['open'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[open]' value='0' {if $item['open'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+</div>
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-basicSetting" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-basicSetting" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#basicSetting">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>

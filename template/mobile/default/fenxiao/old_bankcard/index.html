@@ -1,0 +1,99 @@
+{php $bootstrap_type = 3;}
+{template $appstyle.$do.'/old_'.$ac.'/header}
+{template $appstyle.$do.'/old_'.$ac.'/css}
+{template $appstyle.$do.'/old_'.$ac.'/tip}
+<!-- 分销使用的CSS文件-->
+<link rel='stylesheet' type='text/css' href='{$fm453resource}common/css/foundation.css' />
+<link rel='stylesheet' type='text/css' href='{$fm453resource}common/css/common_v4.0.css' />
+  <style>
+.foot{width:100%;min-width:300px;margin-top:10px;margin-bottom:30px;padding:10px 0;color:#555;text-align:center;}
+.foot a{color:#555;margin:0 3px;}
+   </style>
+<body>
+		<section class="main animated fadeInDown">
+			<div class="main-box">
+				<p class="rb-row"><input type="text" class="input" id="bankAccount" value="{$profile['realname']}" readonly style="background:#ccc" /></p>
+				<p class="rb-row"><input type="text" placeholder="请输入您的银行名称" class="input" id="banktype" value="{$profile['banktype']}"/></p>
+				<p class="rb-row"><input type="tel" placeholder="请输入您的银行卡号" class="input" id="bankcard" value="{$profile['bankcard']}"/></p>
+				<p class="rb-row"><input type="text" placeholder="请输入您的支付宝账号，可不填" id="alipay" class="input" value="{$profile['alipay']}"/></p>
+				<p class="rb-row"><input type="text" placeholder="请输入您的微信支付号码，可不填" id="wxhao" class="input" value="{$profile['wxhao']}"/></p>
+				<div class="recommend-tips">
+					<h6>提示</h6>
+					<p>为了您能快速结佣请提供详细的开户行信息,如建设银行三亚市三亚湾路支行。</p>
+				</div>
+				<p class="rb-submit"><input type="button" value="保存" class="btn" id="J_saveCard"/></p>
+			</div>
+		</section>
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+
+<script src="{$fm453resource}common/com.js"></script>
+<script>
+//保存银行卡信息
+$('#J_saveCard').live("click", function () {
+	bankcard = $("#bankcard").val();
+	banktype = $("#banktype").val();
+	alipay = $("#alipay").val();
+	wxhao = $("#wxhao").val();
+	opp = "{$_GPC['opp']}";
+	if (banktype == "") {
+		TopBox.alert("请填写银行名称!");
+		return;
+	}
+	if (bankcard == "") {
+		TopBox.alert("请填写银行卡号码!");
+		return;
+	} else {
+		$.ajax({
+			type: "POST",
+			url: "{php echo fm_murl('fenxiao','bankcard','edit',array())}",
+			data: { 'bankcard': bankcard, 'banktype': banktype, 'alipay': alipay, 'wxhao': wxhao, 'opp': opp},
+			dataType: "text",
+			success: function (d) {
+				if (d == "1") {
+					TopBox.alert("填写成功.", function () { window.location.href = "{php echo fm_murl('fenxiao','index','index',array('id'=>$profile['id']))}"; });
+					
+				} else if (d == "3") {
+					TopBox.alert("完善资料成功.", function () { window.location.href = "{php echo fm_murl('fenxiao','commission','commapply', array())}"; });
+				} else if (d == "0") {
+					TopBox.alert("填写失败.");
+				} else {
+					TopBox.alert("信息填写不正确.");
+				}
+			},
+			error: function (xml, text, thrown) {
+				TopBox.alert("出错啦!");
+			}
+		});
+	}
+});
+</script>
+<script type="text/javascript">
+	     var wxData = {
+            "appId": "{$_W['account']['key']}",
+            "imgUrl" : "{php echo tomedia($settings['brands']['logo'])}",
+            "link" : "{php echo fm_murl(index','index','index',array('id'=>$id))}",
+            "desc" : "{$settings['brands']['share_desc']}",
+            "title" : "{$settigns['brands']['shopname']}"
+        };
+        wx.config({
+    debug: false,
+    appId: "{$signPackage['appId']}",
+    timestamp: "{$signPackage['timestamp']}", 
+    nonceStr: "{$signPackage['nonceStr']}", 
+    signature: "{$signPackage['signature']}",
+     jsApiList: [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem'
+      ]
+});
+        </script>
+<script src="{$fm453resource}common/wxapi.js"></script>
+</body>
+</html>

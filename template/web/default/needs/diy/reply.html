@@ -1,0 +1,33 @@
+<div class="main">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+			</div>
+			<div class="panel-body">
+				<div class="form-group forcopy">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">复制链接，在手机端核销</label>
+					<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+						<p class="help-block">点击复制<a href="javascript:;" target="_blank" title="点击复制">{php echo fm_murl('appwebneeds', 'detail','index',array('id' => $id,'sn'=>$sn))}</a></p>
+						<img src="{$qrcode_preview}"><span>微信扫码，核销表单</span>
+					</div>
+				</div>
+				<div class="form-group forcopy">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">关联粉丝</label>
+					<div class="col-xs-12 col-sm-9 col-md-3 col-lg-2">
+						<img src="{php echo tomedia($user_info['avatar'])}" alt="" style="width:100px;height:100px;">
+					</div>
+					<ul class="col-xs-12 col-sm-12 col-md-7 col-lg-8">
+						<li>姓名：<a href="javascript:;" target="_blank" title="点击复制">{$user_info['realname']} (昵称： {$user_info['nickname']})</a></li>
+						<li>手机号：<a href="javascript:;" target="_blank" title="点击复制">{$user_info['mobile']} </a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				表单信息(为了管理便利，大部分表单数据不支持后台修改)
+			</div>
+			<div class="panel-body">
+				{template $fm453style.$do.'/'.$ac.'/templates/'.$needs['template'].'/detail'}
+			</div>
+		</div>
+</div>

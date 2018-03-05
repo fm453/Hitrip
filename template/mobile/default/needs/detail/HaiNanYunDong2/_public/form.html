@@ -1,0 +1,221 @@
+<!-- BUG fileinput只能初始化一次，批量处理动作需在一次初始化里写明；待办 -->
+<link href="{$fm453resource}components/fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<script src="{$fm453resource}components/fileinput/fileinput.min.js" type="text/javascript"> </script>
+<script src="{$fm453resource}components/fileinput/fileinput_locale_zh.js" type="text/javascript"></script>
+<script src="{$htmlsrc}453/js/city.data.js"></script>
+<script src="{$htmlsrc}453/js/city.data-3.js"></script>
+<script type="text/javascript">
+	//监听处理文件删除
+	mui('body').on('tap', '.fm-file-remove', function(e) {
+		var filename = $(this).attr('data-src');
+		var backid =$(this).attr('data-backid');
+		var imageid =$(this).attr('data-imageid');
+		var elem = $(this);
+		$.post("{php echo fm_murl('ajax','file','delete',array())}", {'filename' : filename,'filetype' : 'image'}, function(pdata) {
+				pdata = $.parseJSON(pdata);
+				if (pdata == '1') {
+					elem.parent().parent().parent().parent().parent().parent().parent().next().remove();//移除进度条
+					document.getElementById('url-'+backid).setAttribute('value','');
+					mui.toast('文件已删除，请重新设置');
+				} else {
+					mui.toast('未能成功删除'+pdata);
+				}
+			});
+	});
+	//设置图片到绑定对象(在上传组件的预览框中操作时用到)
+	mui('body').on('tap', '.file-preview-image', function(e) {
+		var id = $(this).attr('data-formEle');
+		var src = $(this).attr('src');
+		var fname = $(this).attr('data-filename');
+		$('#url-'+id).attr("value",fname);//添加属性
+    	$('#'+id).attr("value", fname);//添加属性
+    	$('#result-'+id).attr("src", src);//添加属性
+    	$("#modal-upload-"+id).toggleClass('mui-active');	//关闭模态框
+	});
+
+	//处理图片上传后函数(在上传组件加载上传成功事件后用到)
+/*
+	form = data.form,
+	files = data.files,
+	extra = data.extra,
+	reader = data.reader;
+	response = data.response,
+	__________服务器端的响应_________
+		$returns['backid']=$backid;	//上传时调用的组件id
+		$returns['inputname']=$inputname;	//上传时使用的传值输入框
+		$returns['imgurl']=$imgurl;	//服务器端生成的文件相对地址
+		$returns['imgid']=$imageid;	//服务器生成的文件id
+		$returns['imgname']=$imagename;	//服务器生成的文件名(id+后缀)
+		$returns['imgsrc']= tomedia($imgurl);	//文件地址转成网址
+*/
+	function js_upload(divId,fileData) {
+		var id = divId;
+		//var imgurl = "{php echo cache_load(['uploadedfile'].$_FM['member']['info']['uid'])}";
+		var data = fileData;
+		var response = data.response;
+		var imgurl = response['imgurl'];
+// 		console.log('响应的上传组件ID为'+id);
+// 		console.log('应用图片链接为'+imgurl);
+		$('#result-'+id).attr('src',response['imgsrc']);
+		document.getElementById('url-'+id).setAttribute('value',imgurl);
+		document.getElementById(id).setAttribute('value',imgurl);
+	}
+</script>
+<p>温馨提示:本表单由{$shopname}平台管理，为用户提供赛事活动的相关报名提交与结果查阅等服务；请您根据活动的实际情况填写即可！</p>
+<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">队长联系信息(标<span style="color:#f00;"> * </span>为必填项)</h5>
+
+<div class="mui-input-group">
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>姓名：</label>
+		<input id='name' type="text" name="name" class="mui-input-clear" placeholder="{if $_FM['member']['info']['nickname']} {$_FM['member']['info']['nickname']} {else} 请填写，以便我们与您联系 {/if}" value="{$needs_data['name']}" />
+	</div>
+
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>手机号：</label>
+		<input id='mobile' type="text" name="mobile" class="mui-input-clear" placeholder="{if $_FM['member']['info']['mobile']} {$_FM['member']['info']['mobile']} {else} 方便及时联系到您 {/if}" value="{$needs_data['mobile']}" />
+	</div>
+	<ul class="mui-table-view" >
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public_mobile" type="radio" value="1" {if $needs_data['is_public_mobile']==1} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">手机号可公开(仅本平台内)</span>
+		</li>
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public_mobile" type="radio" value="0" {if $needs_data['is_public_mobile']==0} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">保密(需经您许可才能获取)</span>
+		</li>
+	</ul>
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>年龄：</label>
+		<input type="text" name="age" class="mui-input-clear" placeholder="" value="{$needs_data['age']}" />
+	</div>
+
+	<div class="mui-input-row">
+		<label>邮箱：</label>
+		<input type="text" name="email" class="mui-input-clear" placeholder="" value="{$needs_data['email']}" />
+	</div>
+	<div class="mui-input-row">
+		<label style="font-size:10px;">服装尺寸：</label>
+		<input type="text" name="clothessize" class="mui-input-clear" placeholder="" value="{$needs_data['clothessize']}" />
+	</div>
+
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>身份证：</label>
+		<input id='idcard' type="text" name="idcard" class="mui-input-clear" placeholder="{if $_FM['member']['info']['idcard']} {php echo Func_mask_id_card($_FM['member']['info']['idcard'])} {else} 请填写您的身份证号 {/if}" value="{$needs_data['idcard']}" />
+		{if $isNotHexiao}
+		<a class="mui-btn mui-btn-danger mui-btn-outlined" href="#modal-idcard" style="display: inline-block; position: relative;top: -35px;right: 1.5em;width: 30px;float: right;height:30px;border-radius: 50%;padding:5px;" title="身份证号填写申明">
+	   <span class="mui-icon mui-icon-help"></span>
+	   </a>
+	   {/if}
+	</div>
+
+	<ul class="mui-table-view mui-hidden" >
+		<li class="mui-table-view-cell mui-radio mui-right" data-function="#modal-idcard">
+			<input class="" name="is_public_idcard" type="radio" value="0" {if $needs_data['is_public_idcard']!=0} {else} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">保密(点击查看说明)</span>
+		</li>
+	</ul>
+
+<ul class="mui-table-view inline-flex" style="">
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="mui-left" name="sex" type="radio" value="1" {if $needs_data['sex']==1} checked="true" {/if}>男
+	</li>
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="" name="sex" type="radio" value="2" {if $needs_data['sex']==2} checked="true" {/if}>女
+	</li>
+</ul>
+
+
+<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">队伍信息(标<span style="color:#f00;"> * </span>为必填项)</h5>
+<div class="mui-input-group">
+
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>队名：</label>
+		<input name='teamname' type="text" class="mui-input-clear" placeholder="取个牛叉的名字" value="{$needs_data['teamname']}" />
+	</div>
+
+</div>
+
+<ul class="mui-table-view">
+        <li class="mui-table-view-cell mui-collapse mui-active">
+            <a class="mui-navigate-right" href="#">
+            <label>
+            <span style="color:#f00;"> * </span>队员们(点击展示/隐藏列表)
+            </label>
+            </a>
+            <div class="mui-collapse-content teamerlist">
+
+                {loop $needs_data['team'] $i $teammember}
+                    {template $appstyle.$do.'/'.$ac.'/'.$needs['template'].'/_public/form/teammember'}
+                {/loop}
+{if $isNotHexiao}
+<a href="#modal-addteamer" class="mui-btn mui-btn-primary mui-btn-block">添加队员
+</a>
+{/if}
+            </div>
+
+            <a class="mui-navigate-right" style="background-color: rgb(238, 238, 238);" href="#">
+            展开/隐藏队员列表
+            </a>
+        </li>
+</ul>
+
+
+
+<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">补充联系信息</h5>
+
+    <div class="mui-input-row">
+		<label>微信号：</label>
+		<input id='wxhao'  name="wxhao" type="text" class="mui-input-clear" placeholder="{if $_FM['member']['info']['wxhao']} {$_FM['member']['info']['wxhao']} {else} 方便及时联系到您 {/if}" value="{$needs_data['wxhao']}" />
+	</div>
+	<ul class="mui-table-view" >
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public_wxhao" type="radio" value="1" {if $needs_data['is_public_wxhao']==1} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">微信号可公开(仅本平台内)</span>
+		</li>
+		<li class="mui-table-view-cell mui-radio mui-right">
+			<input class="" name="is_public_wxhao" type="radio" value="0" {if $needs_data['is_public_wxhao']==0} checked="true" {/if}>
+			<span style="color:#777;font-weight:400;">保密(需经您许可才能获取)</span>
+		</li>
+	</ul>
+	<div class="mui-input-row">
+		<label>QQ号：</label>
+		<input id='qq'  name="qq" type="text" class="mui-input-clear" placeholder="请填写您的QQ号" value="{$needs_data['qq']}" />
+	</div>
+	<div class="mui-input-row">
+		<label>邮箱：</label>
+		<input id='email'  name="email" type="text" class="mui-input-clear" placeholder="请填写您的Email邮箱" value="{$needs_data['email']}" />
+	</div>
+</div>
+
+<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;">{if $needs_data['setfor']==$currentid || empty($needs_data['setfor'])}您的{/if}备注</h5>
+
+<div class="mui-input-row ">
+	<textarea id='remark' name='remark' class="mui-input-clear question" placeholder="请您按要求如实填写报名信息，如有疑问，请关注‘韵动海南’微信公众号获取赛事交流群，跟进报名进度与赛事信息哦。" >{$needs_data['remark']}</textarea>
+</div>
+
+<div class="mui-content-padded">
+	<div class="mui-inline">{if $needs_data['setfor']==$currentid || empty($needs_data['setfor'])}顺便给咱打个分{else}给活动评星{/if}</div>
+		<div class="icons mui-inline" style="margin-left: 6px;">
+			{if $stars>=1}<i data-index="1" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="1" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=2}<i data-index="2" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="2" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=3}<i data-index="3" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="3" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=4}<i data-index="4" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="4" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=5}<i data-index="5" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="5" class="mui-icon mui-icon-star"></i>{/if}
+		</div>
+</div>
+<input type="hidden" id="stars" name="stars" value="{$needs_data['stars']}" />
+
+{if $needs_data['reply']}
+	<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 1px solid;border-bottom:#fff 1px solid;">平台回复：</h5>
+	<p>
+		{$needs_data['reply']}
+	</p>
+{/if}
+<textarea id='reply' name='reply' class="mui-hidden">{$needs_data['reply']}</textarea>
+
+<div class="mui-input-group">
+	<div class="mui-input-row">
+		<label>推荐码：</label>
+		<input id='tuijianma' type="text" name="tuijianma" class="mui-input-clear" placeholder="如果有，请填写" value="{$needs_data['tuijianma']}" />
+	</div>
+</div>

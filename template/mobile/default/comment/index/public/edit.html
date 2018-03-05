@@ -1,0 +1,142 @@
+{template $appstyle.$do.'/'.$ac.'/'.'header'}
+<link rel="stylesheet" type="text/css" href="../addons/fm453_duokefu/resource/css/default.css">
+<link href="../addons/fm453_duokefu/resource/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<script src="../addons/fm453_duokefu/resource/js/fileinput.js" type="text/javascript"> </script>
+<script src="../addons/fm453_duokefu/resource/js/fileinput_locale_zh.js" type="text/javascript"></script>
+<style type="text/css">
+/*通用全局样式*/
+body {
+background: #f2f2f2;
+}
+.myoder{margin:10px 0 10px 0; -webkit-box-shadow:0 1px 2px 1px rgba(0,0,0,0.2); box-shadow:0 1px 2px 1px rgba(0,0,0,0.2); overflow:hidden; background:#FFF;}
+.myoder .myoder-hd{height:35px; line-height:35px; overflow:hidden; background:#f0f0f0; border-bottom:1px solid #cacaca; padding:0 10px;}
+.myoder .myoder-hd > span{font-size:14px; color:#504040;}
+.myoder .myoder-hd > span.pull-right{font-size:12px; color:#999;}
+</style>
+<img class="img-polaroid" alt="720" src="../addons/fm453_duokefu/resource/images/haoping.jpg" width="100%" style=""/>
+<div class="container">
+<form id="for_add_comment" class=""  style="" onsubmit="check()" method="post" action="{php echo $this->createMobileUrl('comment',array('op'=>'edit'))}">
+	<input type="hidden" value="{$_W['openid']}" name="from_openid" class="openid" />
+	<input type="hidden" value="{$fanid}" name="from_uid" class="uid" />
+	<input type="hidden" value="{$_W['uniacid']}" name="uniacid"  />
+	<input type="hidden" value="{$_W['token']}" name="token"  />
+	<input type="hidden" value="{$comment['id']}" name="id"  />
+<div class="myoder img-rounded">
+	<div class="myoder-hd">
+		<span class="pull-left">我的好评</span>
+		<span class="pull-right">(亲，请您按下面的要求提交点评信息哟)</span>
+	</div>
+	<div class="myoder-hd" style="background-color:#0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">姓名:</span>
+	</div>
+		<div>
+		<input type="text" id="username" name="username" value="{$comment['username']}" class="form-control"/>
+		</div>
+
+	<div class="myoder-hd" style="background-color:#0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">手机号:</span>
+	</div>
+		<div>
+		<input id="mobile" name="mobile" value="{$comment['mobile']}" class="form-control" type="mobile" />
+		</div>
+{if !empty($comment['address']) & $isneedaddress==1}
+	<div class="myoder-hd" style="background-color:#0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">联系地址:</span>
+	</div>
+		<div>
+		<input type="text" id="address" name="address" value="{$comment['address']}" class="form-control" />
+		</div>
+{/if}
+	<div class="myoder-hd" style="background-color:#0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">入住日期:</span>
+	</div>
+		<div id="forstarttime">
+		{php echo tpl_form_field_date('starttime', date("Y-m-d",$comment['starttime']));}
+		</div>
+{if !empty($comment['endtime']) & $isneedendtime==1}
+	<div class="myoder-hd" style="background-color:#0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">离店日期:</span>
+	</div>
+		<div id="forendtime">
+		{php echo tpl_form_field_date('endtime', date("Y-m-d",$comment['endtime']));}
+		</div>
+{/if}
+	<div class="myoder-hd" style="background-color:#0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">入住房号:</span>
+	</div>
+		<div id="forrnumber">
+		<input  id="rnumber" name="rnumber" value="{$comment['rnumber']}" class="form-control" type="number" />
+		</div>
+{if !empty($comment['from_channel']) & isneedchannel==1}
+	<div class="myoder-hd" style="background-color:#0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">订房渠道:</span>
+	</div>
+		<div id="forchannel">
+			<select id="channel" name="channel"  class="form-control">
+				<option value="{$comment['from_channel']}" selected>{$comment['from_channel']}</option>
+				<option value="ctrip">携程</option>
+				<option value="elong"> 艺龙</option>
+				<option value="qunar" > 去哪儿</option>
+				<option value="alitrip" > 阿里旅行</option>
+				<option value="travelagent" > 旅行社</option>
+				<option value="other" > 其他</option>
+			</select>
+		</div>
+{/if}
+	<div class="myoder-hd" style="background-color:#0095f6;color: #fff;">
+		<span class="" style="color: #fff;text-align: center;">原图片:</span>
+	</div>
+	<div style="text-align: center;">
+	<img src='{$_W['attachurl']}{$comment['thumb']}' class='file-preview-image' alt='pic with comment' title='pic with comment' id=''>
+	</div>
+	<div class="myoder-hd" style="background-color:#0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">上传新图:</span>
+	</div>
+		<div id="forthumb">
+		<input id="file-0" type="file" class="file file-upload"  /*multiple*/ data-preview-file-type="text" name="thumb" />
+		<input id="thumburl" type="text" class="form-control hidden"  name="thumburl" />
+		<span id='#errorBlock'> </span>
+		</div>
+ <script>
+ var inputname = "thumb";
+ 	var uploadurl="{$uploadurl}"+"&inputname="+inputname;
+	    $("#file-0").fileinput({
+	    		'uploadUrl' : uploadurl,
+	        'allowedFileExtensions' : ['jpg', 'png','gif','jpeg'],
+	        'overwriteInitial': true,
+	        'showUpload':true,
+	        'previewFileType':'any',
+	        'uploadAsync': true,//异步加载
+					'maxFileCount': 1,
+					//'initialPreview': ["<img src='{$_W['attachurl']}{$comment['thumb']}' class='file-preview-image' alt='pic with comment' title='pic with comment' id=''>"],//预置的图片
+	    //    'slugCallback': function(filename) {//用于显示文件的完整路径
+	       //     return filename.replace('(', '_').replace(']', '_');
+	        //}
+	    });
+	    $('#file-0').on('fileuploaded', function(event, data, previewId, index) {
+    var form = data.form, files = data.files, extra = data.extra,
+        response = data.response, reader = data.reader;
+    		console.log('文件上传成功，图片地址为'+response['imgurl']);
+    		$('#thumburl').attr("value", response['imgurl']);//添加属性
+		});
+	    $(document).ready(function() {
+	        $("#file-0").fileinput({
+	            'showPreview' : false,
+	            'allowedFileExtensions' : ['jpg', 'png','gif'],
+	            'elErrorContainer': '#errorBlock'
+	        });
+	    });
+		</script>
+	<div class="myoder-hd hidden" style="background-color:#0095f6;color: #fff;">
+		<span class="pull-left" style="color: #fff;">引导语:</span>
+	</div>
+		<div id="forremark" hidden="true">
+		<textarea class="form-control" rows="3" id="remark" name="remark" placeholder="亲，您可以在这里填写更多补充信息。">{$comment['remark']}</textarea>
+		</div>
+
+	</div>
+	<button class="btn  btn-default  btn-info" type="submit"  name="edit_comment" value="yes" >确认修改</button>
+</form>
+
+</div>
+{template $appstyle.$do.'/'.$ac.'/'.'footer'}

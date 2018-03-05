@@ -1,0 +1,184 @@
+<script type="text/javascript" charset="utf-8">
+	mui.init(
+		{
+			swipeBack: false, //启用右滑关闭功能
+			gestureConfig: {
+				tap: true, //默认为true,单击屏幕
+				doubletap: true, //默认为false，双击屏幕
+				longtap: false, //默认为false，长按屏幕
+				hold:false,//默认为false，按住屏幕
+				release:false,//默认为false，离开屏幕
+				swipe: true, //默认为true，滑动（swipeleft  , swiperight,   swipeup,   swipedown )
+				drag: true, //默认为true，拖动  ( dragstart,  drag,   dragend )
+			},
+		}
+	);
+	//定义支持区域滚动的层类
+	mui('.mui-scroll-wrapper').scroll();
+	//侧滑容器父节点
+	var offCanvasWrapper = mui('#offCanvasWrapper');
+	//主界面容器
+	var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+	//菜单容器
+	var offCanvasSide = document.getElementById("offCanvasSide");
+	//不是安卓时，隐藏安卓元素
+	if(!mui.os.android) {
+		var spans = document.querySelectorAll('.android-only');
+		for(var i = 0, len = spans.length; i < len; i++) {
+			spans[i].style.display = "none";
+		}
+	}
+	//移动效果是否为整体移动
+	var moveTogether = false;
+	//侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+	var classList = offCanvasWrapper[0].classList;
+
+	//主界面和侧滑菜单界面均支持区域滚动；
+	mui('#offCanvasSideScroll').scroll();
+	mui('#offCanvasContentScroll').scroll();
+
+	//实现ios平台原生侧滑关闭页面；
+	if(mui.os.plus && mui.os.ios) {
+		mui.plusReady(function() { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故直接屏蔽popGesture功能
+			plus.webview.currentWebview().setStyle({
+				'popGesture': 'none'
+			});
+		});
+	}
+</script>
+<!-- 幻灯片 -->
+<script type="text/javascript" >
+	//自动轮播
+	var slider = mui("#slider");
+	slider.slider({
+		interval: 10000
+	});
+</script>
+
+<!-- 监听标题-->
+<script type="text/javascript" >
+//监听header的双击事件
+	document.querySelector('header').addEventListener('doubletap', function() {
+		$('#pagename').html('正在刷新…');
+		refreshLoad("pullrefresh-table");
+	});
+</script>
+<!-- 上拉下拉事件 -->
+<script type="text/javascript" >
+	mui.init({
+		pullRefresh: {
+			container: '#pullrefresh',
+			down: {
+				height:50,
+				auto: false, //自动下拉刷新一次
+				contentover : "{$shopname}提示：立即释放 刷新一下",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+				contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+				contentrefresh : "{$shopname}正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+				callback: pulldownRefresh
+			},
+			up: {
+				height:50,//可选.默认50.触发上拉加载拖动距离
+				auto:false,//可选,默认false.自动上拉加载一次
+				contentrefresh: '{$shopname}正在加载...',
+				contentnomore:'已到页底,没有更多产品了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+				callback: pullupRefresh
+			}
+		}
+	});
+
+	/**
+	 * 下拉刷新具体业务实现
+	 */
+	function pulldownRefresh() {
+		setTimeout(function() {
+			refreshLoad("pullrefresh-table");
+			mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+			mui('#pullrefresh').pullRefresh().scrollTo(0,0,100);
+		}, 500);
+	}
+	//页面刷新加载处理
+	function refreshLoad(container) {
+		var url = "{php echo fm_murl($do,$ac,'load',array())}";
+		var data = {
+			'psize': '{$psize}',
+			'page': '{$pindex}',
+			'pcate': '{$pcate}',
+			'ccate': '{$ccate}',
+			'keyword': '{$_GPC["keyword"]}',
+			'refresh': '1'
+		};
+		$.get(url,data,function(res){
+			if (res) {
+				$('#'.container).html(res);//替换内容
+				$('#pagename').html('内容更新完毕');
+				$('#showstatus').html('内容更新完毕');
+				setTimeout(function(){
+					$('#pagename').html('{$pagename}');
+					$('#showstatus').html('');
+				},100);
+			}
+		});
+	mui('#pullrefresh').pullRefresh().scrollTo(0,0,100);
+	}
+
+	var pindex = "{$pindex}"; //分页计数
+	var count = 0;	//起始计数
+	var maxpages = "{$maxpages}";	//当前分类情况下的最大页数
+	/**
+	 * 上拉加载具体业务实现
+	 */
+	function pullupRefresh() {
+		count ++;	//累计一次上拉次数
+		maxpages = document.getElementById('search-total-num').getAttribute('data-maxpages');
+		setTimeout(function() {
+			loadPage("pullrefresh-tabel-li",count);
+			mui('#pullrefresh').pullRefresh().endPullupToRefresh((count>=maxpages)); //参数为true(累计刷新页数达到最大分页数)代表没有更多数据了
+			//mui('#pullrefresh').pullRefresh().scrollToBottom();    //添加后造成屏幕闪动过大
+		}, 100);
+	}
+
+	//页面迭加新数据
+	function loadPage(container,count) {
+		var pindex = parseInt(count)+1;//当前所在页
+		var url = "{php echo fm_murl($do,$ac,'loadmore',array())}";
+		var formdata = Form_format("form-search"); //自有方法格式化表单元素，返回数组
+		var data = formdata;
+		data['page']=pindex;
+		$.get(url,data,function(res){
+			$('#'+container).append(res);//加在后面
+		});
+
+	}
+	//启动后即执行的动作
+	if (mui.os.plus) {
+		mui.plusReady(function() {
+			setTimeout(function() {
+				//mui('#pullrefresh').pullRefresh().pullupLoading();	//执行一次上拉刷新
+			}, 1000);
+		});
+	} else {
+		mui.ready(function() {
+			//mui('#pullrefresh').pullRefresh().pullupLoading(); //执行一次上拉刷新
+		});
+	}
+</script>
+<!-- 更新浏览量及点击量（待） -->
+<script>
+	function UpdateView(setfor,id) {
+		var url = "{php echo fm_murl('ajax','index','',array())}";
+		var data = {
+			'setfor': setfor,
+			'id': id,
+			'd_o': 'view'
+		};
+		$.get(url,data,function(res){
+			var result = res
+		});
+		return;
+	}
+
+	function UpdateClick(setfor,id) {
+		return;
+	}
+
+</script>

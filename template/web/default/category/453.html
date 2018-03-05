@@ -1,0 +1,18 @@
+{template $fm453style.'common/_header'}
+{template $fm453style.'common/tabnav'}
+{if $operation == 'display'}
+{template $fm453style.$do.'/search'}
+{template $fm453style.$do.'/display'}
+{/if}
+{if $operation == 'modify'}
+{template $fm453style.$do.'/modify'}
+{/if}
+{if $operation == 'add'}
+{template $fm453style.$do.'/modify'}
+{/if}
+{if $operation == 'copy'}
+{template $fm453style.$do.'/modify'}
+{/if}
+{template $fm453style.$do.'/key'}
+{template $fm453style.$do.'/mouse'}
+{template $fm453style.'common/_footer'}

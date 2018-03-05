@@ -1,0 +1,46 @@
+<div class="panel panel-info" id="forsearch">
+	<div class="panel-heading">筛选与导出</div>
+	<div class="panel-body">
+		<form action="" method="post" class="form-horizontal" role="form" id="search-form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="m" value="{FM_NAME}" />
+			<input type="hidden" name="do" value="{$do}" />
+			<input type="hidden" name="ac" value="{$ac}" />
+			<input type="hidden" name="op" value="{$operation}" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">用户Uid</label>
+				<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+					<input class="form-control" name="uid" id="" type="text" value="{$_GPC['uid']}" placeholder="该功能未开放！">
+				</div>
+
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">数据类型</label>
+				<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+					<select name="tabletype" class="form-control">
+						{loop $tabletypelist $key $item}
+						<option value="{$key}" {if $tabletype == $key} selected="selected" {/if}>{$item}</option>
+						{/loop}
+					</select>
+				</div>
+
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">操作类型</label>
+				<div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 ">
+					<select name="dotype" class="form-control">
+						{loop $dotypelist $key $item}
+						<option value="{$key}" {if $dotype == $key} selected="selected" {/if}>{$item}</option>
+						{/loop}
+					</select>
+				</div>
+
+			</div>
+			<div class="form-group" style="text-align: center;">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<button class="btn btn-info" type="submit" name="search" value="yes" data-toggle="tooltip" data-placement="top" title="用于搜索或筛选分类"><i class="fa fa-search"></i> 搜索|筛选</button>
+					<input class="btn btn-default" type="submit" name="export" value="导出数据" data-toggle="tooltip" data-placement="top" title="将数据导出为csv表格文件"/>
+					<a class="btn btn-default" href="{php echo $this->createWebUrl($do,array('ac'=>$ac,'op'=>$operation))}"  data-toggle="tooltip" data-placement="top" title="清空搜索条件">清空查询</a>
+				</div>
+			</div>
+			</form>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<div class="main fm453_newmouse">
+	<div class="category">
+		<form action="" method="post" onsubmit="return formcheck(this)">
+			<div class="panel  panel-warning">
+				<div class="panel-heading"></div>
+				<div class="panel-body">
+					<ol>入站接口》》》
+						{loop $apis['in'] $key $item}
+						<li>
+							<span>{$item['title']}:{$item['url']}</span>
+							<a  class="btn btn-primary js-clip" data-url="{$item['url']}" style="margin-bottom:10px;">复制链接</a>
+							{if $item['status']==1}
+							<a class="btn btn-success" style="margin-bottom:10px;">接口可用</a>
+							{else}
+							<a class="btn btn-danger" style="margin-bottom:10px;">接口暂停</a>
+							{/if}
+						</li>
+						{/loop}
+					</ol>
+				</div>
+				<div class="panel-heading"></div>
+			</div>
+		</form>
+	</div>
+	<div style="text-align: center;">
+
+	</div>
+</div>

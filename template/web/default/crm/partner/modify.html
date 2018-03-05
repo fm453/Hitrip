@@ -1,0 +1,276 @@
+<!-- 编辑器配置文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="{$fm453resource}components/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="modify-form1">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				商户资料
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">所属平台：</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-3 control-label" style="text-align:left;">
+					{php echo uni_account_default($partner['uniacid'])['name'];}
+					<span class="help-block">修改时请直接填写ID值</span>
+					</div>
+					{if $_W['username'] == $settings['mainuser']  or $_W['isfounder'] }
+					<label class="col-xs-12 col-sm-3 col-md-4 col-lg-1 control-label">修改平台ID</label>
+					<div class="col-xs-12 col-sm-9 col-md-2 col-lg-1">
+						<input type="text" name="uniacid" class="form-control" placeholder="" value="{$partner['uniacid']}" />
+					</div>
+					{else}
+					<label class="col-xs-12 col-sm-3 col-md-4 col-lg-1 control-label">平台ID</label>
+					<div class="col-xs-12 col-sm-9 col-md-2 col-lg-1">
+						<input type="text" name="uniacid" class="form-control" placeholder="" value="{$partner['uniacid']}" disabled="true" />
+					</div>
+					{/if}
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">排序</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<input type="text" name="displayorder" class="form-control" placeholder="可留空；此处仅可填写数字" value="{$partner['displayorder']}" />
+						<span class="help-block">说明：数值越大，位置越靠前</span>
+					</div>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否启用</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<label class='radio-inline'>
+							<input type='radio' name='status' value='1' {if abs($partner['status'])==1} checked {/if} /> 是
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='status' value='0' {if abs($partner['status'])==0} checked {/if} /> 否
+						</label>
+					</div>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否推荐</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						 <label class='radio-inline'>
+							 <input type='radio' name='isrec' value='1' {if $partner['isrec']==1} checked {/if} /> 是
+						 </label>
+						 <label class='radio-inline'>
+							 <input type='radio' name='isrec' value='0' {if $partner['isrec']==0} checked {/if} /> 否
+						 </label>
+					</div>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否删除</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						 <label class='radio-inline'>
+							 <input type='radio' name='deleted' value='1' {if $partner['deleted']==1} checked {/if} /> 是
+						 </label>
+						 <label class='radio-inline'>
+							 <input type='radio' name='deleted' value='0' {if $partner['deleted']==0} checked {/if} /> 否
+						 </label>
+					</div>
+
+
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>商户名称</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 ">
+						<input type="text" name="name" class="form-control" value="{$partner['name']}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">分类</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 ">
+						{php echo tpl_form_field_category_2level('category', $parent, $child, $partner['pcate'], $partner['ccate'])}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style='color:red'>*</span>商户LOGO</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 ">
+						{php echo tpl_form_field_image('logo', $partner['logo'])}
+						<span class="help-block">说明：默认LOGO图长宽尺寸比：300px:300px;如果您启用自定义的风格，请重新依据新风格要求的尺寸上传。</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">商户二维码</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 ">
+						{php echo tpl_form_field_image('qrcode', $partner['qrcode'])}
+						<span class="help-block">说明：可以通过微信扫码识别的二维码，比如微信公众号或者店家私人微信的二维码。</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">主营业务</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 ">
+						<textarea name="biz" class="form-control"  placeholder="请填写商家的主营业务或主要经营范围；">{$partner['biz']}</textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">关联微信粉丝</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 ">
+						<input type="text" name="openid" class="form-control" value="{$partner['openid']}" />
+						<span class="help-block">说明：这里填写店主或指定管理员的微信OPENid,可用于某些场景下的消息推送接收。</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">联系方式</label>
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-3 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >电话1</span>
+							<input type="text"  name="tel1" class="form-control"  value="{$partner['tel1']}" />
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-3 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >电话2</span>
+							<input type="text"  name="tel2" class="form-control"  value="{$partner['tel2']}" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label sr-only">联系方式</label>
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-3 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >手机1</span>
+							<input type="text"  name="mobile1" class="form-control"  value="{$partner['mobile1']}" />
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-4  col-lg-3 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >手机2</span>
+							<input type="text"  name="mobile2" class="form-control"  value="{$partner['mobile2']}" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label sr-only">联系方式</label>
+					<div class="col-xs-12 col-sm-9 col-md-10  col-lg-10 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >邮箱</span>
+							<input type="email" name="email" class="form-control" value="{$partner['email']}" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label sr-only">联系方式</label>
+					<div class="col-xs-12 col-sm-9 col-md-10  col-lg-10 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >详细地址</span>
+							<input type="text" name="address" class="form-control" value="{$partner['address']}" />
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">位置坐标：</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="locx" id="loc_x" value="{$partner['locx']}" placeholder="地理经度" />
+                    </div>
+                    <div class="col-sm-1">——</div>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="locy" id="loc_y" value="{$partner['locy']}" placeholder="地理纬度" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+                    <div class="col-sm-9">
+                        <span class="help-block"><a class="btn btn-default" href="http://lbs.qq.com/tool/getpoint/index.html" target="_blank">去搜索位置坐标以便提取</a></span>
+                        <div style="width:700px;height:400px" id="map-container"></div>
+                    </div>
+                </div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style='color:red'>*</span>商户详情</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 ">
+						{php echo fmFunc_tpl_ueditor('description',$partner['description'],'web','html',array('height'=>200,'width'=>800));}
+						<span class="help-block">
+							说明：全屏编辑效果更好；利用第三方编辑器，获得更好地显示效果。
+							<a href="http://demo.hiluker.com/case/vcmseditor/" target="_blank" title="新窗口中打开">VCMS样式转换</a>
+							<a href="http://www.135editor.com/" target="_blank" title="新窗口中打开">135样式编辑</a>
+						</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label sr-only"></label>
+					<div class="col-xs-12 col-sm-12 col-md-6  col-lg-4 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >真实点击次数</span>
+							<input type="text" name="hit" class="form-control"  {if $_W['username'] == $settings['mainuser']  || $_W['isfounder'] } disabled="true" {/if} value="{php echo intval($partner['hit']);}" />
+							<span class="input-group-addon">人次</span>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6  col-lg-4 ">
+						<div class="input-group form-group">
+							<span class="input-group-addon" >附加虚拟点击次数</span>
+							<input type="text" name="vhit" class="form-control"  value="{php echo intval($partner['vhit']);}" />
+							<span class="input-group-addon">人次</span>
+						</div>
+					</div>
+				</div>
+
+				{if $partner['createtime']}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">创建时间</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 ">
+						<span class="help-block">{php echo date('Y-m-d h:i',$partner['createtime']);}</span>
+					</div>
+				</div>
+				{/if}
+
+				<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 " style="text-align: center;">
+					<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp&key={$map_api_qq}"></script>
+<script type="text/javascript">
+    var map,marker,center = null;
+    center = new qq.maps.LatLng({$loc_x}, {$loc_y});
+    map = new qq.maps.Map(
+        document.getElementById("map-container"),
+        {
+            center: center,
+            zoom: 13
+        }
+    );
+    var scaleControl = new qq.maps.ScaleControl({
+        align: qq.maps.ALIGN.BOTTOM_LEFT,
+        margin: qq.maps.Size(85, 15),
+        map: map
+    });
+
+    var anchor = new qq.maps.Point(10, 30);
+    var size = new qq.maps.Size(52, 30);
+    var origin = new qq.maps.Point(0, 0);
+    var icon = new qq.maps.MarkerImage('../addons/{FM_NAME}/resource/vfoods/locate.png', size, origin, anchor);
+        size = new qq.maps.Size(52, 30);
+    var originShadow = new qq.maps.Point(32, 0);
+    var shadow =new qq.maps.MarkerImage(
+            '../addons/{FM_NAME}/resource/vfoods/locate.png',
+            size,
+            originShadow,
+            anchor
+        );
+    var marker = new qq.maps.Marker({
+        icon: icon,
+        shadow: shadow,
+        map: map,
+        position:center,
+    });
+
+    var jump = function(event) {
+        marker.setPosition(event.latLng);
+        $("#loc_x").val(event.latLng.getLat());
+        $("#loc_y").val(event.latLng.getLng());
+    };
+
+    qq.maps.event.addListener(map, 'click', jump);
+</script>

@@ -1,0 +1,30 @@
+<div style="padding-top: 50%;">
+	<h5 style="text-align: center; ">主页君正在努力加载中……</h5>
+	<p class="mui-progressbar mui-progressbar-infinite" style="height:3px;" id="progressbar"></p>
+	<br>
+	<a  href="{php echo fm_murl('index',$ac,'index',array('needentry'=>false))}"  class="mui-btn mui-btn-primary mui-btn-block"> 跳过加载等待</a>
+</div>
+<script>
+	//无限进度条
+	//自动消失，实际可根据实际情况决定关闭进度条的时机；
+	var timelimit = "{php echo rand(0,10)}";
+	setTimeout(function() {
+		mui('body').progressbar().hide();
+
+		mui.openWindow({
+			id: "index-{$ac}-index-mainpage",
+			url: "{php echo fm_murl('index',$ac,'index',array('needentry'=>false))}",
+			show: {
+				aniShow: aniShow
+			},
+			style:{
+				top:0,
+				bottom:0,
+				bounce: 'vertical'
+			},
+			waiting: {
+				autoShow: true
+			}
+		});
+	}, timelimit);
+</script>

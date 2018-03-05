@@ -1,0 +1,58 @@
+<div id="modal-price" class="mui-modal" style="background-color: rgba(245,245,245,1);">
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-close mui-pull-right" href="#modal-price"></a>
+		<h1 class="mui-title" id="modal-price-title">价格说明</h1>
+	</header>
+	<div class="mui-content" style="padding-top:50px;">
+	<section class="_135editor" data-tools="135编辑器" data-id="88341" style="border: 0px none; padding: 0px; position: relative;" data-color="rgb(194, 201, 42)">
+    <section class="layout" style="margin:10px auto;">
+        <section style="display:flex;justify-content:space-between;margin-bottom:-9px;">
+            <section style="width: 16px; height: 16px; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+            <section style="width: 16px; height: 16px; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+        </section>
+        <section style="margin-right: 7px; margin-left: 7px; border: 2px dashed rgb(194, 201, 42); padding: 7px;">
+            <section style="border: 2px solid rgb(194, 201, 42); padding-top: 20px; padding-bottom: 20px;">
+                <section style="display:flex;align-items: center;">
+                    <section style="height: 1px; flex: 1 1 0%; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+                    <section class="135brush" data-brushtype="text" style="padding-right: 8px; padding-left: 8px; font-size: 18px; color: rgb(194, 201, 42); font-weight: bold;">
+                        价格说明
+                    </section>
+                    <section style="height: 1px; flex: 1 1 0%; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+                </section>
+                <p style="padding: 0px 15px; text-indent: 2em;">
+                    可回收类目：
+                    {if $recyle_prices['cats']}
+									{loop $recyle_prices['cats'] $r_c}
+									<span style=""><strong>{$r_c}</strong></span>等;
+									{/loop}
+								{/if}
+                </p>
+                <p style="padding: 0px 15px; text-indent: 2em;">
+                    <ul style="list-style:none;text-indent:5px;-webkit-padding-start: 10px;">
+                    {if $recyle_prices['cat1']}
+									{loop $recyle_prices['cat1'] $key $r_p}
+										<li class="mui-table-view-cell" style="font-size:13px;line-height:18px;">
+									<span ><strong>{$r_p['title']}</strong>:</span><span style="float:right;">{$r_p['price']}{$r_p['unit']}</span>
+								</li>
+									{/loop}
+								{/if}
+								</ul>
+								<p style="text-indent: 2em;">更多价格信息将不断更新，敬请关注哦！</p>
+                </p>
+            </section>
+        </section>
+        <section style="display:flex;justify-content:space-between;margin-top:-9px;">
+            <section style="width: 16px; height: 16px; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+            <section style="width: 16px; height: 16px; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+        </section>
+    </section>
+</section>
+</div>
+
+	<footer style="position:relative;width:100%;top:10px;text-align:center;">
+		<a  class="mui-btn mui-btn-danger mui-btn-block mui-btn-outlined" id="_FM-INFO-PAYRESULT" style="padding:10px 0;" href="#modal-price">
+			返回
+		</a>
+	</footer>
+
+</div>

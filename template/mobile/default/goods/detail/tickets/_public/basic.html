@@ -1,0 +1,28 @@
+<div class="mui-content">
+	<h5  class="copy-able" style="background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 3px solid;border-bottom:#fff 3px solid;font-weight: bold;text-align: center;color: #000;line-height:1.5em;">
+	{$goods['title']}
+	</h5>
+	<div class="mui-content-padded " id="chooseoptions" style="margin-top:10px;">
+					<span style="width:100%;">
+					{if $marketprice == $productprice} <!--市场价与销售价相等时-->
+						价格 : ¥
+						<span id="marketprice" class="text-danger" style="font-size:18px; font-weight:bold;">{$marketprice}</span>
+						{if !empty($goods['unit'])}/ {$goods['unit']}{/if} 起
+					{else}<!--市场价与销售价不等时-->
+						现价 : ¥
+						<span class="text-danger" id="marketprice"  style="font-size:18px; font-weight:bold;">{$marketprice}</span>
+						{if !empty($goods['unit'])}/ {$goods['unit']}{/if} 起
+						{if $originalprice > $marketprice} <!--原价大于销售价时显示-->
+							<span class="hidden" id="originalpricecontainer">
+							&nbsp;原价 : <del style="font-size:14px; ">¥  <span id="originalprice">{$originalprice}</span></del>
+							</span>
+						{/if}
+						{if $productprice > $marketprice} <!--市场参考价大于销售价时显示-->
+							<span id="productpricecontainer">
+							&nbsp;市场参考价 : <del style="font-size:14px; ">¥  <span id="productprice">{$productprice}</span></del>
+							</span>
+						{/if}
+					{/if}
+					</span>
+				</div>
+	</div>

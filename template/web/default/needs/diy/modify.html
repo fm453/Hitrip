@@ -1,0 +1,295 @@
+<!-- 编辑器配置文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="{$fm453resource}components/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="modify-form1">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				有求必应表单——基础信息<a href="{php echo fm_wurl($do,$ac,'data', array('id' => $id,'pindex' => $pindex))}"class="btn btn-default btn-md" data-toggle="tooltip" data-placement="top" title="查看已收集数据"><i class="fa fa-database"></i></a>
+			</div>
+			<div class="panel-body">
+				<div class="form-group forcopy">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">直接链接</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 ">
+						<p class="help-block">点击复制<a href="javascript:;" target="_blank" title="点击复制">{php echo fm_murl('needs', 'detail','index',array('id' => $id))}</a></p>
+						<img src="{$qrcode_preview}"><span>微信扫码，预览表单</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>表单名称</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 ">
+						<input type="text" name="title" class="form-control" value="{$needs['title']}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>表单模板</label>
+					<div class="col-xs-12 col-sm-9 col-md-2 col-lg-2 ">
+						<select name="template" class="form-control">
+						{loop $templates $key $item}
+						<option value="{$key}" {if $needs['template'] == $key} selected="selected" {/if}>{$item}</option>
+						{/loop}
+					</select>
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">启用状态</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-4">
+						<label class='radio-inline'>
+							<input type='radio' name='status' value='1' {if $needs['status']==1}checked{/if} /> 进行中
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='status' value='-1' {if $needs['status']==-1}checked{/if} /> 已停止
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='status' value='0' {if $needs['status']==0 || empty($needs['status'])}checked{/if} /> 未开始(默认)
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-1 col-lg-1 control-label">排序</label>
+					<div class="col-xs-12 col-sm-3 col-md-1 col-lg-2">
+						<input type="text" name="displayorder" class="form-control" placeholder="可留空；此处仅可填写数字" value="{$needs['displayorder']}" />
+					</div>
+					<span class="help-block">说明：相同类型的表单，排序数值越大，位置越靠前</span>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">封面图</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-9">
+						{php echo tpl_form_field_image('thumb', $needs['thumb'])}
+						<span class="help-block">说明：封面图建议为正方形，将在转发时用到。</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">
+						Banner图
+						<input type='checkbox' name='is_banner' value='1' {if $needs['is_banner']==1} checked {/if} />
+					</label>
+					<div class="col-xs-12 col-sm-9 col-md-8 col-lg-9">
+						{php echo tpl_form_field_image('banner', $needs['banner'])}
+						<span class="help-block">说明：BANNER图建议尺寸比为900:250。</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">表单简述</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+						<textarea name="description" class="form-control" placeholder="将在分享转发时用到，如不填写，将引用系统全局设定的分享文字"  >{$needs['description']}</textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">提交提示</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+						<textarea name="res" class="form-control" placeholder="用户提交表单信息成功后收到的系统提示"  >{$needs['res']}</textarea>
+						<span class="help-block">说明：用户提交表单信息成功后收到的系统提示,如：“您的信息我们已收到，将尽快答复您”。</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">详情内容</label>
+					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
+						{php echo fmFunc_tpl_ueditor('content',$needs['content'],$isapp=null,$datatype=null,$options=array('height'=>300,'width'=>'900'));}
+						<span class="help-block">说明：可对表单的内容(如活动行程、项目说明、预约要求等方面做一个较为详细的介绍)</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-heading">
+				基础规则设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+						 <label class='control-label'>
+							 <input type='checkbox' name='is_rec' value='1' {if $needs['is_rec']==1}checked{/if} /> 推荐
+						 </label>
+					</div>
+					
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+						 <label class='control-label'>
+							 <input type='checkbox' name='is_hot' value='1' {if $needs['is_hot']==1}checked{/if} /> 热门
+						 </label>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+						 <label class='control-label'>
+							 <input type='checkbox' name='is_dianzan' value='1' {if $needs['is_dianzan']==1}checked{/if} /> 开启点赞
+						 </label>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+						 <label class='control-label'>
+							 <input type='checkbox' name='is_comment' value='1' {if $needs['is_comment']==1}checked{/if} /> 开启评论
+						 </label>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+						 <label class='control-label'>
+							 <input type='checkbox' name='is_forcelogin' value='1' {if $needs['is_forcelogin']==1}checked{/if} /> 强制登陆
+						 </label>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+						 <label class='control-label'>
+							 <input type='checkbox' name='is_forcefollow' value='1' {if $needs['is_forcefollow']==1}checked{/if} /> 强制关注
+						 </label>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						 <label class='control-label'>
+							 <input type='checkbox' name='is_wechat' value='1' {if $needs['is_wechat']==1}checked{/if} /> 必须在微信中打开
+						 </label>
+					</div>
+
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						 <label class='control-label'>
+							 <input type='checkbox' name='is_share' value='1' {if $needs['is_share']==1}checked{/if} /> 预约信息是否可分享公开
+						 </label>
+					</div>
+					
+				</div>
+
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-6 col-md-2 col-lg-1 ">
+						<div class="input-group ">
+							<span class="input-group-addon">
+								阅读数
+							</span>
+							<input type="number" name="viewcount" class="form-control" style="width:120px;color:#f00;" disabled="true" value="{$needs['viewcount']}" />
+							<span class="input-group-addon">次</span>
+
+							<span class="input-group-addon">
+								点赞数
+							</span>
+							<input type="number" name="dianzancount" class="form-control" style="width:120px;color:#f00;" disabled="true" value="{$needs['dianzancount']}" />
+							<span class="input-group-addon">次</span>
+
+							<span class="input-group-addon">
+								分享数
+							</span>
+							<input type="number" name="sharecount" class="form-control" style="width:120px;color:#f00;" disabled="true" value="{$needs['sharecount']}" />
+							<span class="input-group-addon">次</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-6 col-md-2 col-lg-1 ">
+						<div class="input-group ">
+							<span class="input-group-addon">
+								<input type='checkbox' name='is_pay' value='1' {if $needs['is_pay']==1} checked {/if} /> 开启支付
+							</span>
+							<input type="number" name="price" class="form-control" style="width:120px;" placeholder="可填写数字" value="{$needs['price']}" />
+							<span class="input-group-addon">元</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-6 col-md-2 col-lg-1">
+						<div class="input-group ">
+							<span class="input-group-addon">
+								<input type='checkbox' name='is_max' value='1' {if $needs['is_max']==1} checked {/if} /> 限制最大可参与人次</span>
+							<input type="number" name="max_times" class="form-control" style="width:120px;" placeholder="可填写数字" value="{$needs['max_times']}" />
+							<span class="input-group-addon">人次</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-6 col-md-2 col-lg-1">
+						<div class="input-group ">
+							<span class="input-group-addon">
+								<input type='checkbox' name='is_cycle' value='1' {if $needs['is_cycle']==1} checked {/if} /> 启用生命周期(测试中)</span>
+							<span class="input-group-addon" title="指一个生命周期的时间跨度">长度：</span>
+							<input type="number" name="cycle_lenth" class="form-control" style="width:80px;" placeholder="填数字" value="{$needs['cycle_lenth']}" />
+
+							<span class="input-group-addon">单位：
+								<select name="cycle" class="form-contorl" style="height: 22px !important;">
+								{loop $cycles $key $item}
+								<option value="{$key}" {if $needs['cycle'] == $key} selected="selected" {/if}>{$item}</option>
+								{/loop}
+								</select>
+							</span>
+
+							<span class="input-group-addon">单个生命周期内单人最大参与次数</span>
+							<input type="number" name="single_times" class="form-control" style="width:120px;" value="{$needs['single_times']}" placeholder="填数字" />
+							<span class="input-group-addon">次</span>
+
+							<span class="input-group-addon">单个生命周期内最大总参与人数</span>
+							<input type="number" name="single_all_times" class="form-control" style="width:120px;" value="{$needs['single_all_times']}" placeholder="填数字" />
+							<span class="input-group-addon">人</span>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-6 col-md-2 col-lg-11">
+						<div class="input-group ">
+							<span class="input-group-addon">
+								<input type='checkbox' name='is_time' value='1' {if $needs['is_time']==1}checked{/if} />  启用时效限制
+							</span>
+
+							<span class="input-group-addon">
+								<input type='checkbox' name='is_timestart' value='1' {if $needs['is_timestart']==1}checked{/if} />  限制开始时间
+							</span>
+							<span style="width:220px;">
+								{php echo tpl_form_field_date('starttime',$needs['starttime'],true);}
+							</span>
+
+							<span class="input-group-addon">
+								<input type='checkbox' name='is_timeend' value='1' {if $needs['is_timeend']==1}checked{/if} />  限制结束时间
+							</span>
+							<span style="width:220px;">
+								{php echo tpl_form_field_date('endtime',$needs['endtime'],true);}
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">知会通知</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-11">
+						<textarea type="text" name="notice_mobile" class="form-control" placeholder="管理员手机号" maxlength="255">{$needs['notice_mobile']}</textarea>
+						<span class="help-block">说明：可填写多个；多个手机号之间，用英文半角逗号“,”分隔开</span>
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-11">
+						<textarea type="text" name="notice_openid" class="form-control" placeholder="管理员微信opendid" maxlength="255">{$needs['notice_openid']}</textarea>
+						<span class="help-block">说明：可填写多个；多个openid之间，用英文半角逗号“,”分隔开;管理员同时拥有核销权限；  <a href="{php echo fm_wurl('crm','member','',array());}" class="btn btn-default" target="_blank">  -->>查找会员OPENID  </a></span>
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-11">
+						<textarea type="text" name="notice_email" class="form-control" placeholder="管理员邮箱" maxlength="255">{$needs['notice_email']}</textarea>
+						<span class="help-block">说明：可填写多个；多个邮箱之间，用英文半角逗号“,”分隔开</span>
+					</div>
+				</div>
+
+			</div>
+			{if $operation == 'detail'}
+			<div class="panel-heading">
+				表单自定义参数设定
+			</div>
+			<div class="panel-body">
+				 <?php include fmFunc_template_m('needs/detail'.'/'.$needs['template'].'/'.'/_web/params');?>
+			</div>
+			{/if}
+
+			<div class="panel-heading">
+			</div>
+			<div class="panel-body">
+				<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+					<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

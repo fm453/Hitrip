@@ -1,0 +1,20 @@
+<tr >
+				<td>
+					<a href="javascript:;" onclick="deleteHtml(this)" style="margin-top:10px;" title="删除"><i class="fa fa-remove"  style="color:red;"></i></a>
+				</td>
+
+				<td>
+					<textarea name="data[events][{$k}][title]" type="text" class="form-control param_title ">{$v['title']}</textarea>
+				</td>
+
+				<td>
+					{php echo tpl_form_field_date('data[events]['.$k.'][addtime]',$v['addtime'],true);}
+				</td>
+				
+				<td>
+					<select name="data[events][{$k}][status]" class="form-control">
+						<option value="1" label="启用" {if $v['status']==1} selected="selected" {/if}></option>
+						<option value="0" label="停用" {if $v['status']==0} selected="selected" {/if}></option>
+					</select>
+				</td>
+			</tr>

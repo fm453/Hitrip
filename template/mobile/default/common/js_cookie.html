@@ -1,0 +1,44 @@
+
+<script type="text/javascript" charset='utf-8'>
+/**——利用JS方法管理客户端cookie————**/
+/*
+设置cookie
+@key 键
+@value 值
+@expired 保存时长，以毫秒为单位，默认为7天 7*24*60*60*1000
+*/
+function js_setCookie(key,value,expired){
+	expired = isNaN(expired) ? 7*24*60*60*1000 : expired;		//使expired必为整数值
+	expired = (expired<=0) ? 7*24*60*60*1000 : expired;		//使expired必为正整数值
+	var exp = new Date();
+	exp.setTime(exp.getTime() + expired);
+	document.cookie = key + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+
+/*
+读取cookie
+@key cookie的键值
+*/
+function js_getCookie(key){
+	var arr,reg=new RegExp("(^| )"+key+"=([^;]*)(;|$)");
+	if(arr=document.cookie.match(reg))
+	{
+		//console.log(arr);
+		return unescape(arr[2]);
+	}else{
+		return null;
+	}
+}
+
+/*
+删除cookie
+@key cookie的键值
+*/
+function js_delCookie(key){
+	var exp = new Date();
+	exp.setTime(exp.getTime() - 1);
+	var value=getCookie(key);
+	if(value !=null)
+	document.cookie= key + "="+value+";expires="+exp.toGMTString();
+}
+</script>

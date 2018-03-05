@@ -1,0 +1,5 @@
+				<a href="{php echo $this->createWebUrl('help',array('ac'=>'manual'))}" {if $ac=='manual'} class="btn btn-info" {else} class="btn btn-default" {/if} target="_parent">后台使用指南</a>
+				{if $_W['isfounder']}<a href="{php echo $this->createWebUrl('help',array('ac'=>'develop'))}" {if $ac=='develop'} class="btn btn-info" {else} class="btn btn-default" {/if} target="_parent">二次开发指南</a>{/if}
+				<a href="{php echo $this->createWebUrl('help',array('ac'=>'status'))}" {if $ac=='status'} class="btn btn-info" {else} class="btn btn-default" {/if} target="_parent">数据状态说明</a>
+				<a href="{php echo fm_murl('demo','index','index',array())}" class="btn btn-default" target="_blank">前台UI DEMO</a>
+				<a href="{php echo fm_murl('crontab','index','index',array())}" class="btn btn-default" target="_blank">前台定时任务入口</a>

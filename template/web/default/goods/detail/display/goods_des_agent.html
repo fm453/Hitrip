@@ -1,0 +1,12 @@
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">产品详情(全部代理商统一调用此产品详情)</label>
+	<div class="col-sm-9 col-xs-12">
+		{php echo fmFunc_tpl_ueditor('agentcontent',$item['agentcontent'],'web','html',array('height'=>200,'width'=>800));}
+		<span class="help-block">
+		<ol >
+			<li>建议不要在代理商的产品详情中添加您总店的联系方式，以保持合作通畅; 您可以直接复制总店原有的产品详情后再修改。</li>
+			<li>此处如果不填写内容，则自动调用总店原有产品详情</li>
+		</ol>
+		</span>
+	</div>
+</div>

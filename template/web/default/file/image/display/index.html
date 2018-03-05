@@ -1,0 +1,17 @@
+<link  href="/path/to/cropper.css" rel="stylesheet">
+<link href="{$fm453resource}components/croper/cropper.min.css" rel="stylesheet">
+
+<!-- Wrap the image or canvas with a block element -->
+<div class="container">
+  <img src="../attachment/{$file}">
+</div>
+
+ <script src="{$fm453resource}components/croper/cropper.min.js"></script>
+  <script type="text/javascript">
+  	$('.container > img').cropper({
+  aspectRatio: 16 / 9,
+  crop: function(data) {
+    // Output the result data for cropping image.
+  }
+});
+  </script>

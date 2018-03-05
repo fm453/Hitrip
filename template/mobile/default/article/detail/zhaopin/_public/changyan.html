@@ -1,0 +1,9 @@
+<!--WAP版-->
+{if $_W['uniacid']==96 && $_W['siteroot']=='http://vcms.hiluker.com/'}
+<div id="SOHUCS" sid="{$id}-" ></div>
+{else}
+<div id="SOHUCS" sid="{$id}-{$sn}" ></div>
+{/if}
+<script id="changyan_mobile_js" charset="utf-8" type="text/javascript"
+src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id={$_FM['settings']['api']['changyan_appId']}&conf={$_FM['settings']['api']['changyan_conf']}">
+</script>

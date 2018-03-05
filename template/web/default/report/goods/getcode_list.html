@@ -1,0 +1,67 @@
+<div class="main fm453_newmouse">
+	<div class="category">
+		<form action="" method="post" onsubmit="return formcheck(this)">
+			<div class="panel  panel-warning">
+				<div class="panel-heading"></div>
+				<div class="panel-body">
+					<table class="table table-hover  table-responsive" >
+						<thead>
+							<tr style="">
+								<th style="">id</th>
+								<th class="" style="">IP</th>
+								<th class="" style="">域名</th>
+								<th style="">API</th>
+								<th style="">密钥</th>
+								<th style="">授权码</th>
+								<th style="white-space: normal;">公众号</th>
+								<th style="">操作人</th>
+								<th style="">操作</th>
+								<th style="">时间</th>
+							</tr>
+						</thead>
+						<tbody>
+						{loop $alllogs $log_key $row}
+						<tr>
+							<td>
+							{$row['id']}
+							</td>
+							<td>
+								{$row['details']['addons']['ip']}
+							</td>
+							<td>
+								{$row['details']['addons']['sudomain']}
+							</td>
+							<td>
+								{$row['details']['addons']['suapi']}
+							</td>
+							<td>
+								{$row['details']['addons']['suseceret']}
+							</td>
+							<td>
+								{$row['details']['addons']['sufm453code']}
+							</td>
+							<td>
+								{$row['details']['addons']['uniaccount']['name']}({$row['details']['addons']['uniaccount']['acid']})({$row['details']['addons']['uniaccount']['account']})({$row['details']['addons']['uniaccount']['original']})
+							</td>
+							<td>
+								{$row['details']['addons']['username']}({$row['details']['addons']['uid']})
+							</td>
+							<td>
+							<a class="btn btn-info" href="{php echo $this->createWebUrl('report',array('ac'=>'log','op'=>'detail','id'=> $row['id']))}" target="_blank" >详情</a>
+							</td>
+							<td>
+								{$row['createtime']}
+							</td>
+						</tr>
+						{/loop}
+						</tbody>
+					</table>
+				</div>
+				<div class="panel-heading"></div>
+			</div>
+		</form>
+	</div>
+	<div style="text-align: center;">
+		{$pager}
+	</div>
+</div>

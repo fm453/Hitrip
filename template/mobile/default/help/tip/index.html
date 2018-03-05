@@ -1,0 +1,22 @@
+<link href="../app/resource/css/common.min.css?v=20160906" rel="stylesheet">
+<div class="container container-fill">
+	<div class="mui-content fadeInUpBig animated mui-backdrop" style="background-color: rgb(239, 239, 244); bottom: 20px;">
+		<div class="mui-content-padded">
+			<div class="mui-message">
+				<div class="mui-message-icon"><span class="mui-msg-info"></span></div>
+				<p class="mui-desc">
+				<a id='js_tip'class="mui-btn mui-btn-default mui-btn-block mui-btn-outlined">{$msg['title']}</a>
+					{$msg['body']}
+				</p>
+				<div class="mui-button-area">
+					<a  href="{$backurl}" class="mui-action-back mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">返回上一页</a>
+					<a href="{php echo fm_murl('index','index','index',array())}" class="mui-btn mui-btn-primary mui-btn-block">首页</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+mui.init();
+</script>

@@ -1,0 +1,65 @@
+<div class="panel panel-default">
+			<div class="panel-heading">
+			<a data-toggle="collapse" data-parent="#accordion"
+          href="#goods_labels">
+          自定义标签（图片标签、附加标题等）<span class="pull-right">（点击展示）</span>
+        </a>
+			</div>
+</div>
+<div class="container-fluid panel-collapse collapse in" id="goods_labels">
+	<div class="row-fluid">
+		<div class="span12 forcopy">
+		<ol>
+				<li>
+					<ol>
+						<li>自定义标签设置后，商城前端将按顺序进行分别调用。
+						</li>
+						<li>自定义产主要应用于：产品搜索结果列表页/分类页/部分专题页等 。
+						</li>
+						<li>如果您在前台看不到相应的展示，请切换至商城默认风格后再试。
+						</li>
+					</ol>
+				</li>
+
+				<li>
+					<ol>
+						<li>第一组标签
+						</li>
+						<li>标签名称：可随意填写，用于标签图的ALT说明。
+						</li>
+						<li>标签值：填写系统自带标签图的名称（不带后缀名），必须完全填写正确。(如果不需要标签图，请将该组标签全部留空)
+						</li>
+						<li>现可供选择的值：(如需更多，请联系管理员将图片上传至目录{$_W['siteroot']}addons/fm453_shopping/resource/images内)<br>
+						<span class="btn btn-default"><img src="{$_W['siteroot']}addons/fm453_shopping/resource/images/tag_hot.png" alt="">tag_hot</span>
+						<span class="btn btn-default"><img src="{$_W['siteroot']}addons/fm453_shopping/resource/images/tag_new.png" alt="">tag_new</span>
+						<span class="btn btn-default"><img src="{$_W['siteroot']}addons/fm453_shopping/resource/images/tag_promotion.png" alt="">tag_promotion</span>
+						<span class="btn btn-default"><img src="{$_W['siteroot']}addons/fm453_shopping/resource/images/tag_discount.png" alt="">tag_discount</span>
+						<span class="btn btn-default"><img src="{$_W['siteroot']}addons/fm453_shopping/resource/images/tag_time.png" alt="">tag_time</span>
+						</li>
+					</ol>
+				</li>
+
+				<li>
+					<ol>
+						<li>第二组标签
+						</li>
+						<li>标签名称：需要显示在附加标题中的文字。
+						</li>
+						<li>标签值：附加标题的背景颜色值。(如果不需要，请将该组标签全部留空)
+						</li>
+						<li>参考的值：
+						<span class="label label-default" style="background-color: #fa4242;">#fa4242</span>
+						<span class="label label-default" style="background-color: #47bbf0;">#47bbf0</span>
+						<span class="label label-default" style="background-color: #8feb52;">#8feb52</span>
+						<span class="label label-default" style="background-color: #ff00ff;">#ff00ff</span>
+						<span class="label label-default" style="background-color: #0e8dec;">#0e8dec</span>
+						<p>{php echo tpl_form_field_color('color');}</p>
+						</li>
+					</ol>
+				</li>
+
+			</ol>
+
+		</div>
+	</div>
+</div>

@@ -1,0 +1,50 @@
+{if $_W['uniacid']==99}
+			<a class="mui-tab-item mui-active" href="#offCanvasSide">
+				<span class="mui-icon mui-icon-extra mui-icon-extra-at">
+				</span>
+				<span class="mui-tab-label">预约平台</span>
+			</a>
+
+			<a class="mui-tab-item" href="{php echo fm_murl('needs','list','index',array(''))}">
+				<span class="mui-icon mui-icon-extra mui-icon-extra-dictionary">
+				</span>
+				<span class="mui-tab-label">预约管理</span>
+			</a>
+
+			<a class="mui-tab-item" href="{php echo fm_murl('order','index','index',array(''))}">
+				<span class="mui-icon mui-icon-extra mui-icon-extra-order">
+				</span>
+				<span class="mui-tab-label">商城订单</span>
+			</a>
+
+			<a class="mui-tab-item" href="{php echo fm_murl('member','index','index',array())}">
+				<span class="mui-icon mui-icon-contact">
+				</span>
+				<span class="mui-tab-label">个人中心</span>
+			</a>
+{else}
+			<a class="mui-tab-item" href="#offCanvasSide">
+				<span class="mui-tab-label mui-icon mui-icon-home">
+				</span>
+				<span class="mui-tab-label">菜单</span>
+			</a>
+
+			<a class="mui-tab-item" href="{php echo fm_murl('article','list','index',array(''))}">
+				<span class="mui-icon mui-icon-list">
+				</span>
+				<span class="mui-tab-label">栏目</span>
+			</a>
+
+			<a class="mui-tab-item mui-action-back" >
+				<span class="mui-action-back mui-icon mui-icon-undo">
+
+				</span>
+				<span class="mui-tab-label">返回</span>
+			</a>
+
+			<a class="mui-tab-item" href="{php echo fm_murl('search','article','index',array())}">
+				<span class="mui-icon mui-icon-search">
+				</span>
+				<span class="mui-tab-label">搜索</span>
+			</a>
+{/if}

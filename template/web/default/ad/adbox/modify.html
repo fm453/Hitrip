@@ -1,0 +1,86 @@
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				商品广告位设置{if empty($parentid)}-当前为顶级分类{elseif !empty($parentid)}-当前为子分类,必须填写广告位标识{/if}
+			</div>
+			<div class="panel-body">
+				{if !empty($parentid)}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">上级广告位</label>
+					<div class="col-sm-9 col-xs-12 control-label" style="text-align:left;">{$parent['name']}</div>
+				</div>
+				{/if}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="displayorder" class="form-control" placeholder="可留空；此处仅可填写数字" value="{$adboxes['displayorder']}" />
+					<span class="help-block">说明：数值越大，位置越靠前</span>	
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>广告位名称</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="catename" class="form-control" value="{$adboxes['name']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>广告位标识</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="forpage" class="form-control" value="{$adboxes['forpage']}" />
+						<span class="help-block">说明：标识用于除首页外其他页面调用时的匹配条件，必须填写正确，否则无法正常调用；更多使用帮助请查阅参考。 已支持的标识（括号及括号内为注释，请忽略）：search(搜索页),goodslist(产品列表页)、goodsdetail(产品详情页)、orderlist(订单列表页)、orderdetail(订单详情页)</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">广告位图片</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('thumb', $adboxes['thumb'])}
+						<span class="help-block">说明：广告位图长宽尺寸比：默认为900px:225px；实际请根据不同页面设计稿而定</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">广告位自动上下线时间</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_daterange('adtime', $adboxes['time'], true);}
+						<span class="help-block">说明：启用广告位并在此时间内才有效</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">广告位描述</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea name="description" class="form-control" placeholder="可留空"  cols="70">{$adboxes['description']}</textarea>
+					</div>
+				</div>
+			<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">添加到首页</label>
+					<div class="col-sm-9 col-xs-12">
+						 <label class='radio-inline'>
+							 <input type='radio' name='isrecommand' value=1' {if $adboxes['isrecommand']==1}checked{/if} /> 是
+						 </label>
+						 <label class='radio-inline'>
+							 <input type='radio' name='isrecommand' value=0' {if $adboxes['isrecommand']==0}checked{/if} /> 否
+						 </label>
+					</div>
+				</div>
+				 <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否显示</label>
+					<div class="col-sm-9 col-xs-12">
+						<label class='radio-inline'>
+							<input type='radio' name='enabled' value=1' {if $adboxes['enabled']==1}checked{/if} /> 是
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='enabled' value=0' {if $adboxes['enabled']==0}checked{/if} /> 否
+						</label>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>

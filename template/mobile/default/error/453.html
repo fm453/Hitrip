@@ -1,0 +1,18 @@
+{if $do == 'error'}
+		{template $appstyle.$do.'/'.$ac.'/'.'index'}
+{else}
+
+{template $appstyle.'common/header'}
+<script src="{$appsrc}js/mui.min.js"></script>
+{if $ac == 'index'}
+	{if $operation == 'index'}
+	{template $appstyle.$do.'/'.$ac.'/'.$operation.'/'.'index'}
+	{/if}
+{/if}
+{template $appstyle.'common/js_url'}
+{template $appstyle.'common/js_pic'}
+{template $appstyle.'common/js_array'}
+{template $appstyle.'common/js_form'}
+{template $appstyle.'common/footer_noshare'}
+
+{/if}

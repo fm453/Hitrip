@@ -1,0 +1,22 @@
+{template $appstyle.$do.'/'.$ac.'/_public/css'}
+{template $appstyle.$do.'/'.$ac.'/_public/titlebar'}
+
+<!--下拉刷新容器-->
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="background-color: rgba(255,255,255,1);" >
+	<div class="mui-scroll" >
+		<div class="mui-content"  id="pullrefresh-table" style="background-color: rgba(255,255,255,1);padding-top:50px;padding-bottom: 60px;"><!-- 该ID必须存在且不允许更改 -->
+			{template $appstyle.$do.'/'.$ac.'/'.$operation.'/page'}
+		</div>
+	</div>
+</div>
+<!-- 下拉容器结束 -->
+
+<!-- 模态框 -->
+
+{template $appstyle.$do.'/'.$ac.'/'.$operation.'/js'}
+<!-- 图片放大查看 -->
+<script src="{$appsrc}js/mui.zoom.js"></script>
+<script src="{$appsrc}js/mui.previewimage.js"></script>
+<script type="text/javascript" >
+	mui.previewImage();
+</script>

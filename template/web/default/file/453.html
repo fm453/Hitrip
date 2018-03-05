@@ -1,0 +1,16 @@
+{template $fm453style.'common/_header'}
+{template $fm453style.'common/tabnav'}
+{if $ac == 'list'}
+	{if $operation == 'display'}
+		{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+{/if}
+{if $ac == 'image'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/'.$ac.'/'.$operation.'/index'}
+	{/if}
+{/if}
+
+{template $fm453style.$do.'/key'}
+
+{template $fm453style.'common/_footer'}

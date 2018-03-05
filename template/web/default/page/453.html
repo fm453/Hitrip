@@ -1,0 +1,54 @@
+{template $fm453style.'common/_header'}
+{template $fm453style.$do.'/tabnav'}
+{if $ac == 'model'}
+	{if $operation == 'display'}
+		{template $fm453style.$do.'/'.$ac.'/'.$operation.'/index'}
+	{/if}
+	{if $operation == 'add'}
+		{template $fm453style.$do.'/'.$ac.'/'.'modify'.'/index'}
+	{/if}
+	{if $operation == 'modify'}
+		{template $fm453style.$do.'/'.$ac.'/'.'modify'.'/index'}
+	{/if}
+	{if $operation == 'copy'}
+		{template $fm453style.$do.'/'.$ac.'/'.'modify'.'/index'}
+	{/if}
+	{if $operation == 'param'}
+		{template $fm453style.$do.'/'.$ac.'/'.$operation.'/search'}
+		{template $fm453style.$do.'/'.$ac.'/'.$operation.'/index'}
+	{/if}
+{/if}
+{if $ac == 'instance'}
+	{if $operation == 'display'}
+		{template $fm453style.$do.'/'.$ac.'/'.$operation.'/search'}
+		{template $fm453style.$do.'/'.$ac.'/'.$operation.'/index'}
+	{/if}
+	{if $operation == 'add'}
+		{template $fm453style.$do.'/'.$ac.'/'.'modify'.'/index'}
+	{/if}
+	{if $operation == 'modify'}
+		{template $fm453style.$do.'/'.$ac.'/'.'modify'.'/index'}
+	{/if}
+	{if $operation == 'copy'}
+		{template $fm453style.$do.'/'.$ac.'/'.'modify'.'/index'}
+	{/if}
+{/if}
+{if $ac == 'content'}
+	{if $operation == 'display'}
+		{template $fm453style.$do.'/'.$ac.'/'.$operation.'/search'}
+		{template $fm453style.$do.'/'.$ac.'/'.$operation.'/index'}
+	{/if}
+	{if $operation == 'add'}
+		{template $fm453style.$do.'/'.$ac.'/'.'modify'.'/index'}
+	{/if}
+	{if $operation == 'modify'}
+		{template $fm453style.$do.'/'.$ac.'/'.'modify'.'/index'}
+	{/if}
+	{if $operation == 'copy'}
+		{template $fm453style.$do.'/'.$ac.'/'.'modify'.'/index'}
+	{/if}
+{/if}
+
+{template $fm453style.$do.'/key'}
+{template $fm453style.$do.'/mouse'}
+{template $fm453style.'common/_footer'}

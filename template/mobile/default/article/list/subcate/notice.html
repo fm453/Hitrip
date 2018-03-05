@@ -1,0 +1,11 @@
+{if count($list)<=0}
+<div class="hero-unit well mui-card" style="">
+	<h1>空空如也</h1>
+	<p class="content">
+		亲，去搜索看看有没有相关的内容吧！
+	</p>
+	<p>
+			<a class="mui-btn mui-btn-success mui-btn-block" href="{php echo fm_murl('search','article','index',array())}">现在就去 »</a>
+	</p>
+</div>
+{/if}

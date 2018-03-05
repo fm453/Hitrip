@@ -1,0 +1,206 @@
+<script type="text/javascript">
+	var goodsid='{$id}';
+	var sn='{$sn}';
+	var options={php echo json_encode($options)};
+	var specs={php echo json_encode($specs)};
+	var hasoption = {php echo $goods['hasoption']=='1'?'true':'false'};
+	var maxbuy = {php echo empty($goods['maxbuy'])?"0":$goods['maxbuy']};
+	var stock = $("#stock").html()==''?-1:parseInt($("#stock").html());
+	var goods_thumb = "{$goods['thumb']}";
+	var default_for_spec_option_title = $("#for-spec-option-title").html();
+
+	$(function() {
+		$("#hideoption").click(function() { //当点击该元素时触发，用于切换底部导航条
+			$('#footbar-1').removeClass("hidden");//显示第一个导航条
+			$("#footbar-2").hide();
+		});
+
+		$(".spec-ls-title,.spec-ls-title2").click(function() {
+		//修改规格选择展示
+			var option_title = $(this).find('h5').html();	//规格名
+			var option_thumb = $(this).find('img').attr('src');	//规格缩略图
+			if(option_thumb){
+				$("#for-spec-option-thumb").attr('src',option_thumb);
+			}else{
+				$("#for-spec-option-thumb").attr('src',goods_thumb);
+			}
+			$("#for-spec-option-title").html("已选:" + option_title);
+
+			var specid = $(this).attr("specid");//取得规格所属类型的id
+			var oid = $(this).attr("oid");	//取得规格项的id
+			//alert(oid);
+			$(".optionid_"+specid).val(oid); //为隐藏的input(产品规格类传参用)写入数值-规格项ID，通过input的样式类进行定位
+			$(".options_" + specid + "_span").removeClass("current").attr("sel", "false");//移除所选规格项对应的规格所在层的样式类current，及其相对应的元素中的sel参数
+			$(this).addClass("current").attr("sel", "true");//添加类与sel属性
+			$('.option-for-click').removeClass("disabled");
+			var optionid = "";
+			var stock =0;
+			var marketprice = 0;
+			var productprice = 0;
+			var ret = option_selected();
+
+			if(ret.no!=''){	//规格没有全部选择完时，判断剩下可用的规格项
+				var oids = ret.all.join("_");
+				//alert(oids);
+				var len = options.length;
+				var url = "{php echo fm_murl('goods','detail','checkoption',array('id'=>$goods['id']))}"+"&oids=" + oids + "&len=" + len + "&specid=" + ret.specid;
+				//$("#options").html(url);
+				$.getJSON(url, function(s){
+					if(s.hasempty==1){
+						var len = s.oidnum;
+						for(var i=0;i<len;i++) {
+							var o = s.oids[i];
+							//alert(o);
+							$('.option_'+o).addClass('disabled');
+						}
+					}
+				});
+			}
+			if(ret.no==''){
+				var len = options.length;
+				for(var i=0;i<len;i++) {
+					var o = options[i];
+					var ids = ret.all.join("_");
+					if(o.specs==ids){
+						optionid = o.id;
+						stock = o.stock;
+						marketprice = o.marketprice;
+						productprice = o.productprice;
+						break;
+					}
+				}
+			  $("#optionid").val(optionid); 
+				if(stock!="-1"){
+					if(stock <=0){
+						//alert("该组合情况下，库存不足，无法购买，请重新选择！");
+						$("#gotoconfirm").addClass("").attr("onclick", "");
+						$(this).children().addClass("disabled");
+						delete(oid);
+						$("#stockcontainer").html("( <span id='stock' style='color:#f00;'>" + "库存不足" + "</span> )");
+						$("#gotoconfirm").html('<h6 style="margin-top: 5px;color:#f00;font-weight:bold;">	库存不足,请重新选择</h6>');
+					}else {
+						$('.option-for-click').removeClass("disabled");
+						$("#stockcontainer").html("( 剩余 <span id='stock'>" + stock + "{$goods['unit']}</span> )");
+						$("#gotoconfirm").html('<i class="glyphicon glyphicon-share" style="font-size:20px;top: 5px;"></i><h6 style="margin-top: 5px;color:#fff;">选好了，去付款</h6>');
+						$("#gotoconfirm").addClass("").attr("onclick", "buy()");
+					}
+				}else{
+					$("#stockcontainer").html("<span id='stock'></span>");
+				}
+				$("#marketprice").html(marketprice);
+				$("#marketprice-option").html(marketprice);
+				$("#productprice").html(productprice);
+				if(productprice<=0){
+					$("#productpricecontainer").hide();
+				}else{
+					$("#productpricecontainer").show();
+				}
+			}
+			//alert("测试类元素点击事件成功！规格类型specid为"+specid+",规格项oid为"+oid);
+		});
+
+		$("#total").blur(function(){//当元素失去焦点时触发该事件
+			var total = $("#total");
+			var totalnum =$("#total").value;
+			if(!isNaN(totalnum)){
+				total.val("1");
+			}
+			var stock = $("#stock").html()==''?-1:parseInt($("#stock").html());
+			var mb = maxbuy;
+			if(mb>stock && stock!=-1){
+				mb = stock;
+			}
+			var num = parseInt(total.val() );
+			if(num>mb && mb>0){
+				tip("您最多可购买 " + mb + " 件!",true);
+				total.val(mb);
+			}
+		});
+});
+
+	//对选中项进行汇总
+	var selected = [];
+	function option_selected(){
+		var ret= {
+			no: "",
+			all: [],
+			specid:""
+		};
+		if(!hasoption){
+			return ret;
+		}
+		$(".optionid").each(function(){
+			ret.all.push($(this).val());
+			if($(this).val()==''){
+				ret.no = $(this).attr("title");
+				ret.specid = $(this).attr("specid");
+				return false;
+			}
+		});
+		return ret;
+	}
+
+
+function checkNum(totalnum,mb,stock){
+	if(!isNaN(totalnum)){
+		total.val("1");
+	}
+	if(mb>stock && stock!=-1){
+		mb = stock;
+	}
+	var num = parseInt(total.val() ) + 1;
+	if(num>stock){
+		tip("您最多可购买 " + stock + " 件!",true);
+		num--;
+	}
+	if(num>mb && mb>0){
+		tip("您最多可购买 " + mb + " 件!",true);
+		num = mb;
+	}
+	total.val(num);
+}
+
+function addNum(){
+	var total = $("#total");
+	var totalnum =parseInt(total.val());
+	if(totalnum<=0){
+		total.val(1);
+	}
+	var stock = $("#stock").html()==''?-1:parseInt($("#stock").html());
+	var mb = maxbuy;
+	if(mb>stock && stock!=-1){
+		mb = stock;
+	}
+	var num = parseInt(total.val());
+	//数据跟随变化
+	$("#stock").html(stock-1);
+
+	if(num>stock){
+		tip("您最多可购买 " + stock + " 件!",true);
+		num--;
+	}
+	if(num>mb && mb>0){
+		tip("您最多可购买 " + mb + " 件!",true);
+		num = mb;
+	}
+	total.val(num);
+}
+
+function reduceNum(){
+	var total = $("#total");
+	var totalnum =$("#total").value;
+	var num = parseInt(total.val());
+	if(num<=0){
+		total.val(0);
+		return;
+	}
+	//数据跟随变化
+	var stock = $("#stock").html()==''?-1:parseInt($("#stock").html());
+	if(stock>0){
+		$("#stock").html(stock+1);
+	}
+
+	//num--;
+	total.val(num);
+}
+</script>

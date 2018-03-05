@@ -1,0 +1,38 @@
+<div class="mui-input-group">
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>现居地：</label>
+		<input   class="mui-input-clear" id="now_where" name="view_now_where" style="padding: 8px 0;" value="{if $needs_data['now_province']}{$needs_data['now_province']}-{$needs_data['now_city']}-{$needs_data['now_county']}{else}点击选择您现在的居住地{/if}" />
+<input  type="hidden" id="now_province" name="now_province" value="{$needs_data['now_province']}" />
+<input  type="hidden" id="now_city" name="now_city" value="{$needs_data['now_city']}" />
+<input  type="hidden" id="now_county" name="now_county" value="{$needs_data['now_county']}" />
+	</div>
+	<div class="mui-input-row">
+		<input id='now_address' type="text" name="now_address" class="mui-input-clear" placeholder="现居地详细地址，如所在乡镇、街区、楼栋号等" value="{$needs_data['now_address']}" />
+	</div>
+</div>
+<!--初始化城市区域-->
+<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var cityPicker = new $.PopPicker({
+						layer: 3
+					});
+					cityPicker.setData(cityData3);
+					var id = 'now';
+					var showCityPickerButton = doc.getElementById(id+'_where');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker.show(function(items) {
+							var cityResult = '';
+							cityResult = "" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+							document.getElementById(id+'_where').setAttribute('value',cityResult);
+							document.getElementById(id+'_province').setAttribute('value',(items[0] || {}).text);
+							document.getElementById(id+'_city').setAttribute('value',(items[1] || {}).text);
+							document.getElementById(id+'_county').setAttribute('value',(items[2] || {}).text);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+</script>

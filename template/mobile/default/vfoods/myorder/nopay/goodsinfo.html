@@ -1,0 +1,38 @@
+
+<div class="order-detail">
+			<table class="table">
+				<thead style='background-color:rgba(204,204,204,1);color:#fff;'>
+				<tr>
+					<th class="name">商品</th>
+					<th class="num">数量</th>
+					<th class="total">单价</th>
+				</tr>
+				</thead>
+				<tbody  style='background-color:rgba(255,255,255,1);line-height:28px;'>
+				{loop $item['allgoods']  $goods}
+				<tr>
+					<td class="name">
+						<div class="img" style="display: none;">
+							<a href="{php echo fm_murl('goods','detail','index',array('id' => $goods['id']))}">
+								<img src="{php echo tomedia($goods['sharethumb']);}" style="width: 90px;height: 50px;"/>
+							</a>
+						</div>
+						<span  style="float:left;">
+							{$goods['title']}
+							{if !empty($goods['optionname'])}<br/>
+							<span style='font-size:12px;color:#666'> {$goods['optionname']}</span>
+							{/if}
+						</span>
+					</td>
+					<td class="num">
+						{$goods['buytotal']}{if !empty($goods['unit'])}{$goods['unit']}{/if}
+					</td>
+					<td class="total">
+						<span style="display: none;">{$goods['buytotal']}</span>
+						<span class='goodsprice'>{$goods['price']} 元</span>
+					</td>
+				</tr>
+				{/loop}
+				</tbody>
+			</table>
+</div>

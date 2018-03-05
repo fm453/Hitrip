@@ -1,0 +1,81 @@
+<div id="modal-upload-thumb" class="mui-modal mui-scroll-wrapper" style="background-color: rgba(245,245,245,1);">
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-close mui-pull-right" href="#modal-upload-thumb"></a>
+		<h1 class="mui-title" id="modal-upload-thumb-title">文件上传</h1>
+	</header>
+	<div class="mui-content scroll" style="">
+
+	<form action="{php echo fm_murl('ajax','file','upload',array())}" method="post" class="form-horizontal form" id="form-upload-thumb" enctype="multipart/form-data" onsubmit='return false'>
+		<div id="for-thumb" class="">
+		<input class="file file-upload"  id="file-thumb" name="file-thumb" type="file" data-id="thumb" data-preview-file-type="text" /*accept="image/*"*/ />
+		<input  class="form-control hidden" id="url-thumb" name="url-thumb" type="text" value="{$needs_data['thumb']}"/ >
+		<span id='#errorBlock-thumb'> </span>
+	</div>
+	<script>
+		var id = "thumb";
+		var inputname = "file-"+id;
+		var imageid = "file-preview-"+id;
+		var uploadurl="{php echo fm_murl('ajax','file','upload',array())}"+"&inputname="+inputname+"&backid="+id;
+		var previewSrc = "{php echo tomedia($needs_data['thumb'])}";
+		var previewHtml ="<img src='"+previewSrc+"' class='file-preview-image' alt='' title='' id='"+imageid+"'/>";
+		previewHtml += '<div class="file-thumbnail-footer">';
+		previewHtml += '<div class="file-caption-name" title="" style="width: 170px;"></div>';
+		previewHtml += '<div class="file-actions">';
+		previewHtml += '<div class="file-footer-buttons">';
+		previewHtml += '<button type="button" class="fm-file-remove btn btn-xs btn-default" data-src="'+"{$needs_data['thumb']}"+' data-imageid="'+ imageid +'" data-backid="'+ id +'" title="Remove file"><i class="glyphicon glyphicon-trash text-danger"></i></button>';
+		previewHtml += '</div>';
+		previewHtml += '<div class="file-upload-indicator" tabindex="-1" title="uploaded success"><i class="glyphicon glyphicon-ok-sign text-info"></i></div>';
+		previewHtml += '<div class="clearfix"></div>';
+		previewHtml += '</div>';
+		previewHtml += '</div>';
+		//var initialPreview = ("{$needs_data['thumb']}") ? [previewHtml] : [];
+		var initialPreview = [previewHtml];
+		$("#file-"+id).fileinput({
+			showPreview : true,	//显示预览，设置为false时无法正确监听
+			showUpload: false,
+			showRemove: false,
+			showCaption: false,
+			browseClass: "btn btn-primary btn-block",
+			browseLabel: "选择皮肤状况图片",
+			dropZoneTitle:"请上传您的皮肤状况图片",
+			allowedFileExtensions : ['jpg', 'png','jpeg'],
+			maxFileSize: 2000,	//kb
+			maxFileNum: 1,
+			maxFileCount: 1,
+			uploadUrl : uploadurl,
+			overwriteInitial: true,
+			previewFileType:"any",
+			uploadAsync: true,//异步加载,设置为false时无法有效监听上传成功事件
+			//initialPreview: initialPreview,//预置的图片
+			'elErrorContainer': '#errorBlock-'+id
+		}).on('fileselect', function(event, filesNum) {
+				//自动上传，选择文件后自动上传
+				$(this).fileinput("upload");
+		}).on('fileuploaded', function(event, data, previewId, index) {
+			//上传完成后
+			var form = data.form, files = data.files, extra = data.extra,
+			response = data.response, reader = data.reader;
+			console.log('文件上传成功，图片地址为'+response['imgurl']);
+			id = response['backid'];
+			console.log('响应的上传组件ID为'+id);
+			if (id=='thumb') {
+				$('#url-'+id).attr("value", response['imgurl']);//添加属性
+				$('#'+id).attr("value", response['imgurl']);//添加属性
+				$('#result-'+id).attr("src", response['imgsrc']);//添加属性
+				$("#modal-upload-"+id).toggleClass('mui-active');	//关闭模态框
+				mui.toast('图片已上传成功');
+			}
+			else{
+				js_upload(id,data);
+			}
+		});
+	</script>
+		</form>
+
+	</div>
+	<footer style="position:relative;top:10px;width:100%;text-align:center;">
+		<a  class="mui-btn mui-btn-danger mui-btn-block mui-btn-outlined" style="padding:10px 0;" href="#modal-upload-thumb">
+			返回
+		</a>
+	</footer>
+</div>

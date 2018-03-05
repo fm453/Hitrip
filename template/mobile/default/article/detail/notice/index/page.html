@@ -1,0 +1,32 @@
+{if $thumbInTop}
+	{if !$disableThumb}
+		{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/thumb'}
+	{/if}
+{/if}
+<!-- 标题信息 -->
+{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/basic'}
+{if $thumbInContent}
+	{if !$disableThumb}
+		{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/thumb'}
+	{/if}
+{/if}
+{if !$disableContent}
+	{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/content'}
+{/if}
+{if !$disableVcard}
+	{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/vcard'}
+{/if}
+{if !$disableTips}
+    {template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/tips'}
+{/if}
+{if !$disableDashang}
+<div style="text-align:center;vertical-align: middle;margin-bottom: 55px;">
+<a class="mui-btn mui-btn-danger mui-btn-outline" href="#modal-buy" style="padding:16px;width: 80px;height:80px;border-radius: 50%;font-size: 32px;">{if $DsBtnTitle}{$DsBtnTitle}{else}赏{/if}</a>
+</div>
+{/if}
+{if !$disableDianzan}
+	{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/dianzanlist'}
+{/if}
+{if !$disableComment}
+	{template $appstyle.$do.'/'.$ac.'/'.$article_tpl.'/_public/changyan'}
+{/if}

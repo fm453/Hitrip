@@ -1,0 +1,25 @@
+<div class="tab-pane" id="panel-help">
+	<div style="border-bottom:1px #ccc dotted;margin-bottom:5px;">
+		<span class="btn btn-warning btn-block">商家介绍</span>
+	</div>
+
+	<div class="content" style="text-align: left;height: 500px;">
+
+					<div class="mobile-div img-rounded" style="text-align: center; padding:10px;font-weight:bold;overflow:hidden;word-break:break-all">
+					</div>
+					<div class="mobile-div img-rounded" style="padding-bottom:10px;">
+						{if !empty($settings['brands']['phone'])}
+							<a href="tel:{$settings['brands']['phone']}" class="mobile-li">
+							<i class="glyphicon glyphicon-phone pull-right"></i><b>电话</b>： {$settings['brands']['phone']}
+							</a>
+							<br>
+						{/if}
+					</div>
+					{if !empty($settings['brands']['description'])}
+					<div class="mobile-div img-rounded " style='overflow:hidden;word-break:normal;padding:0px;'>
+						{$settings['brands']['description']}
+					</div>
+					{/if}
+
+	</div>
+</div>

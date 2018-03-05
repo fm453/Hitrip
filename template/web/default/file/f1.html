@@ -1,0 +1,27 @@
+<ol><span style="font-weight: bold;">关于商城分类类型的一些说明：</span>
+	<li>为了方便管理及系统拓展，我们对分类进行了归集处理，根据针对的板块分别设置与显示：
+	</li>
+</ol>
+<ol><span style="font-weight: bold;">关于内容模型：</span>
+	<li>会员介绍：
+		<ul>
+			<li>用于与本系统会员进行关联(通过OPENID或UID进行惟一匹配)，对其进行相应介绍；</li>
+			<li>用于与本系统会员进行关联，对其进行相应介绍；</li>
+			<li>需要(从会员搜索结果中)临时隐藏该会员信息时，请将文章状态设置为下架即可。如需永久隐藏，请删除之（若被误删，可联系站点管理员尝试恢复）</li>
+		</ul>
+	</li>
+<hr>
+<hr>
+<ol><span style="font-weight: bold;">关于内容模型参数状态的一些说明：</span>
+{loop $catestatus $statusindex $item}
+{if $statusindex !='code'}
+	<li>{$item['name']}：
+		<ul>
+			<li>状态码:{$item['value']}</li>
+			{if $item['des']}<li>解释：{$item['des']}</li>{/if}
+		</ul>
+	</li>
+{/if}
+{/loop}
+<hr>
+<span style="color: #aaa;">如果您在使用过程中还有其他疑问的，可以向管理员寻求帮助！</span>

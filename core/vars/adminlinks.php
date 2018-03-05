@@ -1,0 +1,4 @@
+<?php
+
+$adminlinks=array();
+		

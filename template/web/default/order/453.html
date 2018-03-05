@@ -1,0 +1,58 @@
+{template $fm453style.'common/_header'}
+{template $fm453style.'common/tabnav'}
+{if $ac == 'list'}
+	{if $operation == 'display'}
+		{template $fm453style.$do.'/search'}
+		{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+{/if}
+{if $ac == 'detail'}
+	{if $operation == 'display'}
+		{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+	{if $operation == 'print'}
+		{template $fm453style.$do.'/'.$ac.'/print'}
+	{/if}
+{/if}
+{if $ac == 'copy'}
+	{template $fm453style.$do.'/'.'detail'.'/'.'display'.'/index'}
+{/if}
+{if $ac == 'recyle'}
+	{if $operation == 'display'}
+		{template $fm453style.$do.'/search'}
+		{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+{/if}
+{if $ac == 'bygoods'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/search'}
+	{template $fm453style.$do.'/'.'list'.'/display'}
+	{/if}
+{/if}
+{if $ac == 'bygoodtpl'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/search'}
+	{template $fm453style.$do.'/'.'list'.'/display'}
+	{/if}
+{/if}
+{if $ac == 'bymember'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/search'}
+	{template $fm453style.$do.'/'.'list'.'/display'}
+	{/if}
+{/if}
+{if $ac == 'bypartner'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/search'}
+	{template $fm453style.$do.'/'.'list'.'/display'}
+	{/if}
+{/if}
+{if $ac == 'addons'}
+
+{/if}
+{if $ac == 'query'}
+
+{/if}
+{template $fm453style.$do.'/key'}
+{template $fm453style.$do.'/mouse'}
+{template $fm453style.'common/_footer'}

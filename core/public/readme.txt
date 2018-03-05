@@ -1,0 +1,1 @@
+共用的文件，include_once方式

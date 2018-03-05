@@ -1,0 +1,38 @@
+<div id="notifications" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>设置
+				</button>
+				<h1 class="mui-center mui-title">新消息通知</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<span>接收新消息通知</span>
+								<div class="mui-switch mui-switch-mini {if $mine_settings['onoffs']['notify']==1} mui-active {/if}"  data-setfor="onoffs" data-setkey="notify">
+									<div class="mui-switch-handle"></div>
+								</div>
+							</li>
+						</ul>
+						<div class="mui-content-padded">
+							<p>你可以设置是否需要接收产品状态、商城促销等动态信息。开启接收后，我们将通过公众平台推送给您。（部分订单类的通知，为了能够方便您及时了解跟进，不能被关闭。）</p>
+						</div>
+
+						<ul class="mui-table-view mui-table-view-radio">
+							<li class="mui-table-view-divider">消息免打扰功能</li>
+							<li class="mui-table-view-cell ajax-radio  {if $mine_settings['onoffs']['noDisturb']==1} mui-selected {/if}" data-setfor="onoffs"  data-setkey="noDisturb" data-value="1">
+								<span class="mui-navigate-right {if $mine_settings['onoffs']['noDisturb']==1} mui-selected {/if}">开启</span>
+							</li>
+							<li class="mui-table-view-cell ajax-radio  {if $mine_settings['onoffs']['noDisturb']==2} mui-selected {/if}" data-setfor="onoffs"  data-setkey="noDisturb" data-value="2">
+								<span class="mui-navigate-right {if $mine_settings['onoffs']['noDisturb']==2} mui-selected {/if}">只在夜间开启</span>
+							</li>
+							<li class="mui-table-view-cell ajax-radio  {if $mine_settings['onoffs']['noDisturb']==0} mui-selected {/if}" data-setfor="onoffs"  data-setkey="noDisturb" data-value="0">
+								<span class="mui-navigate-right">关闭</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>

@@ -1,0 +1,58 @@
+<div class="panel panel-default">
+			<div class="panel-heading">
+			<a data-toggle="collapse" data-parent="#accordion"
+          href="#function_3">
+          订单管理类函数<span class="pull-right">（点击展示）</span>
+        </a>
+			</div>
+</div>
+<div class="container-fluid panel-collapse collapse in" id="function_3">
+	<div class="row-fluid">
+		<div class="span12">
+			<ol>
+
+				<li>
+					<ul>
+						<li>用户获取其当前购物车产品数量
+						<code>fmMod_shopcart_total();
+						</code>
+						</li>
+						<li>参数
+						<code>
+						</code>
+						<pre>$this->setOrderStock($id = '', $minus = true);
+						</pre>
+						</li>
+						<li>结果值
+						<code>数字  $carttotal
+						</code>
+						</li>
+					</ul>
+				</li>
+
+<p></p>
+<p></p>
+				<li>
+					<ul>
+						<li>根据订单进行对会员积分进行相应调整
+						<code>$this->setOrderCredit();
+						</code>
+						</li>
+						<li>参数
+						<code>$orderid：订单ID, $add 是否增加（true增加， false减少）
+						</code>
+						<pre>$this->setOrderCredit($orderid, $add = true);
+						</pre>
+						</li>
+						<li>结果值
+						<code>无
+						</code>
+						</li>
+					</ul>
+				</li>
+
+
+			</ol>
+		</div>
+	</div>
+</div>

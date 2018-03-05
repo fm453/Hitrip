@@ -1,0 +1,38 @@
+<div class="myoder img-rounded">
+	<div class="myoder-hd">
+		<span class="pull-left">关联信息-摘要</span>
+		<span class="pull-right">(如您发现信息有误，请及时联系我们)</span>
+	</div>
+		<div class="hidden" id="orderinfos">
+		<span>{$tips}</span>
+		</div>
+
+	<div class="myoder-hd" style="background-color:#f69f00;color: #fff;">
+		<span class="pull-left" style="color: #fff;">发往哪里:</span>
+	</div>
+		<div id="type">
+		<input type="text" id="aimareatype" name="seafoodaimareatype" value="{$aimareatype}" class="form-control"/>
+		</div>
+			
+	<div class="myoder-hd" style="background-color:#f69f00;color: #fff;">
+		<span class="pull-left" style="color: #fff;">市内配送区域:</span>
+	</div>
+		<div id="type">
+		<input type="text" id="incityarea" name="seafoodincityarea" value="{$incityarea}" class="form-control"/>
+		</div>			
+
+	<div class="myoder-hd" style="background-color:#f69f00;color: #fff;">
+		<span class="pull-left" style="color: #fff;">意向配送时间:</span>
+	</div>
+		<div id="seafoodstarttime">
+		{php echo tpl_form_field_date('seafoodstarttime', $starttime);}
+		</div>	
+		
+	<div class="myoder-hd" style="background-color:#f69f00;color: #fff;">
+		<span class="pull-left" style="color: #fff;">配送地址:</span>
+	</div>
+		<div id="aboutsend">
+		<input type="text" id="aboutsend" name="seafoodaboutsend" value="{$aboutsend}" class="form-control" />
+		</div>
+
+</div>

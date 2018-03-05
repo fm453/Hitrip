@@ -1,0 +1,40 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+{if  !empty($settings['shouquan']['sufm453code']) && ($_FM['isAdminer'] || $_W['isfounder'])}
+<div class="main">
+	<div class="panel panel-info">
+			<div class="panel-heading" >
+				说明：本UI主要是指针对公众号手机端页面的展示进行排版布局。
+			</div>
+		</div>
+	{template 'modset/ui/app/guide'}
+	{template 'modset/ui/app/common'}
+	{template 'modset/ui/app/index'}
+</div>
+{/if}
+<script type="text/javascript" >
+	function changeVal(obj,objId) {
+		var a = obj.val();
+		$('#' + objId).val(a);
+	}
+
+	function formcheck(formid) {
+		var form = document.getElementById(formid);
+		var formdata = Form_format(formid); //自有方法格式化表单元素，返回数组
+		var url = "{php echo fm_wurl($do,$ac,'modify',array())}";
+		var data = formdata;
+		$('.' + formid).val("正在保存");
+		$.post(url,data,function(res){
+		if (res.code==1) {
+			$('.' + formid).val("已保存");
+		}else{
+			$('.' + formid).val(res.msg);
+			console.log(res.msg.home_1_name);	//调试时查看是否传值成功
+		}
+		},'json');
+		return false;
+	}
+</script>
+{template 'web/default/common/js_array'}
+{template 'web/default/common/js_form'}
+{template 'common/footer'}

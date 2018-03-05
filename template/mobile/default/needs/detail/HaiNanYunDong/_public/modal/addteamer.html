@@ -1,0 +1,148 @@
+<div id="modal-addteamer" class="mui-modal" style="background-color: rgba(245,245,245,1);">
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-icon mui-icon-close mui-pull-right" href="#modal-addteamer"></a>
+		<h1 class="mui-title" id="modal-addteamer-title">添加队员</h1>
+	</header>
+
+    <div class="mui-scroll-wrapper" style="">
+        <div class="mui-scroll" style="text-align: center;">
+
+	       <div class="mui-modal-body copy-able" style="">
+<form action="" method="post" class="form-horizontal form" id="modal-form-addteamer" enctype="multipart/form-data" onsubmit='return formdata2teamer("modal-form-addteamer")'>
+<div class="mui-input-group">
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>姓名：</label>
+		<input type="text" name="name" class="mui-input-clear" placeholder="" value="" />
+	</div>
+
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>手机号：</label>
+		<input type="text" name="mobile" class="mui-input-clear" placeholder="" value="" />
+	</div>
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>年龄：</label>
+		<input type="text" name="age" class="mui-input-clear" placeholder="" value="" />
+	</div>
+
+
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>身份证：</label>
+		<input type="text" name="idcard" class="mui-input-clear" placeholder="未满18周岁的还需监护人信息" value="" />
+	</div>
+	
+	<div class="mui-input-row">
+		<label><span style="color:#ff0;"> * </span>监护人：</label>
+		<input type="text" name="managername" class="mui-input-clear" placeholder="监护人姓名" value="" />
+	</div>
+	
+	<div class="mui-input-row">
+		<label><span style="color:#ff0;"> * </span>手机：</label>
+		<input type="text" name="managertel" class="mui-input-clear" placeholder="监护人手机" value="" />
+	</div>
+	
+</div>
+
+<ul class="mui-table-view inline-flex" style="">
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="mui-left" name="sex" type="radio" value="1" checked="true" >男
+	</li>
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input class="" name="sex" type="radio" value="2">女
+	</li>
+</ul>
+<button type="button" class="mui-btn mui-btn-primary mui-btn-block copyTeamer2form">添加队员
+</button>
+</form>
+<!-- 提示部分 -->
+	<section class="_135editor" data-tools="135编辑器" data-id="88341" style="border: 0px none; padding: 0px; position: relative;" data-color="rgb(194, 201, 42)">
+    <section class="layout" style="margin:10px auto;">
+        <section style="display:flex;justify-content:space-between;margin-bottom:-9px;">
+            <section style="width: 16px; height: 16px; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+            <section style="width: 16px; height: 16px; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+        </section>
+        <section style="margin-right: 7px; margin-left: 7px; border: 2px dashed rgb(194, 201, 42); padding: 7px;">
+            <section style="border: 2px solid rgb(194, 201, 42); padding-top: 20px; padding-bottom: 20px;">
+                <section style="display:flex;align-items: center;">
+                    <section style="height: 1px; flex: 1 1 0%; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+                    <section class="135brush" data-brushtype="text" style="padding-right: 8px; padding-left: 8px; font-size: 18px; color: rgb(194, 201, 42); font-weight: bold;">
+                        填录规范
+                    </section>
+                    <section style="height: 1px; flex: 1 1 0%; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+                </section>
+
+                <p style="text-indent: 1em;text-align:left;">
+                为了便于统计与管理，请您(队长)遵照如下格式填录组员信息：
+                （1）姓名；
+                （2）年龄；
+                （3）手机号；
+                （4）性别：男/女；
+                （5） 身份证号；
+                </p>
+                 <p style="text-indent: 1em;color: #f00;">
+                目前队员信息一旦填写提交，将无法修改，请您务必认真填写。
+                </p>
+                <p style="text-indent: 1em;text-align:left;">
+                报名的活动/比赛有人数限制时，请不要提交超额名单（系统将自动随机忽略）;
+                若队伍中有未满18周岁的队员，请队长将该队员的监护人信息（姓名、联系方式）填录完整，以备核实。
+                </p>
+            </section>
+        </section>
+        <section style="display:flex;justify-content:space-between;margin-top:-9px;">
+            <section style="width: 16px; height: 16px; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+            <section style="width: 16px; height: 16px; color: rgb(255, 255, 255); background: rgb(194, 201, 42);"></section>
+        </section>
+    </section>
+</section>
+
+            </div>
+
+        </div>
+    </div>
+
+
+	<footer class="mui-modal-footer" style="">
+		<a  class="mui-btn mui-btn-danger mui-btn-block" id="" style="padding:10px 0;" href="#modal-addteamer">
+			返回
+		</a>
+	</footer>
+
+</div>
+<script type="text/javascript" >
+    function formdata2teamer(formid) {
+		var f_data = Form_format(formid),gender,htmltext,i,inputs;
+		console.log(f_data);
+		var nowtime = new Date();
+		i = nowtime.getTime();
+		var teamer = '';
+		inputs= '';
+		teamer += '姓名：'+f_data.name+',';
+		inputs += '<input type="hidden" name="team['+i+'][name]" value="'+f_data.name+'"></input>';
+		teamer += '年龄：'+f_data.age+',';
+		inputs += '<input type="hidden" name="team['+i+'][age]" value="'+f_data.age+'"></input>';
+		inputs += '<input type="hidden" name="team['+i+'][sex]" value="'+f_data.sex+'"></input>';
+		if (f_data.sex==2) {
+			gender = '女';
+		}else {
+			gender = '男';
+		}
+		teamer += '性别：'+gender +',';
+		teamer += '手机号：'+f_data.mobile+',';
+		inputs += '<input type="hidden" name="team['+i+'][mobile]" value="'+f_data.mobile+'"></input>';
+		teamer += '身份证号：'+f_data.idcard;
+		inputs += '<input type="hidden" name="team['+i+'][idcard]" value="'+f_data.idcard+'"></input>';
+	if(f_data.managername){
+		teamer += '(监护人：'+f_data.managername;
+		inputs += '<input type="hidden" name="team['+i+'][managername]" value="'+f_data.managername+'"></input>';
+		teamer += ','+f_data.managertel+')';
+		inputs += '<input type="hidden" name="team['+i+'][managertel]" value="'+f_data.managertel+'"></input>';
+	}	
+		htmtext = '<div class="mui-btn mui-btn-default mui-btn-block mui-btn-outlined"><textarea class="" style="border: 1px;" >'+teamer+'</textarea>'+inputs+'</div>';
+		$('.teamerlist').prepend(htmtext);
+		mui.toast('队员信息已经添加至表单(您必须提交/报名按钮后才能成功上报到系统中)，您可点击返回按钮查看');
+		return false;
+	}
+	mui('.mui-modal').on('tap','.copyTeamer2form',function () {
+
+	   formdata2teamer('modal-form-addteamer');
+	});
+</script>

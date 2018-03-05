@@ -1,0 +1,93 @@
+	<!-- js插件 websocket -->
+<script type="text/javascript">
+	/**
+ * 与接口站建立websocket连接
+ * 地址与端口不允许修改
+ */
+ 	var apiHost = 'api.hiluker.com';
+ 	var apiAccessToken  = '{$ApiAccessToken}';	//必须，不可修改，否则通信中断；所有长连接必须使用此token附加
+
+	FmApiWS = new WebSocket("ws://"+apiHost+":4531");
+	//与服务端连接动作开始时
+	FmApiWS.onopen = function(e) {
+		onOpen(e);
+	};
+	//接收到服务端数据时
+	FmApiWS.onmessage = function(e) {
+		onMessage(e);
+	};
+	//与服务端连接出错时
+	FmApiWS.onerror = function(e) {
+		onError(e);
+	};
+	//与服务端断开连接时
+	FmApiWS.onclose = function(e) {
+		onClose(e);
+	};
+
+	function onOpen(e) {
+		console.log("服务器通信开始");
+	}
+
+	function onClose(e) {
+		console.log("连接已经断开");
+	}
+
+	function onError(e) {
+		console.log("连接出错："+e.data);
+	}
+
+	function doSend(message) {
+		FmApiWS.send(message);
+	}
+
+	function onMessage(e){
+		// json数据转换成js对象
+		var data = eval("("+e.data+")");
+		//FmShowObject(data);	//调试时使用，打印数据对象
+		var type = data.type || '';
+		switch(type){
+			//	接收初始化init类型的消息，将client_id发给后台进行uid绑定
+			case 'init':
+				console.log('连接到接口站，初始化客户端：'+ data.client_id);
+				// 利用jquery发起ajax请求，将client_id发给后端进行uid绑定
+				//DAIMS
+				$.post(
+					"http://"+apiHost+"/index.php?r=push/bind&client_id="+data.client_id+"&accesstoken="+apiAccessToken,
+					{client_type: 'web',
+					uid:"{$_W['username']}",
+					do:"{$_GPC['do']}",
+					ac:"{$_GPC['ac']}",
+					op:"{$_GPC['op']}",
+					groupid:"{$_FM['member']['info']['groupid']}",
+					uniacid:"{$_W['uniacid']}"
+					},
+					function(d){
+						console.log('初始化结束（https://api.hiluker.com 专业数据中转存储接口、精准推送服务接口）');
+						console.log(d);
+					},
+					'json');
+			break;
+
+			// 服务端bind绑定后的反馈消息
+			case 'tips':
+				var msg = data.msg;
+				console.log(msg);
+			break;
+
+			// 服务端ping客户端，作心跳数据，防止连接失效
+			case 'ping':
+				var msg = '{"type":"pong"}';
+				FmApiWS.send(msg);
+			break;
+
+
+
+			// 当mvc框架调用GatewayClient发消息时,将数据写入缓存中，剩余逻辑由客户端自行处理
+			default :
+				Fm_data_format(data);
+			break;
+    }
+};
+</script>
+

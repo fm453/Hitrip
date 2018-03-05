@@ -1,0 +1,16 @@
+
+<script type="text/javascript" >
+/*
+* JS对象格式
+* obj={key1:name1,key2:name2,key3:name3}
+*/
+
+//将对象打印出来，会替换掉当前页面全部显示
+	function FmShowObject(obj){
+		var fm_des = "";
+		for(var name in obj){
+			fm_des += name + ":" + obj[name] + ";";
+			console.log(fm_des);
+		}
+	}
+</script>

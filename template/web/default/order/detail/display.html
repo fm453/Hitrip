@@ -1,0 +1,501 @@
+<style type="text/css">
+	.main .form-horizontal .form-group{margin-bottom:0;}
+	.main .form-horizontal .modal .form-group{margin-bottom:15px;}
+	#modal-confirmsend .control-label{margin-top:0;}
+</style>
+
+<div class="main">
+	<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="dispatchid" value="{$dispatch['id']}" />
+		<input type="hidden" name="token" value="{$_W['token']}" />
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				商品信息<span class="text-muted" style="color:red">(订单操作说明：取消订单后订单对相应客户隐藏，其中涉及付款的需要会自动退还相应款项到用户的会员余额)</span>
+			</div>
+			<div class="panel-body table-responsive">
+				<table class="table table-hover">
+					<thead class="navbar-inner">
+					<tr>
+						<th style="width:50px;">ID</th>
+						<th style="width:100px;">操作</th>
+						<th style="width:200px;">商品标题</th>
+						<th style="width:300px;">商品规格</th>
+						<th style="width:150px;color:red;">成交价</th>
+						<th style="width:120px;">数量</th>
+						<th style="width:100px;">商品编号</th>
+						<th style="width:100px;">商品条码</th>
+						<th style="width:120px;">销售价<br><del>成本价</del></th>
+						<th style="width:150px;">状态</th>
+					</tr>
+					</thead>
+					{loop $item['allgoods'] $goods}
+					<tr>
+						<td>{$goods['basic']['goodsid']}</td>
+						<td>
+							<a href="{php echo fm_wurl('goods', 'detail', 'display', array('id' => $goods[basic]['goodsid']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="去编辑该产品" target="_blank"><i class="fa fa-edit"></i></a>&nbsp;
+						</td>
+						<td style="word-wrap: normal;white-space: normal;">
+							{if $category[$goods['detail']['pcate']]['name']}
+							<span class="text-error">
+								[{$category[$goods['detail']['pcate']]['name']}]
+							</span>
+							{/if}
+							{if $children[$goods['detail']['pcate']][$goods['ccate']][1]}
+							<span class="text-info">[{$children[$goods['detail']['pcate']][$goods['ccate']][1]}] </span>
+							{/if}
+							{$goods['detail']['title']}
+							<span class="label" {php echo "style='text-align: left; background-color: ".$goods['label_span_value'].";'"} >
+								{$goods['label_span_title']}
+							</span>
+						</td>
+						<td>
+						{if $goods['basic']['optionid']}
+							<span class="label label-info"> {$goods['basic']['optionname']} </span><br>
+								{loop $goods['specs'] $goodsspecs}
+										<span class="label label-default" >{$goodsspecs['title']}:</span>
+										<span class="label label-success" >{$goodsspecs['item'][title]}</span><br>
+								{/loop}
+							{/if}
+						</td>
+						<td style='color:red;font-weight:bold;'>{$goods['basic']['price']}元</td>
+						<td>{$goods['basic']['total']}{if $goods['detail']['unit']} {$goods['detail']['unit']}{/if}</td>
+						<td>{$goods['detail']['goodssn']}</td>
+						<td>{$goods['detail']['productsn']}</td>
+						<td>{$goods['detail']['marketprice']}元<br><del>{$goods['detail']['costprice']}元</del></td>
+						<td>{if $goods['detail']['status']==1}<span class="label label-success">上架</span>{else}<span class="label label-error">下架</span>{/if}&nbsp;<br><span class="label label-info">{if $goods['detail']['type'] == 1}实体商品{else}虚拟商品{/if}</span></td>
+					</tr>
+					{/loop}
+				</table>
+			</div>
+		</div>
+
+<!-- 订单操作 START -->
+		<div class="text-right" style="margin:0 5px 5px 5px;">
+		{php print_r($item['wuliu'])}
+		{if $item['originaldata']['status'] < 0}
+			<button type="button" class="btn btn-danger">订单已取消</button>
+		{else}
+			{if $item['originaldata']['status'] ==0}
+				<button type="submit" class="btn btn-primary" onclick="return confirm('确认此订单已经付款了吗？'); return false;" name="confrimpay" value="yes">
+				确认到账
+				</button>
+			{else}
+				{if $item['originaldata']['status'] != 3}
+					<button type="submit" class="btn btn-success" onclick="return confirm('确认完成此订单吗？');" name="finish" value="yes">完成订单</button>
+					{if $item['originaldata']['status'] == 1}
+						{if empty($item['wuliu'])}
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-confirmsend">确认发货</button>
+						{/if}
+					{/if}
+					{if $item['originaldata']['status'] == 2}
+						{if !empty($item['wuliu']['dispatch'])}
+						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-cancelsend">取消发货</button>
+						{/if}
+					{/if}
+					<button type="submit" class="btn btn-warning" onclick="return confirm('订单取消后将会进行相关的退款操作，确认取消此订单吗？');" name="cancelorder" value="yes">取消订单</button>
+				{/if}
+			{/if}
+		{/if}
+		{if $item['original']['deleted'] == 0}
+		<button type="submit" class="btn btn-danger pull-left" onclick="return confirm('将删除{$item['id']}号订单,订单号：{$item['ordersn']},删除后将不再显示；请确认是否删除该订单');" name="deleteorder" value="yes">删除订单</button>
+		{else}
+		<button type="submit" class="btn btn-success pull-left" onclick="return confirm('将恢复{$item['id']}号订单；订单号：{$item['ordersn']}您当前操作已被系统记录，请确认您是管理员且获授权使用微商城');" name="recoveryorder" value="yes">恢复订单</button>
+		{/if}
+		<a href="{php echo fm_wurl('order', 'detail', 'print', array('ordersn' => $item['ordersn']))}" class="btn btn-default " target="_blank" title="打印"><i class="fa fa-print"></i>打印订单</a>&nbsp;
+		</div>
+<!-- 订单操作 END -->
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				订单(序号:{$item['id']})详情信息-订单号：{$item['ordersn']}
+			</div>
+			<div class="panel-body">
+				{if $item['original']['transid']>0}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label" style="color:red">系统提示:</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static" style="color:#7ae314"><i class="fa fa-comments"></i>此为微信支付订单，必须要提交发货状态！</p>
+					</div>
+				</div>
+				{/if}
+				<div class="form-group  forcopy">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">商户平台订单号:</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static"><a href="javascript:;" target="_blank" title="点击复制">{$item['paylog'][0]['uniontid']}</a>
+						{if $item['original']['transid']>0}
+						<span style="color:#7ae314">-该单号与腾讯商户平台商户订单号一致;<span style="color:red">点击数字可复制该号码</span></span>
+						{/if}
+						</p>
+					</div>
+				</div>
+				{if $item['original']['transid']>0}
+				<div class="form-group forcopy">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">微信支付订单号 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static"><a href="javascript:;" target="_blank" title="点击复制">{$item['original']['transid']}</a><span style="color:#7ae314">-该单号与腾讯商户平台微信支付订单号一致;<span style="color:red">点击数字可复制该号码</span>，财务对账以此为准</span></p>
+					</div>
+				</div>
+				{/if}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单总价 :</label>
+					<div class="col-sm-5 col-xs-12">
+						<p class="form-control-static">{$item['price']} 元 （商品: {$item['goodsprice']} 元; 运费: {$item['dispatchprice']} 元; 调价幅度: {php echo $item['price']-$item['goodsprice']-$item['dispatchprice'] }元)</p>
+					</div>
+					{if $item['originaldata']['status'] == 0}
+					<div class="col-sm-2 col-xs-12">
+						<input type="text" name="newprice" class="form-control" value="{$item['price']}" />
+					</div>
+					<div class="col-sm-2 col-xs-12">
+
+						<button type="submit" class="btn btn-danger pull-left" onclick="return confirm('确认要修改订单价格吗？修改后客人将以新订单价支付！');" name="changeprice" value="yes">改价</button>
+
+					</div>
+					{/if}
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">付款方式 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static">
+						{$item['paytype']}
+						</p>
+					</div>
+				</div>
+                {if !empty($item['paydetail'])}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">付款方式 :</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <p class="form-control-static">{$item['paydetail']}</p>
+                    </div>
+                </div>
+                {/if}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单状态 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static">
+						<span class="label label-{$item['statuscss']}">{$item['status']}</span>
+						</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">下单日期 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static">{php echo date('Y-m-d H:i:s', $item['createtime'])}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">关联信息 :</label>
+					<div class="col-sm-9 col-xs-12">
+						<p class="form-control-static">{$item['tips']}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">下单人备注 :</label>
+					<div class="col-sm-9 col-xs-12">
+					<div class="input-group">
+				<textarea style="height:100px;" class="form-control" name="remark" cols="70"  readonly="readonly">{$item['remark']}</textarea>
+					</div>
+					<span class="help-block" style="color:red">此处↑↑↑↑为客户下单时提交的备注信息;内容可复制 </span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">客服备注 :</label>
+					<div class="col-sm-9 col-xs-12">
+					<div class="input-group">
+					<textarea style="height:100px;" class="form-control" name="remark_kf" cols="140">{$item['remark_kf']}</textarea>
+					</div>
+					<span class="help-block">客服操作订单的备注信息请填在此处</span>
+					<button type="submit" class="btn btn-success pull-left" onclick="return confirm('确认对此订单做备注吗？');" name="kfbeizhu" value="yes">提交备注</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+<!-- 订单联系信息 -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				联系信息
+			</div>
+			<div class="panel-body">
+				<div class="form-group forcopy">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">联系人 :</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-2 ">
+						<p class="form-control-static">
+						<a href="javascript:;" target="_blank" title="点击复制">{if !empty($item['username'])}{$item['username']}{else} 未填写 {/if}</a>
+						</p>
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">联系手机 :</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-2 ">
+						<p class="form-control-static">
+						<a href="javascript:;" target="_blank" title="点击复制">{if !empty($item['mobile'])}{$item['mobile']}{else} 未填写 {/if}</a>
+						</p>
+					</div>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">地址 :</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-5 ">
+						<p class="form-control-static">
+						<a href="javascript:;" target="_blank" title="点击复制">{$item['address']}</a>
+						</p>
+					</div>
+					<br>
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">默认收货地址 :</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-5 ">
+						<p class="form-control-static">
+						<a href="javascript:;" target="_blank" title="点击复制">{$defaultaddress['address']}</a>
+						</p>
+					</div>
+				</div>
+				{if !empty($item['from_user'])}
+				<div class="form-group forcopy">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">下单人:</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 ">
+						<p class="form-control-static">
+						<img src="{$item['buyer']['avatar']}" alt="粉丝头像" style="width: 50px;height:50px;">
+						Openid: <a href="javascript:;" target="_blank" title="点击复制">{$item['from_user']}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+						粉丝ID：{$item['buyer']['fanid']}&nbsp;&nbsp;&nbsp;&nbsp;
+						会员ID：{$item['buyer']['uid']}&nbsp;&nbsp;&nbsp;&nbsp;
+						昵称：{$item['buyer']['nickname']}&nbsp;&nbsp;&nbsp;&nbsp;
+						手机：{$item['buyer']['mobile']}&nbsp;&nbsp;&nbsp;&nbsp;
+						地址：{$item['buyer']['address']}&nbsp;&nbsp;&nbsp;&nbsp;
+						</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label sr-only">快速联系</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+						<p>
+						<a href="{php echo url('mc/notice/tpl', array('id' => $item['buyer']['fanid']));}" id="" class="btn btn-success btn-sm sms"  data-toggle="tooltip" data-placement="top" title="该功能仅对48小时内有过互动的粉丝有效" target="_blank">微信联系</a>
+						<a href="{php echo fm_wurl('finance', 'charge', 'member', array('uid' => $item['buyer']['uid']));}" id="" class="btn btn-success btn-sm sms"  data-toggle="tooltip" data-placement="top" title="查看该会员的账户变动情况" target="_blank">账户明细</a>
+						<a href="{php echo fm_wurl('crm', 'member', 'modify', array('uid' => $item['buyer']['uid']));}" id="" class="btn btn-success btn-sm sms" target="_blank">编辑会员资料</a>
+						</p>
+					</div>
+				</div>
+				{/if}
+			</div>
+		</div>
+
+		<!-- 分销信息-->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				分销信息<span class="text-muted" style="color:red">（说明：只有启用了分销功能才有效）|当前订单序号{$item['id']}</span>
+			</div>
+			<div class="panel-body table-responsive">
+				<table class="table table-hover">
+					<thead class="navbar-inner">
+					<tr>
+						<th >分销员</th>
+						<th>1级佣金</th>
+						<th>2级佣金</th>
+						<th>3级佣金</th>
+					</tr>
+					</thead>
+					<tr>
+						<td>
+						  {if $item['sharer']}
+						    <a href="{php echo fm_wurl('crm','agent','modify',array('uid'=>$item['sharer']['uid']))}" target="_blank">
+						    {if $item['sharer']['avatar']}
+						    <img src="{$item['sharer']['avatar']}" style="width:30px;height:30px;border-radius:5%;">
+						    {/if}
+						  {/if}
+						    {$item['shareid']}-{$item['shareby']}
+						    
+						</td>
+						<td> {$item['commission']}</td>
+						<td> {$item['commission2']}</td>
+						<td> {$item['commission3']}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- 支付校验-->
+		{if $_W['isfounder']}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				支付记录校验<span class="text-muted" style="color:red">（说明：系统自动处理）|当前订单序号{$item['id']}</span>
+			</div>
+			<div class="panel-body table-responsive">
+				<table class="table table-hover">
+					<thead class="navbar-inner">
+					<tr>
+						<th style="width: 80px;">记录号</th>
+						<th style="width: 180px;">支付订单号</th>
+						<th  style="width: 180px;">支付方式</th>
+						<th style="width: 150px;">支付模块</th>
+						<th  style="width: 150px;">使用卡券</th>
+						<th  style="width: 280px;">UnionTid</th>
+						<th style="color:red;">记录说明</th>
+					</tr>
+					</thead>
+					{loop $item['paylog'] $paylog}
+					<tr>
+						<td>{$paylog['plid']}</td>
+						<td>
+							{$paylog['tid']}
+						</td>
+						<td>
+						支付类型：{$paylog['type']}<br>
+						支付金额：{$paylog['fee']}<br>
+						支付状态：{$paylog['status']}
+						</td>
+						<td>
+						{$mlist[$paylog['module']]['title']}
+						<br>
+						{$paylog['module']}
+						</td>
+						<td>
+						{if $paylog['is_usecard']}
+						卡券金额：{$paylog['card_fee']}<br>
+						卡券类型：{$paylog['card_type']}<br>
+						卡券ID：{$paylog['card_id']}
+						{else}
+						未使用
+						{/if}
+						</td>
+						<td>{$paylog['uniontid']}</td>
+						<td>
+						{php $paylog['tag'] = iunserializer($paylog['tag'])}
+						<pre>{php print_r($paylog['tag'])}</pre>
+						</td>
+					</tr>
+					{/loop}
+				</table>
+			</div>
+		</div>
+		{/if}
+		<!-- 操作日志-->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				订单操作日志<span class="text-muted" style="color:red">（说明：系统自动处理）|当前订单序号{$item['id']}</span>
+			</div>
+			<div class="panel-body">
+					<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">系统日志 :</label>
+					<div class="col-sm-9 col-xs-12">
+					<div class="input-group">
+					<textarea style="height:100px;" class="form-control" cols="500" readonly="true" name="logs">{$item['logs']}</textarea>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 关闭原因 -->
+		<div id="modal-close" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:600px;margin:0px auto;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+						<h3>关闭订单</h3>
+					</div>
+					<div class="modal-body">
+						<label>关闭订单原因</label>
+						<textarea style="height:150px;" class="form-control" name="reson" autocomplete="off"></textarea>
+						<div id="module-menus"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary" name="close" value="yes">关闭订单</button>
+						<a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 确认发货 -->
+		<div id="modal-confirmsend" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:600px;margin:0px auto;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+						<h3>快递信息</h3>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-xs-10 col-sm-3 col-md-3 control-label">是否需要快递</label>
+							<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+								<label for="radio_2" class="radio-inline">
+									<input type="radio" name="isexpress" id="radio_2" value="0" onclick="$('#expresspanel').hide();" checked> 否
+								</label>
+								<label for="radio_1" class="radio-inline">
+									<input type="radio" name="isexpress" id="radio_1" value="1" onclick="$('#expresspanel').show();" > 是
+								</label>
+
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-10 col-sm-3 col-md-3 control-label">快递公司</label>
+							<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+								<select class="form-control" name="express" id="express">
+									<option value="" data-name="">其他快递</option>
+									{loop $expresses $key $express}
+									<option value="{$key}" data-name="{$express}">{$express}</option>
+									{/loop}
+								</select>
+								<input type='hidden' name='expresscom' id='expresscom' />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-10 col-sm-3 col-md-3 control-label">快递单号</label>
+							<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+								<input type="text" name="expresssn" class="form-control" />
+							</div>
+						</div>
+						<div id="module-menus"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary span2" name="confirmsend" value="yes">确认发货</button>
+						<a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 取消发货 -->
+		<div id="modal-cancelsend" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:600px;margin:0px auto;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+						<h3>取消发货</h3>
+					</div>
+					<div class="modal-body">
+						<label>取消发货原因</label>
+						<textarea style="height:150px;" class="form-control" name="cancelreson" autocomplete="off"></textarea>
+						<div id="module-menus"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary span2" name="cancelsend" value="yes">取消发货</button>
+						<a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div id="modal-cancelsend" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" style=" width:600px;">
+	<div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>取消发货</h3></div>
+	<div class="modal-body">
+		<table class="tb">
+			<tr>
+				<th><label for="">取消发货原因</label></th>
+				<td>
+					<textarea style="height:150px;" class="span5" name="cancelreson" cols="70" autocomplete="off"></textarea>
+				</td>
+			</tr>
+		</table>
+		<div id="module-menus"></div>
+	</div>
+	<div class="modal-footer"><button type="submit" class="btn btn-primary span2" name="cancelsend" value="yes">取消发货</button><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+</div>
+<script language='javascript'>
+    $(function(){
+        {if !empty($express)}
+        $("#express").find("option[data-name='{$express['express_name']}']").attr("selected",true);
+        $("#expresscom").val($("#express").find("option:selected").attr("data-name"));
+        {/if}
+        $("#express").change(function(){
+            var obj = $(this);
+            var sel = obj.find("option:selected").attr("data-name");
+            $("#expresscom").val(sel);
+        });
+    });
+</script>
+

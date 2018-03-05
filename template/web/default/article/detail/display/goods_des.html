@@ -1,0 +1,78 @@
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">简要描述</label>
+	<div class="col-xs-12 col-sm-9  col-md-10 col-lg-11">
+		<input type="text" name="description" id="description" class="form-control" value="{$item['description']}" />
+		<span class="help-block">说明：该描述在文章列表页面及产品分享时会被调用；建议不超过144字符</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">内容详情</label>
+	<div id="forChangeWidth" class="col-xs-12 col-sm-9 col-md-5 col-lg-4" style="">
+		{php echo fmFunc_tpl_ueditor('content',$item['content'],$isapp=null,$datatype=null,$options=array('height'=>667,'width'=>'375'));}
+	</div>
+	<div  class="col-xs-12 col-sm-12 col-md-4 col-lg-6">
+		<span class="">
+			说明：利用专业第三方编辑器，可获得更好的显示效果；为了更好地适应手机显示，编辑框默认使用<em> iPhone6 </em>屏幕尺寸大小；
+			<a href="http://demo.hiluker.com/case/vcmseditor/" target="_blank" title="新窗口中打开">VCMS样式转换</a>；
+			<a href="http://www.135editor.com/" target="_blank" title="新窗口中打开">135样式编辑</a>；
+			<a href="http://xiumi.us/#/studio/papers" target="_blank" title="新窗口中打开">秀米编辑器</a>；
+		</span>
+		<span class="help-block">
+			<button type="button" class="btn btn-info" id="insert-default-content" onclick="insertDefaultContent(false);">使用内容模板替换编辑器内容</button>
+			<a class="btn btn-default" href="#pageBottom">到页面底部</a>
+			<button type="button" class="btn btn-warning" id="insert-default-content" onclick="insertDefaultContent(true);">追加内容模板到编辑器中</button>
+			<button type="button" class="btn btn-info" onclick="UE.getEditor('content').setDisabled('fullscreen');">锁定编辑器</button>
+			<button type="button" class="btn btn-info" onclick="UE.getEditor('content').setEnabled();">启用编辑器</button>
+			<button type="button" class="btn btn-info hidden" onclick="changePreview('320','568');"> <i class="fa fa-tablet"></i>iPhone 5 </button>
+			<button type="button" class="btn btn-info hidden" onclick="changePreview('375','667');"><i class="fa fa-tablet"></i> iPhone 6 </button>
+		</span>
+<!--
+		{php echo fmFunc_tpl_ueditor('preview','这里显示预览内容',$isapp=null,$datatype=null,$options=array('height'=>568,'width'=>'320','toolbars'=>'simple'));}
+-->
+		<span class="hidden" id="showsourcesample" style="width:320px;">
+			{template $fm453style.$do.'/'.$ac.'/'.$operation.'/sourcesample'}
+		</span>
+	</div>
+	
+</div>
+<script type="text/javascript">
+	var default_content = '{php echo $allDefault["content"]}';
+
+	function insertDefaultContent(isAppendTo) {
+		UE.getEditor('content').setContent(default_content,isAppendTo);
+		preview_ue.setContent('3');
+	}
+
+	function insertSampleContent() {
+		var source = $(this).firstChild;
+		UE.getEditor('content').setContent(source ,true);	//追加方式
+	}
+
+	function changePreview(w,h) {
+		UE.getEditor('preview').destroy();
+		$('#preview').css({"width":w,"height":h});
+		UE.getEditor('preview',{
+		toolbars: [
+			['redo','undo']
+		],
+		autoHeightEnabled: false,
+		initialFrameWidth: w,
+		initialFrameheight: h,
+		//initialContent:"这里显示预览内容",
+		});
+	}
+
+	function getText(editor) {
+    //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+    var range = UE.getEditor('preview').selection.getRange();
+    range.select();
+    var txt = UE.getEditor('preview').selection.getText();
+    return txt;
+	}
+
+	require(['jquery', 'jquery.ui'],function($){
+		$("#showsourcesample").sortable({handle:'.fa-move'});
+	});
+
+</script>

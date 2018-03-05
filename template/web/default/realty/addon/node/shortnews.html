@@ -1,0 +1,37 @@
+<tr >
+				<td>
+					<a href="javascript:;" onclick="deleteHtml(this)" style="margin-top:10px;" title="删除"><i class="fa fa-remove"  style="color:red;"></i></a>
+				</td>
+
+				<td>
+					<input name="data[shortnews][{$k}][displayorder]" type="text" class="form-control param_displayorder " value="{$v['displayorder']}"/>
+				</td>
+
+				<td>
+					<select name="data[shortnews][{$k}][type]" class="form-control">
+						{loop $shortnewsTypes $stkey $sttype}
+						<option value="{$stkey}" label="{$sttype}" {if $v['type']== $stkey} selected="selected" {/if}></option>
+						{/loop}
+					</select>
+				</td>
+
+				<td>
+					<textarea name="data[shortnews][{$k}][title]" type="text" class="form-control param_title ">{$v['title']}</textarea>
+				</td>
+
+				<td>
+					<textarea name="data[shortnews][{$k}][content]" type="text" class="form-control param_content ">{$v['content']}</textarea>
+				</td>
+
+				<td>
+
+					{php echo tpl_form_field_date('data[shortnews]['.$k.'][addtime]',$v['addtime'],false);}
+				</td>
+				
+				<td>
+					<select name="data[shortnews][{$k}][status]" class="form-control">
+						<option value="1" label="启用" {if $v['status']==1} selected="selected" {/if}></option>
+						<option value="0" label="停用" {if $v['status']==0} selected="selected" {/if}></option>
+					</select>
+				</td>
+			</tr>

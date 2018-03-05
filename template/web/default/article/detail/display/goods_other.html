@@ -1,0 +1,75 @@
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否上架</label>
+	<div class="col-sm-9 col-xs-12">
+		<label for="status" class="radio-inline"><input type="radio" name="status" value="1" id="status1" {if $item['status'] == 1}checked="true"{/if} /> 是</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="status" class="radio-inline"><input type="radio" name="status" value="0" id="status2"  {if $item['status'] == 0}checked="true"{/if} /> 否</label>
+		<span class="help-block">不上架则在前台无显示、不可购买；由于编辑不当被系统自动下架时可手动在此操作一次</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">作者OpenID</label>
+	<div class="col-sm-9 col-xs-12">
+		{php echo fmFunc_tpl_getMember('goodadm',$item['goodadm'],$members,$multi=false);}
+		<span class="help-block">说明：作者可接收该文章的变动情况（编辑、打赏、评论、订阅等）<a class="btn btn-default" href="{php echo fm_wurl('crm','member','display',array());}" target='_blank'>去查找会员Openid</a></span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">服务专线</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="kefuphone" class="form-control" value="{$item['kefuphone']}" />
+		<span class="help-block">说明：单独指定客服服务电话</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="displayorder" class="form-control" value="{$item['displayorder']}" />
+		<span class="help-block">说明：数字越大，在商城客户端的排名越靠前</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">阅读奖励积分</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="credit" class="form-control" value="{$item['credit']}" />
+		<span class="help-block">说明：用户第一次阅读获得的积分奖励</span>
+	</div>
+</div>
+
+<div class="panel-heading panel-info">
+<div class="panel-heading" >	阅读限制 (条件只有在勾选后才能生效)</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label sr-only">  </label>
+	<div class="col-xs-12 col-sm-6 col-md-2 col-lg-1 ">
+		<div class="input-group ">
+			<span class="input-group-addon"><input type="checkbox" name="isfreereadlimit" value="1"  {if $item['isfreereadlimit']==1} checked='checked'{/if} >  用户最少需要</span>
+			<input type="text" name="freereadlimit" id="freereadlimit" class="form-control" style="width:100px;" {if !$_W['isfounder']} readonly='true'{/if} value="{$item['freereadlimit']}" />
+			<span class="input-group-addon">积分</span>
+
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label  sr-only" style="margin-left:15px;">  </label>
+			<span class="input-group-addon"><input type="checkbox" name="isfreereadprice" value="1"  {if $item['isfreereadprice']==1} checked='checked'{/if}>  用户最少需要</span>
+			<input type="text" name="freereadprice" id="freereadprice" class="form-control" style="width:100px;" {if !$_W['isfounder']} readonly='true'{/if} value="{$item['freereadprice']}" />
+			<span class="input-group-addon">余额</span>
+
+		</div>
+
+	</div>
+</div>
+
+<div class="form-group">
+	<div class="col-xs-12 col-sm-6 col-md-2 col-lg-12 ">
+		<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"></label>
+		<input type="checkbox" name="forceInWexin" value="1" {if $item['forceInWeixin']==1} checked='checked'{/if}>
+		必须在微信中打开
+
+		<input type="checkbox" name="forceWxAuth"  value="1" {if $item['forceWxAuth']==1} checked='checked'{/if}>
+		强制用户微信网页授权
+
+		<input type="checkbox" name="forceFollow"  value="1" {if $item['forceFollow']==1} checked='checked'{/if}>
+		必须关注才能阅读
+
+	</div>
+</div>

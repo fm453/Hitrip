@@ -1,0 +1,34 @@
+{template $appstyle.$do.'/'.$ac.'/css'}
+<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-scalable">
+	<!--侧滑菜单部分-->
+		<aside id="offCanvasSide" class="mui-off-canvas-left">
+			{template $appstyle.'common/aside'}
+		</aside>
+	<!--主界面部分-->
+	<div  class="mui-inner-wrap" >
+		<!-- 左右滑动页面主体部分 -->
+		<header class="mui-bar mui-bar-nav" style="display:none;">
+			{template $appstyle.$do.'/'.$ac.'/titlebar'}
+		</header>
+		<div id="offCanvasContentScroll" class="mui-content" style="background:#efeff4 url({$fm453resource}images/default/background-logo.png)  no-repeat fixed center center;">
+		<!--下拉刷新容器-->
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="margin-top: 0px;" >
+				<div class="mui-scroll" >
+					<div class="mui-content" id="pullrefresh-table"><!-- 该ID必须存在且不允许更改 -->
+					{template $appstyle.$do.'/'.$ac.'/'.$operation.'/page'}
+					</div>
+				</div>
+				</div>
+				<!-- 下拉容器结束 -->
+				<!-- 模态框 -->
+
+				<!-- off-canvas backdrop -->
+				<div class="mui-off-canvas-backdrop"></div>
+			</div>
+			<!---底部菜单栏-->
+			<footer class="mui-bar mui-bar-footer">
+				{template $appstyle.$do.'/'.$ac.'/footerbar'}
+			</footer>
+		</div>
+</div>
+{template $appstyle.$do.'/'.$ac.'/'.$operation.'/js'}

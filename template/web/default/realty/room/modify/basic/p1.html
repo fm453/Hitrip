@@ -1,0 +1,152 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion" href="#basicSetting">
+          基础信息<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse in" id="basicSetting">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-basicSetting" {if $sn>0} onsubmit="return formcheck('setting-form-basicSetting');return false;" {/if}>
+				<input type="hidden" name="c" value="site" />
+				<input type="hidden" name="a" value="entry" />
+				<input type="hidden" name="m" value="{FM_NAME}" />
+				<input type="hidden" name="do" value="{$do}" />
+				<input type="hidden" name="ac" value="{$ac}" />
+				<input type="hidden" name="op" value="{$operation}" />
+				<input type="hidden" name="opp" value="" />
+				<input type="hidden" name="setfor" value="" />
+				<input type="hidden" name="s_sn" value="{$s_sn}" />
+				<input type="hidden" name="f_sn" value="{$f_sn}" />
+				<input type="hidden" name="sn" value="{$sn}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">户型名称</label>
+	<div class="col-xs-12 col-sm-9 ">
+		<input type="text" name="data[title]" id="title" class="form-control" value="{$data['title']}" />
+		<span class="help-block">说明：请填写户型名称，如1室1厅1卫; 如不填写，将默认按该格式命名</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">户型结构</label>
+	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>卧室</span>
+			<input type="text" name="data[sleeping_room_num]" id="sleeping_room_num"  class="form-control" placeholder="数量" value="{$item['sleeping_room_num']}" />
+			<span class="input-group-addon">个</span>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>客厅</span>
+			<input type="text" name="data[guest_room_num]" id="guest_room_num"  class="form-control" placeholder="数量" value="{$item['guest_room_num']}" />
+			<span class="input-group-addon">个</span>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>厨房</span>
+			<input type="text" name="data[kitchen_room_num]" id="kitchen_room_num"  class="form-control" placeholder="数量" value="{$item['kitchen_room_num']}" />
+			<span class="input-group-addon">个</span>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>卫生间</span>
+			<input type="text" name="data[toilet_room_num]" id="toilet_room_num"  class="form-control" placeholder="数量" value="{$item['toilet_room_num']}" />
+			<span class="input-group-addon">个</span>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>阳台</span>
+			<input type="text" name="data[balcony_area]" id="balcony_area"  class="form-control" placeholder="面积" value="{$item['balcony_area']}" />
+			<span class="input-group-addon">m<sup>2</sup></span>
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label sr-only">户型结构</label>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+		<div class="input-group form-group">
+			<span class="input-group-addon">建筑面积</span>
+			<input type="text" name="data[covered_area]" id="covered_area"  class="form-control" placeholder="面积" value="{$item['covered_area']}" />
+			<span class="input-group-addon">m<sup>2</sup></span>
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">估价</label>
+	<div class="col-xs-12 col-sm-9 col-md-10 col-lg-5">
+		<div class="input-group form-group">
+			<span class="input-group-addon">从</span>
+			<input type="text" name="data[price][start]" id="[price][start]"  class="form-control" placeholder="价格" value="{$item['price']['start']}" />
+			<span class="input-group-addon">元</span>
+
+			<span class="input-group-addon">至</span>
+			<input type="text" name="data[price][end]" id="[price][end]"  class="form-control" placeholder="价格" value="{$item['price']['end']}" />
+			<span class="input-group-addon">元</span>
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">户型特点</label>
+	<div class="col-xs-12 col-sm-9 ">
+		<textarea name="data[feature]" id="feature" class="form-control">{$item['feature']}</textarea>
+		<span class="help-block">说明：用于在分享、介绍、推荐等场景</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否启用</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[status]' value='1' {if $data['status'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[status]' value='0' {if $data['status'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否删除</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[deleted]' value='1' {if $data['deleted'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[deleted]' value='0' {if $data['deleted'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+	<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">有否售馨</label>
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+		<label class='radio-inline'>
+			<input type='radio' name='data[close]' value='1' {if $item['colse'] == 1} checked {/if} /> 是
+		</label>
+		<label class='radio-inline'>
+			<input type='radio' name='data[close]' value='0' {if $item['close'] == 0} checked {/if} /> 否
+		</label>
+	</div>
+
+</div>
+
+				<div class="form-group" style="text-align: center;">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<input type="submit" name="submit_withoutNotice" value="静默提交" class="btn btn-primary setting-form-basicSetting" style="margin:0 10px;" />
+						<input type="submit" name="submit_withSysNotice" value="提交并通知系统管理员" class="btn btn-default setting-form-basicSetting" style="margin:0 10px;" />
+						<a class="btn btn-info" data-toggle="collapse" data-parent="#accordion" href="#basicSetting">点击收缩该栏目</a>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,58 @@
+<div id="page-{$ac}" class="container-fluid" style="">
+	<div  id="page-1"  class="row-fluid" style="background-image: url({$appsrc}img/hot_bg.jpg);">
+		<div class="span1">
+		</div>
+
+		<div class="span10">
+			<div class="row-fluid">
+				<div class="span12">
+{if $list_hot}
+					<div class="row-fluid">
+						<div class="span12  margin-top-50">
+							<img src="{$appsrc}img/hot_houses.png" alt="">
+						</div>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span12">
+							{template $appstyle.$do.'/'.$ac.'/hots'}
+						</div>
+					</div>
+{/if}
+				</div>
+			</div>
+		</div>
+
+		<div class="span1">
+		</div>
+	</div>
+
+	<div  id="page-2"  class="row-fluid">
+		<div class="span1">
+		</div>
+
+		<div class="span10">
+			<div class="row-fluid">
+				<div class="span12">
+{if $list_rec}
+					<div class="row-fluid">
+						<div class="span12">
+							<img src="{$appsrc}img/rec_houses.png" alt="">
+						</div>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span12">
+							{template $appstyle.$do.'/'.$ac.'/rec'}
+						</div>
+					</div>
+{/if}
+				</div>
+
+			</div>
+		</div>
+
+		<div class="span1">
+		</div>
+	</div>
+</div>

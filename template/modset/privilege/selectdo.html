@@ -1,0 +1,29 @@
+<div class="main">
+	<form action="{php echo $this->createWebUrl('modset')}" method="post" class="form-horizontal form" id="setting-form">
+	<input type="hidden" name="ac" value="privilege" />
+	<input type="hidden" name="op" value="modify" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+		<div class="panel panel-info">
+			<div class="panel-heading">{$shopname}后台权限分配--选择后台入口
+			<span style="color:red;">||</span>
+			<span style="color:red;">用户：{$users[$nowuid]['username']} ( {$nowuid} )</span>
+			&nbsp;&nbsp;&nbsp;
+			<a href="{php echo fm_wurl('modset','privilege','display',array('nowuid'=>'','nowdo'=>$nowdo,'nowplat'=>$nowplat))}" >重新选择</a>
+			<span style="color:red;">||</span>
+			<span style="color:red;">入口：{$routes[$nowdo]['title']} ( {$nowdo} )</span>
+			&nbsp;&nbsp;&nbsp;
+			<a href="{php echo fm_wurl('modset','privilege','display',array('nowuid'=>$nowuid,'nowdo'=>'','nowplat'=>$nowplat))}" >重新选择</a>
+			<span style="color:red;">||</span>
+			<span style="color:red;">公号：{$accounts[$nowplat]['name']} ( {$nowplat} )</span>
+			&nbsp;&nbsp;&nbsp;
+			<a href="{php echo fm_wurl('modset','privilege','display',array('nowuid'=>$nowuid,'nowdo'=>'','nowplat'=>$nowplat))}" >重新选择</a>
+			</div>
+			<div class="panel-body">
+				{loop $routes $do_key  $d_o}
+				<a href="{php echo $this->createWebUrl('modset',array('ac'=>'privilege','nowuid'=>$nowuid,'nowdo'=>$do_key,'nowplat'=>$nowplat))}"  class="btn btn-default btn-md">
+				{$d_o['title']}({$do_key})
+				</a>
+				{/loop}
+			</div>
+	</form>
+</div>

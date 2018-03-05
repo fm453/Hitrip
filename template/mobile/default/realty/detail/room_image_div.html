@@ -1,0 +1,83 @@
+<!-- 内容列表弹窗口 S-->
+
+<!-- {$k} -->
+	<div class="cd-quick-view">
+		<div class="cd-slider-wrapper">
+			<div id="carousel-example-generic-{$k}" class="carousel slide">
+				<ol class="carousel-indicators">
+					{loop $item['params']['album']['thumbs'] $j $thumb}
+					<li data-target="#carousel-example-generic-{$k}" data-slide-to="{$j}">
+					</li>
+					{/loop}
+					<li data-target="#carousel-example-generic-{$k}" data-slide-to="{php echo ($j++);}" class="active">
+					</li>
+				</ol>
+
+				<div class="carousel-inner" role="listbox">
+					{loop $item['params']['album']['thumbs'] $j $thumb}
+					<div class="item next left">
+						<img src="{$thumb}" alt="{$j}..." />
+					</div>
+					{/loop}
+					<div class="item active">
+						<img src="{$item['params']['thumb']}" alt="..." />
+					</div>
+				</div>
+				 <a class="left carousel-control" href="#carousel-example-generic-{$k}" role="button" data-slide="prev">
+				 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				 <span class="sr-only">Previous</span>
+				 </a>
+				 <a class="right carousel-control" href="#carousel-example-generic-{$k}" role="button" data-slide="next">
+				 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				 <span class="sr-only">Next</span>
+				 </a>
+			</div>
+
+		</div>
+		<div class="cd-item-info">
+			<ul>
+				<li  class="row">
+					<div class="col-md-2 tit">
+						<p>户名:</p>
+					</div>
+					<div class="col-md-8 txt">
+						<p>{$item['title']}</p>
+					</div>
+				</li>
+				<li  class="row">
+					<div class="col-md-2 tit">
+						<p>户型:</p>
+					</div>
+					<div class="col-md-8 txt">
+						<p>{$item['params']['sleeping_room_num']}室{$item['params']['guest_room_num']}厅{$item['params']['toilet_room_num']}卫</p>
+					</div>
+				</li>
+				<li  class="row">
+					<div class="col-md-2 tit">
+						<p>面积:</p>
+					</div>
+					<div class="col-md-8 txt">
+						<p>{$item['params']['covered_area']} m<sup>2</sup></p>
+					</div>
+				</li>
+				<li  class="row">
+					<div class="col-md-2 tit">
+						<p>价格:</p>
+					</div>
+					<div class="col-md-8 txt">
+						<p>{$item['params']['price']['start']}~{$item['params']['price']['end']}元</p>
+					</div>
+				</li>
+				<li  class="row">
+					<div class="col-md-2 tit">
+						<p>特色:</p>
+					</div>
+					<div class="col-md-8 txt">
+						<p>{$item['params']['feature']}</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<a href="#0" class="cd-close">关闭</a>
+</div>
+<!-- 内容列表弹窗口 E-->

@@ -1,0 +1,64 @@
+{template 'web/default/common/_header'}
+<div class="main">
+		<div class="panel panel-info">
+			<div class="panel-heading" style="text-align:center;">
+				{$shopname}配置入口(首次使用时，请按照顺序依次进行配置)
+			</div>
+			<div class="panel-body">
+				{loop $all_ac $a_c}
+				<a class="btn btn-default {if $a_c==$ac} disabled {/if}"  href="{php echo fm_wurl($do,$a_c,'',array())}" style="margin-bottom:10px;"><i class="{$routes['modset']['ac'][$a_c]['icon']}"></i> {$routes['modset']['ac'][$a_c]['title']}</a>
+				{/loop}
+			</div>
+			<div class="panel-body">
+				<a  class="btn btn-default" href="{php echo fm_wurl('help','manual','',array())}"><i class='fa fa-file-text'></i> 后台使用指南</a>
+				<a class="btn btn-default" href="{php echo fm_wurl('help','develop','',array())}"><i class='fa fa-file-text'></i> 二次开发指南</a>
+				<a class="btn btn-default" href="{php echo fm_wurl('modset','checkdb','',array())}"><i class='fa fa-bug'></i> 检查数据表</a>
+				<a class="btn btn-default" href="{php echo fm_wurl('modset','upgrade','',array())}"><i class='fa fa-random'></i> 自助升级</a>
+			</div>
+		</div>
+</div>
+<div class="main">
+	<div class="panel panel-warning">
+			<div class="panel-heading" style="text-align:center;">
+				{$shopname}后台功能入口集合
+			</div>
+			<div class="panel-body">
+				<ul class="nav nav-tabs" id="myTab_index">
+				{loop $routes_do $d_o}
+				<li {if $d_o==$do} class="active" {/if}><a href="#do_{$d_o}"  class="btn btn-default" data-toggle="tab" style="margin-bottom:10px;"><i class="{$routes[$d_o]['icon']}"></i> {$routes[$d_o]['title']}</a></li>
+			{/loop}
+				</ul>
+				<div class="tab-content">
+					{loop $routes $d_o $route}
+					<div class="tab-pane fade in {if $d_o==$do} active {/if}" id="do_{$d_o}">
+						<p>
+						<a class="btn btn-success" href="{php echo fm_wurl($d_o,'index','display','')}" style="margin-bottom:10px;" ><i class="{$routes[$d_o]['icon']}"></i> {$routes[$d_o]['title']} ({$d_o}) </a>
+						</p>
+				{loop $route['ac'] $a_c $ops}
+					<p>
+					<a class="btn btn-info" href="{php echo fm_wurl($d_o,$a_c,'','')}"  style="margin-bottom:10px;"><i class="{$routes[$d_o]['ac'][$a_c]['icon']}"></i> {$routes[$d_o]['ac'][$a_c]['title']}  ({$a_c}) </a>
+					{loop $ops['op'] $o_p $item}
+						<a class="btn btn-default" href="{php echo fm_wurl($d_o, $a_c, $o_p, '')}"  style="margin-bottom:10px;"> {$routes[$d_o]['ac'][$a_c]['op'][$o_p]['title']}  ({$o_p}) </a>
+					{/loop}
+					</p>
+				{/loop}
+					</div>
+			{/loop}
+
+				</div>
+			</div>
+
+		</div>
+</div>
+<script type="text/javascript" >
+	$(function () {
+		window.optionchanged = false;
+		$('#myTab_index a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content,使用该功能前提是a链接中加上data-toggle="tab"
+		})
+	});
+</script>
+{template 'web/default/common/js_data'}
+{template 'web/default/common/js_websocket'}
+{template 'web/default/common/_footer'}

@@ -1,0 +1,33 @@
+{template $appstyle.$do.'/'.$ac.'/'.$operation.'/css'}
+<header class="mui-bar mui-bar-nav">
+	{template $appstyle.$do.'/'.$ac.'/'.$operation.'/titlebar'}
+</header>
+<div class="mui-content mui-row mui-fullscreen">
+	<!-- 左侧导航区 -->
+	<div class="mui-col-xs-3">
+		<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+			<a class="mui-control-item mui-active" href="#content-rec">推荐</a>
+		</div>
+	</div>
+	<!-- 右侧列表区 -->
+	<div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
+		<!-- 列表区广告位 -->
+		<ul class="mui-table-view mui-grid-view">
+{if $ads}
+	{loop $ads[0]  $id $row}
+		{template $appstyle.$do.'/'.$ac.'/'.$operation.'/ads_item'}
+	{/loop}
+{/if}
+	</ul>
+
+		<!-- 列表区子分类 -->
+		<div id="content-rec" class="mui-control-content mui-active">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" data-href="{php echo fm_murl('article','list','rec',array('isrecommend'=>1))}">
+					全部推荐内容
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+{template $appstyle.$do.'/'.$ac.'/'.$operation.'/js'}

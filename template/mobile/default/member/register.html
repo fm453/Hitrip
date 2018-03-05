@@ -1,0 +1,135 @@
+{template $appstyle.'common/header_fenxiao'}
+{template $appstyle."common/common_css"}
+{template $appstyle."common/tip"}
+<div class="head">
+	<span class="title">分销员注册代理</span>
+	<a href="{php echo $this->createMobileUrl('list')}" class="bn pull-right"><i class="glyphicon glyphicon-home"></i></a>
+</div>
+			<form action=""  method="post">
+		<input type="hidden" name="i" value="{$_W['uniacid']}" />
+		<input type="hidden" name="c" value="entry" />
+		<input type="hidden" name="m" value="{FM_NAME}" />
+		<input type="hidden" name="do" value="register" />
+		<section class="main animated fadeInDown">
+	<div class="container" style="padding:50px 0 50px 0;">
+		<div class="row clearfix">
+			<h5 style="text-align: center;">分销注册</h5>
+		<div class="col-md-12 column">
+				<div class="form-group">
+					<input class="form-control"  id="realname" type="text" name="realname" placeholder="姓名"  value="{$profile['realname']}"/>
+				</div>
+			</div>
+			<div class="col-md-12 column">
+				<div class="form-group">
+					<input class="form-control"  id="mobile" type="tel" name="mobile" placeholder="手机"  value="{$profile['mobile']}"/>
+				</div>
+			</div>
+			<div class="col-md-12 column">
+				<div class="form-group">
+					<input class="form-control"  id="password" type="password" name="password" placeholder="密码"  value=""/>
+				</div>
+			</div>
+		{if $opp=='complate'}
+			<div class="col-md-12 column">
+				<div class="form-group">
+					<input class="form-control"  type="text" id="banktype" placeholder="银行名称" value="{$profile['banktype']}"/>
+				</div>
+			</div>
+			<div class="col-md-12 column">
+				<div class="form-group">
+					<input class="form-control"  type="tel" id="bankcard" placeholder="银行卡号"  value="{$profile['bankcard']}"/>
+				</div>
+			</div>
+			<div class="col-md-12 column">
+				<div class="form-group">
+					<input class="form-control" type="text" id="alipay" placeholder="支付宝号" value="{$profile['alipay']}"/>
+				</div>
+			</div>
+			<div class="col-md-12 column">
+				<div class="form-group">
+					<input class="form-control" type="text" id="wxhao" placeholder="微信支付号码" value="{$profile['wxhao']}"/>
+				</div>
+			</div>
+		{/if}
+			<div class="col-md-12 column hidden">
+				<div class="form-group">
+				<p class="rb-row registerRuleCheck"><input type="checkbox" checked id="agree"/>&nbsp;我同意注册</p>
+				</div>
+			</div>
+			<div class="col-md-12 column hidden">
+				<div class="form-group">
+					<p>提示：请输入正确的姓名以及电话，否则可能无法结佣。</p>
+				</div>
+			</div>
+			<div class="col-md-12 column">
+				<div class="form-group">	
+			{if !empty($profile)}
+					<button type="submit" name="gengxin" value="yes" class="btn btn-default active btn-info" style="margin-bottom:2px;">提交修改</button>
+			{else}
+					<button type="submit" name="addreg" value="yes" class="btn btn-default active btn-info" style="margin-bottom:2px;">提交注册</button>
+			{/if}
+				</div>
+			</div>	
+			<hr>
+		</div>			
+	</div>
+</section>
+		<input type="hidden" name="token" value="{$_W['token']}" />
+	</form>
+</body>
+<script type="text/javascript">
+    wx.ready(function () {
+        var mid=getCookie("mid");
+        var shareData = {
+            title: '赶快来邀请好友赚佣金！',
+            desc: '赶快来邀请好友赚佣金！',
+            link: "{$wx['url']}",
+            imgUrl: '{$_W['siteroot']}/addons/fm453_shopping/style/images/icon.jpg',
+        };
+        //分享朋友
+        wx.onMenuShareAppMessage({
+            title: shareData.title,
+            desc: shareData.desc,
+            link: shareData.link,
+            imgUrl:shareData.imgUrl,
+            trigger: function (res) {
+            },
+            success: function (res) {
+                window.location.href ='{php echo $_W['siteroot']."app/".$this->mturl('fansindex',array('id'=>$id))}';
+                TopBox.alert("分享后成功,等着收佣金吧!");
+            },
+            cancel: function (res) {
+                TopBox.alert("分享后获得积分,还有可能得到佣金哦!信任，才是最大的财富；推荐值得推荐的！");
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+        //朋友圈
+        wx.onMenuShareTimeline({
+            title: shareData.title+"---"+shareData.desc,
+            link: shareData.link,
+            imgUrl:shareData.imgUrl,
+            trigger: function (res) {
+            },
+            success: function (res) {
+                window.location.href ='{php echo $_W['siteroot']."app/".$this->mturl('fansindex',array('id'=>$id))}';
+            },
+            cancel: function (res) {
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+        //显示分享
+        wx.showOptionMenu();
+    });
+</script>
+<script>
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>
+{template $appstyle."common/designedby"}
+{template $appstyle."common/footmenu"}
+{template $appstyle.'common/footer'}

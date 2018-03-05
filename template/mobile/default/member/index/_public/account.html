@@ -1,0 +1,46 @@
+<div id="account" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>设置
+				</button>
+				<h1 class="mui-center mui-title">基础资料</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+
+						<ul class="mui-table-view">
+							{if $FM_member['avatar']}
+							<li class="mui-table-view-cell">
+								<a id="head" class="mui-navigate-right" href="javascript:;">头像
+								<span class="mui-pull-right head">
+									<img class="head-img mui-action-preview" id="head-img1" src="{php echo tomedia($FM_member['avatar'])}"/>
+								</span>
+							</a>
+							</li>
+							{/if}
+							<li class="mui-table-view-cell">
+								<a>姓名<span class="mui-pull-right">{$FM_member['realname']}</span></a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a href="{$_W['uniaccount']['subscribeurl']}" >平台关注<span class="mui-pull-right">{if $FM_member['follow']}{php echo date('Y-m-d h:i',$FM_member['followtime'])}{else}未关注{/if}</span></a>
+							</li>
+							{if $FM_vipcard_open}
+							<li class="mui-table-view-cell">
+								<a>会员卡<span class="mui-pull-right">{if $FM_vipcard_get}已领取{else}未领取{/if}</span></a>
+							</li>
+							{/if}
+						</ul>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<a>微信号<span class="mui-pull-right">未告知</span></a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a>手机号<span class="mui-pull-right">{$FM_member['mobile']}</span></a>
+							</li>
+						</ul>
+
+					</div>
+				</div>
+			</div>
+		</div>

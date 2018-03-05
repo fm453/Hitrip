@@ -1,0 +1,88 @@
+<ul class="nav nav-tabs">
+	<li>
+			<a href="{php echo fm_wurl('index','index','index',array())}"><i class='fa fa-home'></i> 主工作台</a>
+	</li>
+
+	{if $_FM['isSuper']  || $_W['isfounder'] }
+	<li {if $ac == 'onoff'}  class="active"{/if}>
+		<a href="{php echo $this->createWebUrl('modset',array('ac'=>'onoff','m'=>FM_NAME,'op' => 'display'))}">功能开关</a>
+	</li>
+	{/if}
+	{if $_FM['isAdminer']  || $_W['isfounder'] }
+	<li {if $ac == 'basic'}  class="active" {/if}>
+		<a href="{php echo $this->createWebUrl('modset',array('ac'=>'basic','m'=>FM_NAME,'op' => 'display'))}">基础设置</a>
+	</li>
+	{/if}
+
+	<li {if $ac == 'brands'}  class="active" {/if}>
+		<a href="{php echo $this->createWebUrl('modset',array('ac'=>'brands','m'=>FM_NAME,'op' => 'display'))}">品牌信息</a>
+	</li>
+
+	{if $_FM['isAdminer']  || $_W['isfounder'] }
+	<li {if $ac == 'msgtpls'}  class="active" {/if}>
+		<a href="{php echo $this->createWebUrl('modset',array('ac'=>'msgtpls','m'=>FM_NAME,'op' => 'display'))}">消息模板</a>
+	</li>
+	{/if}
+
+		{if $_FM['isSuper']  || $_W['isfounder'] }
+	<li {if $ac == 'safe'}  class="active" {/if}>
+		<a href="{php echo $this->createWebUrl('modset',array('ac'=>'safe','m'=>FM_NAME,'op' => 'display'))}">安全设置</a>
+	</li>
+		{/if}
+
+	{if $settings['onoffs']['isnavmenu'] == '1'}
+		{if $_FM['isAdminer'] ||  $_W['isfounder'] }
+	<li {if $ac == 'navs'}  class="active" {/if}>
+		<a href="{php echo $this->createWebUrl('modset',array('ac'=>'navs','m'=>FM_NAME,'op' => 'display'))}">后台导航条</a>
+	</li>
+		{/if}
+	{/if}
+
+	{if $_FM['isAdminer']  || $_W['isfounder'] }
+	<li {if $ac == 'fenxiao'}  class="active" {/if}>
+		<a href="{php echo $this->createWebUrl('modset',array('ac'=>'fenxiao','m'=>FM_NAME,'op' => 'display'))}">分享机制</a>
+	</li>
+	{/if}
+
+	{if $_FM['isSuper']  || $_W['isfounder'] }
+	<li {if $ac == 'privilege'}  class="active" {/if}>
+		<a href="{php echo $this->createWebUrl('modset',array('ac'=>'privilege','m'=>FM_NAME))}" > 权限配置</a>
+	</li>
+	{/if}
+
+	{if $settings['shouquan']['sufm453code'] !=''}
+	<li {if $ac == 'ui'}  class="active" {/if}>
+		<a href="{php echo $this->createWebUrl('modset',array('ac'=>'ui','m'=>FM_NAME))}" > 个性UI设置</a>
+	</li>
+	{/if}
+
+	{if $settings['shouquan']['sufm453code'] !=''}
+	<li {if $ac == 'api'}  class="active" {/if}>
+		<a href="{php echo $this->createWebUrl('modset',array('ac'=>'api','m'=>FM_NAME))}" > <i class='fa fa-soundcloud'></i> API管理</a>
+	</li>
+	{/if}
+
+	{if $_FM['isSuper']  || $_W['isfounder'] }
+	<li {if $ac == 'source'}  class="active" {/if}>
+		<a href="{php echo $this->createWebUrl('modset',array('ac'=>'source','m'=>FM_NAME))}" ><i class='fa fa-file-o'></i> 内容源设置</a>
+	</li>
+	{/if}
+
+</ul>
+
+<style type="text/css">
+	.red {float:left;color:red}
+	.white{float:left;color:#fff}
+	.tooltipbox {
+		background:#fef8dd;border:1px solid #c40808; position:absolute; left:0;top:0; text-align:center;height:20px;
+		color:#c40808;padding:2px 5px 1px 5px; border-radius:3px;z-index:1000;
+	}
+</style>
+<script>
+	require(['jquery', 'util'], function($, u){
+		$('.forcopy p a').each(function(){
+			u.clip(this, $(this).text());
+		});
+	});
+
+</script>

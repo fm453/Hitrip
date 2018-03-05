@@ -1,0 +1,265 @@
+<div class="form-group forcopy">
+    <label class="col-xs-12 col-sm-3 col-md-2 control-label">直接链接</label>
+    <div class="col-sm-9 col-xs-12">
+        <p class="help-block">点击复制<a href="javascript:;" target="_blank" title="点击复制">{php echo fm_murl('goods','detail','index',array('id' => $item['id']))}</a></p>
+        <img src="{$qrcode_preview}"><span>微信扫码，预览该商品</span>
+    </div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">产品模型</label>
+	<div class="col-sm-9 col-xs-12">
+	{loop $gtpltype $gindex $gtpl}
+		<label for="gtis{$gindex}" class="radio-inline"><input type="radio" name="goodtpl" value="{$gindex}" id="gtis{$gindex}" {if empty($item['goodtpl']) || $item['goodtpl'] == $gindex} checked="true"{/if}  onclick="changeGoodsTpl('{$gindex}','{$item['sn']}')" /> {$gtpl['name']}</label>
+	{/loop}
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>产品名称</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="title" id="title" class="form-control" value="{$item['title']}" />
+		<span class="help-block">说明：微商城产品名称；建议在标题中概括好产品关键点;最好不要超过30个字节</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">产品单位</label>
+	<div class="col-sm-6 col-xs-6">
+		<input type="text" name="unit" id="unit" class="form-control" value="{$item['unit']}" />
+		<span class="help-block">如: 件/个/份/套/间夜,默认为“份”</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">产品属性</label>
+	<div class="col-sm-9 col-xs-12" >
+		<label for="isrecommand" class="checkbox-inline">
+			<input type="checkbox" name="isrecommand" value="1" id="isrecommand" {if $item['isrecommand'] == 1}checked="true"{/if} /> 推荐
+		</label>
+		<label for="isnew" class="checkbox-inline">
+			<input type="checkbox" name="isnew" value="1" id="isnew" {if $item['isnew'] == 1}checked="true"{/if} /> 新品
+		</label>
+		<label for="ishot" class="checkbox-inline">
+			<input type="checkbox" name="ishot" value="1" id="ishot" {if $item['ishot'] == 1}checked="true"{/if} /> 热卖
+		</label>
+		<label for="isdiscount" class="checkbox-inline">
+			<input type="checkbox" name="isdiscount" value="1" id="isdiscount" {if $item['isdiscount'] == 1}checked="true"{/if} /> 折扣
+		</label>
+		<label for="istime" class="checkbox-inline">
+			<input type="checkbox" name="istime" value="1" id="istime" {if $item['istime'] == 1}checked="true"{/if} /> 限时
+		</label>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">限时卖时间</label>
+	<div class="col-sm-4 col-xs-6">
+		{php echo tpl_form_field_date('timestart', !empty($item['timestart']) ? date('Y-m-d H:i',$item['timestart']) : date('Y-m-d H:i'), 1)}
+	</div>
+	<div class="col-sm-4 col-xs-6">
+		{php echo tpl_form_field_date('timeend', !empty($item['timeend']) ? date('Y-m-d H:i',$item['timeend']) : date('Y-m-d H:i'), 1)}
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>分类</label>
+	<div class="col-sm-8 col-xs-12">
+		{php echo tpl_form_field_category_2level('category', $parent, $child, $item['pcate'], $item['ccate'])}
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">产品列表用图</label>
+	<div class="col-sm-9 col-xs-12">
+		<span class="help-block">产品列表图说明：默认图片长宽尺寸比为100px:80px；如果您启用了新的商城前台风格，请重新依据新风格尺寸上传；展示在产品列表页</span>
+		{php echo tpl_form_field_image('thumb', $item['thumb'])}
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">转发分享用图</label>
+	<div class="col-sm-9 col-xs-12">
+		<span class="help-block">转发分享图说明：请使用正方形图片；默认图片长宽尺寸比为100px:100px；</span>
+		{php echo tpl_form_field_image('sharethumb', $item['sharethumb'])}
+	</div>
+</div>
+<div class="form-group">
+    <label class="col-xs-12 col-sm-3 col-md-2 control-label">限时特价首页图</label>
+    <div class="col-sm-9 col-xs-12">
+    <span class="help-block">限时特价首页图说明：图片长宽尺寸比为900px:500px；展示在限时特价专题页</span>
+        {php echo tpl_form_field_image('xsthumb',$item['xsthumb'])}
+    </div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">详情图片</label>
+	<div class="col-sm-9 col-xs-12">
+		<span class="help-block">详情图说明：图片长宽尺寸比为900px:500px；点击图片右下角“X”可屏蔽对应图片；详情页图片展示顺序：最上面的图片优先展示</span>
+		{php echo tpl_form_field_multi_image('thumbs',$item['thumbs'])}
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">产品编号</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="goodssn" id="goodssn" class="form-control"  placeholder="提示：可不填" value="{$item['goodssn']}" />
+		<span class="help-block">说明：用于与商家自有产品库进行关联以便快速定位产品；但建议产品线增多时启用该机制，方便后期维护；</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class=" col-sm-3 col-md-2 control-label">产品条码</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="productsn" id="productsn" class="form-control" placeholder="提示：可不填" value="{$item['productsn']}" />
+		<span class="help-block">说明：主要用于实物类型的产品，方便线下关联条形码、使用扫码枪、或提供在线验证等用途</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">产品价格</label>
+	<div class="col-sm-9 col-xs-12">
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>销售价</span>
+			<input type="text" name="marketprice" id="marketprice" class="form-control" placeholder="必须填写，不填写时用户将无法购买" value="{$item['marketprice']}" />
+			<span class="input-group-addon">元</span>
+		</div>
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>市场参考价</span>
+			<input type="text" name="cankaoprice" id="cankaoprice" class="form-control" placeholder="建议填写，用于微商城客户端计算折扣" value="{$item['cankaoprice']}" />
+			<span class="input-group-addon">元</span>
+		</div>
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>代理商结算价</span>
+			<input type="text" name="agentprice" id="agentprice" class="form-control" placeholder="如该产品向代理商，请务必填写此项；否则无法向代理商结算" value="{$item['agentprice']}" />
+			<span class="input-group-addon">元</span>
+		</div>
+		<div class="input-group form-group">
+			<span class="input-group-addon"><span style='color:red'>*</span>代理商销售价</span>
+			<input type="text" name="agentsaleprice" id="agentsaleprice" class="form-control" placeholder="代理商商城展示的销售价，如不填写，则默认取总店的销售价" value="{$item['agentsaleprice']}" />
+			<span class="input-group-addon">元</span>
+		</div>
+		<div class="input-group form-group">
+			<span class="input-group-addon">成本价</span>
+			<input type="text" name="costprice" id="costprice" class="form-control" value="{$item['costprice']}" />
+			<span class="input-group-addon">元</span>
+		</div>
+		<div class="input-group form-group">
+			<span class="input-group-addon">原价</span>
+			<input type="text" name="originalprice" id="originalprice" class="form-control" placeholder="建议填写，用于计算产品折扣"  value="{$item['originalprice']}" />
+			<span class="input-group-addon">元</span>
+		</div>
+		<span class="help-block">当前：
+		市场折扣:{if $item['cankaoprice']>0}{php echo round($item['marketprice']/$item['cankaoprice']*10,2)}{else}0{/if}折(销售价/市场价)；
+		产品折扣:{if $item['originalprice']>0}{php echo round($item['marketprice']/$item['originalprice']*10,2)}{else}0{/if}折(市场价/原价)；
+		代理折扣:{if $item['marketprice']>0}{php echo round($item['agentprice']/$item['marketprice']*10,2)}{else}0{/if}折(代理结算价/市场价)；
+		<span style="color:red">  毛利润率:{if $item['costprice']>0}{php echo round(($item['marketprice']-$item['costprice'])/$item['costprice']*100,2)}{else}0{/if}%（(销售价-成本价)/成本价)；  </span>
+		</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">重量</label>
+	<div class="col-sm-6 col-xs-12">
+		<div class="input-group">
+			<input type="text" name="weight" id="weight" class="form-control" value="{$item['weight']}" />
+			<span class="input-group-addon">克</span>
+		</div>
+		<span class="help-block">当产品需要按重量根据运费模板进行运费计算时，才需要用到</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">真实库存</label>
+	<div class="col-sm-6 col-xs-12">
+		<div class="input-group">
+			<input type="text" name="stock" id="total" class="form-control" value="{if empty($item['stock'])}{$item['total']}{else}{$item['stock']}{/if}" />
+			<span class="input-group-addon">份</span>
+		</div>
+		<span class="help-block">当前产品的真实库存数量,必须填写一个有效的数字，否则不能上架</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">虚拟库存</label>
+	<div class="col-sm-6 col-xs-12">
+		<div class="input-group">
+			<input type="text" name="total" id="total" class="form-control" value="{$item['total']}" />
+			<span class="input-group-addon">份</span>
+		</div>
+		<span class="help-block">对外显示的库存数量，-1表示不限制</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">减库存方式</label>
+	<div class="col-sm-9 col-xs-12">
+		<label for="totalcnf" class="radio-inline"><input type="radio" name="totalcnf" value="0" id="totalcnf1" {if empty($item) || $item['totalcnf'] == 0}checked="true"{/if} /> 拍下减库存</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="totalcnf" class="radio-inline"><input type="radio" name="totalcnf" value="1" id="totalcnf2"  {if !empty($item) && $item['totalcnf'] == 1}checked="true"{/if} /> 付款减库存</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="totalcnf" class="radio-inline"><input type="radio" name="totalcnf" value="2" id="totalcnf3"  {if !empty($item) && $item['totalcnf'] == 2}checked="true"{/if} /> 永不减库存</label>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">单次最多购买量</label>
+	<div class="col-sm-6 col-xs-12">
+		<div class="input-group">
+			<input type="text" name="maxbuy" id="maxbuy" class="form-control" value="{$item['maxbuy']}" />
+			<span class="input-group-addon">份</span>
+		</div>
+	<span class="help-block">说明：每个用户每次最多可购买的数量</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">用户最多购买量</label>
+	<div class="col-sm-6 col-xs-12">
+		<div class="input-group">
+			<input type="text" name="usermaxbuy" class="form-control" value="{$item['usermaxbuy']}" />
+			<span class="input-group-addon">份</span>
+		</div>
+		<span class="help-block">说明：每个用户累计最多可购买的数量</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">已出售数(虚拟)</label>
+	<div class="col-sm-6 col-xs-12">
+		<div class="input-group">
+			<input type="text" name="sales" id="sales" class="form-control" value="{$item['sales']}" />
+			<span class="input-group-addon">份</span>
+		</div>
+		<span class="help-block">说明：显示在产品详情页/介绍页，可以有效刺激潜在客人成交</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">真实销量</label>
+	<div class="col-sm-6 col-xs-12">
+		<div class="input-group">
+			{if empty($item['realsales'])}
+				{if $_W['isfounder']}
+					<input type="text" name="realsales" id="realsales" class="form-control" value="{$item['sales']}" />
+				{else}
+					<input type="text" name="realsales" id="realsales" class="form-control" value="{$item['sales']}" readonly="true"/>
+				{/if}
+			{else}
+				<input type="text" name="realsales" id="realsales" class="form-control" value="{$item['realsales']}" readonly="false"/>
+			{/if}
+			<span class="input-group-addon">份</span>
+		</div>
+		<span class="help-block">说明：系统自动记录，无须更改。
+			{if $_W['username'] == $settings['mainuser']  or $_W['isfounder'] }
+			<a href="javascript:;" onclick="fixrealsales()"  class="btn btn-default">校正真实销量</a>
+			{/if}
+		</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">购买积分</label>
+	<div class="col-sm-6 col-xs-12">
+		<div class="input-group">
+			<input type="text" name="credit" id="credit" class="form-control" value="{$item['credit']}" />
+			<span class="input-group-addon">分</span>
+		</div>
+		<p class="help-block">会员购买积分, 如果不填写，则默认为不奖励积分</p>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">创建时间</label>
+	<div class="col-sm-6 col-xs-12">
+	{if $item['createtime']}
+		<p class="help-block">{php echo date('Y年m月d日 H:i:s 星期w',$item['createtime'])}</p>
+	{/if}
+	</div>
+</div>
+<script type="text/javascript" >
+function fixrealsales() {
+	$("#realsales").removeAttr("readonly");//去除只读属性
+}
+</script>

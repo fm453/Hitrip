@@ -1,0 +1,48 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+<style type='text/css'>
+	.tab-pane {padding:20px 0 20px 0;}
+</style>
+{if $_W['isfounder'] || $_FM['isSuper']}
+<div class="main">
+	<form action="./index.php" method="post" class="form-horizontal" role="form" id="form1">
+		<input type="hidden" name="c" value="site" />
+		<input type="hidden" name="a" value="entry" />
+		<input type="hidden" name="m" value="{FM_NAME}" />
+		<input type="hidden" name="do" value="modset" />
+		<input type="hidden" name="ac" value="upgrade" />
+		<input type="hidden" name="op" value="modify" />
+		<input type="hidden" name="token" value="{$_W['token']}" />
+<div class="panel panel-danger">
+		<div class="panel-heading" >
+        执行前请务必先检查/升级数据库（使用“检查数据表”功能）
+		</div>
+	</div>
+
+
+	{template 'modset/upgrade/goodadmins'}
+	{template 'modset/upgrade/clear'}
+	{template 'modset/upgrade/diy_version'}
+	{template 'modset/upgrade/sudo'}
+	</form>
+</div>
+{else}
+对不起,你不是站长,无权限进行此操作!
+{/if}
+<script type="text/javascript">
+	$(function () {
+		window.optionchanged = false;
+		$('#myTab a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content,使用该功能前提是a链接中加上data-toggle="tab"
+		})
+	});
+</script>
+<script>
+	require(['jquery', 'util'], function($, u){
+		$('.forcopy a').each(function(){
+			u.clip(this, $(this).text());
+		});
+	});
+</script>
+{template 'common/footer'}

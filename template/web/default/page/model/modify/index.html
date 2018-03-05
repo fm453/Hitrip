@@ -1,0 +1,74 @@
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="modify-form1">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				新增页面模型
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">模型编码</label>
+					<div class="col-xs-12 col-sm-9 col-md-4 col-lg-3 control-label" style="text-align:left;">
+					{if !empty($s_sn)}
+					{$s_sn}
+					{else}
+					无
+					{/if}
+					<span class="help-block">该编码由服务器自动生成后返回</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">排序</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<input type="number" name="data[displayorder]" class="form-control" placeholder="可留空；此处仅可填写数字" value="{$data['displayorder']}" />
+						<span class="help-block">说明：数值越大，位置越靠前</span>
+					</div>
+
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否启用</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<label class='radio-inline'>
+							<input type='radio' name='data[enabled]' value='1' {if $data['enabled'] == 1} checked {/if} /> 是
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='data[enabled]' value='0' {if $data['enabled'] == 0} checked {/if} /> 否
+						</label>
+					</div>
+
+					{if $operation == 'modify'}
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">是否删除</label>
+					<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<label class='radio-inline'>
+							<input type='radio' name='data[deleted]' value='1' {if $data['deleted'] == 1} checked {/if} /> 是
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='data[deleted]' value='0' {if $data['deleted'] == 0} checked {/if} /> 否
+						</label>
+					</div>
+					{/if}
+
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label"><span style="color:red">*</span>模型名称</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11 ">
+						<input type="text" name="data[title]" class="form-control" value="{$data['title']}" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-1 control-label">模型关键词</label>
+					<div class="col-xs-12 col-sm-9 col-md-10 col-lg-11">
+						<textarea name="data[keywords]" class="form-control" placeholder="可留空,关键词之间使用英文半角逗号（,）分开"  >{$data['keywords']}</textarea>
+					</div>
+				</div>
+
+				<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>
+				
+			</div>
+		</div>
+	</form>
+</div>

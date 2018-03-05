@@ -1,0 +1,19 @@
+<ol><span style="font-weight: bold;">关于商城分类类型的一些说明：</span>
+	<li>为了方便管理及系统拓展，我们对分类进行了归集处理，根据针对的板块分别设置与显示：
+	</li>
+</ol>
+<hr>
+<ol><span style="font-weight: bold;">关于参数状态的一些说明：</span>
+{loop $catestatus $statusindex $item}
+{if $statusindex !='code'}
+	<li>{$item['name']}：
+		<ul>
+			<li>状态码:{$item['value']}</li>
+			{if $item['des']}<li>解释：{$item['des']}</li>{/if}
+		</ul>
+	</li>
+{/if}
+{/loop}
+</ol>
+<hr>
+<span style="color: #aaa;">如果您在使用过程中还有其他疑问的，可以向管理员寻求帮助！</span>

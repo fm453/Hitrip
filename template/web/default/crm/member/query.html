@@ -1,0 +1,19 @@
+<div style="max-height:500px;overflow:auto;min-width:850px;">
+<table class="table table-hover" style="min-width:850px;">
+    <tbody>
+    	{loop $list $item}
+        <tr>
+            <td><img src="{$item['avatar']}" style="width:30px;height:30px;padding:1px;border:1px solid #ccc"> {$item['realname']}</td>
+            <td>{$item['nickname']}</td>
+            <td>{$item['mobile']}</td>
+            <td style="width:80px;"><button type="button" class="btn btn-info btn-md" onclick="member_selector_set(this,{'uniacid':'{$item['uniacid']}','uid':'{$item['uid']}','groupid':'{$item['grooupid']}','openid':'{$item['openid']}','realname':'{$item['realname']}','mobile':'{$item['mobile']}','nickname':'{$item['nickname']}','credit1':'{$item['credit1']}','credit2':'{$item['credit2']}','gender':'{$item['gender']}','avatar':'{$item['avatar']}'});">选择</button></td>
+        </tr>
+        {/loop}
+    </tbody>
+</table>
+</div>
+<script type="text/javascript">
+	function member_selector_set(obj,data){
+		select_member(data,'{$target}',obj);
+	}
+</script>

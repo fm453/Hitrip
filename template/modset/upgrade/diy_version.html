@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+		<div class="panel-heading">
+			<a data-toggle="collapse" data-parent="#accordion"
+          href="#diy-version">
+          版本号自定义<span class="pull-right">点击收缩该栏目</span>
+       </a>
+		</div>
+</div>
+<div class="container-fluid panel-collapse collapse" id="diy-version">
+		<div class="row-fluid">
+			<div class="span12 forcopy">
+				<ol>
+					<li>
+						<ul style="list-style: none;">
+						<li>
+						<pre id="diy-version-1">
+<input name="new_version" class="form-control">
+						</pre>
+						<code>开发者版本号:{FM_VERSION} 当前版本号：{$now_version}</code>
+						</li>
+							<li>
+							<button type="submit" class="btn btn-warning" onclick="return confirm('本功能您确认需要执行操作了吗！');" name="diy_version" value="yes">修改版本号</button>
+							</li>
+						</ul>
+					</li>
+				</ol>
+			</div>
+		</div>
+	</div>

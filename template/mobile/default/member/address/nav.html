@@ -1,0 +1,30 @@
+<nav class="mui-bar mui-bar-tab">
+			<a id="defaultTab" class="mui-tab-item mui-active" href="{php echo fm_murl('search','goods','index',array(''))}">
+				<span class="mui-icon mui-icon-search">
+				</span>
+				<span class="mui-tab-label">搜产品</span>
+			</a>
+			<a class="mui-tab-item" href="{php echo fm_murl('order','mycart','index',array())}">
+				<span class="mui-icon mui-icon-extra mui-icon-extra-cart">
+					<span class="mui-badge">{php echo intval($carttotal)}</span>
+				</span>
+				<span class="mui-tab-label">购物车</span>
+			</a>
+			<a class="mui-tab-item" href="{php echo fm_murl('order','myorder','index',array())}">
+				<span class="mui-icon mui-icon-extra mui-icon-extra-holiday">
+				</span>
+				<span class="mui-tab-label">订单</span>
+			</a>
+			<a class="mui-tab-item" href="{php echo fm_murl('member','index','index',array())}">
+				<span class="mui-icon mui-icon-contact">
+
+				</span>
+				<span class="mui-tab-label">会员</span>
+			</a>
+			<a class="mui-tab-item" href="{php echo fm_murl('index','index','index',array())}">
+				<span class="mui-icon mui-icon-home">
+
+				</span>
+				<span class="mui-tab-label">主页</span>
+			</a>
+		</nav>

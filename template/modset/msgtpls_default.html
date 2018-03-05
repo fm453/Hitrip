@@ -1,0 +1,154 @@
+{template 'common/header-base'}
+{template 'modset/tab_formodule'}
+<div class="main">
+	<form action="{php echo $this->createWebUrl('modset')}" method="post" class="form-horizontal form" id="setting-form">
+	<input type="hidden" name="ac" value="msgtpls" />
+	<input type="hidden" name="op" value="modify" />
+	<input type="hidden" name="industry" value="default" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				消息模板设置({$fm453industry_name})
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单生成通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_order_new" class="form-control" value="{$settings['msgtpls']['default_order_new']}" />
+						<span class="help-block">
+						说明：用于订单的生成时向商家/管理员的知会。(default_order_new)（模板编号：OPENTM205213550）
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">任务处理通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_task" class="form-control" value="{$settings['msgtpls']['default_task']}" />
+						<span class="help-block">
+						说明：用于一些任务处理状态、进度的通知。(default_task)（模板编号：OPENTM200605630）
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单提交成功通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_order_post" class="form-control" value="{$settings['msgtpls']['default_order_post']}" />
+						<span class="help-block">
+						说明：用于客人成功提交订单后的通知。(default_order_post)（模板编号：OPENTM200746866）
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单取消通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_order_cancel" class="form-control" value="{$settings['msgtpls']['default_order_cancel']}" />
+						<span class="help-block">
+						说明：订单取消时发送通知。(default_order_cancel)（模板编号：TM00850）
+						</span>
+					</div>
+				</div>
+ 				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单支付成功通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_order_payed" class="form-control" value="{$settings['msgtpls']['default_order_payed']}" />
+						<span class="help-block">
+						说明：对订单进行追加信息的提醒通知。(default_order_payed)（模板编号：OPENTM204987032）
+						</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单发货通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_order_send" class="form-control" value="{$settings['msgtpls']['default_order_send']}" />
+						<span class="help-block">
+						说明：发货后通知客户。(default_order_send)（模板编号：OPENTM202243318）
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单确认收货通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_book_service" class="form-control" value="{$settings['msgtpls']['default_book_service']}" />
+						<span class="help-block">
+						说明：确认收货后客户收到通知。(default_book_service)（模板编号：OPENTM202314085）
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">会员升级通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_memlevel_up" class="form-control" value="{$settings['msgtpls']['default_memlevel_up']}" />
+						<span class="help-block">
+						说明：会员升级。(default_memlevel_up)（模板编号：OPENTM202674979）
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">充值成功通知</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_charged" class="form-control" value="{$settings['msgtpls']['default_charged']}" />
+						<span class="help-block">
+						说明：用于充值成功的通知。(default_charged)（模板编号：TM00977）
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">退款申请通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_refun_send" class="form-control" value="{$settings['msgtpls']['default_refun_send']}" />
+						<span class="help-block">
+						说明：申请通款后收到通知。(default_refun_send)（模板编号：TM00431）
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">退款申请驳回通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_refun_refuse" class="form-control" value="{$settings['msgtpls']['default_refun_refuse']}" />
+						<span class="help-block">
+						说明：退款申请被驳回时知会给用户。(default_refun_refuse)（模板编号：TM00432）
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">提现提交通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_case_send" class="form-control" value="{$settings['msgtpls']['default_case_send']}" />
+						<span class="help-block">
+						说明：申请提现时接收通知。(default_case_send)（模板编号：TM00979）
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">提现成功通知 </label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_case_success" class="form-control" value="{$settings['msgtpls']['default_case_success']}" />
+						<span class="help-block">
+						说明：申请提现成功的通知。(default_case_success)（模板编号：TM00980）
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">提现失败通知</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="default_case_fail" class="form-control" value="{$settings['msgtpls']['default_case_fail']}" />
+						<span class="help-block">
+						说明：客申请提现失败的通知。(default_case_fail)（模板编号：TM00981）
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+			<div class="col-sm-10 col-xs-10" >
+				<input type="submit" name="save" value="保存" class="btn btn-primary" />
+			</div>
+			<div class="col-sm-1 col-xs-1" >
+			</div>
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,50 @@
+{template $appstyle.'common/header'}
+<script src="{$appsrc}js/mui.min.js"></script>
+{if $ac == 'index'}
+	{if $operation == 'index'}
+	{template $appstyle.$do.'/'.$ac.'/mainpage'}
+	{/if}
+	{if $operation == 'load'}
+	{template $appstyle.$do.'/'.$ac.'/'.$operation.'/index'}
+	{/if}
+{/if}
+{if $ac == 'goods'}
+	{if $operation == 'index'}
+	{template $appstyle.$do.'/'.$ac.'/mainpage'}
+	{/if}
+	{if $operation == 'load'}
+	{template $appstyle.$do.'/'.$ac.'/load/index'}
+	{/if}
+	{if $operation == 'loadmore'}
+	{template $appstyle.$do.'/'.$ac.'/loadmore/page'}
+	{/if}
+{/if}
+{if $ac == 'article'}
+	{if $operation == 'index'}
+	{template $appstyle.$do.'/'.$ac.'/mainpage'}
+	{/if}
+	{if $operation == 'load'}
+	{template $appstyle.$do.'/'.$ac.'/load/index'}
+	{/if}
+	{if $operation == 'loadmore'}
+	{template $appstyle.$do.'/'.$ac.'/loadmore/page'}
+	{/if}
+
+{/if}
+{if $ac == 'member'}
+	{if $operation == 'index'}
+	{template $appstyle.$do.'/'.$ac.'/mainpage'}
+	{/if}
+	{if $operation == 'load'}
+	{template $appstyle.$do.'/'.$ac.'/load/index'}
+	{/if}
+	{if $operation == 'loadmore'}
+	{template $appstyle.$do.'/'.$ac.'/loadmore/page'}
+	{/if}
+{/if}
+{template $appstyle.'common/js_url'}
+{template $appstyle.'common/js_pic'}
+{template $appstyle.'common/js_array'}
+{template $appstyle.'common/js_form'}
+{template $appstyle.'common/js_cookie'}
+{template $appstyle.'common/footer'}

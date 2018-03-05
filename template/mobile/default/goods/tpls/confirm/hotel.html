@@ -1,0 +1,31 @@
+<h5>入住日期:</h5>
+		<div id="indate">
+		<input type="text" name="hotelindate" value="{php echo date('Y年m月d日',TIMESTAMP+84399)}" placeholder="请选择日期" class="form_datetime">
+		</div>
+<h5>离店日期:</h5>
+		<div id="outdate">
+		<input type="text" name="hoteloutdate" value="{php echo date('Y年m月d日',TIMESTAMP+84399*2)}" placeholder="请选择日期" class="form_datetime">
+		</div>
+<h5>人住成人</h5>	
+		<select id='adults' name="hoteladults" class="form-control">		
+		<option value="2" adults='2'>2位</option>
+		<option value="1" adults='1'>1位</option>
+		<option value="3" adults='3'>3位</option>
+		<option value="4" adults='4'>4位</option>
+		<option value="5" adults='5'>5位</option>
+		<option value="6" adults='6'>6位</option>
+		<option value="7" adults='7'>7位</option>
+		<option value="8" adults='8'>8位</option>
+		<option value="9" adults='9'>9位</option>
+		<option value="10" adults='10'>10位</option>
+		</select>
+
+<h5>人住儿童</h5>	
+		<select id='kids' name="hotelkids" class="form-control">
+		<option value="1" kids='1'>1名</option>
+		<option value="0" kids='0'>无</option>
+		<option value="2" kids='2'>2名</option>
+		<option value="3" kids='3'>3名</option>
+		<option value="4" kids='4'>4名</option>
+		<option value="5" kids='5'>5名</option>
+		</select>

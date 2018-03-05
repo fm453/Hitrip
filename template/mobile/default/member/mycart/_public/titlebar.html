@@ -1,0 +1,12 @@
+<header id="header" class="mui-bar" style="">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left " style="padding-top:5px;padding-bottom:7px;margin-top:8px;width:30px;height: 30px;color: #0095f6; background-color:rgba(125,125,125,.1);border-radius:50%;" ></a>
+	<h1 class="mui-title"  id="pagename" style="">{$pagename}</h1>
+	<a href="javascript:void(0)" onclick="clearCart()" id="clearcart" class="mui-icon mui-pull-right" style="{if count($list)<=0} display: none; {/if}">
+	<i class="fa fa-trash"></i> 清空
+	</a>
+</header>
+<script type="text/javascript" >
+	mui('header').on( 'tap' , '#clearcart' , function(){
+		clearCart();
+	});
+</script>

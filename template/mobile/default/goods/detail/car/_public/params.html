@@ -1,0 +1,14 @@
+{if count($params)>0}
+	<div class="mui-content">
+			<div class="mui-content-padded">
+				{loop $params $p}
+		<div class="span12 detail-group" style="margin: 0;height: 25px;">
+			<div class="params">
+				<span class="params-left col-xs-4" style="border-bottom: 1px #fff solid;">{$p['title']}</span>
+				<span class="params-right col-xs-8" style="color:#f00;border-bottom: 1px #fff solid;">{$p['value']}</span>
+   		</div>
+   	</div>
+	{/loop}
+			</div>
+		</div>
+{/if}

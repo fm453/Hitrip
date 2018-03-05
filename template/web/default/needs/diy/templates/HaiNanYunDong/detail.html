@@ -1,0 +1,25 @@
+<!--数据管理(回复) 详情页 -->
+<div class="form-group forcopy">
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+		 <label class='control-label'>
+			 <input type='checkbox' name='nd[wxhao][status]' value='1' {if $needs_data['wxhao']['status']==1}checked{/if} /> 
+		 </label>
+	</div>
+	<label class="col-xs-12 col-sm-9 col-md-2 col-lg-2 control-label">微信号</label>
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+		<input type="text" name="nd[wxhao][value]" class="form-control" value="{$needs_data['wxhao']['value']}" />
+	</div>
+</div>
+
+<div class="form-group forcopy">
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+		 <label class='control-label'>
+			 <input type='checkbox' name='nd[question][status]' value='1' {if $needs_data['question']['status']==1}checked{/if} /> 
+		 </label>
+	</div>
+	<label class="col-xs-12 col-sm-9 col-md-2 col-lg-2 control-label">诉求</label>
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+		<textarea name="nd[question][value]" class="form-control"> {$needs_data['question']['value']}</textarea>
+	</div>
+	
+</div>

@@ -1,0 +1,271 @@
+<style>
+	.sort li{
+	}
+	.sort .mui-table-view.mui-grid-view .mui-table-view-cell{
+		margin-right:0;
+		padding: 10px 0 0 0px;
+	}
+	.sort span .mui-icon{
+		 color:#ddd;
+		 text-align: center;
+	}
+	.sort span .mui-media-body{
+		 margin-left:0px;
+	}
+	.sort .sel {
+		width: 40px;
+		height: 40px;
+		display: inline-block;
+		border: 1px solid #ddd;
+		border-radius: 50%;
+		font-size: 38px;
+	}
+	.sort .active>span{
+		background-color:#0095f6;
+		color:#fff;
+	}
+	.category-keyword .mui-btn {
+		padding:1px;
+	}
+	.goodstpl .mui-table-view.mui-grid-view .mui-table-view-cell{
+		margin-right:0;
+		padding: 10px 0 0 0px;
+	}
+	.goodstpl .active{
+		border:1px  #0095f6 dotted;
+		box-shadow: 2px 2px 2px 2px #0095f6;
+	}
+	.goodstpl .sel {
+		width: 50px;
+		height: 50px;
+		display: inline-block;
+		text-align: center;
+		border-radius: 10px;
+		font-size: 14px;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+	}
+</style>
+<div class="mui-content" style="margin-top: 0;margin-bottom: 0;">
+	<form action="{php echo fm_murl($do,$ac,'operation',array('changeorder'=>1))}" method="post" class="mui-input-group" id="form-search" enctype="multipart/form-data" style="padding-bottom: 5px;">
+		<input type="hidden" name="isnew" value="{$_GPC['isnew']}" />
+		<input type="hidden" name="ishot" value="{$_GPC['ishot']}" />
+		<input type="hidden" name="isdiscount" value="{$_GPC['isdiscount']}" />
+
+		<input type="hidden" name="isupdatetime" value="{$_GPC['isupdatetime']}" />
+		<input type="hidden" name="issales" value="{$_GPC['issales']}" />
+		<input type="hidden" name="isdianzan" value="{$_GPC['isdianzan']}" />
+		<input type="hidden" name="isview" value="{$_GPC['isview']}" />
+
+		<input type="hidden" id="byupdatetime" name="byupdatetime" value="{$hasorderbytime}" />
+		<input type="hidden" id="bysales" name="bysales" value="{$hasorderbysales}" />
+		<input type="hidden" id="bydianzan" name="bydianzan" value="{$hasorderbydianzan}" />
+		<input type="hidden" id="byview" name="byview" value="{$hasorderbyview}" />
+
+		<input type="hidden" name="fromplats" value="{$_GPC['fromplats']}" />
+		<input type="hidden" name="a_tpl" value="{$a_tpl}" />
+		<input type="hidden" name="page" value="{$pindex}" />
+		<input type="hidden" name="pcate" value="{$pcate}" />
+		<input type="hidden" name="ccate" value="{$ccate}" />
+		<input type="hidden" name="token" value="{$_W['token']}" />
+
+		<!--关键词-->
+		<div class="" style="margin-top:3px;">
+			<div class="mui-input-row" style="height:34px;">
+				<input id="search" type="search" name="keyword" class="mui-input  mui-search mui-input-clear" value="{$_GPC['keyword']}" placeholder="在这里输入关键字搜索">
+			</div>
+		</div>
+
+		<!--排序筛选-->
+		<div class="sort" style="">
+				<ul class="mui-table-view mui-grid-view mui-grid-6" style="text-align: center;padding:0 0 10px 0;">
+		<li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2" style="">
+			<span orderby="updatetime" showorder="{$sortbytime}" class="{$allissort[0]}" >
+				{if $sortbytime=='desc'}
+				<span class="sel mui-icon mui-icon-arrowthindown" style="" id="click-updatetime">
+				</span>
+				{else}
+				<span class="sel mui-icon mui-icon-arrowthinup" style="" id="click-updatetime">
+				</span>
+				{/if}
+			<div class="mui-media-body">最近</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2">
+			<span orderby="view" showorder="{$sortbyview}"  class="{$allissort[1]}" >
+				{if $sortbyview=='desc'}
+				<span class="sel mui-icon mui-icon-arrowthindown" style="" id="click-view">
+				</span>
+				{else}
+				<span class="sel mui-icon mui-icon-arrowthinup" style="" id="click-view">
+				</span>
+				{/if}
+				<div class="mui-media-body">阅读量</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2">
+			<span orderby="dianzan" showorder="{$sortbydianzan}"  class="{$allissort[2]}">
+				{if $sortbydianzan=='desc'}
+				<span class="sel mui-icon mui-icon-arrowthindown" style=""  id="click-dianzan">
+				</span>
+				{else}
+				<span class="sel mui-icon mui-icon-arrowthinup" style=""  id="click-dianzan">
+				</span>
+				{/if}
+				<div class="mui-media-body">人气</div>
+			</span>
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-2 mui-col-sm-2">
+			<span  keywords="rand" {if $keywords} class="active" {/if} >
+				<span class="sel mui-icon mui-icon-flag" {if $keywords} style="color:red;" {/if} id="click-keyword">
+				</span>
+				<div class="mui-media-body">热搜</div>
+			</span>
+		</li>
+				</ul>
+		</div>
+
+	<button type="submit" class="hidden" style="display: none;"></button>
+	</form>
+</div>
+
+<script language='javascript'>
+	var now_goodstpl = "{$a_tpl}";
+
+	var has_searched = "{$_GPC['keyword']}";	//是否带了搜索词
+	var is_searched = $('#search').val();
+	//解决当前MUI框架在AJAX结果页中，查看搜索的某条结果后再返回时，搜索词被忽略、数据被刷新的问题
+	//——仅针对 有输入了搜索词但并非url传参带入的情况
+	if(is_searched != '' && has_searched ==''){
+		//该情况下，由于多次不同URL跳转，Form_format函数没有被引入了，故再构造一次
+		function Form_format(formid){
+			var formid = (typeof(formid)=="string" ? formid : '');
+			if (!formid) {
+				return false;
+			}
+			var x = document.getElementById(formid);
+			var result={};
+			for (var i=0;i<x.length;i++)  {
+				var obj = x.elements[i];
+				var key = obj.name;
+				result[key] = obj.value;
+			}
+			return result;
+		}
+
+		//在H5+ 非IOS 环境中；（IOS返回数据维持了搜索结果，故不刷新页面）
+		if(mui.os.plus && !mui.os.ios) {
+			formcheck('form-search');
+		}else{
+			formcheck('form-search');	//非5+环境
+		}
+	}
+
+	//监听文章模型选择
+	mui('.goodstpl').on( 'tap' , 'li' , function(){
+		var goodstpl_clicked=this.getAttribute("data-goodstpl");
+		$('.goodstpl,li').removeClass("active");
+		this.classList.toggle('active');
+		document.getElementsByName("goodstpl")[0].value = goodstpl_clicked;
+		formcheck('form-search');
+	});
+
+	//监听排序设置
+	mui('.sort').on( 'tap' , 'span' , function(){
+		var orderby = this.getAttribute("orderby");
+		var showorder = this.getAttribute("showorder");
+		var fromplats = this.getAttribute("fromplats");
+		var randkeywords = this.getAttribute("keywords");
+		if (orderby || fromplats) {
+			ChangeShoworder(this);
+		}else {
+			if (randkeywords=='rand') {
+				getRandKeywords();
+			}
+		}
+	});
+
+	var sortarray={'updatetime':0,'sales':0,'dianzan':0,'view':0};
+	var orderarray={desc:'asc',asc:'desc'};
+	function ChangeShoworder(obj) {
+		var orderby = obj.getAttribute("orderby");
+		var showorder = obj.getAttribute("showorder");
+		var fromplats = obj.getAttribute("fromplats");
+		var randkeywords = obj.getAttribute("keywords");
+		if (orderby) {
+			sortarray[orderby]++;
+			var k = sortarray[orderby];
+			if (k>2) {
+				document.getElementsByName("by"+orderby)[0].value='';
+				document.getElementsByName("is"+orderby)[0].value='false';
+				sortarray[orderby]=0;
+				obj.classList.toggle('active');
+			}else {
+				document.getElementsByName("is"+orderby)[0].value='true';
+				if (k==1) {
+					obj.classList.toggle('active');
+				}
+				var sortspan = $("#click-"+orderby);
+				if (showorder=='desc') {
+				 	sortspan.addClass('mui-icon-arrowthinup').removeClass('mui-icon-arrowthindown').removeClass('mui-icon-pulldown');
+				 	document.getElementsByName("by"+orderby)[0].value='asc';
+				}else {
+				 	sortspan.removeClass('mui-icon-arrowthinup').addClass('mui-icon-pulldown');
+				 	document.getElementsByName("by"+orderby)[0].value='desc';
+				}
+				obj.setAttribute("showorder",orderarray[showorder]);
+				document.getElementById('click-' + orderby).value=orderarray[showorder];
+			}
+		}
+		if (fromplats) {
+			var new_plat = (fromplats=='all') ? "{$_W['uniacid']}" : 'all';
+			var plattitle = {"all":"全网","{$_W['uniacid']}":"本店"}
+			document.getElementsByName('fromplats')[0].value=new_plat;
+			obj.setAttribute("fromplats",new_plat);
+			obj.classList.toggle('active');
+			$("#click-plat").next().html(plattitle[new_plat]);
+			$('#showstatus').html(fromplats);
+		}
+
+		formcheck('form-search');
+	}
+
+	function getRandKeywords() {
+		var url = "{php echo fm_murl('ajax','index','randkeyword',array())}";
+		var data = {
+			'type' : "article"
+		};
+		mui.getJSON(url,data,
+			function(res){
+				$('#search').val(res);//替换内容
+				formcheck('form-search');
+			}
+		);
+	}
+
+	function formcheck(formid) {
+		var form = document.getElementById(formid);
+		var formdata = Form_format(formid); //自有方法格式化表单元素，返回数组
+		var container = 'search-list-table';
+		var url = "{php echo fm_murl($do,$ac,'operation',array('changeorder'=>1))}";
+		var data = formdata;
+		data['refresh']=1;
+		$('#showstatus').html('正在搜索…');//替换内容
+		$('#pagename').html('正在搜索…');//替换内容
+		$.get(url,data,function(res){
+			$('#'+container).html(res);//替换内容
+			$('#showstatus').html('结果已刷新!');//替换内容
+			$('#pagename').html('结果已刷新!');//替换内容
+			setTimeout(function(){
+					$('#pagename').html('{$pagename}');
+					$('#showstatus').html('');
+				},3000);
+		},'html');
+		$('input').blur();	//让输入框失焦，以关闭键盘
+		//form.keyword.focus();
+		//form.submit();//直接利用表单自身进行提交（不通过AJAX方式进行动态查询，不建议）
+		return false;
+	}
+</script>

@@ -1,0 +1,38 @@
+<div class="panel-heading panel-info">
+<div class="panel-heading" >	基础数据	</div>
+</div>
+<div class="form-group">
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1 ">
+		<div class="input-group ">
+			<span class="input-group-addon">UV</span>
+			<input type="text" name="uv" id="uv" class="form-control" style="width:100px;" {if !$_W['isfounder']} readonly='true'{/if} value="{$item['uv']}" />
+			<span class="input-group-addon">人次</span>
+			<span class="input-group-addon">浏览量</span>
+			<input type="text" name="viewcount" id="viewcount"  style="width:100px;" class="form-control" {if !$_W['isfounder']} readonly='true'{/if} value="{$item['viewcount']}" />
+			<span class="input-group-addon">人次</span>
+			<span class="input-group-addon">点赞量</span>
+			<input type="text" name="dianzan" id="dianzan"  style="width:100px;" class="form-control" {if !$_W['isfounder']} readonly='true'{/if} value="{$item['dianzan']}" />
+			<span class="input-group-addon">人次</span>
+			<span class="input-group-addon">被分享</span>
+			<input type="text" name="sharecount" id="sharecount"  style="width:100px;" class="form-control" {if !$_W['isfounder']} readonly='true'{/if} value="{$item['sharecount']}" />
+			<span class="input-group-addon">人次</span>
+		</div>
+	</div>
+</div>
+<div class="panel-heading panel-info">
+<div class="panel-heading" >	点赞列表	</div>
+</div>
+	<span id="dianzanavatar" class='help-block' {if empty($dianzanList)}style="display:none"{/if}>
+			{loop $dianzanList $dianzaner}
+			<a href="{php echo fm_wurl('crm','member','modify',array('uid'=>$dianzaner['uid']))}" target="_blank"><img  style="width:100px;height:100px;border:1px solid #ccc;padding:1px" src="{$dianzaner['avatar']}" title="{$dianzaner['uid']}" />
+			{/loop}
+	</span>
+	
+<div class="panel-heading panel-info">
+<div class="panel-heading" >	分享列表	</div>
+</div>
+	<span id="shareavatar" class='help-block' {if empty($shareList)}style="display:none"{/if}>
+			{loop $shareList $shareer}
+			<a href="{php echo fm_wurl('crm','member','modify',array('uid'=>$shareer['uid']))}" target="_blank"><img  style="width:100px;height:100px;border:1px solid #ccc;padding:1px" src="{$shareer['avatar']}" title="{$shareer['uid']}" />
+			{/loop}
+	</span>

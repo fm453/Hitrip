@@ -1,0 +1,250 @@
+{template $appstyle.$do.'/'.$ac.'/'.'header'}
+{if $comment['deleted']==1}
+<section class="article135" label="powered by 135editor.com" style="font-family:微软雅黑;font-size:16px;"><section class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="708"><section class="layout" style="border-color: rgb(89, 195, 249); color: rgb(255, 255, 255); margin: 0px auto; padding: 35px; background-color: rgb(89, 195, 249); box-sizing: border-box;"><h2 class="135title" style="font-size: 24px; font-weight: bold; border-color: rgb(89, 195, 249); color: inherit; line-height: 29px;">我的好评</h2><section class="135brush" style="border-color: rgb(89, 195, 249); color: inherit; box-sizing: border-box; padding: 0px; margin: 0px;"><p style="white-space: normal;">您好，您暂时还没有点评内容。</p></section></section><section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section></section>  </section>
+{else}
+<style type="text/css">
+/*通用全局样式*/
+body {
+background-color:rgba(242, 242, 242, 0.09);
+padding-top: 40px;
+padding-bottom:40px;
+}
+.myoder{margin:10px 0 10px 0; -webkit-box-shadow:0 1px 2px 1px rgba(0,0,0,0.2); box-shadow:0 1px 2px 1px rgba(0,0,0,0.2); overflow:hidden; background:#FFF;}
+.myoder .myoder-hd{height:35px; line-height:35px; overflow:hidden; background:#f0f0f0; border-bottom:1px solid #cacaca; padding:0 10px;}
+.myoder .myoder-hd > span{font-size:14px; color:#504040;}
+.myoder .myoder-hd > span.pull-right{font-size:12px; color:#999;}
+</style>
+<div class="container myoder img-rounded">
+<section class="article135" label="powered by 135editor.com" style="font-family:微软雅黑;font-size:16px;">
+    <section class="article135" style="box-sizing: border-box; padding: 0px; margin: 0px;">
+        <section class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="85560">
+            <section class="layout" style="margin: 0px auto; box-sizing: border-box; padding: 0px;">
+                <section style="padding: 2px 10px; box-sizing: border-box; margin: 0px;">
+                    <section style="width: 50px; height: 50px; border: 2px solid rgb(198, 198, 199); border-radius: 50%; float: left; margin-right: 10px; box-sizing: border-box; padding: 0px;">
+                        <img src="{$cavatar}" style="border-radius: 50%; box-sizing: border-box; padding: 0px; margin: 0px;" opacity="" mapurl="" title="" alt="" height="46px" width="46px" border="0"/>
+                    </section>
+                    <section class="135brush" data-style="clear: none;line-height:17px;padding:0 0;font-size:12px;" style="margin: 5px; box-sizing: border-box; padding: 0px;">
+                        <p style="clear: none; font-size: 12px; line-height: 1.5em; padding: 0px; margin: 0px; box-sizing: border-box; white-space: normal;">
+                            <span style="box-sizing:border-box; color:#00B0F0; margin:0px; padding:0px"><strong style="box-sizing:border-box; margin:0px; padding:0px">{$_W['uniaccount']['name']}评论反馈</strong></span>
+                        </p>
+                        <p style="clear: none; font-size: 12px; line-height: 1.5em; padding: 0px; margin: 0px; box-sizing: border-box; white-space: normal;">
+                            我是第{$comment['id']}位点评客，希望能得到亲们的支持啦！
+                        </p>
+                    </section>
+                </section>
+                <section style="border: none; margin: 5px; box-sizing: border-box; padding: 0px;">
+                    <section style="width: 0px; border-bottom-width: 0.6em; border-bottom-style: solid; border-top-color: rgb(198, 198, 199); border-bottom-color: rgb(198, 198, 199); height: 10px; color: inherit; margin-left: 18px; border-left-width: 0.7em !important; border-left-style: solid !important; border-left-color: transparent !important; border-right-width: 0.7em !important; border-right-style: solid !important; border-right-color: transparent !important; box-sizing: border-box; padding: 0px;"></section>
+                    <section style="width: 0px; margin-left: 18px; border-bottom-width: 0.6em; border-bottom-style: solid; border-top-color: rgb(254, 254, 254); border-bottom-color: rgb(254, 254, 254); height: 10px; margin-top: -8px; color: inherit; float: left; border-left-width: 0.7em !important; border-left-style: solid !important; border-left-color: transparent !important; border-right-width: 0.7em !important; border-right-style: solid !important; border-right-color: transparent !important; box-sizing: border-box; padding: 0px;"></section>
+                    <section class="135brush" style="text-align: center; margin: 0px auto -2px; border: 2px solid rgb(198, 198, 199); border-radius: 5px; padding: 10px; box-sizing: border-box;">
+                        <p style="border-color: rgb(198, 198, 199); text-align: justify; box-sizing: border-box; padding: 0px; margin: 0px; white-space: normal;">
+                            <span style="box-sizing: border-box; color: #7F7F7F; margin: 0px; padding: 0px; font-size: 14px;">即日起，参与对{$_W['uniaccount']['name']}的好评活动，官方将会根据您的点评内容与人气，发放相应的奖励哦！<a href="{php echo $this->createMobileUrl('comment',array('op'=>'display'))}"   class="btn  btn-default pull-right" ><i class="fa fa-thumbs-up" style="color: red;"></i>我也去参加</a></span>
+                        </p>
+                    </section>
+                </section>
+            </section>
+            <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+        </section>
+        <section data-custom="rgb(30, 155, 232)" data-color="rgb(30, 155, 232)" class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="58391">
+        <br>
+            <section style="border: medium none; margin: 30px; padding: 0px; background-color: rgb(30, 155, 232); text-align: center; color: rgb(255, 255, 255); box-sizing: border-box;">
+{if !empty($comment['from_channel']) & isneedchannel==1}
+                <section style="width: 120px; height: 40px; margin-left: -55px; margin-bottom: 10px; background-color: rgb(254, 254, 254); box-sizing: border-box display: block; padding: 5px; color: inheritbox-sizing: border-box;box-sizing: border-box;transform: rotate(-40deg);-webkit-transform: rotate(-40deg);-moz-transform: rotate(-40deg);-ms-transform: rotate(-40deg);-o-transform: rotate(-40deg);">
+                    <span class="135brush" data-brushtype="text" style="border-color: #1E9BE8; color: #1E9BE8; font-size: 16px; margin-left: 20px; text-align: center;">
+		{if $comment['from_channel']=="ctrip"}携程{else}
+			{if $comment['from_channel']=="elong"}艺龙{else}
+				{if $comment['from_channel']=="qunar"}去哪儿{else}
+					{if $comment['from_channel']=="alitrip"}阿里旅行{else}
+						{if $comment['from_channel']=="travelagent"}旅行社{else}
+							{if $comment['from_channel']=="other"}其他{/if}
+						{/if}
+					{/if}
+				{/if}
+			{/if}
+		{/if}
+                    </span>
+                </section>
+  {/if}
+                <p style="color: inherit; white-space: normal;">
+                    <img data-width="100%" src="{php echo tomedia($comment['thumb']);}" style="color: inherit; width: 100%; margin: -50px 0px 0px; height: auto ! important; visibility: visible ! important; border-radius: initial;" opacity="" mapurl="" title="" alt="" height="auto" width="100%" border="0"/>
+                </p>
+                <section class="135brush" data-style="color: rgb(146, 208, 80);font-size: 18px;" style="margin: 10px 5px 15px; padding: 5px 5px 10px; color: inherit; box-sizing: border-box;">
+                    <p style="color: inherit; text-align: left; white-space: normal;">
+                        <span style="color:#FFFFFF"><strong><span style="font-size:18px">入住日期：</span></strong>{php echo date("Y-m-d",$comment['starttime']);}</span>
+                    </p>
+                    {if !empty($comment['endtime']) & $isneedendtime==1}
+                    <p style="color: inherit; text-align: left; white-space: normal;">
+                        <span style="color:#FFFFFF"><strong><span style="font-size:18px">离店日期：</span></strong>{php echo date("Y-m-d",$comment['endtime']);}</span>
+                    </p>
+                    {/if}
+                </section>
+            </section>
+            <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+        </section>
+        <section data-custom="rgb(89, 195, 249)" data-color="rgb(89, 195, 249)" class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="128">
+            <section style="border: none; margin: 0.8em 0px 0.3em; box-sizing: border-box; padding: 0px;">
+                <section class="135brush" data-brushtype="text" style="width: 2.5em; height: 2.5em; margin: 0px auto 1px; border-radius: 100%; line-height: 2.5em; box-sizing: border-box; overflow: hidden; font-size: 40px; text-align: center; text-decoration: inherit; color: rgb(255, 255, 255); background-color: rgb(89, 195, 249); border-color: rgb(89, 195, 249); padding: 0px;">
+                    {$logcount}
+                </section>
+                <section style="font-size: 1em; text-align: center; text-decoration: inherit; color: rgb(255, 255, 255); border-color: rgb(89, 195, 249); box-sizing: border-box; padding: 0px; margin: 0px;">
+                    <section style="width: 0px; margin: 0px auto; border-bottom: 0.5em solid rgb(89, 195, 249); border-top-color: rgb(89, 195, 249); border-left: 1em solid transparent ! important; border-right: 1em solid transparent ! important; box-sizing: border-box; height: 10px; padding: 0px;"></section>
+                    <section class="135brush" data-brushtype="text" style="padding: 0.5em; line-height: 1.2em; font-size: 1em; box-sizing: border-box; background-color: rgb(89, 195, 249); color: rgb(255, 255, 255); margin: 0px;">
+                        {$comment['username']}当前影响力为{$rp_power}。
+                    </section>
+                </section>
+            </section>
+            <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+        </section>
+        <p style="text-align: center; white-space: normal;">
+	<div style="text-align: center;">
+		<a href="{php echo $this->createMobileUrl('comment',array('op'=>'up','id'=>$comment['id']))}"   class="btn  btn-default" ><i class="fa fa-thumbs-up" style="color: red;"></i>{$comment['up_count']}</a>
+		<a href="{php echo $this->createMobileUrl('comment',array('op'=>'down','id'=>$comment['id']))}"   class="btn  btn-default  " ><i class="fa fa-thumbs-down" style="color: gray;"></i>{$comment['down_count']}</a>
+    </div>
+        </p>
+        <div style="text-align: center;color: #ccc;">粉丝团</div>
+        <section data-custom="rgb(89, 195, 249)" data-color="rgb(89, 195, 249)" class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="24">
+            <section class="135brush layout" style="margin: 3px auto; padding: 15px; color: rgb(62, 62, 62); line-height: 24px; box-shadow: 0px 0px 3px rgb(170, 170, 170); border: 2px solid rgb(240, 240, 240); box-sizing: border-box;border-radius: 5px;">
+                <p style="white-space: normal;color: #ccc;">
+                {if empty($uplogs)}
+                ～～还没有粉丝们留下足迹
+                {else}
+                {loop $uplogs $uplog}
+                {if !empty($uplog['avatar'])}
+                	<img src="{$uplog['avatar']}" style="width:34px;height:34px;margin-right:6px;border-radius: 50%;" class="img-rounded">
+                	{else}
+                    <img src="{$_W['siteroot']}addons/fm453_duokefu/resource/images/from.jpg" style="width:34px;height:34px;margin-right:6px;border-radius: 50%;" class="img-rounded">
+                    {/if}
+                 {/loop}
+                 {/if}
+                </p>
+            </section>
+            <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+        </section>
+        {if !empty($comment['remark'])}
+        <section class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="708">
+            <section class="layout" style="border-color: rgb(89, 195, 249); color: rgb(255, 255, 255); margin: 0px auto; padding: 5px 15px 5px 15px; background-color: rgb(89, 195, 249); box-sizing: border-box;">
+                <h6 class="135title" style="font-size: 24px; font-weight: bold; border-color: rgb(89, 195, 249); color: inherit; line-height: 10px;">
+                    Ta 说
+                </h6>
+                <section class="135brush" style="border-color: rgb(89, 195, 249); color: inherit; box-sizing: border-box; padding: 0px; margin: 0px;">
+                    <p style="white-space: normal;">
+                        {$comment['remark']}
+                    </p>
+                </section>
+            </section>
+            <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+        </section>
+        {/if}
+        <p style="white-space: normal;">
+            <br/>
+        </p>
+        <section data-custom="rgb(30, 155, 232)" data-color="rgb(30, 155, 232)" class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="47">
+            <section style="text-align: right; box-sizing: border-box; padding: 0px; margin: 0px;">
+                <section data-width="65%" class="135brush layout" style="display: inline-block; width: 65%; margin-top: 0.7em; padding: 1em; border-radius: 1em; text-align: left; font-size: 1em; color: rgb(255, 255, 255); margin-right: -0.4em; background-color: rgb(30, 155, 232); border-color: rgb(255, 255, 255); box-sizing: border-box;">
+                    <p style="color: inherit; white-space: normal;">
+                    {if !empty($comment['reply'])}
+                        {$comment['reply']}
+                        {else}
+                        感谢亲们的关注哦！
+                        {/if}
+                    </p>
+                </section>
+                <section style="display: inline-block; margin-top: 1.2em; vertical-align: top; width: 20px; padding-top: 10px; padding-bottom: 10px; color: inherit; box-sizing: border-box;">
+                    <section style="border-left: 20px solid rgb(30, 155, 232); border-right-width: 0px; border-right-color: rgb(30, 155, 232); display: inline-block; height: 15px; width: 15px; vertical-align: top; float: left; color: inherit; border-bottom: 12px solid transparent ! important; border-top-style: solid ! important; border-top-color: transparent ! important; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+                </section>
+                <section style="display: inline-block; line-height: 20px; vertical-align: top; margin-top: 0.5em; text-align: center; color: inherit; box-sizing: border-box; padding: 0px;">
+                    <img src="{$_W['attachurl']}headimg_{$acid}.jpg" class="img-rounded" style="vertical-align:top; width:40px;height: auto !important;"/><br style="color: inherit;"/><span class="135brush" data-brushtype="text" style="color:inherit; font-size:12px; line-height:30px">管理回复</span>
+                </section>
+            </section>
+            <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+        </section>
+        <p style="white-space: normal;">
+            <br/>
+        </p>
+    </section>
+</section>
+
+</div>
+{/if}
+<section class="article135" label="powered by 135editor.com" style="font-family:微软雅黑;font-size:16px;">
+    <section data-custom="rgb(89, 195, 249)" data-color="rgb(89, 195, 249)" class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="7308">
+        <h2 class="135brush layout" data-brushtype="text" style="padding-bottom: 9px; border-bottom: 1px solid rgb(238, 238, 238); margin: 0px auto 10px; font-weight: bold; line-height: 1.1; font-size: 22px;">
+            <span style="color: #548DD4;">参与方式</span>
+        </h2>
+        <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+    </section>
+    <p style="white-space: normal;">
+        <br/>
+    </p>
+    <section data-custom="rgb(89, 195, 249)" data-color="rgb(89, 195, 249)" class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="2185">
+        <section style="color: inherit; font-size: 16px; padding: 5px 10px 0px 35px; margin-left: 27px; border-left: 2px dotted rgb(228, 228, 228); box-sizing: border-box;">
+            <section title="" data-original-title="" class="autonum" style="width: 32px; height: 32px; margin-left: -53px; margin-top: 23px; color: rgb(255, 255, 255); text-align: center; line-height: 32px; border-radius: 16px; background: rgb(89, 195, 249) none repeat scroll 0% 0%; box-sizing: border-box; padding: 0px;">
+                1
+            </section>
+            <section class="135brush" style="margin-top: -30px; padding-bottom: 10px; color: inherit; box-sizing: border-box;">
+                <p style="white-space: normal;">
+                    通过评论活动页，按要求填写好联系方式、入住日期、离店日期、房号等信息后即可提交了。<br/>
+                </p>
+            </section>
+        </section>
+        <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+    </section>
+    <section data-custom="rgb(89, 195, 249)" data-color="rgb(89, 195, 249)" class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="2185">
+        <section style="color: inherit; font-size: 16px; padding: 5px 10px 0px 35px; margin-left: 27px; border-left: 2px dotted rgb(228, 228, 228); box-sizing: border-box;">
+            <section title="" data-original-title="" class="autonum" style="width: 32px; height: 32px; margin-left: -53px; margin-top: 23px; color: rgb(255, 255, 255); text-align: center; line-height: 32px; border-radius: 16px; background: rgb(89, 195, 249) none repeat scroll 0% 0%; box-sizing: border-box; padding: 0px;">
+                2
+            </section>
+            <section class="135brush" style="margin-top: -30px; padding-bottom: 10px; color: inherit; box-sizing: border-box;">
+                <p style="white-space: normal;">
+                    本次活动仅限从网络预订我酒店直销房价的客人，且非赶机房、月租房等特殊产品，否则将不能获得返现红包。
+<br/>
+                </p>
+            </section>
+        </section>
+        <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+    </section>
+    <section data-custom="rgb(89, 195, 249)" data-color="rgb(89, 195, 249)" class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="2185">
+        <section style="color: inherit; font-size: 16px; padding: 5px 10px 0px 35px; margin-left: 27px; border-left: 2px dotted rgb(228, 228, 228); box-sizing: border-box;">
+            <section title="" data-original-title="" class="autonum" style="width: 32px; height: 32px; margin-left: -53px; margin-top: 23px; color: rgb(255, 255, 255); text-align: center; line-height: 32px; border-radius: 16px; background: rgb(89, 195, 249) none repeat scroll 0% 0%; box-sizing: border-box; padding: 0px;">
+                3
+            </section>
+            <section class="135brush" style="margin-top: -30px; padding-bottom: 10px; color: inherit; box-sizing: border-box;">
+                提交后，我们将有工作人员进行审核、回复；请您及时在“我的点评”页面进行查看哦！<br/>
+            </section>
+        </section>
+        <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+    </section>
+    <section data-custom="rgb(89, 195, 249)" data-color="rgb(89, 195, 249)" class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="2185">
+        <section style="color: inherit; font-size: 16px; padding: 5px 10px 0px 35px; margin-left: 27px; border-left: 2px dotted rgb(228, 228, 228); box-sizing: border-box;">
+            <section title="" data-original-title="" class="autonum" style="width: 32px; height: 32px; margin-left: -53px; margin-top: 23px; color: rgb(255, 255, 255); text-align: center; line-height: 32px; border-radius: 16px; background: rgb(89, 195, 249) none repeat scroll 0% 0%; box-sizing: border-box; padding: 0px;">
+                4
+            </section>
+            <section class="135brush" style="margin-top: -30px; padding-bottom: 10px; color: inherit; box-sizing: border-box;">
+                <p style="white-space: normal;">
+                    审核通过后，您还可将您的评论详情页分享推荐给您的好友们啦，让您的好友们也可以来参与本活动哦。<br/>
+                </p>
+            </section>
+        </section>
+        <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+    </section>
+    <section class="135editor" style="position: static; box-sizing: border-box; border: 0px none; padding: 0px; margin: 0px;" data-id="708">
+        <section class="layout" style="border-color: rgb(89, 195, 249); color: rgb(255, 255, 255); margin: 0px auto; padding: 35px; background-color: rgb(89, 195, 249); box-sizing: border-box;">
+            <h2 class="135title" style="font-size: 24px; font-weight: bold; border-color: rgb(89, 195, 249); color: inherit; line-height: 29px;">
+                奖励发放
+            </h2>
+            <section class="135brush" style="border-color: rgb(89, 195, 249); color: inherit; box-sizing: border-box; padding: 0px; margin: 0px;">
+                <p style="white-space: normal;">
+                    我们将在您的点评信息审核通过后的3个工作日内，直接发放到您的微信钱包，请注意查收哟！
+                </p>
+            </section>
+        </section>
+        <section style="display: block; width: 0px; height: 0px; clear: both; box-sizing: border-box; padding: 0px; margin: 0px;"></section>
+    </section>
+    <p style="white-space: normal;">
+        <br/>
+    </p>
+</section>
+
+<div style="text-align: center;">
+	<a href="{php echo $this->createMobileUrl('comment',array('op'=>'display'))}"   class="btn  btn-default" ><i class="fa fa-comments-o"></i>现在就去评论</a>
+</div>
+{template $appstyle.$do.'/'.$ac.'/'.'footer'}

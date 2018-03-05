@@ -1,0 +1,86 @@
+<div class="panel panel-default">
+			<div class="panel-heading">
+			<a data-toggle="collapse" data-parent="#accordion"
+          href="#formhelp">
+          系统内置表单<span class="pull-right">（点击展示/收起）</span>
+        </a>
+			</div>
+</div>
+<div class="container-fluid panel-collapse collapse in" id="formhelp">
+	<div class="row-fluid">
+		<div class="span12 forcopy">
+			<ol>
+				<li>系统链接：
+					<p>{php echo tpl_form_field_link('lnk',$_W['siteroot'].'app'.str_replace('./','/',murl('entry//',array('do'=>'list','m'=>'fm453_shopping'))), array('css'=>array('input'=>'class1', 'btn'=>'class2')));}</p>
+				</li>
+				<li>获取颜色：
+					<p>{php echo tpl_form_field_color('color');}</p>
+				</li>
+				<li>获取经纬度坐标：
+					<p>{php echo tpl_form_field_coordinate('location');}</p>
+				</li>
+				<li>获取系统表情：
+					<p>{php echo tpl_form_field_emoji('emoji');}</p>
+				</li>
+				<li>系统图标 ：
+					<p>{php echo tpl_form_field_icon('icon');}</p>
+				</li>
+				<li>图片管理(单图上传)：
+					<p>{php echo tpl_form_field_image(image);}</p>
+				</li>
+				<li>多图上传：
+					<p>{php echo tpl_form_field_multi_image('multi-image');}</p>
+				</li>
+				<li>音频管理：
+					<p>{php echo tpl_form_field_multi_audio('audio');}</p>
+				</li>
+				<li>音频管理(2)：
+					<p>{php echo fmFunc_tpl_audio('audio');}</p>
+				</li>
+				<li>视频管理：
+					<p>{php echo tpl_form_field_video('video');}</p>
+				</li>
+				<li>时间选择：
+					<p>{php echo tpl_form_field_date('date','',true);}</p>
+				</li>
+				<li>日期范围选择：
+					<p>{php echo tpl_form_field_daterange('work2', null, true);}</p>
+				</li>
+				<li>微信多图片上传管理(上传到公众微信素材库)：
+					<p>{php echo tpl_form_field_wechat_multi_image('wechat-multi-image');}</p>
+				</li>
+				<li>微信语音上传管理(上传到公众微信素材库)：
+					<p>{php echo tpl_form_field_wechat_voice('wechat-voice');}</p>
+				</li>
+				<li>微信视频上传管理(上传到公众微信素材库)：
+					<p>{php echo tpl_form_field_wechat_video('wechat-video');}</p>
+				</li>
+				<li>富文本编辑：
+					<p>{php echo tpl_ueditor('content');}</p>
+					<script type="text/javascript">
+    // ueditoroption 这个变量是微擎定义好的百度编辑器的初始化参数，直接使用即可
+    var editor = UE.getEditor('content', ueditoroption);
+    editor.addListener('contentChange', function() {
+        //此处增加了侦听编辑器内容变化的事件
+        //do something
+    });
+
+    editor.addListener('ready', function(){
+        //此处增加了侦听编辑器初始化的事件
+        //do something
+    });
+</script>
+				</li>
+
+			</ol>
+		</div>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<a class="btn btn-default btn-block" href="{php echo fm_murl('demo','2index','tpl',array('pagetpl'=>'zujian'))}" target="_blank" >
+			前端组件
+		</a>
+	</div>
+</div>

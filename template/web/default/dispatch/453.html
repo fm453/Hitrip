@@ -1,0 +1,37 @@
+{template $fm453style.'common/_header'}
+{template $fm453style.'common/tabnav'}
+{if $ac == 'express'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+	{if $operation == 'modify' ||  $operation == 'add'  || $operation == 'copy'}
+	{template $fm453style.$do.'/'.$ac.'/modify'}
+	{/if}
+{/if}
+{if $ac == 'area'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+	{if $operation == 'modify'}
+	{template $fm453style.$do.'/'.$ac.'/modify'}
+	{/if}
+{/if}
+{if $ac == 'ziti'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+	{if $operation == 'modify'}
+	{template $fm453style.$do.'/'.$ac.'/modify'}
+	{/if}
+{/if}
+{if $ac == 'yunfei'}
+	{if $operation == 'display'}
+	{template $fm453style.$do.'/'.$ac.'/display'}
+	{/if}
+	{if $operation == 'modify' ||  $operation == 'add'  || $operation == 'copy'}
+	{template $fm453style.$do.'/'.$ac.'/modify'}
+	{/if}
+{/if}
+{template $fm453style.$do.'/key'}
+{template $fm453style.$do.'/mouse'}
+{template $fm453style.'common/_footer'}

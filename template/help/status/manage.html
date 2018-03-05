@@ -1,0 +1,54 @@
+{if $operation=='modify'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+		<input type="hidden" name="op" value="modify" />
+		<input type="hidden" name="id" value="{$id}" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				修改状态{$sitem['id']}
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态编码</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="sn" class="form-control" placeholder="不可留空；此处仅可填写数字" value="{$sitem['sn']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态名</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="showname" class="form-control" placeholder="状态的展示名" value="{$sitem['showname']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">工作顺序</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="workflow" class="form-control" placeholder="不可留空；此处仅可填写数字" value="{$sitem['workflow']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>归属表</label>
+					<div class="col-sm-9 col-xs-12">
+						<select class="form-control" name="setfor"  id="setfor">
+							{loop $tables $key $table}
+							<option value="{$key}" data-name="">{$table}</option>
+							{/loop}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态描述</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea name="description" class="form-control" placeholder="可留空"  cols="70">{$sitem['des']}</textarea>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="modify" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+{/if}

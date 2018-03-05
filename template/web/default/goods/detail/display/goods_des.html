@@ -1,0 +1,19 @@
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">简要描述</label>
+	<div class="col-sm-9 col-xs-12">
+		<input type="text" name="description" id="description" class="form-control" value="{$item['description']}" />
+		<span class="help-block">说明：该描述在产品列表页面及产品分享时会被调用；建议不超过60字</span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-xs-12 col-sm-3 col-md-2 control-label">产品详情</label>
+	<div class="col-sm-9 col-xs-12">
+		{php echo fmFunc_tpl_ueditor('content',$item['content'],'web','html',array('height'=>200,'width'=>800));}
+		<span class="help-block">
+			说明：全屏编辑效果更好；利用第三方编辑器，获得更好地显示效果。
+			<a href="http://demo.hiluker.com/case/vcmseditor/" target="_blank" title="新窗口中打开">VCMS样式转换</a>
+			<a href="http://www.135editor.com/" target="_blank" title="新窗口中打开">135样式编辑</a>
+		</span>
+	</div>
+</div>

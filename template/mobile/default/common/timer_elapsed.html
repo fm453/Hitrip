@@ -1,0 +1,11 @@
+<!-- 这个是一个动态倒计时器插件-->
+<div id="countdowner"></div>
+		<script language="javascript" src="{$fm453resource}common/js/sco.countdown.js"></script>
+<script>
+	$(function() {
+		var  today = new Date()
+			,tomorrow = Math.round(today.setDate(today.getDate() + 1) / 1000)	// seconds instead of milliseconds
+			;
+		$('#countdowner').scojs_countdown({until: tomorrow});
+	});
+</script>

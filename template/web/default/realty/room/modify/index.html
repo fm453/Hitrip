@@ -1,0 +1,97 @@
+<!-- 编辑器配置文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="{$fm453resource}components/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="{$fm453resource}components/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<div class="main">
+	<div class="panel {if $data['status']==1} panel-warning {/if} {if $data['status']==0} panel-success {/if}">
+		<div class="panel-heading">
+			户型编码:
+			<span style="color:red;font-weight:bolder;">
+			{if !empty($o_sn)}
+				{$o_sn}
+			{else}
+				待生成
+			{/if}
+			</span>
+			（该编码由服务器自动生成后返回）|当前户型：{$data['title']}
+		</div>
+
+		<div class="panel-body">
+			<ul class="nav nav-tabs" id="myTab">
+				<li class="active" ><a href="#tab_basic" data-toggle="tab">户型概况</a></li>
+				<li ><a href="#tab_page2" data-toggle="tab">户型相册</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="tab_basic">
+					{template $fm453style.$do.'/'.$ac.'/modify/_basic'}
+				</div>
+				<div class="tab-pane fade" id="tab_page2">
+					{template $fm453style.$do.'/'.$ac.'/modify/_page2'}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function () {
+		window.optionchanged = false;
+		$('#myTab a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content,使用该功能前提是a链接中加上data-toggle="tab"
+		});
+	});
+
+	require(['jquery', 'jquery.ui'],function($){
+		$("#param-items").sortable({handle:'.fa-move'});
+	});
+
+	function formcheck(formid){
+		var form = document.getElementById(formid);
+		var noajax = $('#'+ formid).attr('data-noajax');	//使用noajax标记来临时改用非ajax的提交方法
+		if (noajax == 1) {
+			$('input[name="opp"]').val('noajax');
+			form.submit();
+			return;
+		}
+		var formdata = Form_format(formid); //自有方法格式化表单元素，返回数组
+		var url = "{$_W['siteurl']}";
+		var data = formdata;
+		console.log(data);
+		$('.' + formid).val("正在保存");
+		$.post(url,data,function(res){
+			if (res==1) {
+				$('.' + formid).val("已保存");
+			}else{
+				$('.' + formid).val("保存失败");
+			}
+			console.log(res);
+		},'json');
+		return false;
+	}
+</script>
+
+<script type="text/javascript" >
+	function changeVal(obj,objId) {
+		var a = obj.val();
+		$('#' + objId).val(a);
+	}
+
+	function readable(objId) {
+		$('#' + objId).removeAttr("readonly");//去除只读属性
+	}
+	var nowParams = 0;
+	function addParam(objId) {
+		nowParams++;
+		var htm = '';
+		htm += '<tr><td><a href="javascript:;" class="fa fa-move" title="拖动调整此显示顺序"><i class="fa fa-arrows"></i></a>&nbsp;<a href="javascript:;" onclick="deleteParam(this)" style="margin-top:10px;" title="删除"><i class="fa fa-remove"  style="color:red;"></i></a></td><td><input name="param[facilities][title][_'+ nowParams +'_]" type="text" class="form-control param_title" value=""/></td><td><input type="number" class="form-control" name="param[facilities][status][_'+ nowParams +'_]" value="0" /></td></tr>';
+		
+		$('#' + objId).append(htm);
+	}
+	
+	function deleteParam(o) {
+		$(o).parent().parent().remove();
+	}
+</script>

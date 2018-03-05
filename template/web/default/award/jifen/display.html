@@ -1,0 +1,32 @@
+<div class="main">
+    <div class="panel panel-default">
+    <div class="panel-body table-responsive">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+            <tr>
+                <th>奖品名称</th>
+                <th>剩余数量</th>
+                <th>价格</th>
+                <th>消耗积分</th>
+                <!--<th>描述</th>-->
+                <th style="width:120px;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {loop $list $item}
+            <tr>
+                <td>{$item['title']}</td>
+                <td>{$item['amount']}</td>
+                <td>{$item['price']}</td>
+                <td>{$item['credit_cost']}</td>
+                <td>
+                    <a href="{php echo fm_wurl($do,$ac,'modify',array('id' => $item['id']))}" title="编辑" class="btn btn-default btn-sm"><i class="fa fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+            {/loop}
+            </tbody>
+        </table>
+    </div>
+     </div>
+</div>

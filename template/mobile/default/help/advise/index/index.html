@@ -1,0 +1,20 @@
+{template $appstyle.$do.'/'.$ac.'/'.$operation.'/css'}
+<link rel="stylesheet" type="text/css" href="{$appsrc}css/feedback.css" />
+{template $appstyle.$do.'/'.$ac.'/'.$operation.'/titlebar'}
+
+<div class="mui-content feedback">
+	<form action="{php echo fm_murl($do,$ac,'feedback',array('i'=>1))}" method="post" class="form-horizontal form" id="form-feedback" enctype="multipart/form-data" onsubmit='return formcheck()'>
+	<input type="hidden" name="uid" value="{$FM_member['uid']}" />
+	<input type="hidden" name="openid" value="{$_W['openid']}" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+
+		{template $appstyle.$do.'/'.$ac.'/_public/feedback'}
+		<button id="submit" class="mui-btn mui-btn-primary mui-btn-outlined" style="display: block;width: 120px;margin: 10px auto;">提交</button>
+	</form>
+	<div id="qrcode"  class="mui-hidden" style="text-align: center;">
+		<img src="{$qrcodeurl}" style="width:60%;" />
+		<a id="shortcut" style="width: 60%;margin: 15px auto;padding: 5px;" class="mui-hidden mui-btn mui-btn-block mui-btn-red">创建桌面图标</a>
+	</div>
+</div>
+
+{template $appstyle.$do.'/'.$ac.'/'.$operation.'/js'}

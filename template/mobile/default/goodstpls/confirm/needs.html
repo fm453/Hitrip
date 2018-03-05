@@ -1,0 +1,27 @@
+<h5>需求类型</h5>	
+		<select id='type' name='needstype' class="form-control">
+		<option value="餐饮类" >餐饮类</option>
+		<option value="外卖类" >外卖类</option>
+		<option value="租车类">租车类</option>
+		<option value="其他" >其他</option>
+		</select>
+<h5>预计开始时间:</h5>
+		<div id="starttime">
+		{php echo tpl_form_field_date(needsstarttime, '', true);}
+		</div>
+<h5>预计时间:</h5>
+		<div id="endtime">
+		{php echo tpl_form_field_date(needsendtime, '', true);}
+		</div>
+		
+<h5>地点（如果有，请填写）</h5>	
+		<div id="startarea">
+		<input type="text" id="startarea" name='needsstartarea' value="" class="form-control" />
+		</div>
+
+<h5 class="hidden">发货方式</h5>	
+		<select id='dispatch' name="dispatch" class="form-control hidden">
+	   	{loop $dispatch $d}
+			<option value="{$d['id']}" price='{$d['price']}'>{$d['dispatchname']} (运费：{$d['price']}元)</option>
+		{/loop}
+		</select>

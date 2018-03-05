@@ -1,0 +1,50 @@
+<div class="main">
+	<form action="{php echo $this->createWebUrl('modset')}" method="post" class="form-horizontal form" id="setting-form">
+	<input type="hidden" name="ac" value="checkdb" />
+	<input type="hidden" name="op" value="modify" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+		<div class="panel panel-warning">
+			<div class="panel-heading" >
+				<a data-toggle="collapse" data-parent="#accordion" href="#checkresult">
+					检查结果<span class="pull-right">点击缩起/展开该栏目</span>
+				</a>
+			</div>
+			<div class="container-fluid panel-collapse collapse in" id="checkresult">
+				<div class="row-fluid">
+					<div class="span12 forcopy">
+						<div id="result">
+						{$checkresult}
+						</div>
+						{if $needcreate>0}<a href="{$direct_url}" class="btn btn-default">需要再检查一遍</a>{/if}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-info">
+			<div class="panel-heading" >
+				<a data-toggle="collapse" data-parent="#accordion" href="#database">
+					表结构说明<span class="pull-right">点击缩起/展开该栏目</span>
+				</a>
+			</div>
+			<div class="container-fluid panel-collapse collapse" id="database">
+				<div class="row-fluid">
+					<div class="span12 forcopy">
+						<ol>
+							{loop $tablelist $item}
+							<li>
+								{$item['name']}	:	<kbd>{$item['remark']}</kbd><br>
+							</li>
+							{/loop}
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="panel panel-warning">
+		<div class="panel-heading" >
+			<a class="btn btn-info" href="{php echo $this->createWebUrl('modset',array('ac'=>'checkdb','op'=>'export','withdata'=>0))}">导出数据表结构</a>
+			<a class="btn btn-info" href="{php echo $this->createWebUrl('modset',array('ac'=>'checkdb','op'=>'export','withdata'=>1))}">导出表数据</a>
+		</div>
+	</div>
+</div>

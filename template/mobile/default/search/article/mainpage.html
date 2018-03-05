@@ -1,0 +1,80 @@
+<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			.mui-loader {
+				position: absolute;
+				top: 25%;
+				width: 100%;
+				height: 60%;
+				color: #888;
+				font-size: 14px;
+				text-align: center;
+			}
+			.mui-fadein {
+				opacity: 1;
+			}
+			.mui-fadeout {
+				opacity: 0;
+			}
+			@keyframes fadein {
+				from {
+					opacity: 0;
+				}
+				to {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadein {
+				from {
+					opacity: 0;
+				}
+				to {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeout {
+				from {
+					opacity: 1;
+				}
+				to {
+					opacity: 0;
+				}
+			}
+			@-webkit-keyframes fadeout {
+				from {
+					opacity: 1;
+				}
+				to {
+					opacity: 0;
+				}
+			}
+		</style>
+<header>
+
+</header>
+<div class="mui-loader">加载中...请稍候</div>
+<script type="text/javascript" charset="utf-8">
+	mui.init({
+			subpages:[{
+				url:"{$loadurl}",//子页面（加载首页第一页）
+				id: "{$do}-{$ac}-load-subpage-id",//内容页面标志
+				styles:{
+					top: "0px",//内容页面顶部位置,需根据实际页面布局计算，若使用标准mui导航，顶部默认为48px；
+					bottom: '0px',
+					//其它参数定义
+					}
+				}]
+		}
+	);
+
+//监听header的双击事件
+	var contentWebview = null;
+	document.querySelector('header').addEventListener('doubletap', function() {
+		if(contentWebview==null){
+			contentWebview = plus.webview.currentWebview().children()[0];
+		}
+		contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+	});
+</script>

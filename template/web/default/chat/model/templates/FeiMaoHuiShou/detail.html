@@ -1,0 +1,58 @@
+<div class="form-group forcopy">
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+		 <label class='control-label'>
+			 <input type='checkbox' name='nd[starttime][status]' value='1' {if $needs_data['starttime']['status']==1}checked{/if} /> 
+		 </label>
+	</div>
+	<label class="col-xs-12 col-sm-9 col-md-2 col-lg-2 control-label">预约时间(预计上门时间)</label>
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-7">
+		<input type="text" name="nd[starttime][value]" class="form-control" value="{$needs_data['starttime']['value']}" />
+	</div>
+	<label class="col-xs-12 col-sm-9 col-md-2 col-lg-1 control-label">物品等级</label>
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-1">
+		<input type="text" name="nd[stars][value]" class="form-control" value="{$needs_data['stars']['value']}" />
+	</div>
+</div>
+
+<div class="form-group forcopy">
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+		 <label class='control-label'>
+			 <input type='checkbox' name='nd[cityarea][status]' value='1' {if $needs_data['cityarea']['status']==1}checked{/if} /> 
+		 </label>
+	</div>
+	<label class="col-xs-12 col-sm-9 col-md-2 col-lg-2 control-label">所在区域</label>
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		<input type="text" name="nd[cityarea][value]" class="form-control" value="{$needs_data['cityarea']['value']}" />
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-5">
+		<input type="text" name="nd[street][value]" class="form-control" value="{$needs_data['street']['value']}" />
+	</div>
+</div>
+
+<div class="form-group forcopy">
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+		 <label class='control-label'>
+			 <input type='checkbox' name='nd[address][status]' value='1' {if $needs_data['address']['status']==1}checked{/if} /> 
+		 </label>
+	</div>
+	<label class="col-xs-12 col-sm-9 col-md-2 col-lg-2 control-label">详细地址</label>
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
+		<input type="text" name="nd[address][value]" class="form-control" value="{$needs_data['address']['value']}" />
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-2 col-lg-1">
+		<input type="text" name="nd[house][value]" class="form-control" value="{$needs_data['house']['value']}" />
+	</div>
+</div>
+
+<div class="form-group forcopy">
+	<div class="col-xs-12 col-sm-3 col-md-2 col-lg-1">
+		 <label class='control-label'>
+			 <input type='checkbox' name='nd[remark][status]' value='1' {if $needs_data['remark']['status']==1}checked{/if} /> 
+		 </label>
+	</div>
+	<label class="col-xs-12 col-sm-9 col-md-2 col-lg-2 control-label">备注</label>
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+		<textarea name="nd[remark][value]" class="form-control"> {$needs_data['remark']['value']}</textarea>
+	</div>
+	
+</div>

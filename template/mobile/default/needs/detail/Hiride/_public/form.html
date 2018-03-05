@@ -1,0 +1,166 @@
+
+<p>基本信息</p>
+<div class="mui-input-group">
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>姓名：</label>
+		<input id='name' type="text" name="name" class="mui-input-clear" placeholder="{if $FM_member['nickname']} {$FM_member['nickname']} {else} 请填写，以便我们与您联系 {/if}" value="{$needs_data['name']}" />
+	</div>
+	<div class="mui-input-row">
+		<label><span style="color:#f00;"> * </span>手机号：</label>
+		<input id='mobile' type="text" name="mobile" class="mui-input-clear" placeholder="{if $FM_member['mobile']} {$FM_member['mobile']} {else} 方便及时联系到您 {/if}" value="{$needs_data['mobile']}" />
+	</div>
+</div>
+<ul class="mui-table-view" >
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input name="sex" type="radio" value="1" {if $needs_data['sex']==1} checked="true" {/if}>男
+	</li>
+	<li class="mui-table-view-cell mui-radio mui-left">
+		<input name="sex" type="radio" value="2" {if $needs_data['sex']==2} checked="true" {/if}>女
+	</li>
+</ul>
+
+<h5 class="mui-content-padded">
+	<span style="color:#f00;">*</span>所在区域:<span id='result_cityarea' >{if $needs_data['cityarea']}{$needs_data['cityarea']}-{$needs_data['street']}{else}(请正确告知以便我们安排收件){/if}</span>
+</h5>
+<input  id="cityarea0" name="view_cityarea" class="mui-btn mui-btn-block" style="font-size:14px;" value="{if $needs_data['cityarea']}{$needs_data['cityarea']}-{$needs_data['street']}{else}点击选择上门区域{/if}" />
+<input  type="hidden" id="cityarea2" name="cityarea" value="{$needs_data['cityarea']}" />
+<input  type="hidden" id="cityarea3" name="street" value="{$needs_data['street']}" />
+<!--初始化城市区域-->
+<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var cityPicker = new $.PopPicker({
+						layer: 2
+					});
+					cityPicker.setData(cityData);
+					var id = 'cityarea';
+					var showCityPickerButton = doc.getElementById(id+'0');
+					var cityResult = doc.getElementById('result_' + id);
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker.show(function(items) {
+							cityResult.innerText = "" + items[0].text + " " + items[1].text;
+							document.getElementById(id+'0').setAttribute('value',items[0].text + " " + items[1].text);
+							document.getElementById(id+'2').setAttribute('value',items[0].text);
+							document.getElementById(id+'3').setAttribute('value',items[1].text);
+							//$('#'+id+'0')[0].value = items[0].text + " " + items[1].text;
+							//$('#'+id+'2')[0].value = items[0].text;	//区域
+							//$('#'+id+'3')[0].value = items[1].text;	//街道
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+</script>
+
+<p>详细地址</p>
+<div class="mui-input-row">
+	<input id='address' type="text" name="address" class="mui-input-clear form-control" placeholder="请准确填写小区、楼号等" value="{$needs_data['address']}" />
+</div>
+<div class="mui-input-row">
+	<input id='house' type="text" name="house" class="mui-input-clear form-control" placeholder="房间号" value="{$needs_data['house']}" />
+</div>
+
+<h5 class="mui-content-padded">
+	<span style="color:#f00;">*</span>预约时间:<span id='result_starttime' >{if $needs_data['starttime']}{php echo date('Y-m-d H:i',$needs_data['starttime']);}{else}(至少提前30分钟){/if}</span>
+</h5>
+<button id='starttime0' data-id='starttime' type="button" data-options='{$starttime_data_options}' class="btn mui-btn mui-btn-block choosedate" style="font-size:14px;">{if $needs_data['starttime']}{php echo date('Y-m-d H:i',$needs_data['starttime']);}{else}点击选择收件上门的时间{/if}</button>
+<input type="hidden" id="starttime2" name="starttime" value="{php echo date('Y-m-d H:i',$needs_data['starttime']);}" />
+<ul class="mui-table-view mui-hidden" >
+	<li class="mui-table-view-cell mui-checkbox mui-left">
+		<input name="isalltime" type="checkbox" value="1" {if $needs_data['isalltime']==1} checked="true" {/if}>随时有人在家
+	</li>
+</ul>
+<!-- 初始化日期时间组件 -->
+<script>
+	(function($) {
+		$.init();
+		var btns = $('.choosedate');
+		btns.each(function(i, btn) {
+			btn.addEventListener('tap', function() {
+				var optionsJson = this.getAttribute('data-options') || '{}';
+				var options = JSON.parse(optionsJson);//字符串转数组
+				var id = this.getAttribute('data-id');
+				var result = $('#result_'+id)[0];
+				var picker = new $.DtPicker(options);
+				var chosendate = '';
+				var d =new Date();
+				var vailabletime = d.getTime() + 29*60*1000;	//预留1分钟填表时间
+				picker.show(function(rs) {
+							/*
+		* rs.value 拼合后的 value
+		* rs.text 拼合后的 text
+		* rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+		* rs.m 月，用法同年
+		* rs.d 日，用法同年
+		* rs.h 时，用法同年
+		* rs.i 分（minutes 的第二个字母），用法同年
+		*/
+					result.innerText = rs.text;
+					chosendate = Date.parse(new Date(rs.y.value+'-'+rs.m.value+'-'+rs.d.value+' '+rs.h.value+':'+rs.i.value));
+					var worktime_start_h = "{php echo $worktime['start']['h']}";
+					var worktime_start_i = "{php echo $worktime['start']['i']}";
+					var worktime_end_h = "{php echo $worktime['end']['h']}";
+					var worktime_end_i = "{php echo $worktime['end']['i']}";
+					var worktime = worktime_start_h + ':' + worktime_start_i + '~' + worktime_end_h + ':' + worktime_end_i;
+					if (vailabletime>chosendate) {
+						chosendate = new $.DtPicker(options);
+						$('#'+id+'0')[0].innerHTML = '时间已过，请重新选择(至少提前30分钟)';
+					}else {
+						var _temp_h = Number(rs.h.value);
+						var _temp_i = Number(rs.i.value);
+						if (_temp_h < worktime_start_h) {
+							$('#'+id+'0')[0].innerHTML = '非工作时间，请重新选择(' + worktime + ')';
+						}else if(_temp_h == worktime_start_h && _temp_i < worktime_start_i){
+							$('#'+id+'0')[0].innerHTML = '非工作时间，请重新选择(' + worktime + ')';
+						}else if (_temp_h > worktime_end_h) {
+							$('#'+id+'0')[0].innerHTML = '非工作时间，请重新选择(' + worktime + ')';
+						}else if(_temp_h == worktime_end_h && _temp_i > worktime_end_i){
+							$('#'+id+'0')[0].innerHTML = '非工作时间，请重新选择(' + worktime + ')';
+						}else {
+							$('#'+id+'0')[0].innerHTML = ''+rs.text+'';
+							//$('#'+id+'2')[0].value = chosendate;
+							$('#'+id+'2')[0].value = rs.text;
+						}
+					}
+					picker.dispose();
+				});
+			}, false);
+		});
+	})(mui);
+</script>
+
+<p>{if $needs_data['setfor']==$currentid || empty($needs_data['setfor'])}您的{/if}备注</p>
+<div class="mui-input-row ">
+	<textarea id='remark' name='remark' class="mui-input-clear question" placeholder="补充的需求说明，或您物品的说明等" >{$needs_data['remark']}</textarea>
+</div>
+
+<div class="mui-content-padded">
+	<div class="mui-inline">{if $needs_data['setfor']==$currentid || empty($needs_data['setfor'])}给您的物品评个级{else}物品评级{/if}</div>
+		<div class="icons mui-inline" style="margin-left: 6px;">
+			{if $stars>=1}<i data-index="1" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="1" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=2}<i data-index="2" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="2" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=3}<i data-index="3" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="3" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=4}<i data-index="4" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="4" class="mui-icon mui-icon-star"></i>{/if}
+			{if $stars>=5}<i data-index="5" class="mui-icon mui-icon-star-filled"></i>{else}<i data-index="5" class="mui-icon mui-icon-star"></i>{/if}
+
+		</div>
+</div>
+<input type="hidden" id="stars" name="stars" value="{$needs_data['stars']}" />
+
+{if $needs_data['reply']}
+	<h5 style="text-align: center;background-color:#efeff4;padding-top: 8px;padding-bottom: 8px;text-indent: 12px;border-top:#fff 1px solid;border-bottom:#fff 1px solid;">平台回复：</h5>
+	<p>
+		{$needs_data['reply']}
+	</p>
+{/if}
+
+<div class="mui-input-group">
+	<div class="mui-input-row">
+		<label>推荐码：</label>
+		<input id='tuijianma' type="text" name="tuijianma" class="mui-input-clear" placeholder="如果有，请填写" value="{$needs_data['tuijianma']}" />
+	</div>
+</div>
+
+<script src="{$htmlsrc}{$do}/{$ac}/{$needs['template']}/_public/city.data.js"></script>

@@ -1,0 +1,23 @@
+<nav id="nav-bottom" class="mui-bar mui-bar-tab">
+			<a  id="defaultTab" class="mui-tab-item mui-active" href="#list-box">
+				<span class="mui-icon mui-icon-chat">
+					<span class="mui-badge" id="numMsgNew">{$allTotal['msg_new']}</span>
+				</span>
+				<span class="mui-tab-label">微聊</span>
+			</a>
+			<a class="mui-tab-item" href="{php echo fm_murl('search','article','index',array('a_tpl'=>'member'))}">
+				<span class="mui-icon mui-icon-search">
+				</span>
+				<span class="mui-tab-label">发现</span>
+			</a>
+			<a class="mui-tab-item" href="#modal-member">
+				<span class="mui-icon mui-icon-contact">
+				</span>
+				<span class="mui-tab-label"> 我</span>
+			</a>
+			<a class="mui-tab-item" href="#offCanvasSide">
+				<span class="mui-icon mui-icon-plus">
+				</span>
+				<span class="mui-tab-label"> 栏目</span>
+			</a>
+</nav>

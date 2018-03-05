@@ -1,0 +1,35 @@
+<div class="mui-content" style="font-size: 12px;">
+	<h5 style="text-align: center;">订单详情</h5>
+	<div class="order-detail">
+		<table class="table">
+			<thead style='background-color:rgba(204,204,204,1);color:#fff;'>
+				<tr>
+					<th class="name">商品</th>
+					<th class="num">数量</th>
+					<th class="total">单价</th>
+				</tr>
+			</thead>
+			<tbody  style='background-color:rgba(255,255,255,1);color:#aaa;line-height:28px;'>
+				{loop $allgoods $item}
+				<tr>
+					<td class="name">
+						<span  style="float:left;">
+							{$item['title']}
+							{if !empty($item['optionname'])}<br/>
+							<span style='font-size:12px;color:#666'> {$item['optionname']}</span>
+							{/if}
+						</span>
+					</td>
+					<td class="num">
+						{$item['total']}{if !empty($item['unit'])}{$item['unit']}{/if}
+					</td>
+					<td class="total">
+						<span style="display: none;">{$item['total']}</span>
+						<span class='goodsprice'>{$item['marketprice']} 元</span>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>

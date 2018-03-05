@@ -1,0 +1,140 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<a data-toggle="collapse" data-parent="#accordion"
+          href="#app-common-slide-home">
+          主界面侧滑边栏导航(home)<span class="pull-right">点击收缩该栏目</span>
+       </a>
+	</div>
+
+	<div class="container-fluid panel-collapse collapse" id="app-common-slide-home">
+		<div class="row-fluid">
+			<div class="span12 forcopy" style="padding:5px 0 5px 0;">
+				<form action=" " method="post" class="form-horizontal form" id="setting-form-AppCommonSlideHome" onsubmit="return formcheck('setting-form-AppCommonSlideHome')">
+				<input type="hidden" name="ac" value="ui" />
+				<input type="hidden" name="op" value="modify" />
+				<input type="hidden" name="setfor" value="common" />
+				<input type="hidden" name="opp" value="slide" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+
+				<div class="form-group">
+					<input type="hidden" name="home_1_status"  id="home_1_status" value="" />
+						<label class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">
+						导航一<br>
+						<input type="radio" name="home_1_status_click"  value="1" {if $settings['slide']['home_1_status']==1} checked="true" {/if} onclick="changeVal($(this),'home_1_status')" />开启<br>
+						<input type="radio" name="home_1_status_click"  value="2" {if $settings['slide']['home_1_status']==2} checked="true" {/if} onclick="changeVal($(this),'home_1_status')" />隐藏<br>
+						<input type="radio" name="home_1_status_click"  value="0" {if $settings['slide']['home_1_status']==0} checked="true" {/if}  onclick="changeVal($(this),'home_1_status')" />默认
+						</label>
+					<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+						<input type="text" name="home_1_name" class="form-control" value="<?php echo $settings['slide']['home_1_name']; ?>"  placeholder="我的资料" />
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						{php echo tpl_form_field_link("home_1_value",$settings['slide']['home_1_value'], array('css'=>array('input'=>'class1', 'btn'=>'class2')));}
+					</div>
+					<hr>
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						{php echo tpl_form_field_icon('home_1_icon', $settings['slide']['home_1_icon']);}
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						{php echo tpl_form_field_image('home_1_image',$settings['slide']['home_1_image']);}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<input type="hidden" name="home_2_status"  id="home_2_status" value="" />
+						<label class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">
+						导航二<br>
+						<input type="radio" name="home_2_status_click"  value="1" {if $settings['slide']['home_2_status']==1} checked="true" {/if} onclick="changeVal($(this),'home_2_status')" />开启<br>
+						<input type="radio" name="home_2_status_click"  value="2" {if $settings['slide']['home_2_status']==2} checked="true" {/if} onclick="changeVal($(this),'home_2_status')" />隐藏<br>
+						<input type="radio" name="home_2_status_click"  value="0" {if $settings['slide']['home_2_status']==0} checked="true" {/if} onclick="changeVal($(this),'home_2_status')" />默认
+						</label>
+					<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+						<input type="text" name="home_2_name" class="form-control" value="<?php echo $settings['slide']['home_2_name']; ?>"  placeholder="我的订单" />
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						{php echo tpl_form_field_link("home_2_value",$settings['slide']['home_2_value'], array('css'=>array('input'=>'class1', 'btn'=>'class2')));}
+					</div>
+					<hr>
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						{php echo tpl_form_field_icon('home_2_icon', $settings['slide']['home_2_icon']);}
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						{php echo tpl_form_field_image('home_2_image',$settings['slide']['home_2_image']);}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<input type="hidden" name="home_3_status"  id="home_3_status" value="" />
+						<label class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">
+						导航三<br>
+						<input type="radio" name="home_3_status_click"  value="1" {if $settings['slide']['home_3_status']==1} checked="true" {/if} onclick="changeVal($(this),'home_3_status')" />开启<br>
+						<input type="radio" name="home_3_status_click"  value="2" {if $settings['slide']['home_3_status']==2} checked="true" {/if} onclick="changeVal($(this),'home_3_status')" />隐藏<br>
+						<input type="radio" name="home_3_status_click"  value="0" {if $settings['slide']['home_3_status']==0} checked="true" {/if} onclick="changeVal($(this),'home_3_status')" />默认
+						</label>
+					<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+						<input type="text" name="home_3_name" class="form-control" value="<?php echo $settings['slide']['home_3_name']; ?>"  placeholder="商城首页" />
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						{php echo tpl_form_field_link("home_3_value",$settings['slide']['home_3_value'], array('css'=>array('input'=>'class1', 'btn'=>'class2')));}
+					</div>
+					<hr>
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						{php echo tpl_form_field_icon('home_3_icon', $settings['slide']['home_3_icon']);}
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						{php echo tpl_form_field_image('home_3_image',$settings['slide']['home_3_image']);}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<input type="hidden" name="home_4_status"  id="home_4_status" value="" />
+						<label class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">
+						导航四<br>
+						<input type="radio" name="home_4_status_click"  value="1" {if $settings['slide']['home_4_status']==1} checked="true" {/if} onclick="changeVal($(this),'home_4_status')" />开启<br>
+						<input type="radio" name="home_4_status_click"  value="2" {if $settings['slide']['home_4_status']==2} checked="true" {/if} onclick="changeVal($(this),'home_4_status')" />隐藏<br>
+						<input type="radio" name="home_4_status_click"  value="0" {if $settings['slide']['home_4_status']==0} checked="true" {/if} onclick="changeVal($(this),'home_4_status')" />默认
+						</label>
+					<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+						<input type="text" name="home_4_name" class="form-control" value="<?php echo $settings['slide']['home_4_name']; ?>"  placeholder="官方网站" />
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						{php echo tpl_form_field_link("home_4_value",$settings['slide']['home_4_value'], array('css'=>array('input'=>'class1', 'btn'=>'class2')));}
+					</div>
+					<hr>
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						{php echo tpl_form_field_icon('home_4_icon', $settings['slide']['home_4_icon']);}
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						{php echo tpl_form_field_image('home_4_image',$settings['slide']['home_4_image']);}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<input type="hidden" name="home_5_status"  id="home_5_status" value="" />
+						<label class="col-xs-12 col-sm-1 col-md-1 col-lg-1 control-label">
+						导航五<br>
+						<input type="radio" name="home_5_status_click"  value="1" {if $settings['slide']['home_5_status']==1} checked="true" {/if} onclick="changeVal($(this),'home_5_status')" />开启<br>
+						<input type="radio" name="home_5_status_click"  value="2" {if $settings['slide']['home_5_status']==2} checked="true" {/if} onclick="changeVal($(this),'home_5_status')" />隐藏<br>
+						<input type="radio" name="home_5_status_click"  value="0" {if $settings['slide']['home_5_status']==0} checked="true" {/if} onclick="changeVal($(this),'home_5_status')" />默认
+						</label>
+					<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+						<input type="text" name="home_5_name" class="form-control" value="<?php echo $settings['slide']['home_5_name']; ?>"  placeholder="品牌客服" />
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						{php echo tpl_form_field_link("home_5_value",$settings['slide']['home_5_value'], array('css'=>array('input'=>'class1', 'btn'=>'class2')));}
+					</div>
+					<hr>
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						{php echo tpl_form_field_icon('home_5_icon', $settings['slide']['home_5_icon']);}
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						{php echo tpl_form_field_image('home_5_image',$settings['slide']['home_5_image']);}
+					</div>
+				</div>
+				<input type="submit" name="save_setting-form-AppCommonSlideHome" value="保存" class="btn btn-primary btn-block setting-form-AppCommonSlideHome" style="" />
+				<a class="btn btn-default btn-block" data-toggle="collapse" data-parent="#accordion" href="#app-common-slide-home">点击收缩该栏目</a>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>

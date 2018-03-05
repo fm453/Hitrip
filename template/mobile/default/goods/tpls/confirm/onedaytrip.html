@@ -1,0 +1,32 @@
+<h5>计划游玩日期:</h5>
+		<div id="date">
+		<input type="text" name="onedaytriptime" value="{php echo date('Y年m月d日',TIMESTAMP+84399)}" placeholder="请选择日期" class="form_datetime">
+		</div>
+
+<h5>出发位置</h5>	
+		<div id="startarea">
+		<input type="text" id="startarea" name="onedaytripstartarea" value="" class="form-control" placeholder="请填写您出发的位置，或您的入住酒店/住所；方便我们为您联系安排"/>
+		</div>
+<h5>同行成人数</h5>	
+		<select id='adults' name="onedaytripadults" class="form-control">
+		<option value="1" adults=''>2位</option>
+		<option value="2" adults=''>1位</option>
+		<option value="3" adults=''>3位</option>
+		<option value="4" adults=''>4位</option>
+		<option value="5" adults=''>5位</option>
+		<option value="6" adults=''>6位</option>
+		<option value="7" adults=''>7位</option>
+		<option value="8" adults=''>8位</option>
+		<option value="9" adults=''>9位</option>
+		<option value="10" adults=''>10位</option>
+		</select>
+
+<h5>随行儿童数</h5>	
+		<select id='kids' name="onedaytripkids" class="form-control">
+		<option value="1" adults=''>1名</option>
+		<option value="0" adults=''>无</option>
+		<option value="2" adults=''>2名</option>
+		<option value="3" adults=''>3名</option>
+		<option value="4" adults=''>4名</option>
+		<option value="5" adults=''>5名</option>
+		</select>

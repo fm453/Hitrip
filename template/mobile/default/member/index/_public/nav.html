@@ -1,0 +1,37 @@
+{if $settings['onoffs']['isopenning']==1 && $shopType=='shopping'}
+<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item" href="{php echo fm_murl('index','index','index',array('showguide'=>false))}">
+				<span class="mui-icon mui-icon-home">
+				</span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item" href="{$_FM['settings']['brands']['officialweb']}">
+				<span class="mui-icon mui-icon-info">
+				</span>
+				<span class="mui-tab-label">官网</span>
+			</a>
+			<a class="mui-tab-item" href="{php echo fm_murl('order','myorder','all',array())}">
+				<span class="mui-icon mui-icon-extra mui-icon-extra-holiday">
+				</span>
+				<span class="mui-tab-label">订单</span>
+			</a>
+			<a class="mui-tab-item" href="{php echo fm_murl('member','mycart','index',array())}">
+				<span class="mui-icon mui-icon-extra mui-icon-extra-cart">
+				</span>
+				<span class="mui-tab-label">购物车</span>
+			</a>
+</nav>
+{else}
+<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item" href="{php echo fm_murl('index','index','index',array('showguide'=>false))}">
+				<span class="mui-icon mui-icon-home">
+				</span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item" href="{php echo fm_murl('help','advise','index',array())}">
+				<span class="mui-icon mui-icon-info">
+				</span>
+				<span class="mui-tab-label">反馈</span>
+			</a>
+</nav>
+{/if}

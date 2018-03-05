@@ -1,0 +1,42 @@
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active" href="tel:{$kefuphone}">
+				<span class="mui-icon mui-icon-phone">
+				</span>
+				<span class="mui-tab-label">服务热线</span>
+			</a>
+
+			<a class="mui-tab-item" href="#modal-member">
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label">会员</span>
+			</a>
+
+			{if $available}
+			<a class="mui-tab-item" id="js_submit">
+				<span class="mui-icon mui-icon-compose"><span class="mui-badge">·</span></span>
+				<span class="mui-tab-label">提交预约</span>
+			</a>
+			{else}
+			<a class="mui-tab-item" href="#modal-buy">
+				<span class="mui-icon mui-icon-minus">
+				</span>
+				<span class="mui-tab-label">停止预约</span>
+			</a>
+			{/if}
+
+			<a class="mui-tab-item mui-hidden" href="#Popover_0">
+				<span class="mui-icon mui-icon-gear"></span>
+				<span class="mui-tab-label">更多</span>
+			</a>
+		</nav>
+
+		<div id="Popover_0" class="mui-popover mui-bar-popover" style="">
+			<div class="mui-popover-arrow"></div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell"><a href="#">使用帮助</a>
+				</li>
+				<li class="mui-table-view-cell"><a href="#">我的预约</a>
+				</li>
+				<li class="mui-table-view-cell"><a href="#">核销中心</a>
+				</li>
+			</ul>
+		</div>

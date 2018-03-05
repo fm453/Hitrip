@@ -1,0 +1,35 @@
+<tr >
+				<td>
+					<a href="javascript:;" class="hidden fa fa-move" title="拖动调整此显示顺序"><i class="fa fa-arrows"></i></a>&nbsp;
+					<a href="javascript:;" onclick="deleteHtml(this)" style="margin-top:10px;" title="删除"><i class="fa fa-remove"  style="color:red;"></i></a>
+				</td>
+
+				<td>
+					<div class="input-group">
+						<span class="input-group-addon" style="color:red;">*</span>
+ 						<input name="data[pages][{$k}][title]" id='char_cn_{$k}' type="text" class="form-control param_title " value="{$v['title']}"  />
+ 						<span class="input-group-addon" onclick="getPinyin('{$k}');">转拼音<i class="fa fa-hand-o-right"></i></span>
+ 					</div>
+				</td>
+
+				<td>
+					<div class="input-group">
+						<span class="input-group-addon" style="color:red;">*</span>
+ 						<input name="data[pages][{$k}][key]" id="char_en_{$k}" type="text" class="form-control param_key " value="{$v['key']}"/>
+ 					</div>
+				</td>
+
+				<td>
+					<div class="input-group">
+						<span class="input-group-addon" style="color:red;">*</span>
+ 						<input name="data[pages][{$k}][sn]" type="text" class="form-control param_sn " value="{$v['sn']}"/>
+ 					</div>
+				</td>
+				
+				<td>
+					<select name="data[pages][{$k}][status]" class="form-control">
+						<option value="1" label="启用" {if $v['status']==1} selected="selected" {/if}></option>
+						<option value="0" label="停用" {if $v['status']==0} selected="selected" {/if}></option>
+					</select>
+				</td>
+			</tr>
